@@ -1,15 +1,22 @@
 import { inject, injectable } from "tsyringe";
-import type { IUser } from "../user/user.model";
 import type { IAuthRepository } from "./auth.repository";
 import {
   comparePassword,
   generateToken,
   hashPassword,
 } from "../../utils/helpers";
+import { User } from "@/src/generated/prisma/client";
 
 export interface IAuthService {
-  login(email: string, password: string): Promise<string>;
-  register(email: string, name: string, password: string): Promise<IUser>;
+  login(
+    email: string,
+    password: string
+  ): Promise<{ token: string; user: User } | null>;
+  register(
+    email: string,
+    name: string,
+    password: string
+  ): Promise<{ token: string; user: User } | null>;
   logout(): Promise<void>;
 }
 
@@ -22,16 +29,16 @@ class AuthService {
   public async login(
     email: string,
     password: string
-  ): Promise<{ token: string; user: Omit<IUser, "passwordHash"> } | null> {
+  ): Promise<{ token: string; user: Omit<User, "password"> } | null> {
     const user = await this.authRepository.findByEmail(email);
     if (user) {
-      const isMatch = await comparePassword(password, user.passwordHash);
+      const isMatch = await comparePassword(password, user.password);
       if (isMatch) {
-        const token = generateToken({ id: user._id, email: user.email });
+        const token = generateToken({ id: user.id, email: user.email });
 
         return {
           token,
-          user: { _id: user._id, email: user.email, name: user.name },
+          user: { id: user.id, email: user.email, name: user.name },
         };
       }
     }
@@ -42,18 +49,18 @@ class AuthService {
     email: string,
     name: string,
     password: string
-  ): Promise<{ token: string; user: Omit<IUser, "passwordHash"> } | null> {
+  ): Promise<{ token: string; user: Omit<User, "password"> } | null> {
     const existingUser = await this.authRepository.findByEmail(email);
     if (!existingUser) {
       const hashed = await hashPassword(password);
-      const user =  await this.authRepository.register(email, name, hashed);
+      const user = await this.authRepository.register(email, name, hashed);
 
-      const token = generateToken({ id: user._id, email: user.email });
+      const token = generateToken({ id: user.id, email: user.email });
 
-        return {
-          token,
-          user: { _id: user._id, email: user.email, name: user.name },
-        };
+      return {
+        token,
+        user: { id: user.id, email: user.email, name: user.name },
+      };
     }
     return null;
   }
@@ -63,7 +70,6 @@ class AuthService {
   public async logout(): Promise<void> {
     return;
   }
-
 }
 
 export default AuthService;

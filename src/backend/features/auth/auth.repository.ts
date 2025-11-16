@@ -1,12 +1,12 @@
 import { injectable } from "tsyringe";
-import { IUser, UserModel } from "../user/user.model";
-import { DBInstance } from "../../config/dbConnect";
+import { prisma } from "@/lib/prisma";
+import { User } from "@/src/generated/prisma/client";
 
 export interface IAuthRepository {
-  register(email: string, name: string, password: string): Promise<IUser>;
-  findByEmail(email: string): Promise<IUser | null>;
-  createUser(email: string, name: string, password: string): Promise<IUser>;
-  me(): Promise<IUser[]>;
+  register(email: string, name: string, password: string): Promise<User>;
+  findByEmail(email: string): Promise<User | null>;
+  createUser(email: string, name: string, password: string): Promise<User>;
+  me(): Promise<User[]>;
 }
 
 @injectable()
@@ -15,17 +15,23 @@ class AuthRepository {
     email: string,
     name: string,
     password: string
-  ): Promise<IUser | null> {
-    await DBInstance.getConnection();
-    const user = new UserModel({ email, name, passwordHash: password });
-    return await user.save();
+  ): Promise<User | null> {
+    return await prisma.user.create({
+      data: {
+        email,
+        name,
+        password,
+      },
+    });
   }
 
-  async findByEmail(email:string): Promise<IUser |null>{
-    await DBInstance.getConnection();
-    return await UserModel.findOne({ email });
+  async findByEmail(email: string): Promise<User | null> {
+    return await prisma.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
   }
-
 }
 
 export default AuthRepository;
