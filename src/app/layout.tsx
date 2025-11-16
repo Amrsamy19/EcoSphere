@@ -30,7 +30,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#f6f6f6]`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <ModeToggle/>
+          {/* <ModeToggle/> */}
           {children}
         </ThemeProvider>
       </body>
