@@ -5,7 +5,8 @@ import {
   generateToken,
   hashPassword,
 } from "../../utils/helpers";
-import { User } from "@/src/generated/prisma/client";
+import { User } from "@/generated/prisma/client";
+
 
 export interface IAuthService {
   login(

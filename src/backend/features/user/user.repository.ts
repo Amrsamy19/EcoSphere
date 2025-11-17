@@ -1,17 +1,26 @@
 import { injectable } from "tsyringe";
-import { IUser, UserModel } from "./user.model";
-import { DBInstance } from "../../config/dbConnect";
+import { prisma } from "@/lib/prisma";
+import { User } from "@/generated/prisma/client";
+
 
 export interface IUserRepository {
-  getAll(): Promise<IUser[]>;
+  getAll(): Promise<User[]>;
+  getById(id: string): Promise<User | null>;
 }
 
 @injectable()
 class UserRepository {
-  async getAll(): Promise<IUser[]> {
-    await DBInstance.getConnection();
-    return await UserModel.find();
+  async getAll(): Promise<User[]> {
+    return await prisma.user.findMany();
   }
+  async getById(id: string): Promise<User | null> {
+    return await prisma.user.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
+
 }
 
 export default UserRepository;
