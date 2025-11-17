@@ -1,12 +1,13 @@
 import { inject, injectable } from "tsyringe";
 import type { IUserRepository } from "./user.repository";
-import { User } from "@/generated/prisma/client";
+import { Prisma, User } from "@/generated/prisma/client";
 
 
 
 export interface IUserService {
 	getAll(): Promise<User[]>;
 	getById(id: string): Promise<User | null>;
+	updateById(id: string, data: Prisma.UserUpdateInput): Promise<User | null>;
 	deleteById(id: string): Promise<User | null>;
 }
 
@@ -23,6 +24,12 @@ class UserService {
 	async getById(id: string): Promise<User | null> {
 		return await this.userRepository.getById(id);
 	}
+
+	// Needs to Updated later when we have Avatar Upload functionality
+	async updateById(id: string, data: Prisma.UserUpdateInput): Promise<User | null> {
+		return await this.userRepository.updateById(id, data);
+	}
+
 	async deleteById(id: string): Promise<User | null> {
 		return await this.userRepository.deleteById(id);
 	}
