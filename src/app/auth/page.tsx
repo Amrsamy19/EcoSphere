@@ -265,7 +265,7 @@ const AuthPage = () => {
               <Image src={"/leaf.png"} width={25} height={25} alt="leaf" />
               Sign up
             </button>
-            <p className="text-center text-stone-600 space-x-1 ">
+            <p className="text-center text-stone-600 space-x-1 sm:hidden ">
               <span>One of us ?</span>
               <button
                 onClick={() => setActive("login")}
@@ -359,7 +359,7 @@ const AuthPage = () => {
                 <FaTwitter />
               </Link>
             </div>
-            <p className="text-center text-stone-600 space-x-1 ">
+            <p className="text-center text-stone-600 space-x-1 sm:hidden ">
               <span>New to EcoSphere ?</span>
               <button
                 onClick={() => setActive("register")}
