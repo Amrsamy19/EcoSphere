@@ -1,6 +1,6 @@
 import { injectable } from "tsyringe";
 import { prisma } from "@/lib/prisma";
-import { Menu, Prisma, Restaurant, Reviews, User } from "@/generated/prisma/client";
+import { Prisma, Restaurant } from "@/generated/prisma/client";
 
 export interface IRestaurantRepository {
   create(
@@ -10,14 +10,17 @@ export interface IRestaurantRepository {
     workingHours: string,
     phoneNumber: string,
     avatar: string,
-    description: string,
-
+    description: string
   ): Promise<Restaurant>;
   getAll(): Promise<Restaurant[]>;
   getById(id: string): Promise<Restaurant | null>;
   updateById(
     id: string,
     data: Prisma.RestaurantUpdateInput
+  ): Promise<Restaurant | null>;
+  updateFavoritedBy(
+    userId: string,
+    restaurantId: string
   ): Promise<Restaurant | null>;
   deleteById(id: string): Promise<Restaurant | null>;
 }
@@ -31,11 +34,17 @@ class RestaurantRepository {
     workingHours: string,
     phoneNumber: string,
     avatar: string,
-    description: string,
+    description: string
   ): Promise<Restaurant> {
     return await prisma.restaurant.create({
       data: {
-       location, rating, name, workingHours, phoneNumber, avatar, description
+        location,
+        rating,
+        name,
+        workingHours,
+        phoneNumber,
+        avatar,
+        description,
       },
     });
   }
@@ -58,6 +67,23 @@ class RestaurantRepository {
       where: { id },
       data,
     });
+  }
+  async updateFavoritedBy(
+    userId: string,
+    restaurantId: string
+  ): Promise<Restaurant | null> {
+    const restaurant = await this.getById(restaurantId);
+    if (restaurant) {
+      const isFavorited = restaurant.userIds.includes(userId);
+      const updatedUserIds = isFavorited
+        ? restaurant.userIds.filter((id) => id !== userId)
+        : [...restaurant.userIds, userId];
+      return await prisma.restaurant.update({
+        where: { id: restaurantId },
+        data: { userIds: updatedUserIds },
+      });
+    }
+    return null;
   }
   async deleteById(id: string): Promise<Restaurant | null> {
     return await prisma.restaurant.delete({
