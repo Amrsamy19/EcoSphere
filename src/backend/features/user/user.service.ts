@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import type { IUserRepository } from "./user.repository";
 import { Prisma, User } from "@/generated/prisma/client";
-import { OMIT } from "@/backend/utils/helpers";
+import type { IRestaurantRepository } from "../resturant/resturant.repository";
 
 export interface IUserService {
   getAll(): Promise<Omit<User, "password">[]>;
@@ -20,7 +20,9 @@ export interface IUserService {
 @injectable()
 class UserService {
   constructor(
-    @inject("IUserRepository") private readonly userRepository: IUserRepository
+    @inject("IUserRepository") private readonly userRepository: IUserRepository,
+    @inject("IRestaurantRepository")
+    private readonly restaurantRepository: IRestaurantRepository
   ) {}
 
   async getAll(): Promise<Omit<User, "password">[]> {
@@ -40,12 +42,13 @@ class UserService {
     return await this.userRepository.updateById(id, data);
   }
 
-	async updateFavorites(
-		id: string,
-		data: string[]
-	): Promise<Omit<User, "password"> | null> {
-		return await this.userRepository.updateFavorites(id, data);
-	}
+  async updateFavorites(
+    id: string,
+    data: string[]
+  ): Promise<Omit<User, "password"> | null> {
+    await this.restaurantRepository.updateFavoritedBy(id, data[0]);
+    return await this.userRepository.updateFavorites(id, data);
+  }
 
   async deleteById(id: string): Promise<Omit<User, "password"> | null> {
     return await this.userRepository.deleteById(id);

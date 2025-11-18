@@ -31,6 +31,7 @@ class UserRepository {
         avatar: true,
         birthDate: true,
         createdAt: true,
+        favorites: true,
         favoritesIds: true,
         points: true,
         role: true,
@@ -53,6 +54,7 @@ class UserRepository {
         avatar: true,
         birthDate: true,
         createdAt: true,
+        favorites: true,
         favoritesIds: true,
         points: true,
         role: true,
@@ -110,7 +112,6 @@ class UserRepository {
           updatedFavorites.push(favId);
         }
       });
-      console.log(updatedFavorites);
 
       return await prisma.user.update({
         where: { id },
