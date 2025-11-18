@@ -8,8 +8,15 @@ class RestaurantController {
     constructor(
         @inject("IRestaurantService") private readonly restaurantService: IRestaurantService
     ) {}
-    async create(name : string, location : string, rating : number): Promise<Restaurant> {
-        return await this.restaurantService.create(name, location, rating);
+    async create(  location: string,
+    rating: number,
+    name: string,
+    workingHours: string,
+    phoneNumber: string,
+    avatar: string,
+    description: string,
+): Promise<Restaurant> {
+        return await this.restaurantService.create(location, rating, name, workingHours, phoneNumber, avatar, description);
     }
     async getAll(): Promise<Restaurant[]> {
         return await this.restaurantService.getAll();
