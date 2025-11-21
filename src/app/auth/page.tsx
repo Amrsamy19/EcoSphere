@@ -191,7 +191,7 @@ const AuthPage = () => {
     const sequence = async () => {
       if (active === "login") {
         await controls.start({
-          width: "10px",
+          width: "0px",
           left: 0,
           right: "auto",
           transition: { duration: 0 },
@@ -201,14 +201,14 @@ const AuthPage = () => {
           transition: { duration: 0.8, ease: "easeInOut" },
         });
         await controls.start({
-          width: "10px",
+          width: "0px",
           left: 0,
           right: "auto",
           transition: { duration: 1, ease: "easeInOut" },
         });
       } else {
         await controls.start({
-          width: "10px",
+          width: "0px",
           left: "auto",
           right: 0,
           transition: { duration: 0 },
@@ -218,7 +218,7 @@ const AuthPage = () => {
           transition: { duration: 0.8, ease: "easeInOut" },
         });
         await controls.start({
-          width: "10px",
+          width: "0px",
           left: "auto",
           right: 0,
           transition: { duration: 1, ease: "easeInOut" },
