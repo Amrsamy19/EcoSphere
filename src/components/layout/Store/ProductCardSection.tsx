@@ -1,8 +1,9 @@
+import { IProduct } from "@/types/ProductType";
 import ProductCard from "./ProductCard";
 
-const ProductCardSection = () => {
-     const products = [
+export const products: IProduct[] = [
   {
+    id: "1",
     shopName: "Green Store",
     shopSubtitle: "Organic Goods",
     productImg: "/store img/1.jpg",
@@ -12,6 +13,7 @@ const ProductCardSection = () => {
     productDescription: "Grown organically without pesticides.",
   },
   {
+    id: "2",
     shopName: "Tech Hub",
     shopSubtitle: "Electronics",
     productImg: "/store img/2.jpg",
@@ -21,6 +23,7 @@ const ProductCardSection = () => {
     productDescription: "High-quality sound with long battery life.",
   },
   {
+    id: "3",
     shopName: "Fashion Point",
     shopSubtitle: "Clothing",
     productImg: "/store img/3.jpg",
@@ -30,6 +33,7 @@ const ProductCardSection = () => {
     productDescription: "Classic fit, perfect for all seasons.",
   },
   {
+    id: "4",
     shopName: "Book World",
     shopSubtitle: "Books & Stationery",
     productImg: "/store img/4.jpg",
@@ -39,6 +43,7 @@ const ProductCardSection = () => {
     productDescription: "A thrilling story that captivates readers.",
   },
   {
+    id: "5",
     shopName: "Toy Land",
     shopSubtitle: "Kids",
     productImg: "/store img/5.jpg",
@@ -48,6 +53,7 @@ const ProductCardSection = () => {
     productDescription: "Encourages creativity and problem-solving.",
   },
   {
+    id: "6",
     shopName: "Green Store",
     shopSubtitle: "Organic Goods",
     productImg: "/store img/6.jpg",
@@ -57,6 +63,7 @@ const ProductCardSection = () => {
     productDescription: "Grown naturally without chemicals.",
   },
   {
+    id: "7",
     shopName: "Tech Hub",
     shopSubtitle: "Electronics",
     productImg: "/store img/7.jpg",
@@ -66,6 +73,7 @@ const ProductCardSection = () => {
     productDescription: "Track your health and notifications easily.",
   },
   {
+    id: "8",
     shopName: "Fashion Point",
     shopSubtitle: "Clothing",
     productImg: "/store img/8.jpg",
@@ -75,6 +83,7 @@ const ProductCardSection = () => {
     productDescription: "Perfect for sports and daily wear.",
   },
   {
+    id: "9",
     shopName: "Book World",
     shopSubtitle: "Books & Stationery",
     productImg: "/store img/9.jpg",
@@ -84,6 +93,7 @@ const ProductCardSection = () => {
     productDescription: "High-quality paper, ideal for notes.",
   },
   {
+    id: "10",
     shopName: "Toy Land",
     shopSubtitle: "Kids",
     productImg: "/store img/10.jpg",
@@ -94,13 +104,14 @@ const ProductCardSection = () => {
   },
 ];
 
+
+const ProductCardSection = () => {
   return (
     <section>
       <div className="w-[80%] mx-auto">
         <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-15">
-          {products.map((product, index) => (
-              
-          <ProductCard key={index} {...product} />
+          {products.map((product) => (
+            <ProductCard key={product.id} {...product} />
           ))}
         </div>
       </div>
