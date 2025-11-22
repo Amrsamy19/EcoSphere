@@ -1,5 +1,6 @@
 import ProductDetailsCard from "@/components/layout/Store/product details/ProductDetailsCard";
 import ProductHero from "@/components/layout/Store/product details/ProductHero";
+import TextComponent from "@/components/layout/Store/product details/TextComponent";
 import { products } from "@/components/layout/Store/ProductCardSection";
 
 interface Props {
@@ -22,6 +23,7 @@ const ProductPage = async ({ params }: Props) => {
       <ProductHero product={product} />
       <div className="w-[80%] mx-auto">
         <ProductDetailsCard product={product} />
+        <TextComponent product={product} />
       </div>
     </div>
   );
