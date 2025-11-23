@@ -14,12 +14,14 @@ const RelatedProducts = () => {
         viewport={{ once: false }}
         className="mb-10"
       >
-        <h2 className="text-2xl text-center font-semibold text-foreground">
+     <div className="mb-10">
+         <h2 className="text-2xl text-center font-semibold text-foreground">
           Related Products
         </h2>
         <p className="text-sm text-center text-secondary-foreground">
           explore our wide range of related products
         </p>
+     </div>
         <ProductSliderSection />
       </motion.div>
     </section>
