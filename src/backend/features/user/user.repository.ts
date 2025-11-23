@@ -1,162 +1,51 @@
 import { injectable } from "tsyringe";
+import { IUser, UserModel } from "./user.model";
+import { DBInstance } from "@/backend/config/dbConnect";
 
 export interface IUserRepository {
-	getAll(): Promise<Omit<User, "password">[]>;
-	getById(id: string): Promise<Omit<User, "password"> | null>;
-	updateById(
-		id: string,
-		data: Prisma.UserUpdateInput
-	): Promise<Omit<User, "password"> | null>;
-	updateFavorites(
-		id: string,
-		data: string[]
-	): Promise<Omit<User, "password"> | null>;
-	deleteById(id: string): Promise<Omit<User, "password"> | null>;
+  getAll(): Promise<IUser[]>;
+  getById(id: string): Promise<IUser | null>;
+  updateById(id: string, data: Partial<IUser>): Promise<IUser | null>;
+  updateFavorites(id: string, data: string[]): Promise<IUser | null>;
+  deleteById(id: string): Promise<IUser | null>;
 }
 
 @injectable()
 class UserRepository {
-	async getAll(): Promise<Omit<User, "password">[]> {
-		return await prisma.user.findMany({
-			select: {
-				id: true,
-				email: true,
-				name: true,
-				password: false,
-				phoneNumber: true,
-				address: true,
-				avatar: true,
-				birthDate: true,
-				createdAt: true,
-				favorites: true,
-				favoritesIds: true,
-				points: true,
-				role: true,
-				gender: true,
-				reviews: true,
-			},
-		});
-	}
-	async getById(id: string): Promise<Omit<User, "password"> | null> {
-		return await prisma.user.findUnique({
-			where: {
-				id,
-			},
-			select: {
-				id: true,
-				email: true,
-				name: true,
-				password: false,
-				phoneNumber: true,
-				address: true,
-				avatar: true,
-				birthDate: true,
-				createdAt: true,
-				favorites: true,
-				favoritesIds: true,
-				points: true,
-				role: true,
-				gender: true,
-				reviews: true,
-			},
-		});
-	}
+  async getAll(): Promise<IUser[]> {
+    await DBInstance.getConnection();
+    return await UserModel.find({}, { password: 0 });
+  }
+  async getById(id: string): Promise<IUser | null> {
+    await DBInstance.getConnection();
+    return await UserModel.findById(id, { password: 0 });
+  }
 
-	async updateById(
-		id: string,
-		data: Prisma.UserUpdateInput
-	): Promise<Omit<User, "password"> | null> {
-		const user = await this.getById(id);
-		if (!user) {
-			return null;
-		}
-		return await prisma.user.update({
-			where: { id },
-			data,
-			select: {
-				id: true,
-				email: true,
-				name: true,
-				password: false,
-				phoneNumber: true,
-				address: true,
-				avatar: true,
-				birthDate: true,
-				createdAt: true,
-				favoritesIds: true,
-				points: true,
-				role: true,
-				gender: true,
-			},
-		});
-	}
+  async updateById(id: string, data: Partial<IUser>): Promise<IUser | null> {
+    const user = await this.getById(id);
+    if (user) {
+      return await UserModel.findByIdAndUpdate(id, data, { new: true });
+    }
+    return null;
+  }
 
-	async updateFavorites(
-		id: string,
-		data: string[]
-	): Promise<Omit<User, "password"> | null> {
-		const user = await prisma.user.findUnique({
-			where: { id },
-			select: { favoritesIds: true },
-		});
+  async updateFavorites(id: string, data: string[]): Promise<IUser | null> {
+    const user = await this.getById(id);
 
-		if (user) {
-			const updatedFavorites = [...user.favoritesIds];
+    if (user) {
+      return await UserModel.findByIdAndUpdate(
+        id,
+        { favorites: data },
+        { new: true }
+      );
+    }
+    return null;
+  }
 
-			data.forEach((favId) => {
-				const index = updatedFavorites.indexOf(favId);
-				if (index > -1) {
-					updatedFavorites.splice(index, 1);
-				} else {
-					updatedFavorites.push(favId);
-				}
-			});
-
-			return await prisma.user.update({
-				where: { id },
-				data: { favoritesIds: { set: updatedFavorites } },
-				select: {
-					id: true,
-					email: true,
-					name: true,
-					password: false,
-					phoneNumber: true,
-					address: true,
-					avatar: true,
-					birthDate: true,
-					createdAt: true,
-					favoritesIds: true,
-					points: true,
-					role: true,
-					gender: true,
-				},
-			});
-		}
-		return null;
-	}
-
-	async deleteById(id: string): Promise<Omit<User, "password"> | null> {
-		return await prisma.user.delete({
-			where: {
-				id,
-			},
-			select: {
-				id: true,
-				email: true,
-				name: true,
-				password: false,
-				phoneNumber: true,
-				address: true,
-				avatar: true,
-				birthDate: true,
-				createdAt: true,
-				favoritesIds: true,
-				points: true,
-				role: true,
-				gender: true,
-			},
-		});
-	}
+  async deleteById(id: string): Promise<IUser | null> {
+    await DBInstance.getConnection();
+    return await UserModel.findByIdAndDelete(id);
+  }
 }
 
 export default UserRepository;

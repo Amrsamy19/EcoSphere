@@ -22,7 +22,7 @@ export interface IEvent extends Document {
 }
 
 export interface IUser extends Document {
-	_id?: string;
+	_id: string;
 	email: string;
 	firstName: string;
 	lastName: string;
