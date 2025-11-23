@@ -13,7 +13,7 @@ export interface IMenuItem extends Document {
 	price: number;
 	avatar?: string;
 	availableOnline: boolean;
-	itemRating: IRating[];
+	itemRating?: IRating[];
 }
 
 export interface IRestaurant extends Document {
@@ -32,6 +32,7 @@ export interface IRestaurant extends Document {
 	avatar?: string;
 	createdAt?: Date;
 	updatedAt?: Date;
+	comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
 export const ratingSchema = new Schema<IRating>(

@@ -1,10 +1,11 @@
 import { injectable } from "tsyringe";
-import { IRegistrationStrategy } from "./RegistrationService";
+import { IRegistrationStrategy } from "./registration.service";
+import { RegisterRequestDTO, RegisterResponseDTO } from "../dto/user.dto";
 
 @injectable()
 class ShopRegistration implements IRegistrationStrategy {
 	constructor() {}
-	register<T, V>(data: T): Promise<V> | null {
+	register(data: RegisterRequestDTO): Promise<RegisterResponseDTO> {
 		console.log(data);
 		throw new Error("Method not implemented., shop");
 	}

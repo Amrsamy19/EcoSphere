@@ -1,5 +1,5 @@
 import { inject, injectable } from "tsyringe";
-import type { IRegistrationStrategy } from "./RegistrationService";
+import type { IRegistrationStrategy } from "./registration.service";
 
 interface IRegistrationFactory {
 	getStrategy(userType: string): IRegistrationStrategy;
@@ -17,6 +17,7 @@ class RegistrationFactory implements IRegistrationFactory {
 	) {}
 
 	getStrategy(userType: string): IRegistrationStrategy {
+		console.log(userType);
 		switch (userType) {
 			case "endUser":
 				return this.userStrategy;

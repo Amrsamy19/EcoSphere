@@ -1,9 +1,9 @@
 import { inject, injectable } from "tsyringe";
-import { IUser } from "../../user/user.model";
 import type { ILoginFactory } from "./login.strategy.factory";
+import { LoginRequestDTO, LoginResponseDTO } from "../dto/user.dto";
 
 interface ILoginStrategy {
-	login<T, V>(data: T): Promise<V>;
+	login(data: LoginRequestDTO): Promise<LoginResponseDTO>;
 }
 
 @injectable()
@@ -12,8 +12,8 @@ class LoginService {
 		@inject("LoginFactory") private readonly strategyFactory: ILoginFactory
 	) {}
 
-	async login<T extends IUser>(data: T) {
-		const strategy = this.strategyFactory.getStrategy(data.userType);
+	async login(data: LoginRequestDTO) {
+		const strategy = this.strategyFactory.getStrategy(data.loginType);
 		return await strategy.login(data);
 	}
 }
