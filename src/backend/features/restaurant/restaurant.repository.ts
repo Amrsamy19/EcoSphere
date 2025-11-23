@@ -1,7 +1,6 @@
 import { injectable } from "tsyringe";
 import { IRestaurant, RestaurantModel } from "./restaurant.model";
 import { DBInstance } from "@/backend/config/dbConnect";
-import bcrypt from "bcrypt";
 
 export interface IRestaurantRepository {
   create(

@@ -1,7 +1,6 @@
 import { injectable } from "tsyringe";
 import { IUser, UserModel } from "./user.model";
 import { DBInstance } from "@/backend/config/dbConnect";
-import bcrypt from "bcrypt";
 
 export interface IUserRepository {
   getAll(): Promise<IUser[]>;
