@@ -1,8 +1,9 @@
 import { inject, injectable } from "tsyringe";
 import type { IRegistrationFactory } from "./registration.strategy.factory";
+import { RegisterRequestDTO, RegisterResponseDTO } from "../dto/user.dto";
 
 interface IRegistrationStrategy {
-	register(data: any): Promise<any>;
+	register(data: RegisterRequestDTO): Promise<RegisterResponseDTO>;
 }
 
 @injectable()
@@ -12,9 +13,9 @@ class RegistrationService {
 		private readonly strategyFactory: IRegistrationFactory
 	) {}
 
-	async register(data: any) {
+	async register(data: RegisterRequestDTO): Promise<RegisterResponseDTO> {
 		console.log(data);
-		const strategy = this.strategyFactory.getStrategy(data.userType);
+		const strategy = this.strategyFactory.getStrategy(data.role);
 		return await strategy.register(data);
 	}
 }
