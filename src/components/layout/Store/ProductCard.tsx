@@ -3,19 +3,14 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { RiShoppingCartLine } from "react-icons/ri";
 import { IoMdHeartEmpty } from "react-icons/io";
+import { useRouter } from "next/navigation";
+import { IProduct } from "@/types/ProductType";
 
-interface Props {
-  shopName: string;
-  shopSubtitle: string;
-  productImg: string;
-  productName: string;
-  productPrice: number;
-  productSubtitle: string;
-  productDescription: string;
-}
 
-const ProductCard = (props: Props) => {
+
+const ProductCard = (props: IProduct) => {
   const {
+    id,
     shopName,
     shopSubtitle,
     productImg,
@@ -25,12 +20,13 @@ const ProductCard = (props: Props) => {
     productDescription,
   } = props;
 
+  const router = useRouter();
+
   return (
     <motion.div
-      className="rounded-tr-[80px] rounded-bl-[80px] shadow-2xl h-[440px] flex flex-col overflow-hidden hover:scale-105 transition-transform duration-300 dark:bg-primary/10"
-      initial={{ opacity: 0, y: 80 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
+      className="rounded-tr-[80px] rounded-bl-[80px] shadow-2xl h-[440px] flex flex-col overflow-hidden hover:scale-105 transition-transform duration-300 dark:bg-primary/10 cursor-pointer"
+   
+      onClick={() => router.push(`/store/${id}`)}
     >
       {/* header - fixed height */}
       <div className="flex justify-between items-center p-5 min-h-20">
@@ -72,10 +68,9 @@ const ProductCard = (props: Props) => {
           {productSubtitle}
         </p>
         <div className="grow ">
-
-        <p className="text-sm text-secondary-foreground/90 line-clamp-3 mb-3   ">
-          {productDescription}
-        </p>
+          <p className="text-sm text-secondary-foreground/90 line-clamp-3 mb-3   ">
+            {productDescription}
+          </p>
         </div>
         <div className="flex justify-between items-center">
           <p className="text-lg font-semibold mt-auto ml-10">

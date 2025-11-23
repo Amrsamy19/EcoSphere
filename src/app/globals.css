@@ -7,6 +7,19 @@ div::-webkit-scrollbar {
   display: none;
 }
 
+/* Prevent horizontal scroll on the entire page */
+ body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Optional: Better box-sizing for all elements */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
 
@@ -133,7 +146,8 @@ div::-webkit-scrollbar {
   --input:oklch(98.193% 0.01802 156.147 / 0.723);
   --input-foreground: oklch(0.216 0.006 56.043);
   
-  --background: oklch(0.216 0.006 56.043);
+  /* --background: oklch(0.216 0.006 56.043); */
+  --background: oklch(14.11% 0.0018 16.88);
   --foreground: oklch(1 0 0);
   
   --card: oklch(0.216 0.006 56.043);
