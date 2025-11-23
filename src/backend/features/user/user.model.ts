@@ -1,16 +1,9 @@
 import mongoose, { model, Schema } from "mongoose";
 import bcrypt from "bcrypt";
 
-export enum UserRole {
-	CUSTOMER = "customer",
-	Organizer = "organizer",
-	ADMIN = "admin",
-}
+export type UserRole = "customer" | "organizer" | "admin";
 
-export enum Gender {
-	MALE = "male",
-	FEMALE = "female",
-}
+export type Gender = "male" | "female";
 
 export interface ISection extends Document {
 	title: string;
@@ -83,12 +76,12 @@ const userSchema = new Schema<IUser>(
 		address: { type: String, required: true },
 		avatar: { type: String, required: false },
 		birthDate: { type: String, required: true },
-		gender: { type: String, enum: Object.values(Gender), required: true },
+		gender: { type: String, enum: ["male", "female"], required: true },
 		points: { type: Number, default: 1000 },
 		role: {
 			type: String,
-			enum: Object.values(UserRole),
-			default: UserRole.CUSTOMER,
+			enum: ["customer", "organizer", "admin"],
+			default: "customer",
 		},
 		favoritesIds: { type: [String], default: [] },
 		cart: { type: [String], default: [] },
