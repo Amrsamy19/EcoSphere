@@ -4,6 +4,7 @@ import "./globals.css";
 import { Providers } from "@/frontend/providers/Providers";
 import SideBar from "@/components/layout/SideBar/SideBar/SideBar";
 import ReduxProvider from "@/Redux/Provider";
+import { Toaster } from 'sonner';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,6 +34,9 @@ export default function RootLayout({
       >
         <ReduxProvider>
           <Providers>
+           <Toaster position="top-right" />
+
+
             <SideBar />
             <div className="w-full bg-background text-foreground">
               {children}

@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/Redux/Store";
 import { isInFavSelector, toggleFav } from "@/Redux/fav/FavSlice";
 import { IoHeartCircleOutline, IoHeartCircleSharp } from "react-icons/io5";
+import { toast } from "sonner";
 
 const ProductCard = (product: IProduct) => {
   const {
@@ -30,10 +31,15 @@ const ProductCard = (product: IProduct) => {
   );
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleFav = (e: any) => {
-    e.stopPropagation();
-    dispatch(toggleFav(product));
-  };
+    const handleFav = (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation();
+      dispatch(toggleFav(product));
+      if (isFav) {
+        toast.success("Removed from favorites");
+      } else {
+        toast.success("Added to favorites");
+      }
+    };
 
   return (
     <motion.div

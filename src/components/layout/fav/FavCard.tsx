@@ -6,6 +6,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { HiMiniTrash } from "react-icons/hi2";
 import { toggleFav } from "@/Redux/fav/FavSlice";
+import {toast} from "sonner"
 
 interface FavCardProps {
   product: IProduct;
@@ -15,14 +16,15 @@ const FavCard = ({ product }: FavCardProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const handleRemoveFromFav = () => {
     dispatch(toggleFav(product));
+    toast.success("Removed from favorites")
   };
   return (
     <div
       className={`${
         view === "grid"
-          ? " flex-col w-[300px]"
+          ? " flex-col w-[250px]"
           : "flex-row items-center gap-4 h-[300px]"
-      } flex  shadow-md rounded-lg dark:bg-primary/10 relative`}
+      } flex  shadow-md rounded-lg dark:bg-primary/10 bg-background/50 relative`}
     >
       {/* img */}
       <div
