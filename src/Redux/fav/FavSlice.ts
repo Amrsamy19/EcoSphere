@@ -1,11 +1,19 @@
 import { IProduct } from "@/types/ProductType";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../Store";
+
 interface FavState {
   view: "grid" | "horizontal";
   favProducts: IProduct[];
 }
-const initialState: FavState = { view: "grid", favProducts: [] };
+
+const savedFavs = typeof window !== "undefined" ? localStorage.getItem("favProducts") : null;
+
+const initialState: FavState = {
+  view: "grid",
+  favProducts: savedFavs ? JSON.parse(savedFavs) : [],
+};
+
 const FavSlice = createSlice({
   name: "fav",
   initialState,
@@ -13,15 +21,8 @@ const FavSlice = createSlice({
     toggleFavView(state) {
       state.view = state.view === "grid" ? "horizontal" : "grid";
     },
-    // addFavProduct(state, action) {
-    //   state.favProducts.push(action.payload);
-    // },
-    // removeFavProduct(state, action) {
-    //   state.favProducts = state.favProducts.filter(
-    //     (product) => product.id !== action.payload
-    //   );
-    // },
-    toggleFav(state, action) {
+
+    toggleFav(state, action: PayloadAction<IProduct>) {
       const found = state.favProducts.some((p) => p.id === action.payload.id);
 
       if (!found) {
@@ -31,9 +32,13 @@ const FavSlice = createSlice({
           (product) => product.id !== action.payload.id
         );
       }
+
+      localStorage.setItem("favProducts", JSON.stringify(state.favProducts));
     },
+
     clearFav(state) {
       state.favProducts = [];
+      localStorage.removeItem("favProducts");
     },
   },
 });
