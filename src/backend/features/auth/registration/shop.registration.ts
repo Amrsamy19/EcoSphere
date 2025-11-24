@@ -2,7 +2,10 @@ import { inject, injectable } from "tsyringe";
 import { IRegistrationStrategy } from "./registration.service";
 import { RegisterRequestDTO, RegisterResponseDTO } from "../dto/user.dto";
 import type { IAuthRepository } from "../auth.repository";
-import { mapRestaurantToTokenPayload, mapShopToPublicProfile } from "../mappers";
+import {
+	mapRestaurantToTokenPayload,
+	mapShopToPublicProfile,
+} from "../mappers";
 import { generateToken } from "@/backend/utils/helpers";
 
 @injectable()
@@ -11,7 +14,7 @@ class ShopRegistration implements IRegistrationStrategy {
 		@inject("AuthRepository") private readonly authRepo: IAuthRepository
 	) {}
 	async register(data: RegisterRequestDTO): Promise<RegisterResponseDTO> {
-		const isShopExists = await this.authRepo.existsByEmail(data.email);
+		const isShopExists = await this.authRepo.existsShopByEmail(data.email);
 		if (isShopExists) throw new Error("user already exists.");
 		const savedShop = await this.authRepo.saveNewShop(data);
 		const token = generateToken(mapRestaurantToTokenPayload(savedShop));
