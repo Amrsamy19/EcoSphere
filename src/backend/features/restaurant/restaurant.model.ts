@@ -26,7 +26,7 @@ export interface IRestaurant extends Document {
   phoneNumber: string;
   description: string;
   subscribed: boolean;
-  subscriptionPeriod: Date;
+  subscriptionPeriod?: Date;
   menus?: IMenuItem[];
   restaurantRating?: IRating[];
   avatar?: string;
@@ -62,7 +62,7 @@ const restaurantSchema = new Schema<IRestaurant>(
     avatar: { type: String, required: false },
     description: { type: String, required: true },
     subscribed: { type: Boolean, default: false },
-    subscriptionPeriod: { type: Date, required: false },
+    subscriptionPeriod: { type: Date, required: false, default: Date.now() },
     menus: { type: [menuItemSchema], default: [] },
     restaurantRating: { type: [ratingSchema], default: [] },
   },

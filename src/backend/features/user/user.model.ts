@@ -33,6 +33,7 @@ export interface IUser extends Document {
   points: number;
   role: UserRole;
   subscribed?: boolean;
+  subscriptionPeriod?: Date;
   address?: string;
   avatar?: string;
   favoritesIds?: string[];
@@ -77,6 +78,8 @@ const userSchema = new Schema<IUser>(
     avatar: { type: String, required: false },
     birthDate: { type: String, required: true },
     gender: { type: String, enum: ["male", "female"], required: true },
+    subscribed: { type: Boolean, default: false },
+    subscriptionPeriod: { type: Date, required: false, default: Date.now() },
     points: { type: Number, default: 1000 },
     role: {
       type: String,
