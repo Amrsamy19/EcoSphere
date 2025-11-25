@@ -73,7 +73,7 @@ class AuthRepository {
   async findUserByEmail(email: string): Promise<FoundedUser> {
     await DBInstance.getConnection();
     return await UserModel.findOne({ email })
-      .select("+password +_id +email +role +lastName")
+      .select("+password _id email role lastName")
       .exec();
   }
 
@@ -81,7 +81,7 @@ class AuthRepository {
     await DBInstance.getConnection();
 
     return await RestaurantModel.findOne({ email })
-		.select("+password +_id +email +role +name")
+		.select("+password _id email role lastName")
 		.exec();
   }
 }
