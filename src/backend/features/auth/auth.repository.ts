@@ -2,7 +2,7 @@ import { injectable } from "tsyringe";
 import { Gender, IUser, UserModel } from "../user/user.model";
 import { DBInstance } from "@/backend/config/dbConnect";
 import { ObjectId } from "mongoose";
-import { RegisterRequestDTO } from "./dto/user.dto";
+import { FoundedUser, RegisterRequestDTO } from "./dto/user.dto";
 import { IRestaurant, RestaurantModel } from "../restaurant/restaurant.model";
 
 export interface IAuthRepository {
@@ -20,8 +20,8 @@ export interface IAuthRepository {
   existsShopByEmail(email: string): Promise<{ _id: ObjectId }>;
   saveNewUser(data: RegisterRequestDTO): Promise<IUser>;
   saveNewShop(data: RegisterRequestDTO): Promise<IRestaurant>;
-  findUserByEmail(email: string): Promise<IUser | null>;
-  findShopByEmail(email: string): Promise<IRestaurant>;
+  findUserByEmail(email: string): Promise<FoundedUser>;
+  findShopByEmail(email: string): Promise<FoundedUser>;
   me(): Promise<IUser[]>;
 }
 
@@ -70,16 +70,19 @@ class AuthRepository {
     return await RestaurantModel.create(data);
   }
 
-  async findUserByEmail(email: string): Promise<IUser> {
+  async findUserByEmail(email: string): Promise<FoundedUser> {
     await DBInstance.getConnection();
-
-    return await UserModel.findOne({ email }).select("+password").exec();
+    return await UserModel.findOne({ email })
+      .select("+password +_id +email +role +lastName")
+      .exec();
   }
 
-  async findShopByEmail(email: string): Promise<IRestaurant> {
+  async findShopByEmail(email: string): Promise<FoundedUser> {
     await DBInstance.getConnection();
 
-    return await RestaurantModel.findOne({ email }).select("+password").exec();
+    return await RestaurantModel.findOne({ email })
+		.select("+password +_id +email +role +name")
+		.exec();
   }
 }
 
