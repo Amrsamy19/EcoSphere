@@ -66,10 +66,9 @@ export default function About() {
 
             {/* Replaced text with your summary */}
             <p className="text-muted leading-relaxed">
-              EcoSphere was founded to eliminate the confusion of greenwashing. 
-              We bridge the gap between conscious consumers and planet-friendly 
-              businesses by offering a platform that rigorously vets and simplifies 
-              ethical shopping.
+             EcoSphere was created to make sustainable shopping simple, trustworthy, and accessible. 
+             With greenwashing becoming widespread, consumers are often overwhelmed or unsure who to trust. 
+             EcoSphere bridges that gap—connecting verified, planet-friendly businesses with the growing community of people who want to shop responsibly.
             </p>
             {/* Footer: Profile & CTA */}
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pt-6 border-t border-theme mt-4">
