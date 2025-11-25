@@ -8,7 +8,7 @@ import { mapUserAsOrganizer, mapUserToTokenPayload } from "../mappers";
 @injectable()
 class OrganizerRegistration implements IRegistrationStrategy {
 	constructor(
-		@inject("AuthRepository") private readonly authRepo: IAuthRepository
+		@inject("IAuthRepository") private readonly authRepo: IAuthRepository
 	) {}
 	async register(data: RegisterRequestDTO): Promise<RegisterResponseDTO> {
 		console.log(data);

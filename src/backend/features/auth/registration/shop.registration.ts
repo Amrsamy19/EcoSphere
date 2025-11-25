@@ -11,7 +11,7 @@ import { generateToken } from "@/backend/utils/helpers";
 @injectable()
 class ShopRegistration implements IRegistrationStrategy {
 	constructor(
-		@inject("AuthRepository") private readonly authRepo: IAuthRepository
+		@inject("IAuthRepository") private readonly authRepo: IAuthRepository
 	) {}
 	async register(data: RegisterRequestDTO): Promise<RegisterResponseDTO> {
 		const isShopExists = await this.authRepo.existsShopByEmail(data.email);
