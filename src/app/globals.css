@@ -20,6 +20,14 @@ body {
   box-sizing: border-box;
 }
 
+*::selection {
+  background-color: var(--color-primary);
+  color: var(--color-primary-foreground);
+}
+
+
+
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
 
