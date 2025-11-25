@@ -92,3 +92,20 @@ export const mapShopToPublicProfile = (shop: IRestaurant) => {
 		subscriptionPeriod: shop.subscriptionPeriod,
 	};
 };
+
+export const mapToUserPublicProfile = (
+	user: Partial<IUser> | Partial<IRestaurant>
+) => {
+	return {
+		id: user._id!,
+		email: user.email!,
+		name: isUser(user) ? user.lastName! : user.name!,
+		role: isUser(user) ? user.role! : "shop",
+	};
+};
+
+const isUser = (
+	u: Partial<IUser> | Partial<IRestaurant>
+): u is Partial<IUser> => {
+	return "lastName" in u;
+};
