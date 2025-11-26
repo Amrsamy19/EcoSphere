@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/frontend/redux/store";
 import { toggleAuthView } from "@/frontend/redux/Slice/AuthSlice";
 import LogIn from "@/components/layout/Auth/LogIn";
-import { getCoords } from "@/frontend/Actions/GetCoords";
+import { getCoords, ICoords } from "@/frontend/Actions/GetCoords";
 
 const AuthPage = () => {
   const { active } = useSelector((state: RootState) => state.auth);
@@ -15,16 +15,7 @@ const AuthPage = () => {
 
   const controls = useAnimation();
 
-  const [coords, setCoords] = useState<{
-    loginX: number;
-    registerX: number;
-    loginImgX: number;
-    loginImgY: number;
-    signupImgX: number;
-    signupImgY: number;
-    toSignUpX: number;
-    toSignInX: number;
-  }>({
+  const [coords, setCoords] = useState<ICoords>({
     loginX: -1000,
     registerX: 800,
     loginImgX: -1000,

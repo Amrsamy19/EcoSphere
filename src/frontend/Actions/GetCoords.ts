@@ -1,3 +1,16 @@
+export interface ICoords {
+        loginX: number;
+        registerX: number;
+        loginImgX: number;
+        loginImgY: number;
+        signupImgX: number;
+        signupImgY: number;
+        toSignUpX: number;
+        toSignInX: number;
+    }
+
+
+
 export const getCoords = (width: number) => {
     const percentWidth = width / 5;
 
