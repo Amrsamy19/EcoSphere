@@ -59,6 +59,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 						email: user?.email as string,
 						role: "customer",
 						oAuthId: account.providerAccountId,
+						provider: account.provider,
 					}));
 				case "credentials":
 					// You can add additional logic here for Credentials sign-ins if needed
