@@ -20,8 +20,8 @@ export interface IAuthRepository {
   existsShopByEmail(email: string): Promise<{ _id: ObjectId }>;
   saveNewUser(data: RegisterRequestDTO): Promise<IUser>;
   saveNewShop(data: RegisterRequestDTO): Promise<IRestaurant>;
-  findUserByEmail(email: string): Promise<FoundedUser>;
-  findShopByEmail(email: string): Promise<FoundedUser>;
+  findUserByEmail(email: string, keys?: string): Promise<FoundedUser>;
+  findShopByEmail(email: string, keys?: string): Promise<FoundedUser>;
   me(): Promise<IUser[]>;
 }
 
@@ -52,7 +52,6 @@ class AuthRepository {
 
   async existsByEmail(email: string) {
     await DBInstance.getConnection();
-
     return await UserModel.exists({ email }).lean().exec();
   }
   
@@ -70,19 +69,18 @@ class AuthRepository {
     return await RestaurantModel.create(data);
   }
 
-  async findUserByEmail(email: string): Promise<FoundedUser> {
+  async findUserByEmail(email: string, keys?: string): Promise<FoundedUser> {
     await DBInstance.getConnection();
     return await UserModel.findOne({ email })
-      .select("+password _id email role lastName")
+      .select(`+password _id email role lastName accountProvider ${keys || ""}`)
       .exec();
   }
 
-  async findShopByEmail(email: string): Promise<FoundedUser> {
+  async findShopByEmail(email: string, keys?: string): Promise<FoundedUser> {
     await DBInstance.getConnection();
-
     return await RestaurantModel.findOne({ email })
-		.select("+password _id email role lastName")
-		.exec();
+		  .select(`+password _id email role lastName accountProvider ${keys || ""}`)
+      .exec();
   }
 }
 
