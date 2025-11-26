@@ -10,9 +10,14 @@ class EndUserRegistration implements IRegistrationStrategy {
 	constructor(
 		@inject("IAuthRepository") private readonly authRepository: IAuthRepository
 	) {}
-	async register(data: RegisterRequestDTO): Promise<RegisterResponseDTO> {
-		const isUserExists = await this.authRepository.existsByEmail(data.email);
-		if (isUserExists) throw new Error("email already exists.");
+	async register(
+		data: RegisterRequestDTO,
+		provider?: string
+	): Promise<RegisterResponseDTO> {
+		if (!provider) {
+			const isUserExists = await this.authRepository.existsByEmail(data.email);
+			if (isUserExists) throw new Error("email already exists.");
+		}
 		const savedUser = await this.authRepository.saveNewUser(data);
 
 		const token = generateToken(mapUserToTokenPayload(savedUser));

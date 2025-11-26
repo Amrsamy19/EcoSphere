@@ -3,7 +3,7 @@ import type { IRegistrationFactory } from "./registration.strategy.factory";
 import { RegisterRequestDTO, RegisterResponseDTO } from "../dto/user.dto";
 
 interface IRegistrationStrategy {
-	register(data: RegisterRequestDTO): Promise<RegisterResponseDTO>;
+	register(data: RegisterRequestDTO): Promise<any>;
 }
 
 @injectable()
@@ -13,7 +13,7 @@ class RegistrationService {
 		private readonly strategyFactory: IRegistrationFactory
 	) {}
 
-	async register(data: RegisterRequestDTO): Promise<RegisterResponseDTO> {
+	async register(data: RegisterRequestDTO): Promise<any> {
 		const strategy = this.strategyFactory.getStrategy(data.role);
 		return await strategy.register(data);
 	}
