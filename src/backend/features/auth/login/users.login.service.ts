@@ -1,6 +1,10 @@
 import { inject, injectable } from "tsyringe";
 import { type IAuthRepository } from "../auth.repository";
-import type { LoginRequestDTO, LoginResponse } from "../dto/user.dto";
+import type {
+	FoundedUser,
+	LoginRequestDTO,
+	LoginResponse,
+} from "../dto/user.dto";
 import { mapToUserPublicProfile } from "../mappers";
 
 @injectable()
@@ -18,6 +22,16 @@ class LoginService {
 			throw new Error("Invalid email or password");
 		const publicProfile = mapToUserPublicProfile(user);
 		return publicProfile;
+	}
+
+	async findByEmail(email: string, key: string): Promise<FoundedUser> {
+		let user = await this.authRepository.findShopByEmail(email, key);
+
+		if (!user) user = await this.authRepository.findUserByEmail(email, key);
+		if (!user.oAuthId || user.password)
+			throw new Error("user must login using email and password");
+
+		return user;
 	}
 }
 
