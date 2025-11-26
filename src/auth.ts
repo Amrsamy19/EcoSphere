@@ -15,7 +15,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 			authorize: async (credentials) => {
 				try {
 					const controller = rootContainer.resolve(AuthController);
-					const response = await controller.login({
+					const response = await controller.loginWithCredentials({
 						email: credentials.email as string,
 						password: credentials.password as string,
 					});
@@ -24,7 +24,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 					// Return user object with id and other properties
 					return response;
 				} catch (error) {
-					console.error("Authorization error:", error?.message);
+					console.error(
+						"Authorization error:",
+						error instanceof Error ? error.message : error
+					);
 					return null;
 				}
 			},
@@ -32,6 +35,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 		GoogleProvider({
 			clientId: process.env.GOOGLE_CLIENT_ID!,
 			clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+			authorization: {
+				params: {
+					prompt: "consent",
+					access_type: "offline",
+					response_type: "code",
+				},
+			},
 		}),
 	],
 	session: {
@@ -43,24 +53,36 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 			switch (account?.provider) {
 				case "google":
 					// You can add additional logic here for Google sign-ins if needed
-					return true;
+					return !!(await controller.LoginWithGoogle({
+						firstName: profile?.given_name as string,
+						lastName: profile?.family_name as string,
+						email: user?.email as string,
+						role: "customer",
+						oAuthId: account.providerAccountId,
+					}));
 				case "credentials":
 					// You can add additional logic here for Credentials sign-ins if needed
 					return true;
 				default:
-					return true;
+					return false;
 			}
 		},
 		async jwt({ token, user }) {
 			if (user) {
+				token.id = user.id;
+				token.email = user.email;
 				token.role = user.role;
+				token.name = user.name;
 			}
 			return token;
 		},
 
 		async session({ session, token }) {
 			if (token) {
+				session.user.id = token.id as string;
+				session.user.email = token.email as string;
 				session.user.role = token.role as string;
+				session.user.name = token.name as string;
 			}
 			return session;
 		},
