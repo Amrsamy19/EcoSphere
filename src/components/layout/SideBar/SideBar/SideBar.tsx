@@ -14,13 +14,12 @@ import {
     SidebarTrigger,
     SidebarMenuBadge
 } from "@/components/ui/sidebar"
-import { MdOutlineEventRepeat } from "react-icons/md";
-import { MdOutlineAddToPhotos } from "react-icons/md";
+import { MdOutlineAddToPhotos, MdOutlineSearch, MdOutlineEventRepeat } from "react-icons/md";
 import { RxDashboard } from "react-icons/rx";
 import Link from 'next/link'
 import ThemeBtn from '../ThemeBtn/ThemeBtn'
 import UserBtn from '../UserBtn/UserBtn'
-import GetFavCount from '@/frontend/hooks/getFavCount'
+import GetFavCount from '@/frontend/Actions/GetFavCount'
 // Menu items.
 const items = [
     {
@@ -77,7 +76,12 @@ const dashboardItems=[
         icon: MdOutlineAddToPhotos,
     },
     {
-        title: "All Events",
+        title: "Browse Events",
+        url: "/",
+        icon: MdOutlineSearch,
+    },
+    {
+        title: "Event Details",
         url: "/",
         icon: MdOutlineEventRepeat,
     },
@@ -135,7 +139,7 @@ export default function SideBar() {
                                 <Link href="/fav">
                                     <Heart />
                                     <span>Favorite</span>
-                                    <SidebarMenuBadge><GetFavCount /></SidebarMenuBadge>
+                                    <GetFavCount />
                                 </Link>
                             </SidebarMenuButton>
                         </SidebarMenuItem>

@@ -2,7 +2,6 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { RiShoppingCartLine } from "react-icons/ri";
-import { IoMdHeartEmpty } from "react-icons/io";
 import { useRouter } from "next/navigation";
 import { IProduct } from "@/types/ProductType";
 import { useDispatch, useSelector } from "react-redux";
@@ -102,7 +101,7 @@ const ProductCard = (product: IProduct) => {
               onClick={handleFav}
               className="cursor-pointer hover:scale-130 transition duration-300 text-3xl"
             >
-              {isFav ? <IoHeartCircleSharp /> : <IoHeartCircleOutline />}{" "}
+              {isFav ? <IoHeartCircleSharp /> : <IoHeartCircleOutline />}
             </button>
           </div>
         </div>
