@@ -35,7 +35,7 @@ class AuthController implements IAuthController {
   async LoginWithGoogle(user: OAuthUserDTO): Promise<boolean> {
     const savedUser = await this.loginService.findByEmail(
       user.email,
-      user.oAuthId
+      user.provider!
     );
 
     if (!savedUser) {
