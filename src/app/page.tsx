@@ -1,10 +1,9 @@
+import HomeHero from "@/components/layout/Home/HomeHero";
+
 export default function Home() {
   return (
-    <main className=" h-screen">
-    <div className="bg-primary p-30">
-      <h1 className="text-primary-foreground">Hello World</h1>
-    </div>
-      <h1 className=" text-4xl font-extrabold">Hello World</h1>
+    <main className=" min-h-screen">
+      <HomeHero/>
     </main>
   );
 }
