@@ -13,7 +13,7 @@ const HomeHeroLayout = () => {
         </div>
         <div className="hidden lg:block"></div>
         {/* right */}
-        <div className="bg-amber-600"></div>
+        <div className=""></div>
       </div>
     </div>
   );
