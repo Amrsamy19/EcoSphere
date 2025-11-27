@@ -1,7 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import React from "react";
 
 const LeftFloatingImg = () => {
   return (
@@ -117,7 +116,7 @@ const LeftFloatingImg = () => {
         />
       </motion.div>
       <motion.div
-        className="absolute left-[60%] bottom-[1%] lg:bottom-auto lg:top-[60%] lg:left-[55%] w-[35%] rounded-full aspect-square z-20"
+        className="absolute left-[60%] bottom-[0%] lg:bottom-auto lg:top-[60%] lg:left-[55%] w-[35%] rounded-full aspect-square z-20"
         initial={{ scale: 0, opacity: 0 }}
         whileInView={{ scale: [0,1.5,1], opacity: 1 }}
         viewport={{ once: true }}

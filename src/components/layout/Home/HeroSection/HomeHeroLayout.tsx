@@ -1,6 +1,7 @@
 import React from "react";
 import HomeHero from "./HomeHero";
 import LeftFloatingImg from "./LeftFloatingImg";
+import RightFloatingImg from "./RightFloatingImg";
 
 const HomeHeroLayout = () => {
   return (
@@ -13,7 +14,9 @@ const HomeHeroLayout = () => {
         </div>
         <div className="hidden lg:block"></div>
         {/* right */}
-        <div className=""></div>
+        <div className="">
+          <RightFloatingImg />
+        </div>
       </div>
     </div>
   );
