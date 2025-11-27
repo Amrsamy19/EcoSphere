@@ -1,33 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PUBLIC_ROUTES, PROTECTED_ROUTES } from "./route.config";
+import { PROTECTED_ROUTES } from "./route.config";
 import { AuthSession, checkRoleAccess } from "./role.guards";
 
 export const applyAuthRules = (
 	req: NextRequest,
-	session: AuthSession,
+	session: AuthSession | null,
 	pathname: string
 ) => {
-	const isAuthenticated = !!session;
-	const isPublic = PUBLIC_ROUTES.some((route) => pathname.startsWith(route));
-	const isProtected = PROTECTED_ROUTES.some((route) =>
-		pathname.startsWith(route)
-	);
+	const signedIn = !!session;
 
-	// 1. If user is logged in, block /auth/*
-	if (isAuthenticated && pathname.startsWith("/auth")) {
+	// 1. Signed-in users shouldn't access /auth/*
+	if (signedIn && pathname === "/auth")
 		return NextResponse.redirect(new URL("/dashboard", req.url));
+
+	// 2. Not signed in → accessing protected route
+	const isProtected = PROTECTED_ROUTES.some((r) => pathname.startsWith(r));
+
+	if (!signedIn && isProtected) {
+		const url = new URL("/auth", req.url);
+		url.searchParams.set("callbackUrl", pathname);
+		return NextResponse.redirect(url);
 	}
 
-	// 2. If user is NOT logged in but route is protected
-	if (!isAuthenticated && isProtected) {
-		const loginUrl = new URL("/auth/login", req.url);
-		loginUrl.searchParams.set("callbackUrl", pathname);
-		return NextResponse.redirect(loginUrl);
-	}
-
-	// 3. If user is logged in, check RBAC rules
-	const roleCheck = checkRoleAccess(req, session, pathname);
-	if (roleCheck) return roleCheck;
-
-	return null;
+	// 3. Role-based access
+	return checkRoleAccess(req, session, pathname);
 };

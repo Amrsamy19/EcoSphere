@@ -1,12 +1,12 @@
-export const PUBLIC_ROUTES = [
-	"/",
-	"/auth/login",
-	"/auth/register",
-	"/auth/error",
-];
+// export const PUBLIC_ROUTES = ["/", "/auth/"];
 
 // Protected: must be signed in
-export const PROTECTED_ROUTES = ["/dashboard", "/profile", "/settings"];
+export const PROTECTED_ROUTES = [
+	"/dashboard",
+	"/profile",
+	"/settings",
+	"/store",
+];
 
 // Role-based rules (optional, but scalable)
 export const ROLE_ROUTES: Record<string, string[]> = {
