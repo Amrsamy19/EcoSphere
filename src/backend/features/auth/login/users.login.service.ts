@@ -20,8 +20,7 @@ class LoginService {
 
 		if (!(await user.comparePassword!(data.password)))
 			throw new Error("Invalid email or password");
-		const publicProfile = mapToUserPublicProfile(user);
-		return publicProfile;
+		return mapToUserPublicProfile(user);
 	}
 
 	async findByEmail(email: string, key: string): Promise<FoundedUser> {
