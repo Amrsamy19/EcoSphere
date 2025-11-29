@@ -27,18 +27,18 @@ export default function ShopHero() {
 
   return (
     <motion.div
-      className="container mx-auto w-[80%]"
+      className="container mx-auto w-[80%] text-center"
       initial={{ opacity: 0, y: 80 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7 }}
       viewport={{ once: true }}
     >
       <div className="rounded-3xl p-6">
-        <h2 className="text-3xl font-bold text-primary-forground mb-4 text-center">
+        <h2 className="text-3xl font-bold text-foreground mb-4 text-center">
           Quality You Can Trust
         </h2>
 
-        <p className="text-primary-forground leading-relaxed mb-6 text-center">
+        <p className="text-foreground leading-relaxed mb-6 text-center">
           We check every partner shop with real care keeping things healthy,
           planet-friendly, and a little fun along the way. Hover over a card to
           explore it!
@@ -63,15 +63,15 @@ export default function ShopHero() {
           bg-primary border-0 hover:-translate-y-1`}
               >
                 <div className="text-3xl mb-2">{card.emoji}</div>
-                <h3 className="font-semibold text-primary-forground text-lg mb-1">
+                <h3 className="font-semibold text-primary-foreground text-lg mb-1">
                   {card.title}
                 </h3>
                 <p
                   className={`text-sm mt-2 transition-all duration-300
             ${
               isActive
-                ? "text-primary-forground text-base"
-                : "text-primary-forground/20 text-sm"
+                ? "text-primary-foreground text-base"
+                : "text-primary-foreground text-sm"
             }
           `}
                 >
