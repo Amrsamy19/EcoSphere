@@ -1,4 +1,7 @@
-import React from 'react'
+'use client'
+import { MdOutlineAddToPhotos, MdOutlineEventRepeat } from "react-icons/md";
+import { RxDashboard } from "react-icons/rx";
+import { PiListMagnifyingGlassBold } from "react-icons/pi";
 import { Gamepad2, Calendar, Home, ShoppingBag, Recycle, Store, ShoppingCart, Heart, LogIn, Newspaper, Info } from "lucide-react"
 import {
     Sidebar,
@@ -13,16 +16,15 @@ import {
     SidebarMenuItem,
     SidebarTrigger,
     SidebarMenuBadge
-} from "@/components/ui/sidebar"
-import { MdOutlineAddToPhotos, MdOutlineSearch, MdOutlineEventRepeat } from "react-icons/md";
-import { RxDashboard } from "react-icons/rx";
-import Link from 'next/link'
-import ThemeBtn from '../ThemeBtn/ThemeBtn'
-import UserBtn from '../UserBtn/UserBtn'
-import GetFavCount from '@/frontend/Actions/GetFavCount'
-import { PiListMagnifyingGlassBold } from "react-icons/pi";
-// Menu items.
-const items = [
+} from "@/components/ui/sidebar";
+import Link from 'next/link';
+import { usePathname } from "next/navigation";
+import ThemeBtn from '../ThemeBtn/ThemeBtn';
+import UserBtn from '../UserBtn/UserBtn';
+import { RootState } from "@/frontend/redux/store";
+import { useSelector } from "react-redux";
+// User items.
+const useritems = [
     {
         title: "Home",
         url: "/",
@@ -64,8 +66,8 @@ const items = [
         icon: Info,
     },
 ]
-
-const dashboardItems=[
+// Event dashboard items.
+const dashboardItems = [
     {
         title: "OverView",
         url: "/overview",
@@ -89,6 +91,8 @@ const dashboardItems=[
 ]
 
 export default function SideBar() {
+    const pathname = usePathname();
+    const { favProducts } = useSelector((state: RootState) => state.fav);
     return (
         <Sidebar collapsible="icon" variant='floating' className='bg-background '>
             <SidebarHeader >
@@ -99,10 +103,10 @@ export default function SideBar() {
                     <SidebarGroupLabel>Application</SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
-                            {items.map((item) => (
+                            {useritems.map((item) => (
                                 <SidebarMenuItem key={item.title}>
-                                    <SidebarMenuButton asChild>
-                                        <Link href={item.url}>
+                                    <SidebarMenuButton asChild isActive={pathname === item.url}>
+                                        <Link href={item.url}  >
                                             <item.icon />
                                             <span className='capitalize'>{item.title}</span>
                                         </Link>
@@ -119,7 +123,7 @@ export default function SideBar() {
                         <SidebarMenu>
                             {dashboardItems.map((item) => (
                                 <SidebarMenuItem key={item.title}>
-                                    <SidebarMenuButton asChild>
+                                    <SidebarMenuButton asChild isActive={pathname === item.url}>
                                         <Link href={item.url}>
                                             <item.icon />
                                             <span className='capitalize'>{item.title}</span>
@@ -136,25 +140,25 @@ export default function SideBar() {
                 <SidebarGroupContent className='gap-2'>
                     <SidebarMenu>
                         <SidebarMenuItem >
-                            <SidebarMenuButton asChild >
+                            <SidebarMenuButton asChild isActive={pathname === '/fav'}>
                                 <Link href="/fav">
                                     <Heart />
                                     <span>Favorite</span>
-                                    <GetFavCount />
                                 </Link>
                             </SidebarMenuButton>
+                            <SidebarMenuBadge >{favProducts.length}</SidebarMenuBadge>
                         </SidebarMenuItem>
                         <SidebarMenuItem >
-                            <SidebarMenuButton asChild >
+                            <SidebarMenuButton asChild isActive={pathname === '/cart'}>
                                 <Link href="/cart">
                                     <ShoppingCart />
                                     <span>Cart</span>
-                                    <SidebarMenuBadge>24</SidebarMenuBadge>
                                 </Link>
                             </SidebarMenuButton>
+                            <SidebarMenuBadge>24</SidebarMenuBadge>
                         </SidebarMenuItem>
                         <SidebarMenuItem >
-                            <SidebarMenuButton asChild >
+                            <SidebarMenuButton asChild isActive={pathname === '/auth'}>
                                 <Link href="/auth">
                                     <LogIn />
                                     <span>Login</span>
