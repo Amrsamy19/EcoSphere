@@ -6,14 +6,14 @@ import React from 'react'
 import { MdAddCircleOutline } from "react-icons/md";
 import { FaRegRectangleList } from "react-icons/fa6";
 import { TbListSearch } from "react-icons/tb";
-export default function Overview() {
+export default function EventOverview() {
   return (
     <div className='min-h-screen py-8 w-[95%] mx-auto flex flex-col gap-6'>
       <h1 className='capitalize font-bold text-4xl  text-foreground'>Dashboard Overiew</h1>
       <div className='flex flex-col gap-2'>
         <h2 className='capitalize font-bold text-2xl mb-2 text-foreground'> Quick Actions</h2>
         <div className='grid grid-cols-3 gap-5 '>
-          <Link href='' className='col-span-1 '>
+          <Link href='/dashboard/add' className='col-span-1 '>
             <Button className='w-full py-6 text-xl text-primary-foreground rounded-2xl'>
               <MdAddCircleOutline className='size-6' />
               <span className='capitalize'>
@@ -21,7 +21,7 @@ export default function Overview() {
               </span>
             </Button>
           </Link>
-          <Link href='' className='col-span-1 '>
+          <Link href='/dashboard/viewDetails' className='col-span-1 '>
             <Button className='w-full py-6 text-xl text-primary-foreground rounded-2xl'>
               <FaRegRectangleList className='size-6' />
               <span className='capitalize'>
@@ -29,7 +29,7 @@ export default function Overview() {
               </span>
             </Button>
           </Link>
-          <Link href='' className='col-span-1 '>
+          <Link href='/dashboard/browse' className='col-span-1 '>
             <Button className='w-full py-6 text-xl text-primary-foreground rounded-2xl'>
               <TbListSearch className='size-6' />
               <span className='capitalize'>

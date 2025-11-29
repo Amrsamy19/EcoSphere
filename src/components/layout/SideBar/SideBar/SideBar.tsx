@@ -70,22 +70,22 @@ const useritems = [
 const dashboardItems = [
     {
         title: "OverView",
-        url: "/overview",
+        url: "/dashboard/overview",
         icon: RxDashboard,
     },
     {
         title: "Add Event",
-        url: "/",
+        url: "/dashboard/add",
         icon: MdOutlineAddToPhotos,
     },
     {
         title: "View events",
-        url: "/",
+        url: "/dashboard/viewDetails",
         icon: MdOutlineEventRepeat,
     },
     {
         title: "Browse Events",
-        url: "/",
+        url: "/dashboard/browse",
         icon: PiListMagnifyingGlassBold,
     },
 ]
