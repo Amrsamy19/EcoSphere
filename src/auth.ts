@@ -22,7 +22,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 					if (!response) return null;
 
 					// Return user object with id and other properties
-					return response;
+					return response as any;
 				} catch (error) {
 					console.error(
 						"Authorization error:",
@@ -70,10 +70,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 		},
 		async jwt({ token, user }) {
 			if (user) {
-				token.id = user.id;
-				token.email = user.email;
-				token.role = user.role;
-				token.name = user.name;
+                // user is LoginResponseDTO { token, user: PublicUserProfile }
+                const u = (user as any).user || user;
+				token.id = u.id || u._id;
+				token.email = u.email;
+				token.role = u.role;
+				token.name = u.name || (u.firstName ? `${u.firstName} ${u.lastName}` : "");
+                token.accessToken = (user as any).token;
 			}
 			return token;
 		},

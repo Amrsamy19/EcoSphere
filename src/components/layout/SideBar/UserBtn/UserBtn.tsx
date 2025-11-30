@@ -110,7 +110,7 @@ export default function UserBtn() {
                         <Link href="/auth" onClick={handleLogout}>
                             <DropdownMenuItem>
                                 <LogOut />
-                                <span> Log out</span>
+                                <span>Log out</span>
                             </DropdownMenuItem>
                         </Link>
                     </DropdownMenuContent>

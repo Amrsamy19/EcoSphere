@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
-import { ILoginStrategy, LoginResponseDTO } from "./login.service";
-import { LoginRequestDTO, PublicUserProfile } from "../dto/user.dto";
+import { ILoginStrategy } from "./login.service";
+import { LoginRequestDTO, LoginResponseDTO, PublicUserProfile } from "../dto/user.dto";
 import type { IAuthRepository } from "../auth.repository";
 import { signJwt } from "@/backend/utils/helpers";
 

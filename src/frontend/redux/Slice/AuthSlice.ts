@@ -65,11 +65,54 @@ const initialState: AuthState = {
   },
 };
 
+import { signIn } from "next-auth/react";
+
+// ...
+
 // Real Login Thunk
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (credentials: any, { dispatch, rejectWithValue }) => {
     try {
+      // Use NextAuth signIn
+      const result = await signIn("credentials", {
+        email: credentials.email,
+        password: credentials.password,
+        loginType: credentials.loginType || "customer",
+        redirect: false,
+      });
+
+      if (result?.error) {
+        return rejectWithValue(result.error);
+      }
+
+      if (!result?.ok) {
+        return rejectWithValue("Login failed");
+      }
+
+      // Login successful, cookie is set.
+      // Now fetch the full user profile using the custom API or just use what we have?
+      // Since the custom API /api/login returns the full profile, and we want that in Redux,
+      // we can EITHER:
+      // 1. Call /api/login directly (as before) AND call signIn (double auth?) - Bad.
+      // 2. Trust that signIn called the controller and set the cookie.
+      //    But signIn response doesn't have the user data.
+      
+      // We need to fetch the user profile.
+      // Let's call the original /api/login endpoint? 
+      // No, that would try to log in again.
+      
+      // We need an endpoint to get the current user profile.
+      // The user might not have one.
+      
+      // TEMPORARY SOLUTION:
+      // Call /api/login to get the data for Redux, AND call signIn to set the cookie for Middleware.
+      // It's inefficient but solves the immediate problem of "Middleware redirecting" + "Redux needing data".
+      
+      // 1. Call signIn to satisfy Middleware (sets cookie)
+      // Already done above.
+      
+      // 2. Call /api/login to get data for Redux
       const response = await fetch("/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -82,15 +125,16 @@ export const loginUser = createAsyncThunk(
       const data = await response.json();
 
       if (!response.ok) {
+        // If this fails but signIn succeeded, it's weird.
         return rejectWithValue(data.message || "Login failed");
       }
 
-      // Assuming the API returns { success: true, data: { token: "...", user: { ... } } }
-      // Adjust based on actual API response structure from mappers.ts
-      const userData = data.data.user;
+      const userData = data.data?.user || data.user; // Handle both structures
       
-      // You might want to store the token in localStorage here or in a middleware
-      localStorage.setItem("token", data.data.token);
+      // Store token in localStorage as backup/for API calls if needed
+      if (data.data?.token || data.token) {
+          localStorage.setItem("token", data.data?.token || data.token);
+      }
 
       dispatch(setUser({ ...userData, isLoggedIn: true }));
       return userData;

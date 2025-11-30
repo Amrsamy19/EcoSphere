@@ -28,6 +28,11 @@ export type LoginResponse = {
     name?: string;
 };
 
+export type LoginResponseDTO = {
+    token: string;
+    user: PublicUserProfile;
+};
+
 // Token payload type for JWT
 export type TokenPayload = {
 	_id: string;

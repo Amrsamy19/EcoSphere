@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { verifyJwt } from "../utils/helpers";
-import { TokenPayload } from "../features/auth/mappers";
+import { TokenPayload } from "../features/auth/dto/user.dto";
 
 export async function verifyToken(req: Request): Promise<TokenPayload | NextResponse> {
   try {

@@ -120,17 +120,6 @@ const LogIn = () => {
         )}
       </button>
 
-      <button className="myBtnPrimary">
-        Login
-        <Image
-          src={"/leaf.png"}
-          width={25}
-          height={25}
-          alt="leaf"
-          className="scale-x-[-1]"
-        />
-      </button>
-
       {/* social login */}
       <div className="flex justify-evenly items-center my-4 text-4xl text-secondary-foreground ">
         <Link
