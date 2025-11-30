@@ -86,9 +86,11 @@ class AuthRepository {
 
   async findShopByEmail(email: string, keys?: string): Promise<FoundedUser> {
     await DBInstance.getConnection();
-    return await RestaurantModel.findOne({ email })
-		  .select(`+password _id email role lastName accountProvider ${keys || ""}`)
-      .exec();
+    const query = RestaurantModel.findOne({ email }).select('+password');
+    if (keys) {
+      query.select(keys);
+    }
+    return await query.exec();
   }
 }
 

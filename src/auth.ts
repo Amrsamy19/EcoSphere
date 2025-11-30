@@ -18,7 +18,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 					const response = await controller.loginWithCredentials({
 						email: credentials.email as string,
 						password: credentials.password as string,
-					});
+						loginType: (credentials as any).loginType,
+					} as any);
 					if (!response) return null;
 
 					// Return user object with id and other properties

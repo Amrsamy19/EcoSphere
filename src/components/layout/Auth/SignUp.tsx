@@ -45,7 +45,7 @@ const SignUp = () => {
 
     const resultAction = await dispatch(registerUser(registrationData));
     if (registerUser.fulfilled.match(resultAction)) {
-      router.push('/profile');
+      router.push('/');
     }
   };
 

@@ -7,6 +7,7 @@ import { IoIosArrowRoundForward } from 'react-icons/io'
 import { useDispatch, useSelector } from 'react-redux'
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { Eye, EyeOff } from "lucide-react";
 
 const LogIn = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -15,6 +16,7 @@ const LogIn = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [loginType, setLoginType] = useState<"customer" | "organizer" | "shop">("customer");
 
   const handleToggle = () => {
@@ -26,7 +28,7 @@ const LogIn = () => {
 
     const resultAction = await dispatch(loginUser({ email, password, loginType }));
     if (loginUser.fulfilled.match(resultAction)) {
-      router.push('/profile');
+      router.push('/');
     }
   };
 
@@ -84,12 +86,19 @@ const LogIn = () => {
       />
       <div className="relative">
         <input
-          type="password"
+          type={showPassword ? "text" : "password"}
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="bg-input text-input-foreground w-full p-3 rounded-full transition duration-300 focus:outline-none pl-10"
+          className="bg-input text-input-foreground w-full p-3 rounded-full transition duration-300 focus:outline-none pl-10 pr-12"
         />
+        <button
+          type="button"
+          onClick={() => setShowPassword(!showPassword)}
+          className="absolute right-4 top-1/2 cursor-pointer -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+        >
+          {showPassword ? <EyeOff size={20} className="text-black" /> : <Eye size={20} className="text-black" />}
+        </button>
       </div>
       {/* forget password */}
       <Link href="#">

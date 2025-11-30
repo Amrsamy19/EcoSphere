@@ -76,7 +76,8 @@ const restaurantSchema = new Schema<IRestaurant>(
 
 restaurantSchema.pre("save", async function (next) {
   this.createdAt ??= new Date();
-  if (!this.isModified("password")) next();
+  console.log("Restaurant pre-save. isModified:", this.isModified("password"));
+  if (!this.isModified("password")) return next();
 
   this.password = await bcrypt.hash(this.password, 10);
   next();
