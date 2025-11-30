@@ -1,6 +1,5 @@
 import { IRestaurant } from "../restaurant/restaurant.model";
-import { IUser, UserRole } from "../user/user.model";
-import { RegisterResponseDTO } from "./dto/user.dto";
+import { IUser } from "../user/user.model";
 
 export type LoginCommand = {
 	email: string;
