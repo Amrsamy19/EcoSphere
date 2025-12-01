@@ -6,7 +6,7 @@ import BasicAnimatedWrapper from "../../common/BasicAnimatedWrapper";
 const MarketLeft = () => {
   return (
     <BasicAnimatedWrapper className="w-full md:w-1/2">
-      <div className=" flex flex-col justify-between">
+      <div className=" flex flex-col justify-evenly">
         <Image
           src="/home/market.png"
           alt="marketplace"
