@@ -20,7 +20,7 @@ const HomeHeroLayout = () => {
           <RightFloatingImg />
         </div>
       </div>
-      <div className="gap-10 flex flex-col">
+      <div className="mt-10 gap-10 flex flex-col">
         {/* <TextHeroSection/> */}
         <SolidContentSection/>
       </div>
