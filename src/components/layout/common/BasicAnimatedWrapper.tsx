@@ -7,17 +7,19 @@ const BasicAnimatedWrapper = ({
   index,
   className,
   whileHover,
+  delay
 }: {
   children: React.ReactNode;
   index?: number;
   className?: string;
   whileHover?: TargetAndTransition | VariantLabels;
+  delay?: number;
 }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 80 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: index! * 0.1 || 0 }}
+      transition={{ duration: 0.8, delay: index! * 0.2 || delay || 0 }}
       viewport={{ once: false }}
       whileHover={whileHover}
       className={className}
