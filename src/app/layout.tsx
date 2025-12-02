@@ -35,11 +35,7 @@ export default function RootLayout({
 				<Providers>
 					<Toaster position="top-right" />
 					<SideBar />
-					<SidebarInset>
-						{/* <div className="w-full bg-background text-foreground"> */}
-						{children}
-						{/* </div> */}
-					</SidebarInset>
+					<SidebarInset>{children}</SidebarInset>
 				</Providers>
 			</body>
 		</html>
