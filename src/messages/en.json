@@ -73,5 +73,35 @@
       "description": "Our vision is to help create an interconnected, global economy where sustainable and regenerative commerce is the",
       "descriptionHighlight": "standard, not the exception."
     }
+  },
+  "Game": {
+    "hero": {
+      "title": "Tic Tac Toe",
+      "you": "You",
+      "vs": "vs",
+      "ai": "AI"
+    },
+    "status": {
+      "draw": "Draw",
+      "youWin": "You Win",
+      "aiWin": "AI Win",
+      "aiThinking": "AI think...",
+      "yourTurn": "Your turn"
+    },
+    "difficulty": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard"
+    },
+    "actions": {
+      "playAgain": "Play Again",
+      "resetScores": "Reset Scores"
+    },
+    "scoreBoard": {
+      "title": "SCORE BOARD",
+      "you": "You",
+      "draws": "Draws",
+      "ai": "AI"
+    }
   }
 }
