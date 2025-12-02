@@ -22,18 +22,18 @@ export default function OrderSummary() {
 	};
 
 	return (
-		<div className="rounded-2xl p-6 shadow-md bg-background border">
-			<h2 className="text-xl font-semibold mb-6">Order Summary</h2>
+		<div className="rounded-2xl p-6 shadow-md  border border-primary">
+			<h2 className="text-xl font-semibold mb-6 text-center">Order Summary</h2>
 
 			{/* Coupon/Promo Code Section */}
 			<div className="mb-6">
 				<div className="flex flex-col :flex-row gap-3">
 					<input
 						type="text"
-						placeholder="Keyword encoder"
+						placeholder="Promo code"
 						value={couponCode}
 						onChange={(e) => setCouponCode(e.target.value)}
-						className="flex-1 px-4 py-2 border focus:outline-none focus:ring-2 focus:ring-black bg-input text-input-foreground rounded-full"
+						className="flex-1   bg-input text-input-foreground rounded-full myInput"
 						disabled={appliedCoupon}
 					/>
 					<button
@@ -53,33 +53,33 @@ export default function OrderSummary() {
 			<div className="space-y-3 mb-6">
 				<div className="flex justify-between text-sm">
 					<span className="text-muted-foreground">Sub total</span>
-					<span className="font-medium">
+					<span className="font-medium ">
 						{(subtotalCents / 100).toFixed(2)} EGP
 					</span>
 				</div>
 				<div className="flex justify-between text-sm">
 					<span className="text-muted-foreground">Discount (10%)</span>
-					<span className="font-medium text-green-600">
+					<span className="font-medium text-primary">
 						-${(discountCents / 100).toFixed(2)} EGP
 					</span>
 				</div>
 				<div className="flex justify-between text-sm">
 					<span className="text-muted-foreground">Delivery fee</span>
-					<span className="font-medium">
+					<span className="font-medium text-foreground">
 						${(deliveryCents / 100).toFixed(2)} EGP
 					</span>
 				</div>
 			</div>
 
 			{/* Total */}
-			<div className="flex justify-between font-bold text-lg mb-6 pt-4 border-t">
+			<div className="flex justify-between font-bold text-lg mb-6 pt-4 border-t border-primary">
 				<span>Total</span>
 				<span>${(total / 100).toFixed(2)} EGP</span>
 			</div>
 
 			{/* Warranty Information */}
 			<div className="flex items-start gap-2 mb-6 p-3 bg-muted/50 rounded-full">
-				<Check className="w-5 h-5 text-green-600 shrink-0 mt-0.5" />
+				<Check className="w-5 h-5 text-primary shrink-0 mt-0.5" />
 				<div className="text-sm">
 					<span>
 						90 Day Limited Warranty up to manufacturer&apos;s elements{" "}

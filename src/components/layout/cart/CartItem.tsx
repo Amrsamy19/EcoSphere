@@ -8,7 +8,7 @@ export default function CartItem({ item }: Readonly<{ item: CI }>) {
 	const productCode = item.id.slice(0, 8).toUpperCase();
 
 	return (
-		<div className="grid grid-cols-12 items-center py-4 border-b gap-4">
+		<div className="grid grid-cols-12 items-center py-4 border-b border-primary gap-4">
 			{/* Product Image and Info */}
 			<div className="col-span-12 md:col-span-4 flex items-center gap-4">
 				<div className="w-20 h-20 shrink-0 relative rounded-lg overflow-hidden bg-muted">

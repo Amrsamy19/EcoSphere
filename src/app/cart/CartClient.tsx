@@ -6,32 +6,35 @@ import { hydrateCart } from "@/frontend/redux/Slice/CartSlice";
 import OrderSummary from "@/components/layout/cart/OrderSummary";
 import ProductsSection from "@/components/layout/cart/ProductsSection";
 import { selectCartItemsArray } from "@/frontend/redux/selector/cartSelector";
+import CartHero from "@/components/layout/cart/CartHero";
 
 export default function CartClient({
-	initialCart,
+  initialCart,
 }: Readonly<{
-	initialCart: CartItems[];
+  initialCart: CartItems[];
 }>) {
-	// hydrate server cart into store inside CartPage client component (useEffect)
-	const dispatch = useAppDispatch();
-	const items = useAppSelector(selectCartItemsArray);
+  // hydrate server cart into store inside CartPage client component (useEffect)
+  const dispatch = useAppDispatch();
+  const items = useAppSelector(selectCartItemsArray);
 
-	useEffect(() => {
-		if (initialCart?.length) dispatch(hydrateCart(initialCart));
-	}, [initialCart, dispatch]);
+  useEffect(() => {
+    if (initialCart?.length) dispatch(hydrateCart(initialCart));
+  }, [initialCart, dispatch]);
 
-	return (
-		<div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
-			{/* Left Section - Shopping Cart Items */}
-			<h2 className="text-3xl font-semibold m-5 ml-10">Shopping Cart</h2>
-			<div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 text-primary">
-				<ProductsSection items={items} />
+  return (
+    <div className=" ">
+      {/* Left Section - Shopping Cart Items */}
+      <CartHero />
+      <div className="max-w-[80%] mx-auto my-10">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+          <ProductsSection items={items} />
 
-				{/* Right Section - Order Summary */}
-				<aside className="lg:col-span-1 text-primary">
-					<OrderSummary />
-				</aside>
-			</div>
-		</div>
-	);
+          {/* Right Section - Order Summary */}
+          <aside className="lg:col-span-1 ">
+            <OrderSummary />
+          </aside>
+        </div>
+      </div>
+    </div>
+  );
 }

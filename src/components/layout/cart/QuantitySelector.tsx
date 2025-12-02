@@ -32,11 +32,11 @@ export default function QuantitySelector({
 	};
 
 	return (
-		<div className="flex items-center border rounded-full">
+		<div className="flex items-center border border-primary text-primary rounded-full">
 			<button
 				onClick={dec}
 				aria-label="decrease"
-				className="p-2 text-foreground hover:text-red-400 transition duration-400"
+				className="p-2 text-foreground cursor-pointer transition duration-400"
 				disabled={local <= 1}
 			>
 				<Minus className="w-5 h-5" strokeWidth={3} />
@@ -52,7 +52,7 @@ export default function QuantitySelector({
 			<button
 				onClick={inc}
 				aria-label="increase"
-				className="p-2 hover:text-foreground transition duration-400"
+				className="p-2 hover:text-foreground cursor-pointer transition duration-400"
 			>
 				<Plus className="w-5 h-5" strokeWidth={3} />
 			</button>

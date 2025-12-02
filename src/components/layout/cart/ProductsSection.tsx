@@ -4,6 +4,7 @@ import CartItem from "./CartItem";
 import Image from "next/image";
 import { clearCart as clearAllItems } from "@/frontend/redux/Slice/CartSlice";
 import { useAppDispatch } from "@/frontend/redux/hooks";
+import { Trash2 } from "lucide-react";
 
 export default function ProductsSection({
   items,
@@ -17,7 +18,7 @@ export default function ProductsSection({
 
   return (
     <section className="lg:col-span-2">
-      <div className="bg-background rounded-2xl shadow-md border p-6">
+      <div className="bg-background rounded-2xl shadow-md border border-primary p-6">
         {items.length > 0 ? (
           <>
             {/* Table Header - Hidden on mobile, shown on desktop */}
@@ -36,11 +37,9 @@ export default function ProductsSection({
             </div>
 
             <div className="mt-3 pt-3 flex justify-center">
-              <button
-                onClick={clearCart}
-                className="px-6 py-3 font-medium bg-primary text-primary-foreground p-3 rounded-full transition duration-400 hover:scale-102 flex justify-center items-center text-lg gap-2 hover:outline-2 hover:outline-primary hover:outline-offset-4"
-              >
+              <button onClick={clearCart} className="myBtnPrimary w-full lg:w-auto">
                 Clear all
+                <Trash2 className="w-5 h-5  " />
               </button>
             </div>
           </>
