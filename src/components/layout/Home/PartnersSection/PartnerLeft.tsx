@@ -19,10 +19,10 @@ const PartnerLeft = () => {
         </p>
 
         <Link
-          href="/store"
+          href="/shop"
           className=" text-primary-foreground bg-primary p-3 px-4 rounded-full flex justify-center items-center w-fit gap-2 transition duration-400 hover:scale-102 group"
         >
-          Visit Store
+          Visit Our Partners
           <p className="group-hover:translate-x-1 transition duration-300">
             <IoIosArrowDroprightCircle />
           </p>
