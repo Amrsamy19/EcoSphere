@@ -135,5 +135,19 @@
         "lowestRating": "Lowest Rating"
       }
     }
+  },
+  "Store": {
+    "hero": {
+      "title": "Our Store",
+      "subtitle": "EcoSphere is your trusted destination for eco-friendly products, sustainable gifts, and smart green choices. Browse a variety of earth-conscious items made to help you live cleaner, better, and more naturally every day."
+    },
+    "slider": {
+      "title": "Our Partner Stores",
+      "scrollHint": "Scroll to explore more stores"
+    },
+    "product": {
+      "addedToFavorites": "Added to favorites",
+      "removedFromFavorites": "Removed from favorites"
+    }
   }
 }

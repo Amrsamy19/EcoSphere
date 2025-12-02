@@ -4,8 +4,10 @@ import React, { useRef } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
+import { useTranslations } from 'next-intl';
 
 const StoreSlider = () => {
+  const t = useTranslations('Store.slider');
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const stores = [
@@ -53,7 +55,7 @@ const StoreSlider = () => {
               className="mb-12 text-center"
             >
               <h2 className="text-4xl lg:text-4xl font-semibold text-foreground mb-3">
-                Our Partner Stores
+                {t('title')}
               </h2>
               <div className="w-24 h-1.5 bg-primary mx-auto rounded-full"></div>
             </motion.div>
@@ -150,7 +152,7 @@ const StoreSlider = () => {
               <p className="text-stone-500 text-sm flex items-center justify-center gap-2">
                 <span className="inline-block w-2 h-2 bg-primary rounded-full animate-pulse"></span>
                 {""}
-                Scroll to explore more stores
+                {t('scrollHint')}
               </p>
             </motion.div>
           </div>
