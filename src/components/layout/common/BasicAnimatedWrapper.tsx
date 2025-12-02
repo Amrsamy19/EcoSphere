@@ -17,7 +17,7 @@ const BasicAnimatedWrapper = ({
 }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 80 }}
+      initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, delay: index! * 0.2 || delay || 0 }}
       viewport={{ once: false }}

@@ -16,7 +16,7 @@ const MarketRight = () => {
           items carefully selected from trusted eco-friendly stores and partner
           farms across Egypt and beyond.
         </p>
-        <ul className="list-disc text-secondary-foreground">
+        <ul className="list-disc text-secondary-foreground p-4">
           <li>
             Products made from natural, biodegradable, and recycled materials.
           </li>
@@ -27,14 +27,7 @@ const MarketRight = () => {
             Fresh and organic farm products sourced responsibly from local
             eco-farms.
           </li>
-          <li>
-            Transparent ingredient lists and sustainability ratings for every
-            item.
-          </li>
-          <li>
-            Curated collections to help you shop smarter—whether you're just
-            starting or already living green.
-          </li>
+        
         </ul>
         <Link
           href="/store"
