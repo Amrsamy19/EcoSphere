@@ -146,7 +146,7 @@ export default function SideBar() {
                                     <span>Favorite</span>
                                 </Link>
                             </SidebarMenuButton>
-                            <SidebarMenuBadge >{favProducts.length}</SidebarMenuBadge>
+                            <SidebarMenuBadge suppressHydrationWarning={true} >{favProducts.length}</SidebarMenuBadge>
                         </SidebarMenuItem>
                         <SidebarMenuItem >
                             <SidebarMenuButton asChild isActive={pathname === '/cart'}>

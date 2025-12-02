@@ -6,7 +6,7 @@ import { BsFillPeopleFill } from "react-icons/bs";
 import { PiTicketFill } from "react-icons/pi";
 export default function DisplayEvents() {
     return (
-        <div className='min-h-screen py-8 w-[95%] mx-auto flex flex-col  gap-6'>
+        <div className='min-h-screen py-8 w-[85%] mx-auto flex flex-col  gap-6'>
             <h1 className='capitalize font-bold text-4xl  text-foreground'>Dashboard Display Events</h1>
             <div className=" w-full bg-white rounded-xl shadow-lg border border-indigo-200/50 p-4 sm:p-6 transition-all duration-300">
                 <div className="grid grid-cols-6 justify-center items-center   gap-4 sm:gap-6">

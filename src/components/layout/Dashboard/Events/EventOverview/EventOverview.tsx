@@ -247,7 +247,7 @@ export default function EventOverview() {
     })
     .slice(0, 3);
   return (
-    <div className='min-h-screen py-6 w-[95%] mx-auto flex flex-col gap-6'>
+    <div className='min-h-screen py-6 w-[85%] mx-auto flex flex-col gap-6'>
       <h1 className='capitalize font-bold text-4xl  text-foreground'>Dashboard Overiew</h1>
       <div className='flex flex-col gap-2'>
         <h2 className='capitalize font-bold text-2xl mb-2 text-foreground'> Quick Actions</h2>
