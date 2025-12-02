@@ -1,7 +1,6 @@
 import { rootContainer } from "@/backend/config/container";
 import UserController from "@/backend/features/user/user.controller";
 import { IUser } from "@/backend/features/user/user.model";
-import { PublicUserProfile } from "@/backend/features/auth/dto/user.dto";
 import { ApiResponse, badRequest, ok, serverError } from "@/types/api-helpers";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -23,7 +22,7 @@ export const GET = async (
 export const PUT = async (
   _req: NextRequest,
   context: { params: Promise<{ id: string }> }
-): Promise<NextResponse<ApiResponse<PublicUserProfile>>> => {
+): Promise<NextResponse<ApiResponse<IUser>>> => {
   const { id } = await context.params;
   const body = await _req.json();
   const controller = rootContainer.resolve(UserController);
