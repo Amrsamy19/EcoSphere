@@ -7,12 +7,14 @@ import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import * as Z from "zod";
+import { useTranslations } from 'next-intl';
 import { useState } from "react";
 import Image from "next/image";
 import { Loader2, UploadCloud } from "lucide-react";
 import { toast } from "sonner";
 
 const ShStep3 = () => {
+  const t = useTranslations('Auth.steps.shopStep3');
   const dispatch = useDispatch();
   const [isUploading, setIsUploading] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -54,7 +56,7 @@ const ShStep3 = () => {
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <p className="text-2xl md:text-3xl font-bold text-center text-secondary-foreground">
-          Shop Details
+          {t('title')}
         </p>
 
         {/* Logo upload */}
@@ -128,7 +130,7 @@ const ShStep3 = () => {
         <div>
           <input
             type="text"
-            placeholder="Enter shop location"
+            placeholder={t('location')}
             className="myInput"
             {...register("location")}
           />
@@ -142,7 +144,7 @@ const ShStep3 = () => {
         <div>
           <input
             type="text"
-            placeholder="e.g., Mon-Fri 9:00 AM - 6:00 PM"
+            placeholder={t('workingHours')}
             className="myInput"
             {...register("workingHours")}
           />
