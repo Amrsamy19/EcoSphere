@@ -425,5 +425,30 @@
       "details": "Details",
       "checkoutNow": "Checkout Now"
     }
+  },
+  "Dashboard": {
+    "overview": {
+      "title": "Dashboard Overview",
+      "quickActions": "Quick Actions",
+      "createNewEvent": "Create new Event",
+      "viewAllEvents": "View all events",
+      "browseEvents": "Browse Events",
+      "keyMetrics": "Key Metrics",
+      "realTimeData": "Real-time data",
+      "totalTicketSales": "Total Ticket Sales",
+      "fromLastWeek": "from last week",
+      "totalRevenue": "Total Revenue",
+      "confirmedAttendees": "Confirmed Attendees",
+      "activeEvents": "Active Events",
+      "upcomingEvents": "upcoming events",
+      "viewAll": "view all",
+      "manage": "Manage",
+      "noUpcomingEvents": "No upcoming events found."
+    },
+    "displayEvents": {
+      "title": "Dashboard Display Events",
+      "ticketLeft": "Ticket Left",
+      "sold": "{percent}% Sold"
+    }
   }
 }

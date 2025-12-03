@@ -425,7 +425,33 @@
     "details": "التفاصيل",
     "checkoutNow": "إتمام الشراء"
   }
+},
+"Dashboard": {
+  "overview": {
+    "title": "نظرة عامة على لوحة التحكم",
+    "quickActions": "إجراءات سريعة",
+    "createNewEvent": "إنشاء فعالية جديدة",
+    "viewAllEvents": "عرض جميع الفعاليات",
+    "browseEvents": "تصفح الفعاليات",
+    "keyMetrics": "المؤشرات الرئيسية",
+    "realTimeData": "البيانات اللحظية",
+    "totalTicketSales": "إجمالي مبيعات التذاكر",
+    "fromLastWeek": "من الأسبوع الماضي",
+    "totalRevenue": "إجمالي الإيرادات",
+    "confirmedAttendees": "الحضور المؤكد",
+    "activeEvents": "الفعاليات النشطة",
+    "upcomingEvents": "الفعاليات القادمة",
+    "viewAll": "عرض الكل",
+    "manage": "إدارة",
+    "noUpcomingEvents": "لا توجد فعاليات قادمة."
+  },
+  "displayEvents": {
+    "title": "عرض فعاليات لوحة التحكم",
+    "ticketLeft": "التذاكر المتبقية",
+    "sold": "{percent}% تم بيعها"
+  }
 }
+
 
 
 
