@@ -93,22 +93,22 @@ export default function SideBar() {
 	// Event dashboard items.
 	const dashboardItems = [
 		{
-			title: "OverView",
+			title: t('dashboard.overview'),
 			url: "/overview",
 			icon: RxDashboard,
 		},
 		{
-			title: "Add Event",
+			title: t('dashboard.addEvent'),
 			url: "/add",
 			icon: MdOutlineAddToPhotos,
 		},
 		{
-			title: "View events",
+			title: t('dashboard.eventDetails'),
 			url: "/viewDetails",
 			icon: MdOutlineEventRepeat,
 		},
 		{
-			title: "Browse Events",
+			title: t('dashboard.browseEvents'),
 			url: "/browse",
 			icon: PiListMagnifyingGlassBold,
 		},

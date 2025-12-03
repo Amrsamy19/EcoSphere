@@ -190,7 +190,8 @@
         "default": "Default",
         "highestRating": "Highest Rating",
         "lowestRating": "Lowest Rating"
-      }
+      },
+      "noProducts": "No products match your current search criteria."
     }
   },
   "Store": {
