@@ -336,7 +336,97 @@
       "confirmPassword": "تأكيد كلمة المرور"
     }
   }
+},
+"Profile": {
+  "page": {
+    "pleaseLogin": "يرجى تسجيل الدخول لعرض ملفك الشخصي."
+  },
+  "common": {
+    "editProfile": "تعديل الملف الشخصي",
+    "changePassword": "تغيير كلمة المرور",
+    "personalInformation": "المعلومات الشخصية",
+    "email": "البريد الإلكتروني",
+    "phoneNumber": "رقم الهاتف",
+    "address": "العنوان",
+    "birthDate": "تاريخ الميلاد",
+    "gender": "الجنس",
+    "ecoPoints": "نقاط إيكو",
+    "na": "غير متاح",
+    "cancel": "إلغاء",
+    "saveChanges": "حفظ التغييرات",
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة",
+    "selectGender": "اختر الجنس",
+    "male": "ذكر",
+    "female": "أنثى"
+  },
+  "customer": {
+    "role": "عميل",
+    "orderHistory": "سجل الطلبات",
+    "orderCount": "لديك {count} طلب سابق.",
+    "noOrders": "لا توجد طلبات بعد",
+    "noOrdersDescription": "ابدأ بإضافة المنتجات إلى طلباتك لعرضها هنا",
+    "browseOrders": "تصفح الطلبات",
+    "editModalTitle": "تعديل الملف الشخصي"
+  },
+  "organizer": {
+    "role": "منظم فعاليات",
+    "organizationName": "اسم المنظمة",
+    "eventsOrganized": "الفعاليات التي تم تنظيمها",
+    "editModalTitle": "تعديل الملف الشخصي",
+    "subscriptionManagement": "إدارة الاشتراك",
+    "expiryDate": "تاريخ الانتهاء",
+    "renewSubscription": "تجديد الاشتراك"
+  },
+  "restaurant": {
+    "role": "مطعم",
+    "shopName": "اسم المتجر",
+    "description": "الوصف",
+    "location": "الموقع",
+    "workingHours": "ساعات العمل",
+    "hotline": "الخط الساخن",
+    "editModalTitle": "تعديل ملف المتجر"
+  }
+},
+"Cart": {
+  "hero": {
+    "title": "سلة المشتريات",
+    "home": "الرئيسية",
+    "cart": "السلة"
+  },
+  "productsSection": {
+    "product": "المنتج",
+    "productCode": "رمز المنتج",
+    "quantity": "الكمية",
+    "total": "الإجمالي",
+    "action": "الإجراء",
+    "clearAll": "مسح الكل",
+    "emptyCart": "سلة المشتريات فارغة"
+  },
+  "removeButton": {
+    "confirm": "تأكيد؟",
+    "removeItem": "إزالة المنتج",
+    "clickToConfirm": "انقر مرة أخرى للتأكيد"
+  },
+  "quantitySelector": {
+    "decrease": "تقليل الكمية",
+    "increase": "زيادة الكمية"
+  },
+  "orderSummary": {
+    "title": "ملخص الطلب",
+    "promoCode": "رمز الخصم",
+    "apply": "تطبيق",
+    "couponApplied": "تم تطبيق الكوبون!",
+    "subTotal": "الإجمالي الفرعي",
+    "discount": "الخصم ({percent}%)",
+    "deliveryFee": "رسوم التوصيل",
+    "total": "الإجمالي",
+    "warranty": "ضمان محدود لمدة 90 يومًا يشمل عناصر الشركة المصنعة",
+    "details": "التفاصيل",
+    "checkoutNow": "إتمام الشراء"
+  }
 }
+
 
 
 }

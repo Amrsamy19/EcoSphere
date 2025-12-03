@@ -305,7 +305,97 @@
       "confirmPassword": "Confirmez le mot de passe"
     }
   }
+},
+"Profile": {
+  "page": {
+    "pleaseLogin": "Veuillez vous connecter pour voir votre profil."
+  },
+  "common": {
+    "editProfile": "Modifier le profil",
+    "changePassword": "Changer le mot de passe",
+    "personalInformation": "Informations personnelles",
+    "email": "Email",
+    "phoneNumber": "Numéro de téléphone",
+    "address": "Adresse",
+    "birthDate": "Date de naissance",
+    "gender": "Genre",
+    "ecoPoints": "EcoPoints",
+    "na": "N/A",
+    "cancel": "Annuler",
+    "saveChanges": "Enregistrer les modifications",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "selectGender": "Sélectionnez le genre",
+    "male": "Homme",
+    "female": "Femme"
+  },
+  "customer": {
+    "role": "Client",
+    "orderHistory": "Historique des commandes",
+    "orderCount": "Vous avez {count} commande(s) passée(s).",
+    "noOrders": "Aucune commande pour le moment",
+    "noOrdersDescription": "Ajoutez des produits à vos commandes pour les voir ici",
+    "browseOrders": "Voir les commandes",
+    "editModalTitle": "Modifier le profil"
+  },
+  "organizer": {
+    "role": "Organisateur d'événements",
+    "organizationName": "Nom de l'organisation",
+    "eventsOrganized": "Événements organisés",
+    "editModalTitle": "Modifier le profil",
+    "subscriptionManagement": "Gestion d'abonnement",
+    "expiryDate": "Date d'expiration",
+    "renewSubscription": "Renouveler l'abonnement"
+  },
+  "restaurant": {
+    "role": "Restaurant",
+    "shopName": "Nom du magasin",
+    "description": "Description",
+    "location": "Emplacement",
+    "workingHours": "Heures d'ouverture",
+    "hotline": "Hotline",
+    "editModalTitle": "Modifier le profil du magasin"
+  }
+},
+"Cart": {
+  "hero": {
+    "title": "Panier",
+    "home": "Accueil",
+    "cart": "Panier"
+  },
+  "productsSection": {
+    "product": "Produit",
+    "productCode": "Code produit",
+    "quantity": "Quantité",
+    "total": "Total",
+    "action": "Action",
+    "clearAll": "Tout effacer",
+    "emptyCart": "Votre panier est vide"
+  },
+  "removeButton": {
+    "confirm": "Confirmer ?",
+    "removeItem": "Supprimer l'article",
+    "clickToConfirm": "Cliquez encore une fois pour confirmer"
+  },
+  "quantitySelector": {
+    "decrease": "Réduire la quantité",
+    "increase": "Augmenter la quantité"
+  },
+  "orderSummary": {
+    "title": "Récapitulatif de la commande",
+    "promoCode": "Code promo",
+    "apply": "Appliquer",
+    "couponApplied": "Code promo appliqué !",
+    "subTotal": "Sous-total",
+    "discount": "Réduction ({percent}%)",
+    "deliveryFee": "Frais de livraison",
+    "total": "Total",
+    "warranty": "Garantie limitée de 90 jours couvrant les éléments du fabricant",
+    "details": "Détails",
+    "checkoutNow": "Passer à la commande"
+  }
 }
+
 
 
 }
