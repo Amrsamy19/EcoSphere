@@ -14,7 +14,10 @@ export const proxy = auth((req) => {
 	const result = applyAuthRules(req, session, pathname);
 	if (result) return result;
 
-	return intlMiddleware(req);
+	// Handle locale detection for routes without [locale] folder
+	const response = intlMiddleware(req);
+	
+	return response;
 });
 
 export const config = {
