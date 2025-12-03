@@ -1,19 +1,71 @@
 import { injectable } from "tsyringe";
-import { IEvent, UserModel } from "../user/user.model";
+import { IEvent, IUser, UserModel } from "../user/user.model";
 import { DBInstance } from "@/backend/config/dbConnect";
 
 export interface IEventRepository {
   getAll(): Promise<IEvent[]>;
-  create(data: Partial<IEvent>): Promise<IEvent>;
-  getById(id: string): Promise<IEvent>;
+  createEvent(id: string, data: Partial<IEvent>): Promise<IEvent>;
+  getById(id: string, eventId: string): Promise<IEvent>;
   updateById(id: string, data: Partial<IEvent>): Promise<IEvent>;
-  deleteById(id: string): Promise<IEvent>;
+  deleteById(id: string, eventId: string): Promise<IEvent>;
 }
 
 @injectable()
 class EventRepository {
   async getAll() {
     await DBInstance.getConnection();
-    return await UserModel.find({}, { events: 1 });
+    return await UserModel.find({}).select("events").lean().exec();
+  }
+
+  async createEvent(id: string, data: Partial<IEvent>): Promise<any> {
+    // TODO: Check returned object from mongo
+    const user = await UserModel.findById({ _id: id })
+      .select("events _id")
+      .lean()
+      .exec();
+    return user;
+  }
+
+  async getById(id: string, eventId: string): Promise<IEvent> {
+    const data = await UserModel.findOne(
+      { _id: id },
+      {
+        events: {
+          $elemMatch: { _id: eventId },
+        },
+      }
+    )
+      .lean<Pick<IUser, "events">>()
+      .exec();
+
+    return data as IEvent;
+  }
+
+  async deleteById(id: string, eventId: string): Promise<IEvent> {
+    const eventProjection = await UserModel.findOne(
+      { _id: id },
+      { events: { $elemMatch: { _id: eventId } } }
+    )
+      .lean<Pick<IUser, "events">>()
+      .exec();
+
+    if (
+      !eventProjection ||
+      !eventProjection.events ||
+      eventProjection.events.length === 0
+    ) {
+      throw new Error(`Event with ID ${eventId} not found for user ${id}.`);
+    }
+
+    const deletedEvent: IEvent = eventProjection.events[0] as IEvent;
+
+    await UserModel.updateOne(
+      { _id: id },
+      {
+        $pull: { events: { _id: eventId } },
+      }
+    ).exec();
+
+    return deletedEvent;
   }
 }
