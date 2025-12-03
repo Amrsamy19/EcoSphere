@@ -336,5 +336,56 @@
         "confirmPassword": "Confirm Password"
       }
     }
+  },
+  "Profile": {
+    "page": {
+      "pleaseLogin": "Please log in to view your profile."
+    },
+    "common": {
+      "editProfile": "Edit Profile",
+      "changePassword": "Change Password",
+      "personalInformation": "Personal Information",
+      "email": "Email",
+      "phoneNumber": "Phone Number",
+      "address": "Address",
+      "birthDate": "Birth Date",
+      "gender": "Gender",
+      "ecoPoints": "EcoPoints",
+      "na": "N/A",
+      "cancel": "Cancel",
+      "saveChanges": "Save Changes",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "selectGender": "Select Gender",
+      "male": "Male",
+      "female": "Female"
+    },
+    "customer": {
+      "role": "Customer",
+      "orderHistory": "Order History",
+      "orderCount": "You have {count} past order(s).",
+      "noOrders": "No orders yet",
+      "noOrdersDescription": "Start adding products to your Orders to see them here",
+      "browseOrders": "Browse Orders",
+      "editModalTitle": "Edit Profile"
+    },
+    "organizer": {
+      "role": "Event Organizer",
+      "organizationName": "Organization Name",
+      "eventsOrganized": "Events Organized",
+      "editModalTitle": "Edit Profile",
+      "subscriptionManagement": "Subscription Management",
+      "expiryDate": "Expiry Date",
+      "renewSubscription": "Renew Subscription"
+    },
+    "restaurant": {
+      "role": "Restaurant",
+      "shopName": "Shop Name",
+      "description": "Description",
+      "location": "Location",
+      "workingHours": "Working Hours",
+      "hotline": "Hotline",
+      "editModalTitle": "Edit Shop Profile"
+    }
   }
 }

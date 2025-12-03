@@ -5,14 +5,16 @@ import { RootState } from "@/frontend/redux/store";
 import CustomerProfile from "@/components/profile/CustomerProfile";
 import OrganizerProfile from "@/components/profile/OrganizerProfile";
 import RestaurantProfile from "@/components/profile/RestaurantProfile";
+import { useTranslations } from 'next-intl';
 
 export default function ProfilePage() {
+  const t = useTranslations('Profile.page');
   const user = useSelector((state: RootState) => state.user);
 
   if (!user.isLoggedIn) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p className="text-xl">Please log in to view your profile.</p>
+        <p className="text-xl">{t('pleaseLogin')}</p>
       </div>
     );
   }
