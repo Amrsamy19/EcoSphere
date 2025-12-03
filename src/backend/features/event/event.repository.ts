@@ -77,14 +77,42 @@ class EventRepository {
     return result.events[0];
   }
 
-  async updateEvent(id: string, data: Partial<IEvent>): Promise<any> {
+  async updateEvent(
+    userId: string,
+    eventData: Partial<IEvent> & { _id: string }
+  ): Promise<IEvent | null> {
     await DBInstance.getConnection();
-    // TODO: Implement the update logic
-    const user = await UserModel.findById({ _id: id })
-      .select("events _id")
-      .lean()
+
+    const eventId = eventData._id;
+
+    const updateFields: Record<string, any> = {};
+
+    for (const [key, value] of Object.entries(eventData)) {
+      if (key !== "_id") {
+        updateFields[`events.$.${key}`] = value;
+      }
+    }
+
+    updateFields["events.$.updatedAt"] = new Date();
+
+    const result = await UserModel.findOneAndUpdate(
+      { _id: userId, "events._id": eventId },
+      { $set: updateFields },
+      {
+        new: true,
+        select: {
+          events: { $elemMatch: { _id: eventId } },
+        },
+      }
+    )
+      .lean<{ events: IEvent[] }>()
       .exec();
-    return user;
+
+    if (!result || !result.events || result.events.length === 0) {
+      return null;
+    }
+
+    return result.events[0];
   }
 
   async deleteEvent(id: string, eventId: string): Promise<IEvent> {
