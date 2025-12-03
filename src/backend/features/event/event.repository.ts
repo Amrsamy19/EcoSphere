@@ -1,11 +1,12 @@
 import { injectable } from "tsyringe";
 import { IEvent, IUser, UserModel } from "../user/user.model";
 import { DBInstance } from "@/backend/config/dbConnect";
+import mongoose from "mongoose";
 
 export interface IEventRepository {
   getEvents(): Promise<IEvent[]>;
-  createEvent(id: string, data: Partial<IEvent>): Promise<IEvent>;
   getEvent(id: string, eventId: string): Promise<IEvent>;
+  createEvent(id: string, data: IEvent): Promise<IEvent>;
   updateEvent(id: string, data: Partial<IEvent>): Promise<IEvent>;
   deleteEvent(id: string, eventId: string): Promise<IEvent>;
 }
@@ -18,6 +19,7 @@ class EventRepository {
   }
 
   async getEvent(id: string, eventId: string): Promise<IEvent> {
+    await DBInstance.getConnection();
     const data = await UserModel.findOne(
       { _id: id },
       {
@@ -32,16 +34,36 @@ class EventRepository {
     return data as IEvent;
   }
 
-  async createEvent(id: string, data: Partial<IEvent>): Promise<any> {
-    // TODO: Check returned object from mongo
-    const user = await UserModel.findById({ _id: id })
-      .select("events _id")
+  async createEvent(id: string, data: IEvent): Promise<any> {
+    await DBInstance.getConnection();
+    const newEventId = new mongoose.Types.ObjectId();
+    const newEvent = {
+      ...data,
+      _id: newEventId,
+    } as IEvent;
+
+    const updatedUser = await UserModel.findOneAndUpdate(
+      { _id: id },
+      { $push: { events: newEvent } },
+      {
+        new: true,
+        select: {
+          events: { $elemMatch: { _id: newEventId } },
+        },
+      }
+    )
       .lean()
       .exec();
-    return user;
+
+    if (!updatedUser) {
+      throw new Error(`User ${id} not found or event creation failed.`);
+    }
+
+    return updatedUser;
   }
 
   async updateEvent(id: string, data: Partial<IEvent>): Promise<any> {
+    await DBInstance.getConnection();
     // TODO: Implement the update logic
     const user = await UserModel.findById({ _id: id })
       .select("events _id")
@@ -51,6 +73,7 @@ class EventRepository {
   }
 
   async deleteEvent(id: string, eventId: string): Promise<IEvent> {
+    await DBInstance.getConnection();
     const eventProjection = await UserModel.findOne(
       { _id: id },
       { events: { $elemMatch: { _id: eventId } } }
@@ -78,3 +101,5 @@ class EventRepository {
     return deletedEvent;
   }
 }
+
+export default EventRepository;

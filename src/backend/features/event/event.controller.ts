@@ -28,3 +28,5 @@ class EventController {
     return await this.eventService.deleteEvent(id, eventId);
   }
 }
+
+export default EventController;

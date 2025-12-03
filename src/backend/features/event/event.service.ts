@@ -37,3 +37,5 @@ class EventService {
     return await this.eventRepository.deleteEvent(id, eventId);
   }
 }
+
+export default EventService;
