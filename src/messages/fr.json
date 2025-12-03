@@ -248,6 +248,64 @@
     "subtitle": "découvrez les produits de ce magasin",
     "noProducts": "Aucun produit disponible pour ce magasin."
   }
+},
+"Auth": {
+  "page": {
+    "newToEcosphere": "Nouveau sur Ecosphere ?",
+    "signUpText": "inscrivez-vous pour commencer avec Ecosphere",
+    "signUp": "Créer un compte",
+    "oneOfUs": "Déjà l’un des nôtres ?",
+    "signInText": "nous sommes heureux de vous revoir",
+    "signIn": "Se connecter"
+  },
+  "login": {
+    "title": "Connexion",
+    "email": "Email",
+    "password": "Mot de passe",
+    "forgetPassword": "Mot de passe oublié",
+    "or": "ou",
+    "newToEcosphere": "Nouveau sur EcoSphere ?",
+    "signUp": "Créer un compte"
+  },
+  "signup": {
+    "oneOfUs": "Déjà l’un des nôtres ?",
+    "login": "Se connecter"
+  },
+  "steps": {
+    "step1": {
+      "title": "Créer un compte",
+      "user": "utilisateur normal",
+      "organizer": "organisateur d'événements",
+      "shop": "boutique"
+    },
+    "userStep2": {
+      "title": "Détails de l'utilisateur",
+      "firstName": "Entrez votre prénom",
+      "lastName": "Entrez votre nom",
+      "phoneNumber": "Entrez votre numéro de téléphone",
+      "female": "Femme",
+      "male": "Homme"
+    },
+    "shopStep2": {
+      "title": "Détails de la boutique",
+      "name": "Entrez le nom de la boutique",
+      "description": "Description",
+      "phoneNumber": "Numéro de téléphone",
+      "hotline": "Hotline"
+    },
+    "shopStep3": {
+      "title": "Détails de la boutique",
+      "location": "Entrez l’emplacement de la boutique",
+      "workingHours": "ex. : Lun–Ven 9h00 – 18h00"
+    },
+    "lastStep": {
+      "title": "Étape finale",
+      "email": "Email",
+      "password": "Mot de passe",
+      "confirmPassword": "Confirmez le mot de passe"
+    }
+  }
 }
+
 
 }

@@ -9,10 +9,12 @@ import { saveStep4Data, setStepValid } from "@/frontend/redux/Slice/AuthSlice";
 import { LastStepSchema } from "@/frontend/schema/register.schema";
 import { AppDispatch } from "@/frontend/redux/store";
 import { Eye, EyeOff } from "lucide-react";
+import { useTranslations } from 'next-intl';
 
 type LastStepForm = Z.infer<typeof LastStepSchema>;
 
 const LastStep = () => {
+  const t = useTranslations('Auth.steps.lastStep');
   const dispatch = useDispatch<AppDispatch>();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -20,7 +22,7 @@ const LastStep = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors , isValid },
+    formState: { errors, isValid },
   } = useForm<LastStepForm>({
     resolver: zodResolver(LastStepSchema),
     mode: "onChange",
@@ -37,20 +39,20 @@ const LastStep = () => {
   };
 
   useEffect(() => {
-  dispatch(setStepValid({ step: 4, valid: isValid }));
-}, [isValid , dispatch]);
+    dispatch(setStepValid({ step: 4, valid: isValid }));
+  }, [isValid, dispatch]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 p-5">
       <p className="text-2xl md:text-3xl font-bold text-center text-secondary-foreground">
-        Final Step
+        {t('title')}
       </p>
 
       {/* Email */}
       <div>
         <input
           type="email"
-          placeholder="Email"
+          placeholder={t('email')}
           {...register("email")}
           className="bg-input text-input-foreground p-3 rounded-full transition duration-300 focus:outline-none pl-10 w-full"
         />
@@ -63,7 +65,7 @@ const LastStep = () => {
       <div className="relative">
         <input
           type={showPassword ? "text" : "password"}
-          placeholder="Password"
+          placeholder={t('password')}
           {...register("password")}
           className="bg-input text-input-foreground p-3 rounded-full transition duration-300 focus:outline-none pl-10 pr-12 w-full"
         />
@@ -83,7 +85,7 @@ const LastStep = () => {
       <div className="relative">
         <input
           type={showConfirmPassword ? "text" : "password"}
-          placeholder="Confirm Password"
+          placeholder={t('confirmPassword')}
           {...register("confirmPassword")}
           className="bg-input text-input-foreground p-3 rounded-full transition duration-300 focus:outline-none pl-10 pr-12 w-full"
         />
