@@ -8,8 +8,11 @@ import {
 	updateProfile,
 } from "@/frontend/redux/Slice/UserSlice";
 import ImageUpload from "@/components/layout/common/ImageUpload";
+import { useTranslations } from "next-intl";
 
 export default function OrganizerProfile() {
+	const t = useTranslations("Profile.organizer");
+	const tCommon = useTranslations("Profile.common");
 	const user = useSelector((state: RootState) => state.user);
 	const dispatch = useDispatch<AppDispatch>();
 	const [isEditing, setIsEditing] = useState(false);
@@ -77,20 +80,20 @@ export default function OrganizerProfile() {
 									<h1 className="text-2xl font-bold text-card-foreground">
 										{user.firstName} {user.lastName}
 									</h1>
-									<p className="text-muted-foreground">Organizer</p>
+									<p className="text-muted-foreground">{t("role")}</p>
 								</div>
 								<div className="flex flex-wrap gap-2">
 									<button
 										onClick={handleEditClick}
 										className="bg-primary text-primary-foreground px-3 py-1.5 text-sm rounded-lg hover:bg-primary/90 transition whitespace-nowrap"
 									>
-										Edit Profile
+										{tCommon("editProfile")}
 									</button>
 									<button
 										onClick={handleChangePassword}
 										className="bg-destructive text-destructive-foreground px-3 py-1.5 text-sm rounded-lg hover:bg-destructive/90 transition whitespace-nowrap"
 									>
-										Change Password
+										{tCommon("changePassword")}
 									</button>
 								</div>
 							</div>
@@ -105,37 +108,47 @@ export default function OrganizerProfile() {
 						{/* Personal Information */}
 						<div>
 							<h2 className="text-xl font-semibold mb-4 text-card-foreground">
-								Personal Information
+								{tCommon("personalInformation")}
 							</h2>
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 								<div>
-									<p className="text-sm text-muted-foreground">Email</p>
+									<p className="text-sm text-muted-foreground">
+										{tCommon("email")}
+									</p>
 									<p className="font-medium text-card-foreground">
 										{user.email}
 									</p>
 								</div>
 								<div>
-									<p className="text-sm text-muted-foreground">Phone Number</p>
+									<p className="text-sm text-muted-foreground">
+										{tCommon("phoneNumber")}
+									</p>
 									<p className="font-medium text-card-foreground">
-										{user.phoneNumber || "N/A"}
+										{user.phoneNumber || tCommon("na")}
 									</p>
 								</div>
 								<div>
-									<p className="text-sm text-muted-foreground">Address</p>
+									<p className="text-sm text-muted-foreground">
+										{tCommon("address")}
+									</p>
 									<p className="font-medium text-card-foreground">
-										{user.address || "N/A"}
+										{user.address || tCommon("na")}
 									</p>
 								</div>
 								<div>
-									<p className="text-sm text-muted-foreground">Birth Date</p>
+									<p className="text-sm text-muted-foreground">
+										{tCommon("birthDate")}
+									</p>
 									<p className="font-medium text-card-foreground">
-										{user.birthDate || "N/A"}
+										{user.birthDate || tCommon("na")}
 									</p>
 								</div>
 								<div>
-									<p className="text-sm text-muted-foreground">Gender</p>
+									<p className="text-sm text-muted-foreground">
+										{tCommon("gender")}
+									</p>
 									<p className="font-medium capitalize text-card-foreground">
-										{user.gender || "N/A"}
+										{user.gender || tCommon("na")}
 									</p>
 								</div>
 							</div>
@@ -146,20 +159,22 @@ export default function OrganizerProfile() {
 						{/* Subscription Management */}
 						<div>
 							<h2 className="text-xl font-semibold mb-4 text-card-foreground">
-								Subscription Management
+								{t("subscriptionManagement")}
 							</h2>
 							<div className="flex items-center justify-between">
 								<div>
-									<p className="text-sm text-muted-foreground">Expiry Date</p>
+									<p className="text-sm text-muted-foreground">
+										{t("expiryDate")}
+									</p>
 									<p className="font-medium text-card-foreground">
-										{user.subscriptionPeriod || "N/A"}
+										{user.subscriptionPeriod || tCommon("na")}
 									</p>
 								</div>
 								<button
 									onClick={handleRenewSubscription}
 									className="bg-primary text-primary-foreground px-4 py-2 rounded-lg hover:bg-primary/90 transition"
 								>
-									Renew Subscription
+									{t("renewSubscription")}
 								</button>
 							</div>
 						</div>
@@ -172,13 +187,13 @@ export default function OrganizerProfile() {
 				<div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
 					<div className="bg-card rounded-lg p-6 w-full max-w-md border border-border shadow-lg">
 						<h2 className="text-xl font-bold mb-4 text-card-foreground">
-							Edit Profile
+							{t("editModalTitle")}
 						</h2>
 						<div className="space-y-4">
 							<div className="grid grid-cols-2 gap-4">
 								<div>
 									<label className="block text-sm font-medium text-card-foreground mb-1">
-										First Name
+										{tCommon("firstName")}
 									</label>
 									<input
 										type="text"
@@ -190,7 +205,7 @@ export default function OrganizerProfile() {
 								</div>
 								<div>
 									<label className="block text-sm font-medium text-card-foreground mb-1">
-										Last Name
+										{tCommon("lastName")}
 									</label>
 									<input
 										type="text"
@@ -203,7 +218,7 @@ export default function OrganizerProfile() {
 							</div>
 							<div>
 								<label className="block text-sm font-medium text-card-foreground mb-1">
-									Phone Number
+									{tCommon("phoneNumber")}
 								</label>
 								<input
 									type="text"
@@ -215,7 +230,7 @@ export default function OrganizerProfile() {
 							</div>
 							<div>
 								<label className="block text-sm font-medium text-card-foreground mb-1">
-									Address
+									{tCommon("address")}
 								</label>
 								<input
 									type="text"
@@ -227,7 +242,7 @@ export default function OrganizerProfile() {
 							</div>
 							<div>
 								<label className="block text-sm font-medium text-card-foreground mb-1">
-									Birth Date
+									{tCommon("birthDate")}
 								</label>
 								<input
 									type="date"
@@ -239,7 +254,7 @@ export default function OrganizerProfile() {
 							</div>
 							<div>
 								<label className="block text-sm font-medium text-card-foreground mb-1">
-									Gender
+									{tCommon("gender")}
 								</label>
 								<select
 									name="gender"
@@ -247,9 +262,9 @@ export default function OrganizerProfile() {
 									onChange={handleInputChange}
 									className="w-full rounded-md border border-input bg-background px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
 								>
-									<option value="">Select Gender</option>
-									<option value="male">Male</option>
-									<option value="female">Female</option>
+									<option value="">{tCommon("selectGender")}</option>
+									<option value="male">{tCommon("male")}</option>
+									<option value="female">{tCommon("female")}</option>
 								</select>
 							</div>
 						</div>
@@ -258,13 +273,13 @@ export default function OrganizerProfile() {
 								onClick={() => setIsEditing(false)}
 								className="px-4 py-2 border border-input rounded-md text-foreground hover:bg-accent hover:text-accent-foreground transition"
 							>
-								Cancel
+								{tCommon("cancel")}
 							</button>
 							<button
 								onClick={handleSave}
 								className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition"
 							>
-								Save Changes
+								{tCommon("saveChanges")}
 							</button>
 						</div>
 					</div>

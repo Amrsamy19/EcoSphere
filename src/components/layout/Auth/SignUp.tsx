@@ -9,12 +9,14 @@ import LastStep from "./Steps/LastStep";
 import ShStep2 from "./Steps/shop/ShStep2";
 import ShStep3 from "./Steps/shop/ShStep3";
 import { useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 
 type StepKey = "step1" | "step2" | "step3" | "step4";
 
 const SignUp = () => {
+	const t = useTranslations("Auth.signup");
 	const dispatch = useDispatch<AppDispatch>();
 	const {
 		selectedType,
@@ -67,7 +69,7 @@ const SignUp = () => {
 	};
 
 	return (
-		<div className="">
+		<div>
 			<Stepper
 				initialStep={1}
 				onStepChange={(step) => setCurrentStep(step)}
@@ -85,12 +87,15 @@ const SignUp = () => {
 						<UStep2 />
 					</Step>
 				)}
+
 				{selectedType === "shop" && (
 					<Step>
 						<ShStep2 />
 					</Step>
 				)}
+
 				{/* step 3 */}
+
 				{selectedType === "shop" && (
 					<Step>
 						<ShStep3 />
@@ -102,12 +107,12 @@ const SignUp = () => {
 			</Stepper>
 			<div className="flex sm:flex gap-5 flex-col p-5">
 				<p className="text-center text-stone-700  space-x-1 sm:hidden ">
-					<span>One of us ?</span>
+					<span>{t("oneOfUs")}</span>
 					<button
 						onClick={handleToggle}
 						className="text-primary cursor-pointer"
 					>
-						Login
+						{t("login")}
 					</button>
 				</p>
 			</div>

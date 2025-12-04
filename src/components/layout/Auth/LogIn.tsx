@@ -8,6 +8,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { signIn, SignInResponse } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/frontend/redux/hooks";
+import { useTranslations } from "next-intl";
 
 const initiateData: SignInResponse = {
 	status: 200,
@@ -29,6 +30,7 @@ const LogIn = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	const [loginState, setLoginState] = useState(initiateData);
 	// console.log(loginForm, "loginForm"); // leave here to show the rerender 1000 times
+	const t = useTranslations("Auth.login");
 
 	const handleToggle = () => {
 		dispatch(toggleAuthView());
@@ -56,23 +58,23 @@ const LogIn = () => {
 	return (
 		<div className="flex sm:flex gap-5 flex-col">
 			<p className="capitalize text-center font-extrabold mb-5 text-secondary-foreground text-4xl">
-				Login
+				{t("title")}
 			</p>
 			<input
 				type="email"
 				name="email"
-				placeholder="Email"
+				placeholder={t("email")}
 				value={loginForm.email}
-				onChange={(e) => handleFormData(e)}
+				onChange={handleFormData}
 				className="myInput"
 			/>
 			<div className="relative">
 				<input
 					type={showPassword ? "text" : "password"}
-					placeholder="Password"
 					name="password"
+					placeholder={t("password")}
 					value={loginForm.password}
-					onChange={(e) => handleFormData(e)}
+					onChange={handleFormData}
 					className="myInput"
 				/>
 				<button
@@ -91,16 +93,16 @@ const LogIn = () => {
 			<div className="flex justify-end items-center gap-6">
 				{loginState.error && (
 					<span className="text-red-500 text-center">
-						{"Invalid email or password"}
+						Invalid email or password
 					</span>
 				)}
 				<Link href="#">
 					<div className="flex justify-end px-5">
 						<div className="flex gap-1 justify-center items-center text-sm group cursor-pointer">
 							<p className="text-secondary-foreground transition-all duration-300 ">
-								Forget Password
+								{t("forgetPassword")}
 							</p>
-							<IoIosArrowRoundForward className="transform transition-all duration-300 ease-out group-hover:translate-x-1" />
+							<IoIosArrowRoundForward className=" transform transition-all duration-300 ease-out group-hover:translate-x-1 " />
 						</div>
 					</div>
 				</Link>
@@ -111,7 +113,8 @@ const LogIn = () => {
 				disabled={!!(!loginForm.email || !loginForm.password)}
 				className="myBtnPrimary disabled:opacity-50"
 			>
-				Login
+				{t("title")}
+				(
 				<Image
 					src={"/leaf.png"}
 					width={25}
@@ -119,39 +122,47 @@ const LogIn = () => {
 					alt="leaf"
 					className="scale-x-[-1]"
 				/>
+				)
 			</button>
+
+			{/* divider */}
+			<div className="flex items-center gap-2">
+				<div className="h-px bg-secondary-foreground/50 w-full"></div>
+				<p className="text-stone-500">{t("or")}</p>
+				<div className="h-px bg-secondary-foreground/50 w-full"></div>
+			</div>
 
 			{/* social login */}
 			<div className="flex justify-evenly items-center my-4 text-4xl text-secondary-foreground ">
 				<button
 					onClick={async () => await signIn("google")}
-					className="hover:scale-115 hover:shadow-2xl shadow-primary transition duration-300 cursor-pointer"
+					className="hover:scale-115 hover:shadow-2xl shadow-primary transition duration-300"
 				>
 					<FaGoogle />
 				</button>
 				<Link
 					href={"#"}
-					className="hover:scale-115 hover:shadow-2xl shadow-primary transition duration-300 cursor-pointer"
+					className="hover:scale-115 hover:shadow-2xl shadow-primary transition duration-300"
 				>
 					<FaFacebookF />
 				</Link>
 				<Link
 					href={"#"}
-					className="hover:scale-115 hover:shadow-2xl shadow-primary transition duration-300 cursor-pointer"
+					className="hover:scale-115 hover:shadow-2xl shadow-primary transition duration-300"
 				>
 					<FaApple />
 				</Link>
 				<Link
 					href={"#"}
-					className="hover:scale-115 hover:shadow-2xl shadow-primary transition duration-300 cursor-pointer"
+					className="hover:scale-115 hover:shadow-2xl shadow-primary transition duration-300"
 				>
 					<FaTwitter />
 				</Link>
 			</div>
-			<p className="text-center text-stone-600 space-x-1 sm:hidden">
-				<span>New to EcoSphere ?</span>
+			<p className="text-center text-stone-600 space-x-1 sm:hidden ">
+				<span>{t("newToEcosphere")}</span>
 				<button onClick={handleToggle} className="text-primary cursor-pointer">
-					Sign up
+					{t("signUp")}
 				</button>
 			</p>
 		</div>

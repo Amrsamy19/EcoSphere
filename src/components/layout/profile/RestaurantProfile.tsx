@@ -8,8 +8,11 @@ import {
 	updateProfile,
 } from "@/frontend/redux/Slice/UserSlice";
 import ImageUpload from "@/components/layout/common/ImageUpload";
+import { useTranslations } from "next-intl";
 
 export default function RestaurantProfile() {
+	const t = useTranslations("Profile.restaurant");
+	const tCommon = useTranslations("Profile.common");
 	const user = useSelector((state: RootState) => state.user);
 	const dispatch = useDispatch<AppDispatch>();
 	const [isEditing, setIsEditing] = useState(false);
@@ -71,20 +74,20 @@ export default function RestaurantProfile() {
 									<h1 className="text-2xl font-bold text-card-foreground">
 										{user.name || "Restaurant Name"}
 									</h1>
-									<p className="text-muted-foreground">Restaurant</p>
+									<p className="text-muted-foreground">{t("role")}</p>
 								</div>
 								<div className="flex flex-wrap gap-2">
 									<button
 										onClick={handleEditClick}
 										className="bg-primary text-primary-foreground px-3 py-1.5 text-sm rounded-lg hover:bg-primary/90 transition whitespace-nowrap"
 									>
-										Edit Profile
+										{tCommon("editProfile")}
 									</button>
 									<button
 										onClick={handleChangePassword}
 										className="bg-destructive text-destructive-foreground px-3 py-1.5 text-sm rounded-lg hover:bg-destructive/90 transition whitespace-nowrap"
 									>
-										Change Password
+										{tCommon("changePassword")}
 									</button>
 								</div>
 							</div>
@@ -97,29 +100,35 @@ export default function RestaurantProfile() {
 					{/* Right Side: Restaurant Information */}
 					<div className="flex-1 w-full">
 						<h2 className="text-xl font-semibold mb-4 text-card-foreground">
-							Restaurant Information
+							{t("shopName")} Information
 						</h2>
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 							<div>
-								<p className="text-sm text-muted-foreground">Location</p>
+								<p className="text-sm text-muted-foreground">{t("location")}</p>
 								<p className="font-medium text-card-foreground">
-									{user.location || "N/A"}
+									{user.location || tCommon("na")}
 								</p>
 							</div>
 							<div>
-								<p className="text-sm text-muted-foreground">Phone Number</p>
+								<p className="text-sm text-muted-foreground">
+									{tCommon("phoneNumber")}
+								</p>
 								<p className="font-medium text-card-foreground">
-									{user.phoneNumber || "N/A"}
+									{user.phoneNumber || tCommon("na")}
 								</p>
 							</div>
 							<div>
-								<p className="text-sm text-muted-foreground">Working Hours</p>
+								<p className="text-sm text-muted-foreground">
+									{t("workingHours")}
+								</p>
 								<p className="font-medium text-card-foreground">
-									{user.workingHours || "N/A"}
+									{user.workingHours || tCommon("na")}
 								</p>
 							</div>
 							<div className="col-span-2">
-								<p className="text-sm text-muted-foreground">Description</p>
+								<p className="text-sm text-muted-foreground">
+									{t("description")}
+								</p>
 								<p className="font-medium text-card-foreground">
 									{user.description || "No description available."}
 								</p>
@@ -134,12 +143,12 @@ export default function RestaurantProfile() {
 				<div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
 					<div className="bg-card rounded-lg p-6 w-full max-w-md border border-border shadow-lg">
 						<h2 className="text-xl font-bold mb-4 text-card-foreground">
-							Edit Profile
+							{t("editModalTitle")}
 						</h2>
 						<div className="space-y-4">
 							<div>
 								<label className="block text-sm font-medium text-card-foreground mb-1">
-									Restaurant Name
+									{t("shopName")}
 								</label>
 								<input
 									type="text"
@@ -151,7 +160,7 @@ export default function RestaurantProfile() {
 							</div>
 							<div>
 								<label className="block text-sm font-medium text-card-foreground mb-1">
-									Phone Number
+									{tCommon("phoneNumber")}
 								</label>
 								<input
 									type="text"
@@ -163,7 +172,7 @@ export default function RestaurantProfile() {
 							</div>
 							<div>
 								<label className="block text-sm font-medium text-card-foreground mb-1">
-									Location
+									{t("location")}
 								</label>
 								<input
 									type="text"
@@ -175,7 +184,7 @@ export default function RestaurantProfile() {
 							</div>
 							<div>
 								<label className="block text-sm font-medium text-card-foreground mb-1">
-									Working Hours
+									{t("workingHours")}
 								</label>
 								<input
 									type="text"
@@ -188,7 +197,7 @@ export default function RestaurantProfile() {
 							</div>
 							<div>
 								<label className="block text-sm font-medium text-card-foreground mb-1">
-									Description
+									{t("description")}
 								</label>
 								<textarea
 									name="description"
@@ -204,13 +213,13 @@ export default function RestaurantProfile() {
 								onClick={() => setIsEditing(false)}
 								className="px-4 py-2 border border-input rounded-md text-foreground hover:bg-accent hover:text-accent-foreground transition"
 							>
-								Cancel
+								{tCommon("cancel")}
 							</button>
 							<button
 								onClick={handleSave}
 								className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition"
 							>
-								Save Changes
+								{tCommon("saveChanges")}
 							</button>
 						</div>
 					</div>

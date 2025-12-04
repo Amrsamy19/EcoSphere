@@ -27,6 +27,7 @@ import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
+import { useTranslations } from 'next-intl';
 
 export default function UserBtn({
 	session,
@@ -34,6 +35,7 @@ export default function UserBtn({
 }: Readonly<{ session: Session; status: string }>) {
 	const { isMobile } = useSidebar();
 	const router = useRouter();
+	const t = useTranslations('Layout.UserBtn');
 
 	const handleLogout = () => {
 		signOut({ redirect: false });
@@ -106,7 +108,7 @@ export default function UserBtn({
 						<DropdownMenuGroup>
 							<DropdownMenuItem>
 								<Sparkles />
-								Subscribe
+								{t('subscribe')}
 							</DropdownMenuItem>
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
@@ -114,22 +116,22 @@ export default function UserBtn({
 							<Link href="/profile">
 								<DropdownMenuItem>
 									<BadgeCheck />
-									Account
+									{t('account')}
 								</DropdownMenuItem>
 							</Link>
 							<DropdownMenuItem>
 								<CreditCard />
-								Billing
+								{t('billing')}
 							</DropdownMenuItem>
 							<DropdownMenuItem>
 								<Bell />
-								Notifications
+								{t('notifications')}
 							</DropdownMenuItem>
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
 						<DropdownMenuItem onClick={handleLogout}>
 							<LogOut />
-							<span>Logout</span>
+							<span>{t('logout')}</span>
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>
