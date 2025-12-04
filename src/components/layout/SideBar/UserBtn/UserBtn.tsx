@@ -25,15 +25,20 @@ import {
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { Session } from "next-auth";
+import { useRouter } from "next/navigation";
+import { useTranslations } from 'next-intl';
 
 export default function UserBtn({
 	session,
 	status,
 }: Readonly<{ session: Session; status: string }>) {
 	const { isMobile } = useSidebar();
+	const router = useRouter();
+	const t = useTranslations('Layout.UserBtn');
 
-	const handleLogout = async () => {
-		await signOut({ redirectTo: "/auth" });
+	const handleLogout = () => {
+		signOut({ redirect: false });
+		router.replace("/")
 	};
 
 	if (status === "unauthenticated") return null;
@@ -102,7 +107,7 @@ export default function UserBtn({
 						<DropdownMenuGroup>
 							<DropdownMenuItem>
 								<Sparkles />
-								Subscribe
+								{t('subscribe')}
 							</DropdownMenuItem>
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
@@ -115,13 +120,13 @@ export default function UserBtn({
 							</Link>
 							<DropdownMenuItem>
 								<Bell />
-								Notifications
+								{t('notifications')}
 							</DropdownMenuItem>
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
 						<DropdownMenuItem onClick={handleLogout}>
 							<LogOut />
-							<span>Log out</span>
+							<span>{t('logout')}</span>
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>
