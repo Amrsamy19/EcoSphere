@@ -3,7 +3,6 @@ import {
 	BadgeCheck,
 	Bell,
 	ChevronsUpDown,
-	CreditCard,
 	LogOut,
 	Sparkles,
 } from "lucide-react";
@@ -119,10 +118,6 @@ export default function UserBtn({
 									{t('account')}
 								</DropdownMenuItem>
 							</Link>
-							<DropdownMenuItem>
-								<CreditCard />
-								{t('billing')}
-							</DropdownMenuItem>
 							<DropdownMenuItem>
 								<Bell />
 								{t('notifications')}
