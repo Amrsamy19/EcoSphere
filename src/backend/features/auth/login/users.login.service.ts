@@ -39,6 +39,10 @@ class LoginService {
 		);
 
 		if (!user) user = await this.authRepository.findUserByEmail(email, key);
+		if (!user) {
+			console.error("user not found");
+			return false;
+		}
 		if (user?.password) {
 			console.error("user must login using email and password");
 			return false;

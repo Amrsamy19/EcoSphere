@@ -49,29 +49,36 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 	},
 	callbacks: {
 		async signIn({ user, account, profile }) {
-			const controller = rootContainer.resolve(AuthController);
 			switch (account?.provider) {
-				case "google":
-					return !!(await controller.LoginWithGoogle({
-						firstName: profile?.given_name as string,
-						lastName: profile?.family_name as string,
-						email: user?.email as string,
-						role: "customer",
-						oAuthId: account.providerAccountId,
-						provider: account.provider,
-					}));
+				case "google": {
+					const [firstName, ...rest] = (profile?.name ?? "").split(" ");
+					const lastName = rest.join(" ")	
+					return !!(await rootContainer
+						.resolve(AuthController)
+						.LoginWithGoogle({
+							firstName: firstName,
+							lastName: lastName,
+							email: user?.email as string,
+							role: "customer",
+							oAuthId: account.providerAccountId,
+							provider: account.provider,
+						}));
+				}
 				case "credentials":
 					return true;
 				default:
 					return false;
 			}
 		},
-		async jwt({ token, user }) {
+		async jwt({ token, user, account }) {
 			if (user) {
 				token.id = user.id;
 				token.email = user.email;
 				token.role = user.role;
 				token.name = user.name;
+			}
+			if (account?.provider === "google") {
+				token.role = "customer"
 			}
 			return token;
 		},
