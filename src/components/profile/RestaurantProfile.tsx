@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "@/frontend/redux/store";
 import { updateUserProfile, updateProfile } from "@/frontend/redux/Slice/UserSlice";
-import ImageUpload from "@/components/common/ImageUpload";
+import ImageUpload from "@/components/layout/common/ImageUpload";
 import { Edit, Eye, EyeOff } from "lucide-react";
 import { ChangePasswordSchema } from "@/frontend/schema/profile.schema";
 
@@ -174,9 +174,8 @@ export default function RestaurantProfile() {
             {/* Security Section */}
             <div className="bg-card shadow rounded-lg p-6 border border-border">
                 <h2 className="text-xl font-semibold mb-4 text-card-foreground">Security</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {/* Current Password - Top Left */}
-                    <div className="md:col-start-1 md:row-start-1">
+                <div className="max-w-md space-y-4">
+                    <div>
                         <label className="block text-sm font-medium text-card-foreground mb-1">Current Password</label>
                         <div className="relative">
                             <input
@@ -197,9 +196,7 @@ export default function RestaurantProfile() {
                         </div>
                         {touched.currentPassword && errors.currentPassword && <p className="text-red-500 text-sm mt-1">{errors.currentPassword}</p>}
                     </div>
-
-                    {/* New Password - Bottom Left */}
-                    <div className="md:col-start-1 md:row-start-2">
+                    <div>
                         <label className="block text-sm font-medium text-card-foreground mb-1">New Password</label>
                         <div className="relative">
                             <input
@@ -221,9 +218,7 @@ export default function RestaurantProfile() {
                         </div>
                         {touched.newPassword && errors.newPassword && <p className="text-red-500 text-sm mt-1">{errors.newPassword}</p>}
                     </div>
-
-                    {/* Confirm Password - Top Right */}
-                    <div className="md:col-start-2 md:row-start-1">
+                    <div>
                         <label className="block text-sm font-medium text-card-foreground mb-1">Confirm Password</label>
                         <div className="relative">
                             <input
@@ -245,19 +240,13 @@ export default function RestaurantProfile() {
                         </div>
                         {touched.confirmPassword && errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>}
                     </div>
-
-                    {/* Change Password Button - Bottom Right */}
-                    <div className="md:col-start-2 md:row-start-2">
-                        {/* Invisible label for alignment */}
-                        <label className="invisible block text-sm font-medium mb-1">Placeholder</label>
-                        <button
-                            onClick={handleChangePassword}
-                            className={`myBtnPrimary w-full ${(!passwordData.confirmPassword || passwordData.newPassword !== passwordData.confirmPassword) ? "opacity-50 cursor-not-allowed" : ""}`}
-                            disabled={!passwordData.confirmPassword || passwordData.newPassword !== passwordData.confirmPassword}
-                        >
-                            Change Password
-                        </button>
-                    </div>
+                    <button
+                        onClick={handleChangePassword}
+                        className={`mt-8 myBtnPrimary w-full ${(!passwordData.confirmPassword || passwordData.newPassword !== passwordData.confirmPassword) ? "opacity-50 cursor-not-allowed" : ""}`}
+                        disabled={!passwordData.confirmPassword || passwordData.newPassword !== passwordData.confirmPassword}
+                    >
+                        Change Password
+                    </button>
                 </div>
             </div>
 
