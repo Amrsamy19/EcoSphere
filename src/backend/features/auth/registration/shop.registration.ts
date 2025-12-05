@@ -2,6 +2,7 @@ import { inject, injectable } from "tsyringe";
 import { IRegistrationStrategy } from "./registration.service";
 import { RegisterResponseDTO, ShopRegisterDTO } from "../dto/user.dto";
 import type { IAuthRepository } from "../auth.repository";
+import { sendWelcomeEmail } from "@/backend/utils/mailer";
 import { ImageService } from "@/backend/services/image.service";
 
 @injectable()
@@ -33,6 +34,15 @@ class ShopRegistration implements IRegistrationStrategy {
 
 		const savedShop = await this.authRepo.saveNewShop(data);
 		if (!savedShop) throw new Error("something went wrong, shop can not registered");
+
+		await sendWelcomeEmail(
+			data.email,
+			"firstName" in data || "lastName" in data
+				? `${(data as any).firstName || ""} ${(data as any).lastName || ""}`.trim()
+				: data.name,
+			"shop"
+		);
+
 		return { success: true };
 	}
 }

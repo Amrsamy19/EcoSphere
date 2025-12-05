@@ -34,7 +34,7 @@ export default function ShopHero() {
       transition={{ duration: 0.7 }}
       viewport={{ once: true }}
     >
-      <div className="rounded-3xl p-6">
+      <div className="rounded-3xl p-2">
         <h2 className="text-3xl font-bold text-foreground mb-4 text-center">
           {t('title')}
         </h2>
@@ -57,7 +57,7 @@ export default function ShopHero() {
                 className={`
           transition-all duration-300 ease-in-out cursor-pointer rounded-2xl border p-4 shadow-xl backdrop-blur-md group w-full md:w-1/3
           
-          ${isDimmed ? "opacity-60 scale-[0.98]" : "opacity-100 scale-100"}
+          ${isDimmed ? "opacity-70 scale-[0.98]" : "opacity-100 scale-100"}
           
           bg-primary border-0 hover:-translate-y-1`}
               >
