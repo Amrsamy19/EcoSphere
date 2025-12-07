@@ -3,8 +3,8 @@
 import Image from "next/image";
 import { motion, useAnimation } from "framer-motion";
 import { useEffect, useState } from "react";
-import EmailVerification from "@/components/layout/Auth/ForgotPassword/EmailVerification";
-import ResetPassword from "@/components/layout/Auth/ForgotPassword/ResetPassword";
+import EmailVerification from "@/components/layout/ForgotPassword/EmailVerification";
+import ResetPassword from "@/components/layout/ForgotPassword/ResetPassword";
 import { getCoords, ICoords } from "@/frontend/Actions/GetCoords";
 
 const ForgotPasswordPage = () => {
