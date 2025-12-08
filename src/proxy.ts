@@ -7,7 +7,7 @@ import { routing } from "./i18n/routing";
 
 const intlMiddleware = createMiddleware(routing);
 
-export const proxy = auth(async (req) => {
+export const proxy = auth((req) => {
   const session = req.auth as AuthSession | null;
   const pathname = req.nextUrl.pathname;
 
