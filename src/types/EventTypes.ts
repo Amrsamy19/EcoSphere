@@ -39,9 +39,9 @@ export interface IEventDetails {
 }
 
 export interface EventProps {
-  events: IEventDetails[];
+  events: EventListItemProps[];
 }
 
-export type EventListItemProps = Pick<IEventDetails, '_id' | 'name' | 'eventDate' | 'startTime' | 'endTime' | 'locate'> & {
+export type EventListItemProps = Pick<IEventDetails,  '_id' | 'name' | 'eventDate' | 'startTime' | 'endTime' | 'locate'> & {
   avatar: string | undefined;
 };

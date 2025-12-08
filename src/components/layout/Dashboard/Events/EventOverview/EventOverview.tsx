@@ -9,7 +9,7 @@ import { TrendingUp, TrendingDown } from 'lucide-react';
 import { MapPin } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { EventListItemProps, EventProps, MetricData } from '@/types/EventTypes';
+import { EventListItemProps, EventProps, IEventDetails, MetricData } from '@/types/EventTypes';
 import React from 'react';
 import { useSession } from 'next-auth/react';
 
@@ -216,8 +216,8 @@ export default function EventOverview({ events }: EventProps) {
           <h4 className='text-gray-400 text-md'>{t('viewAll')}</h4>
         </div>
         <div className='flex flex-col gap-2'>
-          {sortedAndLimitedEvents?.length > 0 ? (
-            sortedAndLimitedEvents.map((event) => (
+          {sortedAndLimitedEvents?.length! > 0 ? (
+            sortedAndLimitedEvents!.map((event) => (
               <EventListItem
                 key={event._id}
                 _id={event._id}
