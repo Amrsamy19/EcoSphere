@@ -1,8 +1,10 @@
 import React from "react";
 import { Check, Leaf } from "lucide-react";
 import { ISubscribePlan } from "@/types/SubscribePlan";
+import Link from "next/link";
 
 export default async function  PlanCard({ plan , locale  }: Readonly<{ plan: ISubscribePlan , locale: string }>) {
+
   return (
     <div className="">
       <div className="bg-background rounded-2xl   shadow-xl max-w-sm w-full overflow-hidden transform transition-all hover:scale-105 duration-300 flex flex-col justify-between">
@@ -47,7 +49,7 @@ export default async function  PlanCard({ plan , locale  }: Readonly<{ plan: ISu
 
         {/* CTA Button */}
         <div className="px-8 pb-8">
-          <button className="w-full myBtnPrimary">{plan.btnText}</button>
+          <Link href={"/checkout"} className="w-full myBtnPrimary" >{plan.btnText}</Link>
         </div>
       </div>
     </div>

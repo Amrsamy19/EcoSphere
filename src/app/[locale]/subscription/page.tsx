@@ -2,7 +2,7 @@ import SubscriptionHero from "@/components/layout/subscription/subscriptionHero"
 import SubscriptionSection from "@/components/layout/subscription/SubscriptionSection";
 import React from "react";
 
-export default async function page(params) {
+export default async function page(params:{params:Promise<{locale:string}>} ) {
   const { locale } = await params.params;
   console.log(locale);
   return (
