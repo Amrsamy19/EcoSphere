@@ -132,12 +132,12 @@ export default function CheckoutPage() {
           </>
         ) : (
           <div className="text-center py-6 animate-in fade-in slide-in-from-bottom-4">
-            <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Banknote className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+            <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+              <Banknote className="w-8 h-8 text-primary-foreground" />
             </div>
             <h3 className="text-lg font-bold mb-2">Cash on Delivery</h3>
             <p className="text-zinc-500 dark:text-zinc-400 mb-6 px-4">
-              You will pay <strong>{(amount / 100).toFixed(2)}EGP</strong>{" "}
+              You will pay <strong className="text-primary">{(amount / 100).toFixed(2)}EGP</strong>{" "}
               directly to the courier upon delivery.
             </p>
             <button
