@@ -56,7 +56,7 @@ const MaterialSection = ({
         onClick={addMaterial}
         className="w-full md:w-auto bg-background text-primary border-2 border-primary p-3 px-5 rounded-full transition duration-400 hover:scale-102 flex justify-center items-center text-lg gap-2 hover:outline-2 hover:outline-primary hover:outline-offset-4 hover:bg-primary hover:text-primary-foreground cursor-pointer"
       >
-        <Plus size={20} /> Add Another Item
+        <Plus size={20} /> Add Item
       </button>
     </div>
   </div>

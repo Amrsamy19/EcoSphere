@@ -1,6 +1,6 @@
 "use client";
 
-import { MapPin } from "lucide-react";
+import { MapPin ,Building2, StretchHorizontal,DoorClosed, Rows4, Sparkles   } from "lucide-react";
 import { UseFormRegister, FieldErrors } from "react-hook-form";
 import { type RecycleFormValues } from "@/frontend/schema/recycle.schema";
 import Input from "./UI/formInput";
@@ -17,19 +17,60 @@ const AddressSection = ({ register, errors }: AddressSectionProps) => (
       <span className="text-sm font-extrabold uppercase">Address Details</span>
     </div>
 
-    <div className=" p-8 rounded-3xl border-2 border-primary/30  space-y-6">
+    <div className=" p-4 md:p-6 lg:p-8 rounded-3xl border-2 border-primary/30  space-y-6">
       <div className="grid md:grid-cols-2 gap-8">
-        <Input label="City" register={register("city")} error={errors.city?.message} icon={MapPin} placeholder="Enter city name" required />
-        <Input label="Neighborhood" register={register("neighborhood")} error={errors.neighborhood?.message} icon={MapPin} placeholder="Enter neighborhood" required />
+        <Input
+          label="City"
+          register={register("city")}
+          error={errors.city?.message}
+          icon={MapPin}
+          placeholder="Enter city name"
+          required
+        />
+        <Input
+          label="Neighborhood"
+          register={register("neighborhood")}
+          error={errors.neighborhood?.message}
+          icon={Sparkles }
+          placeholder="Enter neighborhood"
+          required
+        />
       </div>
 
-      <Input label="Street" register={register("street")} error={errors.street?.message} icon={MapPin} placeholder="Enter street address" required />
+      <Input
+        label="Street"
+        register={register("street")}
+        error={errors.street?.message}
+        icon={StretchHorizontal }
+        placeholder="Enter street address"
+        required
+      />
 
-      <div className="grid grid-cols-3 gap-6">
-        <Input label="Building" register={register("building")} error={errors.building?.message} icon={MapPin} placeholder="Building #" required />
-        <Input label="Floor" register={register("floor")} error={errors.floor?.message} icon={MapPin} placeholder="Floor #" required />
-        <Input label="Apartment" register={register("apartment")} error={errors.apartment?.message} icon={MapPin} placeholder="Apt #" required
-         />
+      <div className="grid grid-cols-1 md:grid-cols-3  gap-6">
+        <Input
+          label="Building"
+          register={register("building")}
+          error={errors.building?.message}
+          icon={Building2 }
+          placeholder="Building #"
+          required
+        />
+        <Input
+          label="Floor"
+          register={register("floor")}
+          error={errors.floor?.message}
+          icon={Rows4 }
+          placeholder="Floor #"
+          required
+        />
+        <Input
+          label="Apartment"
+          register={register("apartment")}
+          error={errors.apartment?.message}
+          icon={DoorClosed }
+          placeholder="Apt #"
+          required
+        />
       </div>
     </div>
   </div>
