@@ -22,6 +22,7 @@ import { RecycleService } from "../features/recycle/recycle.service";
 import { RecycleRepository } from "../features/recycle/recycle.repository";
 import { OrderRepository } from "../features/orders/order.repository";
 import { OrderService } from "../features/orders/order.service";
+import { PaymentService } from "../services/payment.service";
 
 // you will register any
 container.registerSingleton("IUserRepository", UserRepository);
@@ -44,6 +45,7 @@ container.registerSingleton("UploadService", UploadService);
 container.registerSingleton("UploadRepository", UploadRepository);
 container.registerSingleton("ProductRepository", ProductRepository);
 container.registerSingleton("ProductService", ProductService);
+container.registerSingleton("PaymentService", PaymentService);
 container.registerSingleton("RecycleService", RecycleService);
 container.registerSingleton("RecycleRepository", RecycleRepository);
 
