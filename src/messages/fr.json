@@ -446,7 +446,7 @@
     }
   },
   "subscribe": {
-      "titleFirst": "Sélectionnez le ",
+    "titleFirst": "Sélectionnez le ",
     "boldTitle": "plan parfait",
     "titleLast": " pour vos besoins",
     "plans": [
@@ -464,7 +464,6 @@
         ],
         "icon": "leaf"
       },
-
       {
         "title": "Formule Pro",
         "subtitle": "Pour les boutiques professionnelles et les grands organisateurs d'événements.",
@@ -494,6 +493,7 @@
         "icon": "growth"
       }
     ]
+  },
   "AI": {
     "button": {
       "label": "Demander à l'IA"
