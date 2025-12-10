@@ -23,6 +23,8 @@ import { RecycleRepository } from "../features/recycle/recycle.repository";
 import { OrderRepository } from "../features/orders/order.repository";
 import { OrderService } from "../features/orders/order.service";
 import { PaymentService } from "../services/payment.service";
+import { AIRepository } from "../features/ai/ai.repository";
+import { AIService } from "../features/ai/ai.service";
 
 // you will register any
 container.registerSingleton("IUserRepository", UserRepository);
@@ -48,5 +50,7 @@ container.registerSingleton("ProductService", ProductService);
 container.registerSingleton("PaymentService", PaymentService);
 container.registerSingleton("RecycleService", RecycleService);
 container.registerSingleton("RecycleRepository", RecycleRepository);
+container.registerSingleton("AIRepository", AIRepository);
+container.registerSingleton("AIService", AIService);
 
 export { container as rootContainer } from "tsyringe";
