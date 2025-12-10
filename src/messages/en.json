@@ -495,7 +495,6 @@
         ],
         "icon": "leaf"
       },
-
       {
         "title": "Pro Plan",
         "subtitle": "For professional stores and large event organizers.",
@@ -525,6 +524,7 @@
         "icon": "growth"
       }
     ]
+  },
   "AI": {
     "button": {
       "label": "Ask AI"
