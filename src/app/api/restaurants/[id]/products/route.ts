@@ -4,6 +4,7 @@ import { IRestaurant } from "@/backend/features/restaurant/restaurant.model";
 import {
   ProductResponse,
   CreateProductDTO,
+  PaginatedProductResponse,
 } from "@/backend/features/product/dto/product.dto";
 import { ApiResponse, ok, serverError, badRequest } from "@/types/api-helpers";
 import { NextRequest, NextResponse } from "next/server";
@@ -11,12 +12,28 @@ import { NextRequest, NextResponse } from "next/server";
 export const GET = async (
   _req: NextRequest,
   context: { params: Promise<{ id: string }> }
-): Promise<NextResponse<ApiResponse<ProductResponse[]>>> => {
+): Promise<
+  NextResponse<ApiResponse<PaginatedProductResponse | ProductResponse[]>>
+> => {
   const { id } = await context.params;
   const controller = rootContainer.resolve(ProductController);
 
+  // Extract Query Params
+  const searchParams = _req.nextUrl.searchParams;
+  const page = searchParams.get("page")
+    ? parseInt(searchParams.get("page")!)
+    : undefined;
+  const limit = searchParams.get("limit")
+    ? parseInt(searchParams.get("limit")!)
+    : undefined;
+  const search = searchParams.get("search") || undefined;
+
   try {
-    const result = await controller.getByRestaurantId(id);
+    const result = await controller.getByRestaurantId(id, {
+      page,
+      limit,
+      search,
+    });
     return ok(result);
   } catch (error) {
     console.error(error);
