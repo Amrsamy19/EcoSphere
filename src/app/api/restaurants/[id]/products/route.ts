@@ -3,10 +3,9 @@ import { ProductController } from "@/backend/features/product/product.controller
 import { IRestaurant } from "@/backend/features/restaurant/restaurant.model";
 import {
   ProductResponse,
-  CreateProductDTO,
   PaginatedProductResponse,
 } from "@/backend/features/product/dto/product.dto";
-import { ApiResponse, ok, serverError, badRequest } from "@/types/api-helpers";
+import { ApiResponse, ok, serverError } from "@/types/api-helpers";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (
@@ -52,8 +51,8 @@ export const POST = async (
   try {
     const result = await controller.addProduct(id, body);
     return ok(result);
-  } catch (error: any) {
+  } catch (error) {
     console.error(error);
-    return badRequest(error.message || "Failed to add product");
+    return serverError("Something went wrong");
   }
 };
