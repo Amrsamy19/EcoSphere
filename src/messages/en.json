@@ -26,7 +26,9 @@
         "overview": "OverView",
         "addEvent": "Add Event",
         "browseEvents": "Browse Events",
-        "eventDetails": "Event Details"
+        "eventDetails": "Event Details",
+        "products": "Products",
+        "orders": "Orders"
       },
       "footer": {
         "favorite": "Favorite",
@@ -192,6 +194,62 @@
         "lowestRating": "Lowest Rating"
       },
       "noProducts": "No products match your current search criteria."
+    }
+  },
+  "Restaurant": {
+    "Products": {
+      "title": "Products",
+      "subtitle": "Manage your restaurant menu items",
+      "addProduct": "Add Product",
+      "searchPlaceholder": "Search products...",
+      "noProducts": "No products found. Add your first product!",
+      "previous": "Previous",
+      "next": "Next",
+      "page": "Page {current} of {total}",
+      "unavailable": "Unavailable",
+      "noImage": "No Image",
+      "currency": "EGP",
+      "actions": {
+        "edit": "Edit",
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "save": "Save Product",
+        "saving": "Saving...",
+        "deleting": "Deleting..."
+      },
+      "popup": {
+        "addTitle": "Add New Product",
+        "editTitle": "Edit Product",
+        "addDescription": "Add a new item to your menu",
+        "editDescription": "Update product details",
+        "titleLabel": "Title",
+        "titlePlaceholder": "e.g. Margherita Pizza",
+        "subtitleLabel": "Subtitle",
+        "subtitlePlaceholder": "Short description...",
+        "priceLabel": "Price (EGP)",
+        "imageLabel": "Product Image",
+        "availableLabel": "Available Online",
+        "errors": {
+          "titleRequired": "Title is required",
+          "subtitleRequired": "Subtitle is required",
+          "priceRequired": "Price is required"
+        }
+      },
+      "deleteDialog": {
+        "title": "Delete Product",
+        "description": "Are you sure you want to delete <bold>{name}</bold>? This action cannot be undone.",
+        "confirm": "Delete",
+        "thisProduct": "this product"
+      },
+      "toasts": {
+        "loadError": "Failed to load products",
+        "createSuccess": "Product created successfully",
+        "createError": "Failed to create product",
+        "updateSuccess": "Product updated successfully",
+        "updateError": "Failed to update product",
+        "deleteSuccess": "Product deleted successfully",
+        "deleteError": "Failed to delete product"
+      }
     }
   },
   "Store": {

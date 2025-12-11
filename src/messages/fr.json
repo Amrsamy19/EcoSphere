@@ -26,7 +26,9 @@
         "overview": "Aperçu",
         "addEvent": "Ajouter un événement",
         "browseEvents": "Parcourir les événements",
-        "eventDetails": "Détails de l’événement"
+        "eventDetails": "Détails de l’événement",
+        "products": "Produits",
+        "orders": "Commandes"
       },
       "footer": {
         "favorite": "Favoris",
@@ -249,6 +251,62 @@
       "title": "Produits du magasin",
       "subtitle": "découvrez les produits de ce magasin",
       "noProducts": "Aucun produit disponible pour ce magasin."
+    }
+  },
+  "Restaurant": {
+    "Products": {
+      "title": "Produits",
+      "subtitle": "Gérez les articles du menu de votre restaurant",
+      "addProduct": "Ajouter un produit",
+      "searchPlaceholder": "Rechercher des produits...",
+      "noProducts": "Aucun produit trouvé. Ajoutez votre premier produit !",
+      "previous": "Précédent",
+      "next": "Suivant",
+      "page": "Page {current} sur {total}",
+      "unavailable": "Indisponible",
+      "noImage": "Pas d'image",
+      "currency": "EGP",
+      "actions": {
+        "edit": "Modifier",
+        "delete": "Supprimer",
+        "cancel": "Annuler",
+        "save": "Enregistrer le produit",
+        "saving": "Enregistrement...",
+        "deleting": "Suppression..."
+      },
+      "popup": {
+        "addTitle": "Ajouter un nouveau produit",
+        "editTitle": "Modifier le produit",
+        "addDescription": "Ajoutez un nouvel article à votre menu",
+        "editDescription": "Mettre à jour les détails du produit",
+        "titleLabel": "Titre",
+        "titlePlaceholder": "ex : Pizza Margherita",
+        "subtitleLabel": "Sous-titre",
+        "subtitlePlaceholder": "Courte description...",
+        "priceLabel": "Prix (EGP)",
+        "imageLabel": "Image du produit",
+        "availableLabel": "Disponible en ligne",
+        "errors": {
+          "titleRequired": "Le titre est requis",
+          "subtitleRequired": "Le sous-titre est requis",
+          "priceRequired": "Le prix est requis"
+        }
+      },
+      "deleteDialog": {
+        "title": "Supprimer le produit",
+        "description": "Êtes-vous sûr de vouloir supprimer <bold>{name}</bold> ? Cette action est irréversible.",
+        "confirm": "Supprimer",
+        "thisProduct": "ce produit"
+      },
+      "toasts": {
+        "loadError": "Échec du chargement des produits",
+        "createSuccess": "Produit créé avec succès",
+        "createError": "Échec de la création du produit",
+        "updateSuccess": "Produit mis à jour avec succès",
+        "updateError": "Échec de la mise à jour du produit",
+        "deleteSuccess": "Produit supprimé avec succès",
+        "deleteError": "Échec de la suppression du produit"
+      }
     }
   },
   "Auth": {
