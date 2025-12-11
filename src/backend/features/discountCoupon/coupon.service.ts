@@ -4,7 +4,7 @@ import type { ICouponRepository } from "./coupon.repository";
 
 export interface ICouponService {
 	findCouponByCode(code: string): Promise<ICoupon>;
-	useCoupon(code: string): Promise<ICoupon>;
+	useCoupon(code: string, userId: string): Promise<ICoupon>;
 	createCoupon(couponData: ICoupon): Promise<ICoupon>;
 	deleteCoupon(code: string): Promise<ICoupon>;
 }
@@ -24,15 +24,18 @@ export class CouponService implements ICouponService {
 		return coupon;
 	}
 
-	async useCoupon(code: string): Promise<ICoupon> {
+	async useCoupon(code: string, userId: string): Promise<ICoupon> {
 		const coupon = await this.findCouponByCode(code);
-		if (coupon.numberOfUse >= coupon.maxNumberOfUse) {
+		if (coupon.numberOfUse >= coupon.maxNumberOfUse) 
 			throw new Error(`Coupon ${code} has reached its usage limit`);
-		}
-		if (coupon.validTo >= new Date()) {
+
+		if (coupon.validTo <= new Date()) 
 			throw new Error(`Coupon ${code} outdated`);
-		}
-		coupon.numberOfUse++;
+
+		if (coupon.source === "redeem" && `${coupon.createdBy}` !== userId)
+			throw new Error(`Coupon ${code} not meant for this user`);
+
+		++coupon.numberOfUse;
 		return await this.couponRepository.updateCoupon(code, coupon);
 	}
 

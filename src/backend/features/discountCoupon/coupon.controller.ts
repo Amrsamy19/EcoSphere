@@ -15,9 +15,9 @@ export class CouponController {
 		return response;
 	}
 
-	async useCoupon(code: string) {
+	async useCoupon(code: string, userId: string) {
 		if (!code) return;
-		const response = await this.couponService.useCoupon(code);
+		const response = await this.couponService.useCoupon(code, userId);
 		return response;
 	}
 

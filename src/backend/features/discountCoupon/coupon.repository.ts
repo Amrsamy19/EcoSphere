@@ -26,6 +26,7 @@ export class CouponRepository implements ICouponRepository {
 		const result = await CouponModel.findOneAndUpdate({ code }, updateData, {
 			new: true,
 		})
+			.select("code rate validTo")
 			.lean<ICoupon>()
 			.exec();
 		return result!;
