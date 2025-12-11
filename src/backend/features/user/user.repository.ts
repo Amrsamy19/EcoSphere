@@ -73,14 +73,18 @@ class UserRepository implements IUserRepository{
     return result[0] as DashboardUsers;
   }
 
-	async redeemPoints(userId: string): Promise<IUser> {
-		await DBInstance.getConnection();
-		const response = await UserModel.findById(userId)
-			.select("points")
-			.lean<IUser>()
-			.exec();
-		return response!;
-	}
+	async redeemPoints(userId: string) {
+    await DBInstance.getConnection();
+    const user = await UserModel.findByIdAndUpdate(
+      userId,
+      { $set: { points: 0 } },
+      { new: true }
+    )
+      .select("email points")
+      .lean<IUser>()
+      .exec();
+    return user!;
+}
 
   async getUserIdByEmail(email: string): Promise<IUser> {
 		await DBInstance.getConnection();
