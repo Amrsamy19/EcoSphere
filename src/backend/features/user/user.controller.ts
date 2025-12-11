@@ -34,6 +34,12 @@ class UserController {
     return result;
   }
 
+  async redeemUserPoints(userId: string) {
+    if (!userId) return;
+    const result = await this.userService.redeemUserPoints(userId);
+    return result;
+  }
+
   async getUserIdByEmail(email: string): Promise<IUser> {
     return await this.userService.getUserIdByEmail(email);
   }

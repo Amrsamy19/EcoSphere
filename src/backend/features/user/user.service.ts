@@ -13,6 +13,7 @@ export interface IUserService {
     sortOrder?: 1 | -1,
     selectFields?: string | Record<string, 0 | 1>
   ): Promise<DashboardUsers>;
+  redeemUserPoints(userId: string): Promise<IUser>;
   getUserIdByEmail(email: string): Promise<IUser>;
   updateById(id: string, data: Partial<IUser>): Promise<IUser>;
   updateFavorites(id: string, data: string): Promise<IUser>;
@@ -44,6 +45,12 @@ class UserService implements IUserService {
       selectFields,
     });
     return result;
+  }
+
+  async redeemUserPoints(userId: string): Promise<IUser> {
+    const response = await this.userRepository.redeemPoints(userId);
+    // we need node mailer to send a proper with the generated code to notify the user with rules;
+    return response;
   }
 
   async getById(id: string): Promise<IUser> {

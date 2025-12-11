@@ -12,6 +12,7 @@ export interface IUserRepository {
     sortOrder?: 1 | -1;
     selectFields?: string | Record<string, 0 | 1>;
   }): Promise<DashboardUsers>;
+	redeemPoints(userId: string): Promise<IUser>
   getUserIdByEmail(email: string): Promise<IUser>;
   updateById(id: string, data: Partial<IUser>): Promise<IUser>;
   updateFavorites(id: string, data: string): Promise<IUser>;
@@ -72,8 +73,22 @@ class UserRepository implements IUserRepository{
     return result[0] as DashboardUsers;
   }
 
+	async redeemPoints(userId: string): Promise<IUser> {
+		await DBInstance.getConnection();
+		const response = await UserModel.findById(userId)
+			.select("points")
+			.lean<IUser>()
+			.exec();
+		return response!;
+	}
+
   async getUserIdByEmail(email: string): Promise<IUser> {
-    return await UserModel.findOne({ email }).select("_id").exec()
+		await DBInstance.getConnection();
+    const response = await UserModel.findOne({ email })
+			.select("_id")
+			.lean<IUser>()
+			.exec();
+		return response!;
   }
   async updateById(id: string, data: Partial<IUser>): Promise<IUser> {
     await DBInstance.getConnection();
