@@ -7,10 +7,12 @@ import { DashboardUsers } from "./user.types";
 import { randomInt } from "node:crypto";
 import { ICoupon } from "../discountCoupon/coupon.model";
 import { sendRedeemingMail } from "@/backend/utils/mailer";
+import { IMenuItem } from "../restaurant/restaurant.model";
 
 export interface IUserService {
   getAll(): Promise<IUser[]>;
   getById(id: string, query?: string): Promise<IUser>;
+  getFavoriteMenuItems(itemIds: string[]): Promise<IMenuItem[]>;
   getDashBoardData(
     limit?: number,
     sortBy?: string,
@@ -102,6 +104,10 @@ class UserService implements IUserService {
   async updateFavorites(id: string, data: string): Promise<IUser> {
     const user = await this.userRepository.updateFavorites(id, data);
     return await this.populateAvatar(user);
+  }
+
+  async getFavoriteMenuItems(itemIds: string[]): Promise<IMenuItem[]> {
+    return await this.userRepository.getFavoriteMenuItems(itemIds);
   }
 
   async deleteById(id: string): Promise<IUser> {

@@ -1,8 +1,6 @@
 import { IProduct } from "@/types/ProductType";
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "@/frontend/redux/store";
-import { getCurrentUser } from "@/backend/utils/authHelper";
-import { useSession } from "next-auth/react";
 
 interface FavState {
   view: "grid" | "horizontal";
@@ -27,14 +25,14 @@ export const getFavorites = createAsyncThunk(
 
     if (!res.ok) throw new Error("Failed to fetch favorites");
 
-    const data: IProduct[] = await res.json();
+    const { data } = await res.json();
 
     const state = getState() as RootState;
     const existingFavs = state.fav.favProducts;
-    
+
     const merged = Array.from(
       new Map(
-        [...existingFavs, ...data].map((item) => [item.id, item])
+        [...existingFavs, ...data].map((item) => [item._id, item])
       ).values()
     );
 
@@ -49,13 +47,13 @@ export const toggleFavoriteAsync = createAsyncThunk(
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
-      body: JSON.stringify({ favoritesIds: product.id }),
+      body: JSON.stringify({ favoritesIds: product._id }),
     });
 
     if (!res.ok) throw new Error("Failed to toggle favorite");
 
-    const updatedFavs: IProduct[] = await res.json();
-    return updatedFavs;
+    const { data } = await res.json();
+    return data.favoritesIds;
   }
 );
 
@@ -83,8 +81,9 @@ const FavSlice = createSlice({
         state.status = "failed";
       })
 
-      .addCase(toggleFavoriteAsync.fulfilled, (state) => {
+      .addCase(toggleFavoriteAsync.fulfilled, (state, action) => {
         state.status = "succeeded";
+        state.favProducts = action.payload;
       });
   },
 });
@@ -93,4 +92,4 @@ export const { toggleFavView, clearFav } = FavSlice.actions;
 export default FavSlice.reducer;
 
 export const isInFavSelector = (state: RootState, productId: string) =>
-  state.fav.favProducts.some((p) => p.id === productId);
+  state.fav.favProducts.some((p) => p._id === productId);

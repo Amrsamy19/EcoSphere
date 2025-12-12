@@ -1,4 +1,5 @@
 import { rootContainer } from "@/backend/config/container";
+import { IMenuItem } from "@/backend/features/restaurant/restaurant.model";
 import UserController from "@/backend/features/user/user.controller";
 import { IUser } from "@/backend/features/user/user.model";
 import { getCurrentUser } from "@/backend/utils/authHelper";
@@ -13,7 +14,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (
   _req: NextRequest
-): Promise<NextResponse<ApiResponse<IUser>>> => {
+): Promise<NextResponse<ApiResponse<IMenuItem[]>>> => {
   const session = await getCurrentUser();
   if (!session?.id) {
     return unauthorized();
@@ -21,7 +22,15 @@ export const GET = async (
 
   const controller = rootContainer.resolve(UserController);
   try {
-    const result = await controller.getById(session.id, "favoritesIds");
+    const { favoritesIds } = await controller.getById(
+      session.id,
+      "favoritesIds"
+    );
+
+    const result = await controller.getFavoriteMenuItems(
+      favoritesIds as string[]
+    );
+
     return ok(result);
   } catch (error) {
     console.error(error);
