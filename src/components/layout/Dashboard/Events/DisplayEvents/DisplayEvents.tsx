@@ -16,7 +16,6 @@ import { formatDate, formatTime } from "@/frontend/utils/Event";
 
 
 export default function DisplayEvents({ events }: EventProps) {
-  console.log(events);
   const t = useTranslations("Dashboard.displayEvents");
   return (
     <div className="min-h-screen py-8 w-[85%] mx-auto flex flex-col gap-6">

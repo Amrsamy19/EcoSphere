@@ -27,7 +27,7 @@ export default function TicketCard({ event }: { event: any }) {
                 <div className="relative h-48 bg-black ">
                     {/* Use the actual image or Next/Image here */}
                     <Image
-                        src={event.avatar || '/events/defaultImgEvent.png'}
+                        src={event.avatar?.url || '/events/defaultImgEvent.png'}
                         alt={`${event.name} avatar`}
                         className="w-full h-full object-cover opacity-90"
                         width={200}

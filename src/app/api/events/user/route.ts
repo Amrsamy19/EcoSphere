@@ -58,9 +58,7 @@ export const POST = async (
     }
 
     return ok(
-      await rootContainer
-        .resolve(EventController)
-        .createEvent(user.id, body as unknown as IEvent)
+      await rootContainer.resolve(EventController).createEvent(user.id, body as IEvent)
     );
   } catch (error) {
     console.error(error);

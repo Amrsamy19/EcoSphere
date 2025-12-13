@@ -84,6 +84,7 @@ export const eventSchema = new Schema<IEvent>(
     name: { type: String, required: true },
     locate: { type: String, required: true },
     ticketPrice: { type: Number, required: true },
+    description: { type: String, required: true },
     avatar: {
       key: { type: String, required: true },
       url: { type: String, required: false },
