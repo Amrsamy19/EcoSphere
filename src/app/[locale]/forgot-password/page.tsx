@@ -6,8 +6,10 @@ import { useEffect, useState } from "react";
 import EmailVerification from "@/components/layout/ForgotPassword/EmailVerification";
 import ResetPassword from "@/components/layout/ForgotPassword/ResetPassword";
 import { getCoords, ICoords } from "@/components/layout/Auth/GetCoords";
+import { useTranslations } from 'next-intl';
 
 const ForgotPasswordPage = () => {
+  const t = useTranslations('ForgotPassword');
   const controls = useAnimation();
 
   const [coords, setCoords] = useState<ICoords>({
@@ -172,7 +174,7 @@ const ForgotPasswordPage = () => {
           src="/logo.png"
           width={250}
           height={250}
-          alt="forgot"
+          alt={t('logoAlt')}
           className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]"
         />
       </motion.div>
@@ -182,7 +184,7 @@ const ForgotPasswordPage = () => {
         src="/forgot-password.png"
         width={300}
         height={350}
-        alt="forgot-password"
+        alt={t('forgotPasswordImageAlt')}
         className="sm:absolute sm:block hidden absolute bottom-50 right-0 sm:-right-2 md:-right-10 lg:right-10 xl:-right-10 xl:w-[350px]"
         variants={imgLoginVariants}
         initial={false}
@@ -195,7 +197,7 @@ const ForgotPasswordPage = () => {
         src="/verify-email.png"
         width={350}
         height={400}
-        alt="verify-email"
+        alt={t('verifyEmailImageAlt')}
         className="sm:absolute sm:block hidden absolute bottom-0 right-0 md:w-[320px] md:h-[300px] lg:w-[450px] lg:h-[350px]"
         variants={imgSignupVariants}
         initial={false}
@@ -212,10 +214,10 @@ const ForgotPasswordPage = () => {
         transition={{ duration: 2, delay: 0.5 }}
       >
         <h2 className="text-2xl lg:text-2xl xl:text-3xl font-extrabold">
-          Verify Your Email
+          {t('emailStep.title')}
         </h2>
         <p className="text-base lg:text-lg xl:text-xl">
-          Enter your email to receive a verification code.
+          {t('emailStep.description')}
         </p>
       </motion.div>
 
@@ -228,10 +230,10 @@ const ForgotPasswordPage = () => {
         transition={{ duration: 2, delay: 0.5 }}
       >
         <h2 className="text-2xl lg:text-xl xl:text-5xl font-extrabold">
-          Reset Password
+          {t('resetStep.title')}
         </h2>
         <p className="text-sm lg:text-xl xl:text-2xl">
-          Create a new secure password for your account.
+          {t('resetStep.description')}
         </p>
       </motion.div>
     </section>

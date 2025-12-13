@@ -473,5 +473,61 @@
       "ticketLeft": "Ticket Left",
       "sold": "{percent}% Sold"
     }
+  },"ForgotPassword": {
+    "logoAlt": "EcoSphere Logo",
+    "forgotPasswordImageAlt": "Forgot Password Illustration",
+    "verifyEmailImageAlt": "Verify Email Illustration",
+    "emailStep": {
+      "title": "Verify Your Email",
+      "description": "Enter your email to receive a verification code."
+    },
+    "resetStep": {
+      "title": "Reset Password",
+      "description": "Create a new secure password for your account."
+    },
+    "resetPassword": {
+      "title": "Reset Password",
+      "description": "Create a new secure password for your account",
+      "newPassword": {
+        "label": "New Password",
+        "placeholder": "Enter new password"
+      },
+      "confirmPassword": {
+        "label": "Confirm Password",
+        "placeholder": "Confirm new password",
+        "mismatch": "Passwords do not match"
+      },
+      "requirements": {
+        "minLength": "At least 8 characters",
+        "hasNumber": "Contains a number",
+        "hasSpecial": "Contains a special character"
+      },
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
+      "submitButton": "Reset Password",
+      "success": {
+        "title": "Password Changed!",
+        "description": "Your password has been successfully changed. You will be redirected to the login page shortly.",
+        "button": "Go to Login"
+      }
+    },
+    "emailVerification": {
+      "emailStep": {
+        "title": "Verify Email",
+        "description": "Enter your email address and we'll send you a 6-digit verification code.",
+        "placeholder": "Enter your email",
+        "sendButton": "Send Code",
+        "backButton": "Back to Login"
+      },
+      "codeStep": {
+        "title": "Enter Code",
+        "description": "We've sent a 6-digit code to {email}",
+        "inputLabel": "Digit {position}",
+        "error": "Please enter all 6 digits.",
+        "verifyButton": "Verify Code",
+        "changeEmailButton": "Change Email"
+      }
+    }
   }
 }
+  

@@ -473,5 +473,71 @@
       "ticketLeft": "التذاكر المتبقية",
       "sold": "{percent}% تم بيعها"
     }
+  },
+
+  "ForgotPassword": {
+    "logoAlt": "شعار إيكوسفير",
+    "forgotPasswordImageAlt": "رسم توضيحي لنسيان كلمة المرور",
+    "verifyEmailImageAlt": "رسم توضيحي للتحقق من البريد الإلكتروني",
+
+    "emailStep": {
+      "title": "تحقق من بريدك الإلكتروني",
+      "description": "أدخل بريدك الإلكتروني لتلقي رمز التحقق."
+    },
+
+    "resetStep": {
+      "title": "إعادة تعيين كلمة المرور",
+      "description": "أنشئ كلمة مرور آمنة جديدة لحسابك."
+    },
+
+    "resetPassword": {
+      "title": "إعادة تعيين كلمة المرور",
+      "description": "أنشئ كلمة مرور آمنة جديدة لحسابك",
+      "newPassword": {
+        "label": "كلمة المرور الجديدة",
+        "placeholder": "أدخل كلمة المرور الجديدة"
+      },
+      "confirmPassword": {
+        "label": "تأكيد كلمة المرور",
+        "placeholder": "أكد كلمة المرور الجديدة",
+        "mismatch": "كلمات المرور غير متطابقة"
+      },
+      "requirements": {
+        "minLength": "8 أحرف على الأقل",
+        "hasNumber": "يحتوي على رقم",
+        "hasSpecial": "يحتوي على حرف خاص"
+      },
+      "showPassword": "إظهار كلمة المرور",
+      "hidePassword": "إخفاء كلمة المرور",
+      "submitButton": "إعادة تعيين كلمة المرور",
+      "success": {
+        "title": "!تم تغيير كلمة المرور",
+        "description": "تم تغيير كلمة المرور بنجاح. سيتم إعادة توجيهك إلى صفحة تسجيل الدخول قريباً.",
+        "button": "الذهاب لتسجيل الدخول"
+      }
+    },
+
+    "emailVerification": {
+      "emailStep": {
+        "title": "التحقق من البريد الإلكتروني",
+        "description": "أدخل عنوان بريدك الإلكتروني وسنرسل لك رمز تحقق مكون من 6 أرقام.",
+        "placeholder": "أدخل بريدك الإلكتروني",
+        "sendButton": "إرسال الرمز",
+        "backButton": "العودة لتسجيل الدخول"
+      },
+      "codeStep": {
+        "title": "أدخل الرمز",
+        "description": "لقد أرسلنا رمزاً مكوناً من 6 أرقام إلى {email}",
+        "inputLabel": "الرقم {position}",
+        "error": "يرجى إدخال جميع الأرقام الستة.",
+        "verifyButton": "التحقق من الرمز",
+        "changeEmailButton": "تغيير البريد الإلكتروني"
+      }
+    }
   }
 }
+
+
+  
+
+
