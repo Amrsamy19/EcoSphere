@@ -3,6 +3,7 @@ import type { IUserService } from "./user.service";
 import { ICart, IUser } from "./user.model";
 import { DashboardUsers } from "./user.types";
 import { IProductCart } from "@/types/ProductType";
+import { IMenuItem } from "../restaurant/restaurant.model";
 
 @injectable()
 class UserController {
@@ -15,8 +16,8 @@ class UserController {
     return users;
   }
 
-  async getById(id: string): Promise<IUser> {
-    const user = await this.userService.getById(id);
+  async getById(id: string, query?: string): Promise<IUser> {
+    const user = await this.userService.getById(id, query);
     return user;
   }
 
@@ -66,6 +67,11 @@ class UserController {
     const user = await this.userService.updateFavorites(id, data);
     return user;
   }
+
+  getFavoriteMenuItems(itemIds: string[]): Promise<IMenuItem[]> {
+    return this.userService.getFavoriteMenuItems(itemIds);
+  }
+
   async deleteById(id: string): Promise<IUser> {
     const user = await this.userService.deleteById(id);
     return user;

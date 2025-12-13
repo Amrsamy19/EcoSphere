@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { IProduct } from "@/types/ProductType";
 import { useSelector } from "react-redux";
 import { RootState } from "@/frontend/redux/store";
-import { isInFavSelector, toggleFav } from "@/frontend/redux/Slice/FavSlice";
+import { isInFavSelector, toggleFavoriteAsync } from "@/frontend/redux/Slice/FavSlice";
 import { IoHeartCircleOutline, IoHeartCircleSharp } from "react-icons/io5";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
@@ -34,15 +34,15 @@ const ProductCard = (product: IProduct) => {
 
   const dispatch = useAppDispatch();
   const isFav = useSelector((state: RootState) =>
-    isInFavSelector(state, product.id),
+    isInFavSelector(state, id),
   );
   const isInCart = useSelector((state: RootState) =>
-    isInCartSelector(state, product.id),
+    isInCartSelector(state, id),
   );
 
   const handleFav = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    dispatch(toggleFav(product));
+    dispatch(toggleFavoriteAsync(product));
     if (isFav) {
       toast.success(t("removedFromFavorites"));
     } else {
@@ -72,8 +72,8 @@ const ProductCard = (product: IProduct) => {
           <Image
             width={1000}
             height={1000}
-            src="/store img/avatar.jpg"
-            alt="avatar"
+            src={productImg || "/store img/2.jpg"}
+            alt={productDescription}
             className="w-10 h-10 rounded-full shrink-0"
           />
           <div className="min-w-0 flex-1">
@@ -93,7 +93,7 @@ const ProductCard = (product: IProduct) => {
         <Image
           width={1000}
           height={1000}
-          src={productImg}
+          src={productImg || "/store img/2.jpg"}
           alt="product"
           className="w-full h-full object-cover"
         />
@@ -102,12 +102,9 @@ const ProductCard = (product: IProduct) => {
       {/* product details - flexible but controlled */}
       <div className="p-5 flex flex-col flex-1 min-h-0">
         <p className="text-lg font-semibold line-clamp-1 mb-1">{productName}</p>
-        <p className="text-sm text-secondary-foreground/80 line-clamp-1 mb-2">
-          {productSubtitle}
-        </p>
         <div className="grow ">
           <p className="text-sm text-secondary-foreground/90 line-clamp-3 mb-3   ">
-            {productDescription}
+            {productSubtitle}
           </p>
         </div>
         <div className="flex justify-between items-center">
