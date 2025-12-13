@@ -1,15 +1,15 @@
 "use client";
-import { CartItems } from "@/types/cart";
 import CartItem from "./CartItem";
 import Image from "next/image";
 import { clearCart as clearAllItems } from "@/frontend/redux/Slice/CartSlice";
 import { useAppDispatch } from "@/frontend/redux/hooks";
 import { Trash2 } from "lucide-react";
 import { useTranslations } from 'next-intl';
+import { IProductCart } from "@/types/ProductType";
 
 export default function ProductsSection({
   items,
-}: Readonly<{ items: CartItems[] }>) {
+}: Readonly<{ items: IProductCart[] }>) {
   const t = useTranslations('Cart.productsSection');
   const dispatch = useAppDispatch();
 

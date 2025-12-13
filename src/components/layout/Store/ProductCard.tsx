@@ -34,10 +34,10 @@ const ProductCard = (product: IProduct) => {
 
   const dispatch = useAppDispatch();
   const isFav = useSelector((state: RootState) =>
-    isInFavSelector(state, product.id)
+    isInFavSelector(state, product.id),
   );
   const isInCart = useSelector((state: RootState) =>
-    isInCartSelector(state, product.id)
+    isInCartSelector(state, product.id),
   );
 
   const handleFav = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -52,27 +52,13 @@ const ProductCard = (product: IProduct) => {
 
   const handleCart = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    if (!isInCart) {
-      dispatch(
-        addItem({
-          id: id,
-          price: productPrice,
-          quantity: 1,
-          title: productName,
-          description: productDescription,
-          image: productImg,
-        })
-      );
-      toast.success("added to cart");
-    } else {
+    if (isInCart) {
       dispatch(removeItem(id));
       toast.success("removed from cart");
+    } else {
+      dispatch(addItem({ ...product, quantity: 1 }));
+      toast.success("added to cart");
     }
-    // if (isFav) {
-    // 	toast.success("Removed from favorites");
-    // } else {
-    // 	toast.success("Added to favorites");
-    // }
   };
 
   return (

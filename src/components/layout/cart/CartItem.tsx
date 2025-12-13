@@ -1,10 +1,10 @@
 import Image from "next/image";
 import QuantitySelector from "./QuantitySelector";
 import RemoveButton from "./RemoveButton";
-import { CartItems as CI } from "@/types/cart";
+import { IProductCart } from "@/types/ProductType";
 
-export default function CartItem({ item }: Readonly<{ item: CI }>) {
-	const totalPrice = (item.price * item.quantity);
+export default function CartItem({ item }: Readonly<{ item: IProductCart }>) {
+	const totalPrice = item.productPrice * item.quantity;
 	const productCode = item.id.slice(0, 8).toUpperCase();
 
 	return (
@@ -15,17 +15,17 @@ export default function CartItem({ item }: Readonly<{ item: CI }>) {
 					<Image
 						fill
 						className="object-cover"
-						src={item?.image}
-						alt={item.title}
+						src={item?.productImg}
+						alt={item.productName}
 					/>
 				</div>
 				<div className="flex-1 min-w-0">
 					<h3 className="text-base font-medium text-foreground">
-						{item.title}
+						{item.productName}
 					</h3>
-					{item.description && (
+					{item.productSubtitle && (
 						<p className="text-xs text-muted-foreground mt-0.5">
-							{item.description}
+							{item.productSubtitle}
 						</p>
 					)}
 				</div>
