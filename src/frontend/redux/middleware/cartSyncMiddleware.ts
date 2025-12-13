@@ -122,7 +122,7 @@ const getCartData = (store: MiddlewareAPI) => {
   return cartItems;
 };
 
-const mapCartBackendData = (cartItems: IProductCart[]) => {
+export const mapCartBackendData = (cartItems: IProductCart[]) => {
   const mappedData = cartItems.map(
     (item) =>
       ({
