@@ -157,9 +157,10 @@ export default function TicTacToe() {
           //Update user points based on the diffculty
           if (b[x] === "X" && status === "authenticated") {
             await updateUser();
-          } else if (b[x] === "X" && status === "unauthenticated"){
+          } else if (b[x] === "X" && status === "unauthenticated") {
             toast.info(t("status.loginForPoints"));
-          } return;
+          }
+          return;
         }
       }
 
@@ -409,7 +410,7 @@ export default function TicTacToe() {
         </div>
 
         {/* Left Section - Score Board */}
-        <div className="w-full  sm:w-[60%] md:w-[50%] lg:w-80 space-y-6">
+        <div className="w-full  sm:w-[60%] md:w-[50%] lg:w-[22rem] space-y-6">
           {/* Title Card - Only on large screens */}
           <div className="hidden  bg-primary/10 lg:flex justify-evenly backdrop-blur-md rounded-3xl p-8 shadow-2xl text-center transform hover:scale-105 transition-transform">
             <div className="flex items-center gap-1.5">
