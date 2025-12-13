@@ -1,4 +1,4 @@
-import mongoose, { Document, model, Schema } from "mongoose";
+import { Document, model, models, Schema, Types } from "mongoose";
 import bcrypt from "bcrypt";
 
 export interface IRating extends Document {
@@ -16,11 +16,10 @@ export interface IMenuItem extends Document {
     url?: string;
   };
   availableOnline: boolean;
-  itemRating?: IRating[];
+  itemRating?: Types.DocumentArray<IRating>;
 }
 
 export interface IRestaurant extends Document {
-  _id: mongoose.Types.ObjectId;
   name: string;
   email: string;
   password: string;
@@ -30,8 +29,8 @@ export interface IRestaurant extends Document {
   description: string;
   subscribed: boolean;
   subscriptionPeriod?: Date;
-  menus?: IMenuItem[];
-  restaurantRating?: IRating[];
+  menus?: Types.DocumentArray<IMenuItem>;
+  restaurantRating?: Types.DocumentArray<IRating>;
   avatar?: {
     key: string;
     url?: string;
@@ -101,5 +100,5 @@ restaurantSchema.methods.comparePassword = async function (
 };
 
 export const RestaurantModel =
-  mongoose.models.Restaurant ||
+  models.Restaurant ||
   model<IRestaurant>("Restaurant", restaurantSchema);

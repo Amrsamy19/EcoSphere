@@ -1,6 +1,7 @@
 import { injectable } from "tsyringe";
 import { IRestaurant, RestaurantModel } from "./restaurant.model";
 import { DBInstance } from "@/backend/config/dbConnect";
+import { Types } from "mongoose";
 
 export interface IRestaurantRepository {
   create(
@@ -11,10 +12,11 @@ export interface IRestaurantRepository {
     workingHours: string,
     phoneNumber: string,
     avatar: string,
-    description: string
+    description: string,
   ): Promise<IRestaurant>;
   getAll(): Promise<IRestaurant[]>;
   getById(id: string): Promise<IRestaurant>;
+  getRestaurantsByIdes(restaurantIds: string[]): Promise<IRestaurant[]>;
   updateById(id: string, data: Partial<IRestaurant>): Promise<IRestaurant>;
   updateFavoritedBy(userId: string, restaurantId: string): Promise<IRestaurant>;
   deleteById(id: string): Promise<IRestaurant>;
@@ -30,7 +32,7 @@ class RestaurantRepository {
     workingHours: string,
     phoneNumber: string,
     avatar: string,
-    description: string
+    description: string,
   ): Promise<IRestaurant> {
     await DBInstance.getConnection();
     return await RestaurantModel.create({
@@ -59,9 +61,24 @@ class RestaurantRepository {
     return restaurant;
   }
 
+  async getRestaurantsByIdes(restaurantIds: string[]): Promise<IRestaurant[]> {
+    const validIds = restaurantIds.filter((id) => Types.ObjectId.isValid(id));
+
+    if (validIds.length === 0) {
+      return [];
+    }
+
+    return RestaurantModel.find({
+      _id: { $in: validIds },
+    })
+      .select("name menus")
+      .lean<IRestaurant[]>()
+      .exec();
+  }
+
   async updateById(
     id: string,
-    data: Partial<IRestaurant>
+    data: Partial<IRestaurant>,
   ): Promise<IRestaurant> {
     await DBInstance.getConnection();
     const restaurant = await this.getById(id);

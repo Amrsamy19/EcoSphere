@@ -59,6 +59,12 @@ class RestaurantService {
     const restaurant = await this.restaurantRepository.getById(id);
     return await this.populateAvatar(restaurant);
   }
+  
+  async getRestaurantsByIds(restIds: string[]): Promise<IRestaurant[]> {
+    const rest = await this.restaurantRepository.getRestaurantsByIdes(restIds);
+    return rest;
+  }
+  
   async updateById(
     id: string,
     data: Partial<IRestaurant>
