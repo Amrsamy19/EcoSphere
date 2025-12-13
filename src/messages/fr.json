@@ -543,6 +543,39 @@
       "sold": "{percent}% vendu"
     }
   },
+  "AI": {
+    "button": {
+      "label": "Demander à l'IA"
+    },
+    "window": {
+      "title": "EcoSphere IA",
+      "subtitle": "Votre Assistant Vert",
+      "clearChat": "Effacer la discussion",
+      "emptyState": {
+        "title": "Comment puis-je vous aider à recycler aujourd'hui ?",
+        "subtitle": "Posez des questions sur des produits, des restaurants, ou des conseils de recyclage !"
+      },
+      "input": {
+        "placeholder": "Posez-moi n'importe quelle question..."
+      },
+      "disclaimer": "L'IA peut commettre des erreurs. Veuillez vérifier les informations importantes."
+    },
+    "errors": {
+      "connection": "J'ai des difficultés à me connecter en ce moment. Veuillez réessayer plus tard."
+    }
+  },
+  "News": {
+    "page": {
+      "title": "Actualités & Mises à jour",
+      "description": "Restez à jour avec les dernières nouveautés sur EcoSphere. Découvrez les nouveaux restaurants et boutiques écoresponsables qui rejoignent notre communauté."
+    },
+    "recentlyAdded": {
+      "title": "Récemment ajoutés"
+    },
+    "card": {
+      "viewMore": "Voir plus"
+    }
+  },
   "ForgotPassword": {
     "logoAlt": "Logo EcoSphere",
     "forgotPasswordImageAlt": "Illustration Mot de passe oublié",

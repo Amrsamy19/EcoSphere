@@ -542,7 +542,41 @@
       "ticketLeft": "Ticket Left",
       "sold": "{percent}% Sold"
     }
-  },"ForgotPassword": {
+  },
+  "AI": {
+    "button": {
+      "label": "Ask AI"
+    },
+    "window": {
+      "title": "EcoSphere AI",
+      "subtitle": "Your Green Assistant",
+      "clearChat": "Clear Chat",
+      "emptyState": {
+        "title": "How can I help you recycle today?",
+        "subtitle": "Ask about products, restaurants, or recycling tips!"
+      },
+      "input": {
+        "placeholder": "Ask me anything..."
+      },
+      "disclaimer": "AI can make mistakes. Please verify important info."
+    },
+    "errors": {
+      "connection": "I'm having trouble connecting right now. Please try again later."
+    }
+  },
+  "News": {
+    "page": {
+      "title": "News & Updates",
+      "description": "Stay up to date with the latest additions to EcoSphere. Discover new eco-friendly restaurants and shops joining our community."
+    },
+    "recentlyAdded": {
+      "title": "Recently Added"
+    },
+    "card": {
+      "viewMore": "View More"
+    }
+  },
+  "ForgotPassword": {
     "logoAlt": "EcoSphere Logo",
     "forgotPasswordImageAlt": "Forgot Password Illustration",
     "verifyEmailImageAlt": "Verify Email Illustration",
@@ -599,4 +633,3 @@
     }
   }
 }
-  
