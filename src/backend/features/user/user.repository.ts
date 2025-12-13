@@ -119,12 +119,13 @@ class UserRepository implements IUserRepository {
 
   async updateById(id: string, data: Partial<IUser>): Promise<IUser> {
     await DBInstance.getConnection();
-    const user = await this.getById(id);
-    if (!user) {
+    const updatedUser = await UserModel.findByIdAndUpdate(id, data, {
+      new: true,
+    });
+    if (!updatedUser) {
       throw new Error(`User with id ${id} not found`);
     }
-    Object.assign(user, data);
-    return await user.save();
+    return updatedUser;
   }
 
   async updateFavorites(id: string, item: string): Promise<IUser> {
@@ -152,30 +153,30 @@ class UserRepository implements IUserRepository {
   }
 
   async getFavoriteMenuItems(itemIds: string[]): Promise<IMenuItem[]> {
-		if (itemIds.length === 0) return [];
-		await DBInstance.getConnection();
+    if (itemIds.length === 0) return [];
+    await DBInstance.getConnection();
 
-		const objectIds = itemIds.map((id) => new Types.ObjectId(id));
+    const objectIds = itemIds.map((id) => new Types.ObjectId(id));
 
-		const restaurants = await RestaurantModel.find({
+    const restaurants = await RestaurantModel.find({
       "menus._id": { $in: objectIds },
     })
       .select("menus")
       .lean()
       .exec();
 
-		const favoriteItems: IMenuItem[] = [];
+    const favoriteItems: IMenuItem[] = [];
 
-		restaurants.forEach((restaurant) => {
-			restaurant.menus.forEach((menu: IMenuItem) => {
-				if (objectIds.some((id) => id.equals(menu._id))) {
-					favoriteItems.push(menu);
-				}
-			});
-		});
+    restaurants.forEach((restaurant) => {
+      restaurant.menus.forEach((menu: IMenuItem) => {
+        if (objectIds.some((id) => id.equals(menu._id))) {
+          favoriteItems.push(menu);
+        }
+      });
+    });
 
-		return favoriteItems;
-	};
+    return favoriteItems;
+  }
 
   async deleteById(id: string): Promise<IUser> {
     await DBInstance.getConnection();

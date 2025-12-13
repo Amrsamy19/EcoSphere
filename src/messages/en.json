@@ -144,7 +144,9 @@
       "youWin": "You Win",
       "aiWin": "AI Win",
       "aiThinking": "AI think...",
-      "yourTurn": "Your turn"
+      "yourTurn": "Your turn",
+      "pointsAdded": "{points} points added to your EcoPoints!",
+      "updatePoints": "Error updating EcoPoints. Please try again."
     },
     "difficulty": {
       "easy": "Easy",

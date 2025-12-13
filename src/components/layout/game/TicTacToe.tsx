@@ -8,6 +8,8 @@ import { FaHandshakeSimple, FaPlay } from "react-icons/fa6";
 import { FaRegSmileWink } from "react-icons/fa";
 import { GiTrophy } from "react-icons/gi";
 import { useTranslations } from 'next-intl';
+import { updateUserPoints } from "@/frontend/api/Users";
+import { toast } from "sonner";
 
 export default function TicTacToe() {
   const t = useTranslations('Game');
@@ -26,7 +28,9 @@ export default function TicTacToe() {
   // 💾 LOAD SCORES FROM STORAGE
   // -------------------------
   useEffect(() => {
-    mainAudioRef.current!.volume = 0.5;
+    if(mainAudioRef.current){
+      mainAudioRef.current.volume = 0.1;
+    }
     const savedScores = localStorage.getItem("tictactoe_scores");
     if (savedScores) {
       setTimeout(() => {
@@ -117,7 +121,7 @@ export default function TicTacToe() {
   // 🏆 CHECK WINNER (SET STATE)
   // -------------------------
   const checkWinner = useCallback(
-    (b: Player[]) => {
+    async (b: Player[]) => {
       const lines = [
         [0, 1, 2],
         [3, 4, 5],
@@ -133,6 +137,18 @@ export default function TicTacToe() {
         if (b[x] && b[x] === b[y] && b[y] === b[z]) {
           setWinner(b[x]);
           updateScores(b[x]);
+          //Update user points based on the diffculty
+          if (b[x] === "X") {
+            const pointsToAdd =
+              difficulty === "easy" ? 100 : difficulty === "medium" ? 250 : 500;
+            try {
+              await updateUserPoints(pointsToAdd);
+              toast.success(t("status.pointsAdded", { points: pointsToAdd }));
+            } catch (error) {
+              console.error("Error updating user points:", error);
+              toast.error(t("status.updatePoints"));
+            }
+          }
           return;
         }
       }
@@ -143,7 +159,7 @@ export default function TicTacToe() {
         updateScores("Draw");
       }
     },
-    [updateScores]
+    [updateScores, difficulty, t]
   );
 
   // -------------------------
@@ -195,7 +211,7 @@ export default function TicTacToe() {
     }
 
     setIsAiTurn(false);
-  }, [board, checkWinner, getAvailableMoves, difficulty]);
+  }, [difficulty, getAvailableMoves, board, checkWinner, minimax]);
 
   // -------------------------
   // 🎮 PLAYER MOVE
@@ -299,9 +315,9 @@ export default function TicTacToe() {
         </div>
       );
     return (
-      <div className="flex items-center justify-center">
+      <p className="flex items-center justify-center">
         {t('status.yourTurn')} <BiSolidLeaf className="text-primary ml-3" />
-      </div>
+      </p>
     );
   };
 
@@ -329,18 +345,12 @@ export default function TicTacToe() {
       <div className="min-h-screen flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-12 p-6 lg:p-12 relative z-10">
         {/* Right Section - Game Board */}
         <div className="w-fit lg:w-auto shrink-0">
-          {/* Mobile Title */}
-          {/* <div className="lg:hidden text-center mb-6">
-            <h1 className="text-4xl font-black bg-linear-to-r from-primary to-primary/70 bg-clip-text text-transparent mb-2">
-              TIC TAC TOE
-            </h1>
-          </div> */}
 
           {/* Status Card */}
           <div className="bg-primary/10 backdrop-blur-md rounded-3xl py-4 px-6 shadow-2xl mb-6 text-center">
-            <p className="text-2xl lg:text-3xl font-black dark:text-secondary-foreground">
+            <div className="text-2xl lg:text-3xl font-black dark:text-secondary-foreground">
               {getGameStatus()}
-            </p>
+            </div>
           </div>
 
           {/* Game Board */}
@@ -376,7 +386,7 @@ export default function TicTacToe() {
             {winner && (
               <button
                 onClick={restartGame}
-                className="w-full bg-gradient-to-r from-primary to-primary/80 text-primary-foreground py-4 rounded-2xl font-black text-xl
+                className="w-full bg-linear-to-r from-primary to-primary/80 text-primary-foreground py-4 rounded-2xl font-black text-xl
                   hover:from-primary/90 hover:to-primary/70 flex items-center justify-center gap-3 cursor-pointer 
                   active:scale-95 transition-all duration-200 shadow-xl hover:shadow-2xl"
               >
