@@ -146,7 +146,8 @@
       "aiThinking": "L’IA réfléchit...",
       "yourTurn": "À votre tour",
       "pointsAdded": "{points} points ajoutés à vos EcoPoints !",
-      "updatePoints": "Erreur lors de la mise à jour des EcoPoints. Veuillez réessayer."
+      "updatePoints": "Erreur lors de la mise à jour des EcoPoints. Veuillez réessayer.",
+      "loginForPoints": "Connectez-vous pour gagner des EcoPoints !"
     },
     "difficulty": {
       "easy": "Facile",

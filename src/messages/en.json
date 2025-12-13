@@ -146,7 +146,8 @@
       "aiThinking": "AI think...",
       "yourTurn": "Your turn",
       "pointsAdded": "{points} points added to your EcoPoints!",
-      "updatePoints": "Error updating EcoPoints. Please try again."
+      "updatePoints": "Error updating EcoPoints. Please try again.",
+      "loginForPoints": "Login to earn EcoPoints!"
     },
     "difficulty": {
       "easy": "Easy",
