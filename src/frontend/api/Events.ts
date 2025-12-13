@@ -1,28 +1,19 @@
-import { IEventDetails } from "@/types/EventTypes";
-
 export async function PostEvent(formData: FormData) {
     const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/events/user`, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
         body: formData
     });
     console.log(res);
-
     if (!res.ok) {
         throw new Error("error in fetch api response");
     }
     return res;
 };
 
-export async function UpdateEvent({ data }: { data: Partial<IEventDetails> }) {
+export async function UpdateEvent(formData: FormData) {
     const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/events/user`, {
         method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ ...data })
+        body: formData
     });
     if (!res.ok) {
         throw new Error("error in fetch api response");

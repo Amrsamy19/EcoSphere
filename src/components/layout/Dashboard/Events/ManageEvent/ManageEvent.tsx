@@ -35,46 +35,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { EVENT_TYPES, IEventDetails } from "@/types/EventTypes";
+import { EVENT_TYPES} from "@/types/EventTypes";
 import { eventSchema } from "@/frontend/schema/event.schema";
-import { PostEvent } from "@/frontend/api/Events";
+import { PostEvent, UpdateEvent } from "@/frontend/api/Events";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import z from "zod";
-function createFormData(data: Partial<IEventDetails>): FormData {
-  const formData = new FormData();
-  const file = data.avatar instanceof FileList ? data.avatar[0] : null;
 
-  // 1. Append the file if it exists
-  if (file) {
-    formData.append("avatar", file, file.name);
-  }
-
-  // 2. Append all other fields, converting complex types like sections to a JSON string
-  for (const key in data) {
-    if (key === "avatar" || key === "_id" || !data[key as keyof typeof data])
-      continue;
-
-    const value = data[key as keyof typeof data];
-
-    if (key === "sections") {
-      // Convert the array of sections into a JSON string
-      formData.append(key, JSON.stringify(value));
-    } else if (key === "capacity" || key === "ticketPrice") {
-      // Ensure numbers are sent as strings in FormData
-      formData.append(key, String(Number(value)));
-    } else {
-      // Append all other simple string/number fields
-      formData.append(key, String(value));
-    }
-  }
-
-  return formData;
-}
-export default function ManageEvent() {
-  const form = useForm < z.infer < typeof eventSchema >>({
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function ManageEvent({ initialData }: { initialData?: any }) {
+  const router = useRouter();
+  const form = useForm<z.infer<typeof eventSchema>>({
     resolver: zodResolver(eventSchema),
-    defaultValues: {
+    defaultValues: initialData ?? {
       name: "",
       type: "",
       avatar: "",
@@ -90,7 +63,6 @@ export default function ManageEvent() {
     },
   });
 
-  // --- Initialize useFieldArray for dynamic schedule items ---
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: "sections",
@@ -100,12 +72,6 @@ export default function ManageEvent() {
     name: "ticketType",
   });
 
-  // --- 3. Watchers & Calculations ---
-  // Watch specific fields to trigger side effects or UI updates
-  // const ticketType = form.watch("ticketType");
-  const router = useRouter();
-  // --- 4. Side Effects ---
-  // If ticket type changes to 'Free', reset price to 0 automatically
   useEffect(() => {
     if (ticketType === "Free") {
       form.setValue("ticketPrice", 0);
@@ -114,47 +80,44 @@ export default function ManageEvent() {
   }, [ticketType, form]);
 
   // --- 5. Submission Handler ---
-  async function handleEvent(data: z.infer<typeof eventSchema>) {
-    console.log(data);
-
-    // const file = data.avatar instanceof FileList ? data.avatar[0] : null;
-    // const {  ...restOfData } = data;
-    // const eventData = {
-    //   ...restOfData,
-    //   capacity: Number(restOfData.capacity),
-    //   ticketPrice: Number(restOfData.ticketPrice),
-    //   avatar: file || restOfData.avatar,
-    // };
-
-    // const formData = createFormData(data);
-    // console.log(
-    //   "--- Event Details (excluding file/upload details) ---",
-    //   formData
-    // );
-    // try {
-    //   await PostEvent(formData);
-    //   toast.success("Event added successfully", {
-    //     position: "bottom-right",
-    //     duration: 3000,
-    //   });
-    //   router.push("/organizer/details");
-    // } catch (error) {
-    //   toast.error(`${error}`, {
-    //     position: "bottom-right",
-    //     duration: 3000,
-    //   });
-    // }
+  async function onSubmit(data: z.infer<typeof eventSchema>) {
+    const formData = new FormData();
+    Object.entries(data).forEach(([key, value]) => {
+      if (key === "sections") {
+        formData.append("sections", JSON.stringify(value || []));
+      } else if (key === "avatar" && value instanceof File) {
+        formData.append("avatar", value);
+      } else {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        formData.append(key, value as any);
+      }
+    });
+    console.log(Object.fromEntries(formData.entries()));
+    
+    try {
+      if (data._id) {
+        formData.append("_id", data._id);
+        await UpdateEvent(formData);
+        toast.success("Event updated successfully");
+      } else {
+        await PostEvent(formData);
+        toast.success("Event created successfully");
+      }
+      router.push("/organizer/details");
+    } catch (err) {
+      toast.error("Error saving event");
+    }
   }
 
   return (
     <div className="min-h-screen py-8 w-[85%] mx-auto flex flex-col  gap-6">
       <h1 className="capitalize font-bold text-4xl  text-foreground">
-        Create/Edit Event
+        {initialData ? "Edit Event" : "Create Event"}
       </h1>
 
       <div className=" p-6 sm:p-10 rounded-2xl shadow-2xl border-2 border-primary">
         <Form {...form}>
-          <form id="event-form" onSubmit={form.handleSubmit(handleEvent)} className="space-y-8">
+          <form id="event-form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             {/* --- SECTION 1: Event Details --- */}
             <div className="space-y-6">
               <h2 className="text-2xl font-semibold text-gray-800 border-b pb-2 flex items-center">
@@ -162,6 +125,7 @@ export default function ManageEvent() {
                 Primary Event Information
               </h2>
               <div className="grid grid-cols-6 gap-2">
+                {/* Name */}
                 <FormField
                   control={form.control}
                   name="name"
@@ -182,6 +146,7 @@ export default function ManageEvent() {
                     </FormItem>
                   )}
                 />
+                {/* Type */}
                 <FormField
                   control={form.control}
                   name="type"
@@ -213,33 +178,25 @@ export default function ManageEvent() {
                   )}
                 />
               </div>
-
+              {/* Avatar */}
               <FormField
                 control={form.control}
                 name="avatar"
-                render={({ field: { value: _, onChange, ...fieldProps } }) => (
+                render={({ field: { value: _, onChange } }) => (
                   <FormItem>
-                    <FormLabel>Event Image (Upload File)</FormLabel>
+                    <FormLabel>Event Image</FormLabel>
                     <FormControl>
-                      <div className="relative">
-                        <ImageIcon className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-                        <Input
-                          {...fieldProps}
-                          type="file" // --- Key Change ---
-                          accept="image/*"
-                          className="pl-9 cursor-pointer"
-                          // Handle file change: only pass the FileList from e.target.files
-                          onChange={(event) => {
-                            onChange(event.target.files);
-                          }}
-                        />
-                      </div>
+                      <Input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => onChange(e.target.files?.[0])}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-
+              {/* Description */}
               <FormField
                 control={form.control}
                 name="description"
@@ -290,6 +247,7 @@ export default function ManageEvent() {
               />
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* Date */}
                 <FormField
                   control={form.control}
                   name="eventDate"
@@ -306,6 +264,7 @@ export default function ManageEvent() {
                     </FormItem>
                   )}
                 />
+                {/* Start */}
                 <FormField
                   control={form.control}
                   name="startTime"
@@ -322,6 +281,7 @@ export default function ManageEvent() {
                     </FormItem>
                   )}
                 />
+                {/* End */}
                 <FormField
                   control={form.control}
                   name="endTime"
@@ -349,6 +309,7 @@ export default function ManageEvent() {
               </h2>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* Capacity */}
                 <FormField
                   control={form.control}
                   name="capacity"
@@ -363,7 +324,6 @@ export default function ManageEvent() {
                             min={0}
                             className="pl-9"
                             {...field}
-                            onChange={(e) => field.onChange(+e.target.value)}
                           />
                         </div>
                       </FormControl>
@@ -372,7 +332,7 @@ export default function ManageEvent() {
                   )}
                 />
 
-                {/* Radio Group for Ticket Status */}
+                {/*  Ticket Status */}
                 <FormField
                   control={form.control}
                   name="ticketType"
@@ -400,7 +360,7 @@ export default function ManageEvent() {
                     </FormItem>
                   )}
                 />
-
+                {/* Price */}
                 <FormField
                   control={form.control}
                   name="ticketPrice"
@@ -414,9 +374,8 @@ export default function ManageEvent() {
                             type="number"
                             min={0}
                             className="pl-9"
-                            disabled={ticketType === "Free"} // Disable if free
+                            disabled={ticketType === "Free"} 
                             {...field}
-                            onChange={(e) => field.onChange(+e.target.value)}
                           />
                         </div>
                       </FormControl>
@@ -434,11 +393,11 @@ export default function ManageEvent() {
                 Detailed Event Schedule (Agenda Items)
               </h2>
 
-              {form.formState.errors.sections && (
+              {/* {form.formState.errors.sections && (
                 <p className="text-sm font-medium text-red-500 mt-2">
                   {form.formState.errors.sections.message}
                 </p>
-              )}
+              )} */}
 
               {fields.map((field, index) => (
                 <div
@@ -459,16 +418,16 @@ export default function ManageEvent() {
                       <X className="h-4 w-4" />
                     </Button>
                   </div>
-
+                  {/* Title */}
                   <FormField
                     control={form.control}
                     name={`sections.${index}.title`}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Section Title</FormLabel>
+                        <FormLabel>Title</FormLabel>
                         <FormControl>
                           <Input
-                            placeholder="Keynote Speech / Band Set / Workshop Topic"
+                            placeholder="Agenda section title"
                             {...field}
                           />
                         </FormControl>
@@ -476,7 +435,7 @@ export default function ManageEvent() {
                       </FormItem>
                     )}
                   />
-
+                  {/* Description */}
                   <FormField
                     control={form.control}
                     name={`sections.${index}.description`}
@@ -485,7 +444,7 @@ export default function ManageEvent() {
                         <FormLabel>Description</FormLabel>
                         <FormControl>
                           <Textarea
-                            placeholder="Details about this section..."
+                            placeholder="Details..."
                             {...field}
                           />
                         </FormControl>
@@ -493,6 +452,7 @@ export default function ManageEvent() {
                       </FormItem>
                     )}
                   />
+                  {/* Start & End */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <FormField
                       control={form.control}
@@ -558,9 +518,9 @@ export default function ManageEvent() {
               ) : (
                 <>
                   <Send className="mr-2 h-4 w-4" />
-                  Save Event Details
+                    {initialData ? "Update Event" : "Create Event"}
                 </>
-              )}
+                )} 
             </Button>
           </form>
         </Form>

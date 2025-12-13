@@ -28,7 +28,7 @@ export interface IEventDetails {
   _id: string;
   name: string;
   type: string;
-  avatar?: string | File | FileList | undefined;
+  avatar?:  File| undefined;
   description?: string;
   locate: string;
   eventDate: string;
