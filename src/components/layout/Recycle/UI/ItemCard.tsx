@@ -33,18 +33,18 @@ const ItemCard = ({
   const typeRegistration = register(`type`);
 
   return (
-    <div className="space-y-6 relative transition-transform hover:scale-[1.01] bg-primary-foreground/10 p-6 rounded-3xl border border-primary-foreground/20">
+    <div className="space-y-6 relative transition-transform hover:scale-[1.01]  p-6 rounded-3xl border border-primary/30">
       {total > 1 && (
         <button
           type="button"
           onClick={() => onRemove(item.id)}
-          className="absolute top-4 right-4 p-2 bg-red-500/20 text-red-100 rounded-full hover:bg-red-500/40"
+          className="absolute top-4 right-4 p-2 bg-red-500/50 text-red-100 rounded-full hover:bg-red-500/60 cursor-pointer transition duration-400 "
         >
           <X size={16} />
         </button>
       )}
 
-      <div className="font-bold text-primary-foreground/80 uppercase">
+      <div className="font-bold text-primary/80 uppercase">
         Material Item {index + 1}
       </div>
 
@@ -70,27 +70,27 @@ const ItemCard = ({
         />
 
         <div className="flex flex-col space-y-2">
-          <label className="text-xs font-bold uppercase ml-2">
+          <label className="text-xs font-bold text-muted-foreground uppercase ml-2">
             Est. Weight (kg)
           </label>
 
-          <div className="flex items-center justify-between p-1.5 rounded-full bg-primary-foreground/10 border border-primary-foreground/20">
+          <div className="flex items-center justify-between p-2 rounded-full border border-primary/50 ">
             <button
               type="button"
               onClick={() => onAmountChange(index, -1)}
-              className="w-10 h-10 flex items-center justify-center rounded-full bg-primary-foreground/20 text-primary-foreground border hover:bg-primary-foreground hover:text-primary"
+              className="w-10 h-10 flex items-center text-primary-foreground justify-center bg-primary rounded-full transition duration-400 hover:scale-102  text-lg gap-2 hover:outline-2 hover:outline-primary hover:outline-offset-2"
             >
               <Minus size={18} />
             </button>
 
-            <span className="font-mono font-bold text-xl w-12 text-center">
+            <span className=" font-bold text-primary text-xl w-12 text-center">
               {item.amount}
             </span>
 
             <button
               type="button"
               onClick={() => onAmountChange(index, +1)}
-              className="w-10 h-10 flex items-center justify-center rounded-full bg-primary-foreground/20 text-primary-foreground border hover:bg-primary-foreground hover:text-primary"
+              className="w-10 h-10 flex items-center text-primary-foreground justify-center bg-primary rounded-full transition duration-400 hover:scale-102  text-lg gap-2 hover:outline-2 hover:outline-primary hover:outline-offset-2"
             >
               <Plus size={18} />
             </button>

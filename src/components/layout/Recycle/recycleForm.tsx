@@ -3,7 +3,7 @@
 import React, { useState, useTransition } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   recycleFormSchema,
   type RecycleFormValues,
@@ -11,9 +11,9 @@ import {
 import PersonalInfoSection from "./personalInfoSection";
 import AddressSection from "./addressSection";
 import MaterialSection from "./MaterialSection";
+import { Loader2, Sparkles } from "lucide-react";
 import { useRecycleAnalysis } from "@/hooks/useRecycleAnalysis";
 import VisionUploadArea from "./VisionUploadArea";
-import { Scan, FileText, CheckCircle2, Sparkles, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { updateUserPoints } from "@/frontend/api/Users";
 
@@ -152,7 +152,7 @@ const RecycleForm = () => {
   const isBusinessProcessing = isSubmitting || isAnalyzing;
 
   return (
-    <div className="w-full min-h-screen bg-background text-foreground flex flex-col items-center py-20">
+    <div className="w-full min-h-screen  text-foreground flex flex-col items-center py-20">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -161,11 +161,13 @@ const RecycleForm = () => {
       >
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="w-full space-y-12 bg-primary text-primary-foreground p-8 md:p-16 rounded-[3rem] border-4 shadow-2xl"
+          className="w-full space-y-12   p-8 md:p-16 rounded-[3rem] border-2  border-primary/80 shadow-2xl"
         >
-          <div className="text-center space-y-4">
-            <h2 className="text-5xl font-extrabold">Recycle Request</h2>
-            <p className="text-primary-foreground/90">
+          <div className="text-center space-y-4 animate-bounce">
+            <h2 className="text-5xl font-extrabold text-primary">
+              Recycle Request
+            </h2>
+            <p className="text-primary/80">
               Schedule your pickup. Eco-friendly and easy.
             </p>
           </div>
@@ -191,10 +193,10 @@ const RecycleForm = () => {
               <button
                 type="button"
                 onClick={() => setEntryMethod("manual")}
-                className={`px-6 py-2 rounded-full font-bold transition-all ${
+                className={`px-6 py-2  font-bold transition-all cursor-pointer ${
                   entryMethod === "manual"
-                    ? "bg-primary-foreground text-primary"
-                    : "text-primary-foreground hover:bg-primary-foreground/10"
+                    ? "bg-primary-foreground text-primary border-b-2 border-primary"
+                    : " hover:bg-primary-foreground/10 text-foreground border-0"
                 }`}
               >
                 Manual
@@ -202,10 +204,10 @@ const RecycleForm = () => {
               <button
                 type="button"
                 onClick={() => setEntryMethod("vision")}
-                className={`px-6 py-2 rounded-full font-bold transition-all ${
+                className={`px-6 py-2  font-bold transition-all cursor-pointer ${
                   entryMethod === "vision"
-                    ? "bg-primary-foreground text-primary"
-                    : "text-primary-foreground hover:bg-primary-foreground/10"
+                    ? "bg-primary-foreground text-primary border-b-2 border-primary"
+                    : " hover:bg-primary-foreground/10 text-foreground border-0"
                 }`}
               >
                 AI Scan
@@ -257,7 +259,7 @@ const RecycleForm = () => {
           <button
             type="submit"
             disabled={isBusinessProcessing}
-            className="w-full py-4 text-xl font-bold rounded-full bg-primary-foreground text-primary border-4 disabled:opacity-50 hover:scale-[1.02] transition-transform active:scale-[0.98] flex items-center justify-center gap-3"
+            className="w-full myBtnPrimary"
           >
             {isBusinessProcessing ? (
               <>

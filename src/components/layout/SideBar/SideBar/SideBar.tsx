@@ -34,7 +34,9 @@ import {
   MdOutlineEventRepeat,
   MdRestaurantMenu,
   MdAssignment,
+  MdEventAvailable,
 } from "react-icons/md";
+import { FaShop } from "react-icons/fa6";
 import { RxDashboard } from "react-icons/rx";
 import Link from "next/link";
 import ThemeBtn from "../ThemeBtn/ThemeBtn";

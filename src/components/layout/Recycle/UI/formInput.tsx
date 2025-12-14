@@ -29,8 +29,8 @@ const formInput = ({
   className = "",
 }: FormInputProps) => (
   <div className="flex flex-col space-y-2 w-full">
-    <label className="text-xs font-bold uppercase ml-2 text-primary-foreground">
-      {label} {required && <span className="text-red-300">*</span>}
+    <label className="text-sm  font-bold uppercase ml-2 text-primary">
+      {label} {required && <span className="text-red-500 ml-2">*</span>}
     </label>
 
     <div className="relative w-full">
@@ -45,11 +45,8 @@ const formInput = ({
         maxLength={maxLength}
         onInput={onInput}
         className={`
-          myInput w-full p-3 rounded-full bg-primary-foreground/20 
-          text-primary-foreground placeholder:text-foreground border border-primary-foreground/20
-          transition-all duration-300
-          focus:ring-2 focus:border-primary-foreground
-          hover:shadow-lg hover:ring-2 
+          myInput 
+           placeholder:text-foreground
           ${Icon ? "pl-12!" : "pl-4"}
           ${error ? "ring-2 ring-red-400 border-red-400" : ""}
           ${className}

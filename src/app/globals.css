@@ -118,7 +118,7 @@ div::-webkit-scrollbar {
   --secondary-foreground: oklch(0.216 0.006 56.043);
 
   /* input */
-  --input: oklch(92.8% 0.006 264.531);
+  --input: oklch(92.758% 0.00592 264.656 / 0.604);
   --input-foreground: oklch(0.216 0.006 56.043);
 
   /* card --> black&white */
@@ -170,7 +170,7 @@ div::-webkit-scrollbar {
   --secondary-foreground: oklch(100% 0.00011 271.152 / 0.758);
 
   /* input  */
-  --input: oklch(98.193% 0.01802 156.147 / 0.723);
+  --input: oklch(95.729% 0.04754 154.775 / 0.782);
   --input-foreground: oklch(0.216 0.006 56.043);
 
   /* card --> black&white */

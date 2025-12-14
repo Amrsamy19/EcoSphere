@@ -13,16 +13,14 @@ type SelectProps = {
 
 const SelectField = ({ label, options, register, error }: SelectProps) => (
   <div className="flex flex-col space-y-2 w-full">
-    <label className="text-xs font-bold uppercase ml-2 text-primary-foreground">{label}</label>
+    <label className="text-xs font-bold uppercase ml-2 text-muted-foreground">{label}</label>
 
     <div className="relative">
       <select
         {...register}
         defaultValue=""
         className={`
-          myInput w-full p-3 pl-4 rounded-full bg-primary-foreground/20
-          border border-primary-foreground/20 text-primary-foreground
-          focus:ring-2 hover:shadow-lg transition-all
+          myInput
           appearance-none cursor-pointer
           ${error ? "ring-2 ring-red-400 border-red-400" : ""}
         `}

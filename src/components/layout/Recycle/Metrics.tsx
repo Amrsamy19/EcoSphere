@@ -1,7 +1,13 @@
 "use client";
 
 import React, { useRef, useEffect } from "react";
-import { motion, useInView, useMotionValue, useTransform, animate } from "framer-motion";
+import {
+  motion,
+  useInView,
+  useMotionValue,
+  useTransform,
+  animate,
+} from "framer-motion";
 import { Recycle, Package, Users, BarChart4 } from "lucide-react";
 
 // ---- Reveal Wrapper ----
@@ -36,7 +42,10 @@ const Counter = ({ value }: { value: number }) => {
   const rounded = useTransform(motionValue, (latest) => Math.floor(latest));
 
   useEffect(() => {
-    const controls = animate(motionValue, value, { duration: 2, ease: "easeOut" });
+    const controls = animate(motionValue, value, {
+      duration: 2,
+      ease: "easeOut",
+    });
     return () => controls.stop();
   }, [motionValue, value]);
 
@@ -52,9 +61,8 @@ export const Metrics = () => {
   ];
 
   return (
-    <section className="py-20 md:py-32 px-6">
+    <section className="py-10 md:py-10 px-6">
       <div className="max-w-6xl mx-auto">
-
         {/* Title */}
         <Reveal>
           <div className="text-center mb-16 space-y-4">
@@ -69,22 +77,21 @@ export const Metrics = () => {
         </Reveal>
 
         {/* Metric Cards */}
-<Reveal delay={0.2}>
-  <div className="grid md:grid-cols-3 gap-8">
-
-    {metrics.map((item, index) => (
-      <motion.div
-        key={item.label}
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ delay: index * 0.15, duration: 0.6 }}
-        viewport={{ once: true }}
-         className={`
+        <Reveal delay={0.2}>
+          <div className="grid md:grid-cols-3 gap-8">
+            {metrics.map((item, index) => (
+              <motion.div
+                key={item.label}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.15, duration: 0.6 }}
+                viewport={{ once: true }}
+                className={`
                 relative 
                 
                 /* --- Stronger light-mode presence --- */
-                bg-card 
-                border border-primary-500/50 
+               
+                border border-primary/50 
                 shadow-[0_4px_14px_rgba(0,0,0,0.08)] 
                 hover:shadow-[0_8px_20px_rgba(0,0,0,0.12)] 
                 
@@ -98,35 +105,36 @@ export const Metrics = () => {
                 transition-all duration-300
                 hover:scale-[1.03]
               `}
-            >
-              {/* Subtle inner glow */}
-              <div className="
+              >
+                {/* Subtle inner glow */}
+                <div
+                  className="
                 absolute inset-0 
                 bg-primary/5 
                 blur-xl 
                 rounded-4xl 
                 pointer-events-none 
-              "></div>
-        {/* Icon */}
-              <item.Icon className={`w-10 h-10 mb-2 text-primary relative z-10`} />
+              "
+                ></div>
+                {/* Icon */}
+                <item.Icon
+                  className={`w-10 h-10 mb-2 text-primary relative z-10`}
+                />
 
-        {/* Number */}
-        <div className="text-3xl md:text-4xl font-extrabold text-primary relative z-10">
-          <Counter value={item.value} />
-          {item.suffix}
-        </div>
+                {/* Number */}
+                <div className="text-3xl md:text-4xl font-extrabold text-primary relative z-10">
+                  <Counter value={item.value} />
+                  {item.suffix}
+                </div>
 
-        {/* Label */}
-        <p className="text-lg font-medium text-foreground/80">
-          {item.label}
-        </p>
-      </motion.div>
-    ))}
-
-  </div>
-</Reveal>
-
-
+                {/* Label */}
+                <p className="text-lg font-medium text-foreground/80">
+                  {item.label}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </Reveal>
       </div>
     </section>
   );
