@@ -1,10 +1,9 @@
 "use client";
-import { Store } from "lucide-react";
 import { useState } from "react";
 import {
   MdCheckCircleOutline,
+  MdEvent,
   MdPendingActions,
-  MdVisibilityOff,
 } from "react-icons/md";
 import { RiNumbersLine } from "react-icons/ri";
 const EventHero = () => {
@@ -65,7 +64,7 @@ const EventHero = () => {
       <div className="max-w-7xl mx-auto flex flex-col items-center">
         {/* Header */}
         <div className="flex items-center justify-center gap-3 mb-3">
-          <Store className="w-8 h-8" />
+          <MdEvent  className="w-8 h-8" />
           <h1 className="text-2xl sm:text-3xl font-bold">
             Event Requests Dashboard
           </h1>
