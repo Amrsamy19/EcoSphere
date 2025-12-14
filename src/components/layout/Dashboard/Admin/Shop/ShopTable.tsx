@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Eye, EyeOff, Store } from "lucide-react";
+import Pagination from "@/components/ui/Pagination";
 
 const ShopTable = () => {
   const [shops, setShops] = useState([
@@ -62,7 +63,7 @@ const ShopTable = () => {
   return (
     <div>
       {/* Table Section */}
-      <div className="max-w-7xl mx-auto px-6 py-12 min-h-screen bg-secondary rounded-xl p-4 sm:p-6 lg:p-8">
+      <div className="max-w-7xl mx-auto px-6 py-12  bg-secondary rounded-xl p-4 sm:p-6 lg:p-8">
         <div className="bg-secondary rounded-xl shadow-lg overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
@@ -145,6 +146,7 @@ const ShopTable = () => {
             </table>
           </div>
         </div>
+        <Pagination />
       </div>
     </div>
   );

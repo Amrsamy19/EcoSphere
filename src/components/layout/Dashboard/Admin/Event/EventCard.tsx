@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Mail, Phone, MapPin, Ticket, Check, X } from "lucide-react";
+import Pagination from "@/components/ui/Pagination";
 
 const EventCard = () => {
   const [events, setEvents] = useState([
@@ -33,7 +34,7 @@ const EventCard = () => {
     },
   ]);
 
-  const handleAccept = (id) => {
+  const handleAccept = (id: number) => {
     setEvents(
       events.map((event) =>
         event.id === id ? { ...event, status: "accepted" } : event
@@ -41,7 +42,7 @@ const EventCard = () => {
     );
   };
 
-  const handleDeny = (id) => {
+  const handleDeny = (id: number) => {
     setEvents(
       events.map((event) =>
         event.id === id ? { ...event, status: "denied" } : event
@@ -50,7 +51,7 @@ const EventCard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-secondary rounded-xl p-4 sm:p-6 lg:p-8">
+    <div className=" bg-secondary rounded-xl p-4 sm:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {events.map((event) => (
@@ -88,15 +89,21 @@ const EventCard = () => {
                 <div className="flex items-start gap-3">
                   <MapPin className="w-5 h-5 text-muted-foreground mt-0.5 shrink-0" />
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs text-muted-foreground mb-1">Location</p>
-                    <p className="text-sm text-foreground/60">{event.location}</p>
+                    <p className="text-xs text-muted-foreground mb-1">
+                      Location
+                    </p>
+                    <p className="text-sm text-foreground/60">
+                      {event.location}
+                    </p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
                   <Ticket className="w-5 h-5 text-muted-foreground mt-0.5 shrink-0" />
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs text-muted-foreground mb-1">Ticket Price</p>
+                    <p className="text-xs text-muted-foreground mb-1">
+                      Ticket Price
+                    </p>
                     <p className="text-lg font-bold text-primary">
                       {event.ticketPrice}
                     </p>
@@ -138,6 +145,7 @@ const EventCard = () => {
             </div>
           ))}
         </div>
+        <Pagination />
       </div>
     </div>
   );
