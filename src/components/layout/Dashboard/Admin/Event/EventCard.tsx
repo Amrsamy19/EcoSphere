@@ -50,7 +50,7 @@ const EventCard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-secondary rounded-lg p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen bg-secondary rounded-xl p-4 sm:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {events.map((event) => (
