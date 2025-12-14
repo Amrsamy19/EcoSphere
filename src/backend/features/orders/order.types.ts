@@ -1,17 +1,25 @@
-import { ObjectId } from "mongoose";
+import { ObjectId, Types } from "mongoose";
 
 // schema types
 export type PaymentMethod = "cashOnDelivery" | "paymob" | "fawry" | "stripe";
 
 export type OrderStatus =
-	| "pending"
+	| "pending" // created, not paid
+	| "paid"    // payment confirmed
 	| "preparing"
 	| "delivering"
 	| "completed"
 	| "canceled";
+	
+export type updatePayment = {
+	status: OrderStatus,
+	paidAt?: Date,
+  paymentProvider?: string
+}
 
 export type IOrderItem = {
-	productId: ObjectId;
+	restaurantId: ObjectId | string;
+	productId: ObjectId | string;
 	quantity: number;
 	unitPrice: number;
 	totalPrice: number; // total of these items
@@ -19,20 +27,26 @@ export type IOrderItem = {
 
 // input / outputs types
 export type CreateOrderDTO = {
-	userId: ObjectId;
-	restaurantId: ObjectId;
-	productId: ObjectId;
-	quantity: number;
-	productPrice: number;
+	userId: string;
+  paymentMethod: PaymentMethod;
+  items: OrderRequestItem[];
+};
+
+export type OrderSuccess = {
+  orderId: string;
+  stripePaymentIntentId: string;
+  paidAmount: number;
+};
+
+export type OrderRequestItem = {
+  restaurantId: Types.ObjectId | string;
+  productId: string;
+  quantity: number;
 };
 
 export type CreateOrderCommand = {
-	userId: ObjectId;
-	restaurantId: ObjectId;
-	productId: ObjectId;
-	quantity: number;
-	totalPrice: number;
-};
+  totalPrice: number;
+} & OrderRequestItem & { price: number };
 
 export type revenuePerRest = {
 	_id: ObjectId;

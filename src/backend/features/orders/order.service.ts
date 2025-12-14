@@ -8,13 +8,17 @@ import {
 	RevenuePerDate,
 	OrderStatus,
 	CreateOrderDTO,
+	IOrderItem,
 } from "./order.types";
 import { IOrder } from "./order.model";
+import type { IUserService } from "../user/user.service";
+import Stripe from "stripe";
 
 export interface IOrderService {
-	createOrder(orderData: CreateOrderDTO): Promise<IOrder>;
+	createOrder(userId: string, orderData: CreateOrderDTO): Promise<IOrder>;
 	getUserOrders(userId: string): Promise<IOrder[]>;
 	getOrderById(orderId: string): Promise<IOrder>;
+	handleStripeEvent(event: Stripe.Event): Promise<any>;
 	updateOrderStatus(orderId: string, status: OrderStatus): Promise<IOrder>;
 	deleteOrder(orderId: string): Promise<IOrder>;
 	getRestaurantRevenue(restaurantId: string): Promise<revenuePerRest[]>;
@@ -32,23 +36,86 @@ export interface IOrderService {
 export class OrderService implements IOrderService {
 	constructor(
 		@inject("OrderRepository")
-		private readonly orderRepository: IOrderRepository
+		private readonly orderRepository: IOrderRepository,
+		@inject("IUserService") private readonly userService: IUserService
 	) {}
 
-	async createOrder(orderData: CreateOrderDTO): Promise<IOrder> {
-		// Calculate total price
-		const totalPrice = orderData.quantity * orderData.productPrice;
+	async createOrder(
+		userId: string,
+		orderData: CreateOrderDTO
+	): Promise<IOrder> {
+		const userCart = await this.userService.getCart(userId);
 
-		// In a real scenario, you would create the order items array properly
-		// This is simplified - you might need to adjust based on your actual data structure
-		const order = await this.orderRepository.makeOrder({
-			userId: orderData.userId,
-			restaurantId: orderData.restaurantId,
-			productId: orderData.productId,
-			quantity: orderData.quantity,
-			totalPrice: totalPrice,
+		if (!userCart || userCart.items.length === 0) {
+			throw new Error("Cart is empty");
+		}
+
+		const orderItems: IOrderItem[] = orderData.items.map((item) => {
+			const cartItem = userCart.items.find(
+				(ci) => `${ci.id}` === `${item.productId}`
+			);
+
+			if (!cartItem) {
+				throw new Error(`Product ${item.productId} not found in cart`);
+			}
+
+			const unitPrice = cartItem.productPrice;
+			const totalPrice = unitPrice * item.quantity;
+
+			return {
+				restaurantId: `${item.restaurantId}`,
+				productId: `${item.productId}`,
+				quantity: item.quantity,
+				unitPrice,
+				totalPrice,
+			};
 		});
+
+		const orderPrice = orderItems.reduce(
+			(sum, item) => sum + item.totalPrice,
+			0
+		);
+
+		const orderNewData = {
+			userId,
+			items: orderItems,
+			orderPrice,
+			paymentMethod: orderData.paymentMethod,
+			// status will be default (e.g. PENDING)
+		};
+
+		const order = await this.orderRepository.makeOrder(orderNewData);
 		return order;
+	}
+
+	async handleStripeEvent(event: Stripe.Event) {
+		console.log(event, "event");
+		const intent = event.data.object as Stripe.PaymentIntent;
+		switch (event.type) {
+			case "payment_intent.succeeded": {
+				const orderId = intent.metadata.orderId;
+				if (!orderId) return;
+
+				const order = await this.orderRepository.updateOrderStatus(orderId, {
+					status: "preparing",
+					paidAt: new Date(intent.created),
+					paymentProvider: "stripe",
+				});
+				console.log(order, "order in the service layer");
+				break;
+			}
+			case "payment_intent.payment_failed": {
+				const orderId = intent.metadata.orderId;
+				if (!orderId) return;
+				await this.orderRepository.updateOrderStatus(orderId, {
+					status: "canceled",
+				});
+				break;
+			}
+			default:
+				// ignore other events
+				break;
+		}
 	}
 
 	async getUserOrders(userId: string): Promise<IOrder[]> {
@@ -67,10 +134,9 @@ export class OrderService implements IOrderService {
 		orderId: string,
 		status: OrderStatus
 	): Promise<IOrder> {
-		const updatedOrder = await this.orderRepository.updateOrderStatus(
-			orderId,
-			status
-		);
+		const updatedOrder = await this.orderRepository.updateOrderStatus(orderId, {
+			status,
+		});
 		if (!updatedOrder) {
 			throw new Error("Order not found");
 		}
@@ -111,4 +177,9 @@ export class OrderService implements IOrderService {
 	): Promise<RevenuePerDate[]> {
 		return this.orderRepository.revenueFilteredByDate(startDate, endDate);
 	}
+	// private getCartTotal = (items: IProductCart[]) =>
+	// 	items.reduce(
+	// 		(sum, { productPrice, quantity }) => sum + productPrice * quantity,
+	// 		0
+	// 	);
 }
