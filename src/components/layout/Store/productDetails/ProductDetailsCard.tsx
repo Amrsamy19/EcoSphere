@@ -21,6 +21,8 @@ const ProductDetailsCard = ({ product }: { product: IProduct }) => {
     availableOnline
   } = product;
 
+  console.log('ProductDetailsCard product:', product);
+
   const [count, setCount] = useState(1);
   const isFav = useSelector((state: RootState) => isInFavSelector(state, _id));
   const dispatch = useDispatch<AppDispatch>()
@@ -132,7 +134,7 @@ const ProductDetailsCard = ({ product }: { product: IProduct }) => {
 
           {/* Price */}
           <div className="text-3xl font-bold text-primary">
-            ${price.toFixed(2)}
+            ${price}
           </div>
 
           {/* Description */}

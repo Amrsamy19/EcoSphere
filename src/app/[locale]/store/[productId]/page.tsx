@@ -2,7 +2,6 @@ import ProductDetailsCard from "@/components/layout/Store/productDetails/Product
 import ProductHero from "@/components/layout/Store/productDetails/ProductHero";
 import RelatedProducts from "@/components/layout/Store/productDetails/RelatedProducts";
 import TextComponent from "@/components/layout/Store/productDetails/TextComponent";
-import { products } from "@/data/products";
 
 interface Props {
   params: {
@@ -12,8 +11,10 @@ interface Props {
 
 const ProductPage = async ({ params }: Props) => {
   const { productId } = await params;
-
-  const product = products.find((p) => p.id === productId);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/${productId}`, {
+    cache: 'no-store',
+  });
+  const product = await res.json();
 
   if (!product) {
     return <div>Product not found</div>;

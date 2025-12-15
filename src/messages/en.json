@@ -304,7 +304,9 @@
       "quantity": "Quantity:",
       "addToCart": "Add to Cart",
       "addedToFavorites": "Added to favorites",
-      "removedFromFavorites": "Removed from favorites"
+      "removedFromFavorites": "Removed from favorites",
+      "availableOnline": "Available Online",
+      "notAvailableOnline": "Unavailable Online"
     },
     "tabs": {
       "description": "description",

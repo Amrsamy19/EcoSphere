@@ -248,7 +248,9 @@
       "quantity": "الكمية:",
       "addToCart": "أضف إلى السلة",
       "addedToFavorites": "تمت الإضافة إلى المفضلة",
-      "removedFromFavorites": "تمت الإزالة من المفضلة"
+      "removedFromFavorites": "تمت الإزالة من المفضلة",
+      "availableOnline": "متاح عبر الانترنت",
+      "notAvailableOnline": "غير متاح عبر الانترنت"
     },
     "tabs": {
       "description": "الوصف",

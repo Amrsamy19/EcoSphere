@@ -249,7 +249,9 @@
       "quantity": "Quantité :",
       "addToCart": "Ajouter au panier",
       "addedToFavorites": "Ajouté aux favoris",
-      "removedFromFavorites": "Retiré des favoris"
+      "removedFromFavorites": "Retiré des favoris",
+      "availableOnline": "Disponible en ligne",
+      "notAvailableOnline": "Indisponible en ligne"
     },
     "tabs": {
       "description": "description",
