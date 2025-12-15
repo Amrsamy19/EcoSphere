@@ -49,3 +49,18 @@ export const DELETE = async (
     return serverError("Something went wrong");
   }
 };
+export const PATCH = async (
+  req: NextRequest,
+  context: { params: Promise<{ id: string }> }
+): Promise<NextResponse<ApiResponse<IRestaurant>>> => {
+  const { id } = await context.params;
+  const body = await req.json();
+  const controller = rootContainer.resolve(RestaurantController);
+  try {
+    const result = await controller.updateById(id, body);
+    return ok(result);
+  } catch (error) {
+    console.error(error);
+    return serverError("Something went wrong");
+  }
+};

@@ -19,7 +19,7 @@ export default function ProfilePage() {
   }
 
   if (status === "loading") {
-    return <div>loading</div>;
+    return <div>{t("loading")}</div>;
   }
 
   console.log(session);

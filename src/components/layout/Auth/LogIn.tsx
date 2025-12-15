@@ -9,7 +9,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { signIn, SignInResponse } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/frontend/redux/hooks";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
 const initiateData: SignInResponse = {
   status: 200,
@@ -31,6 +31,7 @@ const LogIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loginState, setLoginState] = useState(initiateData);
   const t = useTranslations("Auth.login");
+  const locale = useLocale();
 
   const handleToggle = () => {
     dispatch(toggleAuthView());
@@ -83,7 +84,9 @@ const LogIn = () => {
         <button
           type="button"
           onClick={() => setShowPassword(!showPassword)}
-          className="absolute right-4 top-1/2 cursor-pointer -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+          className={`absolute ${
+            locale === "ar" ? "left-4" : "right-4"
+          } top-1/2 cursor-pointer -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors`}
         >
           {showPassword ? (
             <EyeOff size={20} className="text-black" />

@@ -1,9 +1,11 @@
 "use client";
 import { useState } from "react";
-import { Mail, Phone, MapPin, Ticket, Check, X,User  } from "lucide-react";
+import { Mail, Phone, MapPin, Ticket, Check, X, User } from "lucide-react";
 import Pagination from "@/components/ui/Pagination";
+import { useTranslations } from "next-intl";
 
 const EventCard = () => {
+  const t = useTranslations("Admin.Events.card");
   const [events, setEvents] = useState([
     {
       id: 1,
@@ -74,7 +76,9 @@ const EventCard = () => {
                 <div className="flex items-start gap-3">
                   <User className="w-5 h-5 text-muted-foreground mt-0.5 shrink-0" />
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs text-muted-foreground mb-1">Organizer</p>
+                    <p className="text-xs text-muted-foreground mb-1">
+                      {t("organizer")}
+                    </p>
                     <p className="text-sm text-foreground/60 truncate">
                       {event.organizer}
                     </p>
@@ -83,7 +87,9 @@ const EventCard = () => {
                 <div className="flex items-start gap-3">
                   <Mail className="w-5 h-5 text-muted-foreground mt-0.5 shrink-0" />
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs text-muted-foreground mb-1">Email</p>
+                    <p className="text-xs text-muted-foreground mb-1">
+                      {t("email")}
+                    </p>
                     <p className="text-sm text-foreground/60 truncate">
                       {event.email}
                     </p>
@@ -93,7 +99,9 @@ const EventCard = () => {
                 <div className="flex items-start gap-3">
                   <Phone className="w-5 h-5 text-muted-foreground mt-0.5 shrink-0" />
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs text-muted-foreground mb-1">Phone</p>
+                    <p className="text-xs text-muted-foreground mb-1">
+                      {t("phone")}
+                    </p>
                     <p className="text-sm text-foreground/60">{event.phone}</p>
                   </div>
                 </div>
@@ -102,7 +110,7 @@ const EventCard = () => {
                   <MapPin className="w-5 h-5 text-muted-foreground mt-0.5 shrink-0" />
                   <div className="flex-1 min-w-0">
                     <p className="text-xs text-muted-foreground mb-1">
-                      Location
+                      {t("location")}
                     </p>
                     <p className="text-sm text-foreground/60">
                       {event.location}
@@ -114,7 +122,7 @@ const EventCard = () => {
                   <Ticket className="w-5 h-5 text-muted-foreground mt-0.5 shrink-0" />
                   <div className="flex-1 min-w-0">
                     <p className="text-xs text-muted-foreground mb-1">
-                      Ticket Price
+                      {t("ticketPrice")}
                     </p>
                     <p className="text-lg font-bold text-primary">
                       {event.ticketPrice}
@@ -132,14 +140,14 @@ const EventCard = () => {
                       className="flex-1 flex items-center justify-center gap-2 bg-red-50 hover:bg-red-100 text-red-600 font-medium py-2.5 px-4 rounded-lg transition-colors cursor-pointer"
                     >
                       <X className="w-4 h-4" />
-                      Deny
+                      {t("actions.deny")}
                     </button>
                     <button
                       onClick={() => handleAccept(event.id)}
                       className="flex-1 flex items-center justify-center gap-2 bg-green-50 hover:bg-green-100 text-green-600 font-medium py-2.5 px-4 rounded-lg transition-colors cursor-pointer"
                     >
                       <Check className="w-4 h-4" />
-                      Accept
+                      {t("actions.accept")}
                     </button>
                   </div>
                 ) : (
@@ -150,7 +158,9 @@ const EventCard = () => {
                         : "bg-red-100 text-red-700"
                     }`}
                   >
-                    {event.status === "accepted" ? "✓ Accepted" : "✗ Denied"}
+                    {event.status === "accepted"
+                      ? "✓ " + t("status.accepted")
+                      : "✗ " + t("status.denied")}
                   </div>
                 )}
               </div>

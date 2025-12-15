@@ -4,21 +4,21 @@ import { Loader2 } from "lucide-react";
 import { CheckoutForm } from "@/components/layout/payment/CheckoutForm";
 import { StripeCheckoutProvider } from "./StripeCheckoutProvider";
 import { usePaymentIntent } from "@/hooks/usePaymentIntent";
+import { useTranslations } from "next-intl";
 
 interface Props {
   amount: number;
 }
 
 export function CardCheckoutSection({ amount }: Props) {
+  const t = useTranslations("Checkout.form");
   const { clientSecret, loading, error } = usePaymentIntent(amount, true);
 
   if (loading || !clientSecret) {
     return (
       <div className="flex flex-col items-center justify-center py-10">
         <Loader2 className="w-10 h-10 animate-spin text-primary mb-4" />
-        <p className="text-zinc-500 animate-pulse">
-          Initializing Secure Payment...
-        </p>
+        <p className="text-zinc-500 animate-pulse">{t("initializing")}</p>
       </div>
     );
   }

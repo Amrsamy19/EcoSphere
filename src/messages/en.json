@@ -4,13 +4,41 @@
       "subtitle": "#Join the movement",
       "title": "Successful fundraisers start here",
       "cta": "More About EcoSphere"
+    },
+    "marketplace": {
+      "title": "Our Store",
+      "description": "Shop 100% eco-friendly products and start your journey toward a more sustainable lifestyle. We offer a wide range of certified, toxin-free items carefully selected from trusted eco-friendly stores and partner farms across Egypt and beyond.",
+      "list": {
+        "natural": "Products made from natural, biodegradable, and recycled materials.",
+        "zeroWaste": "A full range of zero-waste essentials you can rely on every day.",
+        "farm": "Fresh and organic farm products sourced responsibly from local eco-farms."
+      },
+      "stats": {
+        "products": "300+ sustainable products",
+        "brands": "50+ green brands"
+      },
+      "cta": "Visit Store"
+    },
+    "partners": {
+      "title": "Eco-Friendly Partner Stores & Farms",
+      "description": "We proudly connect you with top eco-friendly stores and farms that share our mission of promoting a cleaner, more sustainable future. Our network is growing every day, making it easier for you to access trusted, safe, and environmentally responsible products from certified shops and passionate eco farms.",
+      "cta": "Visit Our Partners",
+      "stats": {
+        "partners": "50+",
+        "partnersDesc": "partners committed to sustainability",
+        "products": "1200+",
+        "productsDesc": "natural and toxin-free products",
+        "farms": "15+",
+        "farmsDesc": "certified local farms"
+      }
     }
   },
   "Layout": {
     "Sidebar": {
       "groups": {
         "application": "Application",
-        "dashboard": "Dashboard"
+        "dashboard": "Dashboard",
+        "admin": "Admin"
       },
       "menu": {
         "home": "Home",
@@ -214,13 +242,20 @@
       "page": "Page {current} of {total}",
       "unavailable": "Unavailable",
       "noImage": "No Image",
-      "currency": "EGP",
+      "currency": "$",
       "actions": {
         "edit": "Edit",
         "delete": "Delete",
         "cancel": "Cancel",
-        "save": "Save Product",
-        "saving": "Saving...",
+        "save": "Save",
+        "saving": "Saving..."
+      },
+      "deleteDialog": {
+        "title": "Delete Product",
+        "description": "Are you sure you want to delete \"{title}\"? This action cannot be undone.",
+        "descriptionNoTitle": "Are you sure you want to delete this product? This action cannot be undone.",
+        "confirm": "Delete",
+        "cancel": "Cancel",
         "deleting": "Deleting..."
       },
       "popup": {
@@ -241,12 +276,7 @@
           "priceRequired": "Price is required"
         }
       },
-      "deleteDialog": {
-        "title": "Delete Product",
-        "description": "Are you sure you want to delete <bold>{name}</bold>? This action cannot be undone.",
-        "confirm": "Delete",
-        "thisProduct": "this product"
-      },
+
       "toasts": {
         "loadError": "Failed to load products",
         "createSuccess": "Product created successfully",
@@ -269,27 +299,13 @@
     },
     "product": {
       "addedToFavorites": "Added to favorites",
-      "removedFromFavorites": "Removed from favorites"
+      "removedFromFavorites": "Removed from favorites",
+      "addedToCart": "Added to cart",
+      "removedFromCart": "Removed from cart",
+      "currency": "EGP"
     }
   },
-  "Favorites": {
-    "hero": {
-      "title": "Favorite",
-      "breadcrumb": {
-        "home": "Home",
-        "favorite": "Favorite"
-      }
-    },
-    "emptyState": {
-      "title": "No favorites yet",
-      "description": "Start adding products to your favorites to see them here",
-      "browseButton": "Browse Products"
-    },
-    "card": {
-      "addToCart": "add to cart",
-      "removedFromFavorites": "Removed from favorites"
-    }
-  },
+
   "ProductDetails": {
     "hero": {
       "title": "Store",
@@ -368,7 +384,9 @@
     },
     "signup": {
       "oneOfUs": "One of us ?",
-      "login": "Login"
+      "login": "Login",
+      "registering": "Registering...",
+      "continue": "Continue"
     },
     "forgotPassword": {
       "title": "Forgot Password",
@@ -411,7 +429,8 @@
         "lastName": "Enter Your Last Name",
         "phoneNumber": "Enter Your Phone Number",
         "female": "Female",
-        "male": "Male"
+        "male": "Male",
+        "addressPlaceholder": "Enter Your Address"
       },
       "shopStep2": {
         "title": "Shop Details",
@@ -435,7 +454,8 @@
   },
   "Profile": {
     "page": {
-      "pleaseLogin": "Please log in to view your profile."
+      "pleaseLogin": "Please log in to view your profile.",
+      "loading": "Loading..."
     },
     "common": {
       "editProfile": "Edit Profile",
@@ -465,6 +485,24 @@
       "browseOrders": "Browse Orders",
       "editModalTitle": "Edit Profile"
     },
+    "toasts": {
+      "passwordChanged": "Password changed successfully",
+      "passwordChangeFailed": "Failed to change password"
+    },
+    "states": {
+      "loading": "Loading profile...",
+      "notFound": "User not found."
+    },
+    "security": {
+      "title": "Security",
+      "currentPassword": "Current Password",
+      "currentPasswordPlaceholder": "Enter current password",
+      "newPassword": "New Password",
+      "newPasswordPlaceholder": "Enter new password",
+      "confirmPassword": "Confirm Password",
+      "confirmPasswordPlaceholder": "Confirm new password",
+      "changePassword": "Change Password"
+    },
     "organizer": {
       "role": "Event Organizer",
       "organizationName": "Organization Name",
@@ -472,7 +510,8 @@
       "editModalTitle": "Edit Profile",
       "subscriptionManagement": "Subscription Management",
       "expiryDate": "Expiry Date",
-      "renewSubscription": "Renew Subscription"
+      "renewSubscription": "Renew Subscription",
+      "renewFeatureComingSoon": "Renew Subscription feature coming soon!"
     },
     "restaurant": {
       "role": "Restaurant",
@@ -481,7 +520,9 @@
       "location": "Location",
       "workingHours": "Working Hours",
       "hotline": "Hotline",
-      "editModalTitle": "Edit Shop Profile"
+      "editModalTitle": "Edit Shop Profile",
+      "restaurantInformation": "Restaurant Information",
+      "noDescription": "No description available."
     }
   },
   "Cart": {
@@ -510,17 +551,56 @@
     },
     "orderSummary": {
       "title": "Order Summary",
-      "promoCode": "Promo code",
+      "promoCode": "Promo Code",
       "apply": "Apply",
-      "couponApplied": "Coupon applied!",
-      "subTotal": "Sub total",
+      "couponApplied": "Coupon Applied",
+      "subTotal": "Subtotal",
       "discount": "Discount ({percent}%)",
-      "deliveryFee": "Delivery fee",
+      "deliveryFee": "Delivery Fee",
       "total": "Total",
-      "warranty": "90 Day Limited Warranty up to manufacturer's elements",
+      "warranty": "Warranty",
       "details": "Details",
       "checkoutNow": "Checkout Now",
-      "no-coupon": "No coupon applied"
+      "currency": "EGP",
+      "toasts": {
+        "couponApplied": "Coupon Applied",
+        "invalidCoupon": "Not valid coupon"
+      },
+      "no-coupon": "No Coupon"
+    }
+  },
+  "Checkout": {
+    "page": {
+      "title": "Checkout",
+      "payWithCard": "Pay with Card",
+      "payWithCash": "Cash on Delivery",
+      "somethingWentWrong": "Something went wrong",
+      "youWillPay": "You will pay",
+      "directlyToCourier": "directly to the courier upon delivery.",
+      "confirmOrder": "Confirm Order"
+    },
+    "form": {
+      "initializing": "Initializing Secure Payment...",
+      "securePayment": "Secure Payment",
+      "securePaymentDesc": "Complete your purchase securely.",
+      "errorTitle": "Error",
+      "unexpectedError": "An unexpected error occurred.",
+      "processing": "Processing...",
+      "pay": "Pay {amount}",
+      "securedByStripe": "Payments secured by Stripe"
+    },
+    "verification": {
+      "successTitle": "Payment Confirmed",
+      "successDesc": "Thank you for contributing to a greener future.",
+      "transactionId": "Transaction ID",
+      "totalAmount": "Total Amount",
+      "returnHome": "Return Home",
+      "downloadReceipt": "Download Receipt",
+      "failedTitle": "Payment Failed",
+      "failedDesc": "We encountered an issue processing your eco-contribution. No funds were deducted.",
+      "errorCode": "Error Code: {code}",
+      "cardDeclined": "Card declined. Please check your card details or try a different payment method.",
+      "tryAgain": "Try Again"
     }
   },
   "Dashboard": {
@@ -546,6 +626,29 @@
       "title": "Dashboard Display Events",
       "ticketLeft": "Ticket Left",
       "sold": "{percent}% Sold"
+    }
+  },
+  "Favorites": {
+    "hero": {
+      "title": "Your Favorites",
+      "breadcrumb": {
+        "home": "Home",
+        "favorite": "Favorites"
+      }
+    },
+    "emptyState": {
+      "title": "No favorites yet",
+      "description": "Start exploring and add items to your wishlist!",
+      "browseButton": "Browse Items"
+    },
+    "card": {
+      "removedFromFavorites": "Removed from favorites",
+      "addToCart": "Add to cart"
+    },
+    "view": {
+      "grid": "Grid View",
+      "list": "List View",
+      "clearAll": "Clear All Favorites"
     }
   },
   "AI": {
@@ -732,6 +835,11 @@
       "manual": "Manual",
       "aiScan": "AI Scan"
     },
+    "vision": {
+      "addImages": "Add Images",
+      "dragDrop": "Drag & drop or click to upload",
+      "imagesReady": "{count} Image{s} Ready"
+    },
     "errors": {
       "addItem": "Please add at least one item.",
       "uploadImage": "Please upload at least one image.",
@@ -817,6 +925,142 @@
       "electronic": "Electronic Waste",
       "metal": "Metal",
       "mixed": "Mixed"
+    }
+  },
+  "RecycleDashboard": {
+    "title": "Recycle Dashboard",
+    "description": "Manage and track all recycling requests. Review, process, and complete pickups efficiently.",
+    "stats": {
+      "totalRequests": "Total Requests",
+      "reviewing": "Reviewing",
+      "pending": "Pending",
+      "outForDelivery": "Out for Delivery",
+      "completed": "Completed"
+    },
+    "tabs": {
+      "activeRequests": "Active Requests",
+      "completed": "Completed"
+    },
+    "table": {
+      "customerName": "Customer Name",
+      "email": "Email",
+      "phone": "Phone",
+      "location": "Location",
+      "status": "Status",
+      "actions": "Actions",
+      "empty": "No requests found"
+    },
+    "status": {
+      "reviewing": "Reviewing",
+      "pending": "Pending",
+      "outForDelivery": "Out for Delivery",
+      "completed": "Completed"
+    }
+  },
+  "Admin": {
+    "Events": {
+      "title": "Event Requests Dashboard",
+      "description": "Manage and monitor all event registration requests. Review, approve, and control event.",
+      "stats": {
+        "total": "Total Events",
+        "active": "Active",
+        "pending": "Pending"
+      },
+      "card": {
+        "organizer": "Organizer",
+        "email": "Email",
+        "phone": "Phone",
+        "location": "Location",
+        "ticketPrice": "Ticket Price",
+        "status": {
+          "accepted": "Accepted",
+          "denied": "Denied"
+        },
+        "actions": {
+          "accept": "Accept",
+          "deny": "Deny"
+        }
+      }
+    },
+    "Shops": {
+      "title": "Shop Requests Dashboard",
+      "description": "Manage and monitor all shop registration requests. Review, approve, and control shop visibility with ease.",
+      "stats": {
+        "total": "Total Shops",
+        "active": "Active",
+        "pending": "Pending",
+        "hidden": "Hidden"
+      },
+      "table": {
+        "headers": {
+          "name": "Shop Name",
+          "email": "Email",
+          "phone": "Phone",
+          "status": "Status",
+          "visibility": "Visibility"
+        },
+        "status": {
+          "active": "Active",
+          "pending": "Pending",
+          "inactive": "Inactive"
+        },
+        "actions": {
+          "hidden": "Hidden",
+          "visible": "Visible"
+        }
+      }
+    }
+  },
+  "Events": {
+    "Browse": {
+      "title": "Browse All Events",
+      "searchPlaceholder": "Search...",
+      "noEvents": "No upcoming events found."
+    },
+    "Manage": {
+      "titleCreate": "Create Event",
+      "titleEdit": "Edit Event",
+      "submitCreate": "Create Event",
+      "submitUpdate": "Update Event",
+      "submitting": "Saving Event...",
+      "successCreate": "Event created successfully",
+      "successUpdate": "Event updated successfully",
+      "error": "Error saving event",
+      "sections": {
+        "primary": "Primary Event Information",
+        "venue": "Venue and Schedule",
+        "capacity": "Capacity and Sales",
+        "schedule": "Detailed Event Schedule (Agenda Items)"
+      },
+      "fields": {
+        "title": "Event Title",
+        "titlePlaceholder": "Event Name",
+        "type": "Event Type",
+        "typePlaceholder": "Select event type",
+        "image": "Event Image",
+        "description": "Short Description",
+        "descriptionPlaceholder": "Describe your event...",
+        "location": "Location / Venue",
+        "locationPlaceholder": "City, Address, or Venue",
+        "date": "Event Date",
+        "startTime": "Start Time",
+        "endTime": "End Time",
+        "ticketsAmount": "Tickets Amount",
+        "ticketStatus": "Ticket Status",
+        "ticketStatusPlaceholder": "Select ticket status",
+        "ticketPrice": "Ticket Price",
+        "agendaTitle": "Title",
+        "agendaTitlePlaceholder": "Agenda section title",
+        "agendaDescription": "Description",
+        "agendaDescriptionPlaceholder": "Details..."
+      },
+      "actions": {
+        "addAgenda": "Add Agenda Section"
+      },
+      "ticketTypes": {
+        "priced": "Priced",
+        "free": "Free"
+      }
     }
   },
   "Metrics": {

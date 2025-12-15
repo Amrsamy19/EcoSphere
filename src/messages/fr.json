@@ -3,14 +3,42 @@
     "hero": {
       "subtitle": "#Rejoignez le mouvement",
       "title": "Les collectes de fonds réussies commencent ici",
-      "cta": "En savoir plus sur EcoSphere"
+      "cta": "Plus sur EcoSphere"
+    },
+    "marketplace": {
+      "title": "Notre Magasin",
+      "description": "Achetez des produits 100% écologiques et commencez votre voyage vers un mode de vie plus durable. Nous proposons une large gamme d'articles certifiés sans toxines, soigneusement sélectionnés auprès de magasins écologiques de confiance et de fermes partenaires à travers l'Égypte et au-delà.",
+      "list": {
+        "natural": "Produits fabriqués à partir de matériaux naturels, biodégradables et recyclés.",
+        "zeroWaste": "Une gamme complète d'essentiels zéro déchet sur lesquels vous pouvez compter au quotidien.",
+        "farm": "Produits agricoles frais et biologiques provenant de manière responsable de fermes écologiques locales."
+      },
+      "stats": {
+        "products": "300+ produits durables",
+        "brands": "50+ marques vertes"
+      },
+      "cta": "Visiter le Magasin"
+    },
+    "partners": {
+      "title": "Magasins et Fermes Partenaires Écologiques",
+      "description": "Nous sommes fiers de vous mettre en relation avec les meilleurs magasins et fermes écologiques qui partagent notre mission de promouvoir un avenir plus propre et plus durable. Notre réseau s'agrandit chaque jour, ce qui vous permet d'accéder plus facilement à des produits fiables, sûrs et respectueux de l'environnement provenant de magasins certifiés et de fermes écologiques passionnées.",
+      "cta": "Visiter Nos Partenaires",
+      "stats": {
+        "partners": "50+",
+        "partnersDesc": "partenaires engagés dans la durabilité",
+        "products": "1200+",
+        "productsDesc": "produits naturels et sans toxines",
+        "farms": "15+",
+        "farmsDesc": "fermes locales certifiées"
+      }
     }
   },
   "Layout": {
     "Sidebar": {
       "groups": {
         "application": "Application",
-        "dashboard": "Tableau de bord"
+        "dashboard": "Tableau de bord",
+        "admin": "Admin"
       },
       "menu": {
         "home": "Accueil",
@@ -214,7 +242,10 @@
     },
     "product": {
       "addedToFavorites": "Ajouté aux favoris",
-      "removedFromFavorites": "Retiré des favoris"
+      "removedFromFavorites": "Retiré des favoris",
+      "addedToCart": "Ajouté au panier",
+      "removedFromCart": "Retiré du panier",
+      "currency": "EGP"
     }
   },
   "Favorites": {
@@ -368,8 +399,10 @@
       "signUp": "Créer un compte"
     },
     "signup": {
-      "oneOfUs": "Déjà l'un des nôtres ?",
-      "login": "Se connecter"
+      "oneOfUs": "Un de nous ?",
+      "login": "Connexion",
+      "registering": "Enregistrement...",
+      "continue": "Continuer"
     },
     "forgotPassword": {
       "title": "Mot de passe oublié",
@@ -412,7 +445,8 @@
         "lastName": "Entrez votre nom",
         "phoneNumber": "Entrez votre numéro de téléphone",
         "female": "Femme",
-        "male": "Homme"
+        "male": "Homme",
+        "addressPlaceholder": "Entrez votre adresse"
       },
       "shopStep2": {
         "title": "Détails de la boutique",
@@ -436,7 +470,8 @@
   },
   "Profile": {
     "page": {
-      "pleaseLogin": "Veuillez vous connecter pour voir votre profil."
+      "pleaseLogin": "Veuillez vous connecter pour voir votre profil.",
+      "loading": "Chargement..."
     },
     "common": {
       "editProfile": "Modifier le profil",
@@ -466,6 +501,24 @@
       "browseOrders": "Voir les commandes",
       "editModalTitle": "Modifier le profil"
     },
+    "toasts": {
+      "passwordChanged": "Mot de passe modifié avec succès",
+      "passwordChangeFailed": "Échec de la modification du mot de passe"
+    },
+    "states": {
+      "loading": "Chargement du profil...",
+      "notFound": "Utilisateur non trouvé."
+    },
+    "security": {
+      "title": "Sécurité",
+      "currentPassword": "Mot de passe actuel",
+      "currentPasswordPlaceholder": "Entrez le mot de passe actuel",
+      "newPassword": "Nouveau mot de passe",
+      "newPasswordPlaceholder": "Entrez le nouveau mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
+      "confirmPasswordPlaceholder": "Confirmer le nouveau mot de passe",
+      "changePassword": "Changer le mot de passe"
+    },
     "organizer": {
       "role": "Organisateur d'événements",
       "organizationName": "Nom de l'organisation",
@@ -473,7 +526,8 @@
       "editModalTitle": "Modifier le profil",
       "subscriptionManagement": "Gestion d'abonnement",
       "expiryDate": "Date d'expiration",
-      "renewSubscription": "Renouveler l'abonnement"
+      "renewSubscription": "Renouveler l'abonnement",
+      "renewFeatureComingSoon": "La fonctionnalité de renouvellement arrive bientôt !"
     },
     "restaurant": {
       "role": "Restaurant",
@@ -482,7 +536,9 @@
       "location": "Emplacement",
       "workingHours": "Heures d'ouverture",
       "hotline": "Hotline",
-      "editModalTitle": "Modifier le profil du magasin"
+      "editModalTitle": "Modifier le profil du magasin",
+      "restaurantInformation": "Informations sur le restaurant",
+      "noDescription": "Aucune description disponible."
     }
   },
   "Cart": {
@@ -513,15 +569,54 @@
       "title": "Récapitulatif de la commande",
       "promoCode": "Code promo",
       "apply": "Appliquer",
-      "couponApplied": "Code promo appliqué !",
+      "couponApplied": "Coupon appliqué",
+      "no-coupon": "Aucun coupon",
       "subTotal": "Sous-total",
-      "discount": "Réduction ({percent}%)",
+      "discount": "Remise ({percent}%)",
       "deliveryFee": "Frais de livraison",
       "total": "Total",
-      "warranty": "Garantie limitée de 90 jours couvrant les éléments du fabricant",
+      "warranty": "Garantie",
       "details": "Détails",
-      "checkoutNow": "Passer à la commande",
-      "no-coupon": "Aucun coupon appliqué"
+      "checkoutNow": "Commander maintenant",
+      "currency": "EGP",
+      "toasts": {
+        "couponApplied": "Coupon appliqué",
+        "invalidCoupon": "Coupon non valide"
+      }
+    }
+  },
+  "Checkout": {
+    "page": {
+      "title": "Paiement",
+      "payWithCard": "Payer par carte",
+      "payWithCash": "Paiement à la livraison",
+      "somethingWentWrong": "Une erreur s'est produite",
+      "youWillPay": "Vous paierez",
+      "directlyToCourier": "directement au coursier à la livraison.",
+      "confirmOrder": "Confirmer la commande"
+    },
+    "form": {
+      "initializing": "Initialisation du paiement sécurisé...",
+      "securePayment": "Paiement sécurisé",
+      "securePaymentDesc": "Complétez votre achat en toute sécurité.",
+      "errorTitle": "Erreur",
+      "unexpectedError": "Une erreur inattendue s'est produite.",
+      "processing": "Traitement...",
+      "pay": "Payer {amount}",
+      "securedByStripe": "Paiements sécurisés par Stripe"
+    },
+    "verification": {
+      "successTitle": "Paiement confirmé",
+      "successDesc": "Merci de contribuer à un avenir plus vert.",
+      "transactionId": "ID de transaction",
+      "totalAmount": "Montant total",
+      "returnHome": "Retour à l'accueil",
+      "downloadReceipt": "Télécharger le reçu",
+      "failedTitle": "Échec du paiement",
+      "failedDesc": "Nous avons rencontré un problème lors du traitement de votre éco-contribution. Aucun fonds n'a été déduit.",
+      "errorCode": "Code d'erreur : {code}",
+      "cardDeclined": "Carte refusée. Veuillez vérifier les détails de votre carte ou essayer un autre mode de paiement.",
+      "tryAgain": "Réessayer"
     }
   },
   "Dashboard": {
@@ -547,6 +642,29 @@
       "title": "Affichage des événements du tableau de bord",
       "ticketLeft": "Billets restants",
       "sold": "{percent}% vendu"
+    }
+  },
+  "Favorites": {
+    "hero": {
+      "title": "Vos favoris",
+      "breadcrumb": {
+        "home": "Accueil",
+        "favorite": "Favoris"
+      }
+    },
+    "emptyState": {
+      "title": "Pas encore de favoris",
+      "description": "Commencez à explorer et ajoutez des articles à votre liste de souhaits !",
+      "browseButton": "Parcourir les articles"
+    },
+    "card": {
+      "removedFromFavorites": "Retiré des favoris",
+      "addToCart": "Ajouter au panier"
+    },
+    "view": {
+      "grid": "Vue en grille",
+      "list": "Vue en liste",
+      "clearAll": "Tout effacer"
     }
   },
   "AI": {
@@ -732,6 +850,11 @@
       "manual": "Manuel",
       "aiScan": "Scan IA"
     },
+    "vision": {
+      "addImages": "Ajouter des images",
+      "dragDrop": "Glissez-déposez ou cliquez pour télécharger",
+      "imagesReady": "{count} Image{s} prête(s)"
+    },
     "errors": {
       "addItem": "Veuillez ajouter au moins un article.",
       "uploadImage": "Veuillez télécharger au moins une image.",
@@ -814,6 +937,142 @@
       "electronic": "Déchets Électroniques",
       "metal": "Métal",
       "mixed": "Mixte"
+    }
+  },
+  "RecycleDashboard": {
+    "title": "Tableau de Bord Recyclage",
+    "description": "Gérez et suivez toutes les demandes de recyclage. Examinez, traitez et complétez les collectes efficacement.",
+    "stats": {
+      "totalRequests": "Total des Demandes",
+      "reviewing": "En Revue",
+      "pending": "En Attente",
+      "outForDelivery": "En Livraison",
+      "completed": "Terminé"
+    },
+    "tabs": {
+      "activeRequests": "Demandes Actives",
+      "completed": "Terminées"
+    },
+    "table": {
+      "customerName": "Nom du Client",
+      "email": "E-mail",
+      "phone": "Téléphone",
+      "location": "Lieu",
+      "status": "Statut",
+      "actions": "Actions",
+      "empty": "Aucune demande trouvée"
+    },
+    "status": {
+      "reviewing": "En Revue",
+      "pending": "En Attente",
+      "outForDelivery": "En Livraison",
+      "completed": "Terminé"
+    }
+  },
+  "Admin": {
+    "Events": {
+      "title": "Tableau de Bord des Demandes d'Événements",
+      "description": "Gérez et surveillez toutes les demandes d'inscription d'événements. Examinez, approuvez et contrôlez les événements.",
+      "stats": {
+        "total": "Total des Événements",
+        "active": "Actif",
+        "pending": "En Attente"
+      },
+      "card": {
+        "organizer": "Organisateur",
+        "email": "E-mail",
+        "phone": "Téléphone",
+        "location": "Lieu",
+        "ticketPrice": "Prix du Billet",
+        "status": {
+          "accepted": "Accepté",
+          "denied": "Refusé"
+        },
+        "actions": {
+          "accept": "Accepter",
+          "deny": "Refuser"
+        }
+      }
+    },
+    "Shops": {
+      "title": "Tableau de Bord des Demandes de Boutiques",
+      "description": "Gérez et surveillez toutes les demandes d'inscription de boutiques. Examinez, approuvez et contrôlez la visibilité des boutiques facilement.",
+      "stats": {
+        "total": "Total des Boutiques",
+        "active": "Actif",
+        "pending": "En Attente",
+        "hidden": "Masqué"
+      },
+      "table": {
+        "headers": {
+          "name": "Nom de la Boutique",
+          "email": "E-mail",
+          "phone": "Téléphone",
+          "status": "Statut",
+          "visibility": "Visibilité"
+        },
+        "status": {
+          "active": "Actif",
+          "pending": "En Attente",
+          "inactive": "Inactif"
+        },
+        "actions": {
+          "hidden": "Masqué",
+          "visible": "Visible"
+        }
+      }
+    }
+  },
+  "Events": {
+    "Browse": {
+      "title": "Parcourir tous les événements",
+      "searchPlaceholder": "Rechercher...",
+      "noEvents": "Aucun événement à venir trouvé."
+    },
+    "Manage": {
+      "titleCreate": "Créer un Événement",
+      "titleEdit": "Modifier l'Événement",
+      "submitCreate": "Créer l'Événement",
+      "submitUpdate": "Mettre à jour l'Événement",
+      "submitting": "Enregistrement de l'événement...",
+      "successCreate": "Événement créé avec succès",
+      "successUpdate": "Événement mis à jour avec succès",
+      "error": "Erreur lors de l'enregistrement de l'événement",
+      "sections": {
+        "primary": "Informations Principales de l'Événement",
+        "venue": "Lieu et Horaire",
+        "capacity": "Capacité et Ventes",
+        "schedule": "Programme Détaillé de l'Événement"
+      },
+      "fields": {
+        "title": "Titre de l'Événement",
+        "titlePlaceholder": "Nom de l'Événement",
+        "type": "Type d'Événement",
+        "typePlaceholder": "Sélectionner le type d'événement",
+        "image": "Image de l'Événement",
+        "description": "Brève Description",
+        "descriptionPlaceholder": "Décrivez votre événement...",
+        "location": "Lieu / Salle",
+        "locationPlaceholder": "Ville, Adresse ou Lieu",
+        "date": "Date de l'Événement",
+        "startTime": "Heure de Début",
+        "endTime": "Heure de Fin",
+        "ticketsAmount": "Nombre de Billets",
+        "ticketStatus": "Statut du Billet",
+        "ticketStatusPlaceholder": "Sélectionner le statut du billet",
+        "ticketPrice": "Prix du Billet",
+        "agendaTitle": "Titre",
+        "agendaTitlePlaceholder": "Titre de la section",
+        "agendaDescription": "Description",
+        "agendaDescriptionPlaceholder": "Détails..."
+      },
+      "actions": {
+        "addAgenda": "Ajouter une Section"
+      },
+      "ticketTypes": {
+        "priced": "Payant",
+        "free": "Gratuit"
+      }
     }
   },
   "Metrics": {

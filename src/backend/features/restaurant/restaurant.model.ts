@@ -37,7 +37,7 @@ export interface IRestaurant extends Document {
   };
   createdAt?: Date;
   updatedAt?: Date;
-  isHeddin: boolean; // needed
+  isHidden: boolean; // needed
   comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
@@ -74,6 +74,7 @@ const restaurantSchema = new Schema<IRestaurant>(
       key: { type: String, required: false },
     },
     description: { type: String, required: true },
+    isHidden: { type: Boolean, default: false },
     subscribed: { type: Boolean, default: false },
     subscriptionPeriod: { type: Date, required: false, default: Date.now() },
     menus: { type: [menuItemSchema], default: [] },
@@ -82,12 +83,12 @@ const restaurantSchema = new Schema<IRestaurant>(
   { timestamps: true }
 );
 
-restaurantSchema.pre<IRestaurant>("save", function (): 
-  | Promise<void> 
+restaurantSchema.pre<IRestaurant>("save", function ():
+  | Promise<void>
   | undefined {
-	this.createdAt ??= new Date();
-	if (!this.isModified("password")) { 
-    return; 
+  this.createdAt ??= new Date();
+  if (!this.isModified("password")) {
+    return;
   }
   return bcrypt.hash(this.password, 10).then((hashedPassword) => {
     this.password = hashedPassword;
@@ -101,5 +102,4 @@ restaurantSchema.methods.comparePassword = async function (
 };
 
 export const RestaurantModel =
-  models.Restaurant ||
-  model<IRestaurant>("Restaurant", restaurantSchema);
+  models.Restaurant || model<IRestaurant>("Restaurant", restaurantSchema);

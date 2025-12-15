@@ -20,7 +20,7 @@ const HeroSection = ({ imgUrl, subTitle, title }: IProps) => {
         />
 
         {/* Overlay Box */}
-        <BasicAnimatedWrapper className="relative z-10 left-1/2 -translate-x-1/2 -translate-y-1/3 w-[80%] bg-primary/70  dark:bg-primary/50 backdrop-blur-lg to-transparent rounded-xl p-6 flex flex-col items-center text-center shadow-lg">
+        <BasicAnimatedWrapper className="relative z-10 mx-auto -translate-y-1/3 w-[80%] bg-primary/70  dark:bg-primary/50 backdrop-blur-lg to-transparent rounded-xl p-6 flex flex-col items-center text-center shadow-lg">
           <h1 className="lg:text-5xl md:text-4xl text-3xl font-semibold mb-3 text-primary-foreground ">
             {title}
           </h1>
