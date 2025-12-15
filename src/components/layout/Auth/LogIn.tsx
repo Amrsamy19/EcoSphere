@@ -136,7 +136,7 @@ const LogIn = () => {
       {/* social login */}
       <div className="flex justify-evenly items-center my-4 text-4xl text-secondary-foreground ">
         <button
-          onClick={async () => await signIn("google")}
+          onClick={async () => await signIn("google", { redirectTo: "/" })}
           className="hover:scale-115 hover:shadow-2xl shadow-primary transition duration-300"
         >
           <FaGoogle />
