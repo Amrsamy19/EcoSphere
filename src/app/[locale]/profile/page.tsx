@@ -28,7 +28,8 @@ export default function ProfilePage() {
       <div className=" bg-background py-8">
         <div className="min-h-screen flex justify-center items-center w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="w-[80%]">
-            {session?.user.role === "customer" && (
+            {(session?.user.role === "customer" ||
+              session?.user.role === "admin") && (
               <CustomerProfile
                 id={session?.user.id}
                 role={session?.user.role}

@@ -16,6 +16,22 @@ import { User } from "@/types/UserTypes";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
 
+const OrderHistoryComponent = ({ user }: { user: User }) => {
+  const t = useTranslations("Profile.orderHistory");
+  return user.paymentHistory && user.paymentHistory.length > 0 ? (
+    <div className="bg-card shadow rounded-lg p-6 border border-border">
+      <h2 className="text-xl font-semibold mb-4 text-card-foreground">
+        Order History
+      </h2>
+      <p className="text-muted-foreground">
+        You have {user.paymentHistory.length} past order(s).
+      </p>
+    </div>
+  ) : (
+    <OrderHistoryEmptyState />
+  );
+};
+
 export default function CustomerProfile({
   id,
   role,
@@ -395,18 +411,7 @@ export default function CustomerProfile({
       </div>
 
       {/* Order History */}
-      {user.paymentHistory && user.paymentHistory.length > 0 ? (
-        <div className="bg-card shadow rounded-lg p-6 border border-border">
-          <h2 className="text-xl font-semibold mb-4 text-card-foreground">
-            Order History
-          </h2>
-          <p className="text-muted-foreground">
-            You have {user.paymentHistory.length} past order(s).
-          </p>
-        </div>
-      ) : (
-        <OrderHistoryEmptyState />
-      )}
+      {role === "customer" && <OrderHistoryComponent user={user} />}
 
       {/* Edit Modal */}
       {isEditing && (
