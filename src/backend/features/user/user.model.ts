@@ -26,15 +26,18 @@ export interface IEvent extends Document {
   locate: string;
   ticketPrice: number;
   description: string;
-  avatar?: string;
-  attenders: string[];
+  avatar?: {
+    key: string;
+    url?: string;
+  };
+  attenders?: string[];
   capacity: number;
   sections?: ISection[];
   eventDate: Date;
   startTime: string;
   endTime: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
   type: EventType;
 }
 
@@ -85,12 +88,16 @@ export const eventSchema = new Schema<IEvent>(
     name: { type: String, required: true },
     locate: { type: String, required: true },
     ticketPrice: { type: Number, required: true },
-    avatar: { type: String, required: true },
+    description: { type: String, required: true },
+    avatar: {
+      key: { type: String, required: true },
+      url: { type: String, required: false },
+    },
     attenders: { type: [String], default: [] },
     capacity: { type: Number, required: true },
     sections: { type: [sectionsSchema], default: [] },
-    createdAt: { type: Date, required: true, default: Date.now() },
-    updatedAt: { type: Date, required: true, default: Date.now() },
+    createdAt: { type: Date, default: Date.now() },
+    updatedAt: { type: Date, default: Date.now() },
     type: {
       type: String,
       enum: [
@@ -148,7 +155,7 @@ const userSchema = new Schema<IUser>(
 userSchema.pre<IUser>("save", function (): Promise<void> | undefined {
   this.createdAt ??= new Date();
   if (!this.isModified("password")) return;
-  
+
   return bcrypt.hash(this.password, 10).then((hashedPassword) => {
     this.password = hashedPassword;
   });

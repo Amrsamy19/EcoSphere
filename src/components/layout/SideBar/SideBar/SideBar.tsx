@@ -47,83 +47,82 @@ import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 
 export default function SideBar() {
-  const { data: session, status } = useSession();
-  const t = useTranslations("Layout.Sidebar");
-  const matchPathWithOptionalLocale = (
-    pathname: string,
-    targetSegment: string
-  ) => {
-    const base = `\\${targetSegment}`;
-    const ar = `\\/ar\\${targetSegment}`;
-    const fr = `\\/fr\\${targetSegment}`;
-    return new RegExp(`^(${base}|${ar}?|${fr}?)$`).test(pathname);
-  };
-  // User items.
-  const useritems = [
-    {
-      title: t("menu.home"),
-      url: "/",
-      icon: Home,
-    },
-    {
-      title: t("menu.shops"),
-      url: "/shop",
-      icon: ShoppingBag,
-    },
-    {
-      title: t("menu.events"),
-      url: "/events",
-      icon: Calendar,
-    },
-    {
-      title: t("menu.recycle"),
-      url: "/recycle",
-      icon: Recycle,
-    },
-    {
-      title: t("menu.news"),
-      url: "/news",
-      icon: Newspaper,
-    },
-    {
-      title: t("menu.store"),
-      url: "/store",
-      icon: Store,
-    },
-    {
-      title: t("menu.game"),
-      url: "/game",
-      icon: Gamepad2,
-    },
-    {
-      title: t("menu.about"),
-      url: "/about",
-      icon: Info,
-    },
-  ];
-  // Event dashboard items.
-  const dashboardItems = [
-    {
-      title: t("dashboard.overview"),
-      url: "/organizer",
-      icon: RxDashboard,
-    },
-    {
-      title: t("dashboard.addEvent"),
-      url: "/organizer/manage",
-      icon: MdOutlineAddToPhotos,
-    },
-    {
-      title: t("dashboard.eventDetails"),
-      url: "/organizer/details",
-      icon: MdOutlineEventRepeat,
-    },
-    {
-      title: t("dashboard.browseEvents"),
-      url: "/organizer/browse",
-      icon: PiListMagnifyingGlassBold,
-    },
-  ];
+	
+	const { data: session, status } = useSession();
+	const t = useTranslations('Layout.Sidebar');
+	const matchPathWithOptionalLocale = (pathname: string,targetSegment: string) => {
+		const base = `\\${targetSegment}`;
+		const en = `\\/en\\${targetSegment}`;
+		const ar = `\\/ar\\${targetSegment}`;
+		const fr = `\\/fr\\${targetSegment}`;
+		return new RegExp(`^(${base}|${en}?|${ar}?|${fr}?)$`).test(pathname);
+	};
+	// User items.
+	const useritems = [
+		{
+			title: t('menu.home'),
+			url: "/",
+			icon: Home,
+		},
+		{
+			title: t('menu.shops'),
+			url: "/shop",
+			icon: ShoppingBag,
+		},
+		{
+			title: t('menu.events'),
+			url: "/events",
+			icon: Calendar,
+		},
+		{
+			title: t('menu.recycle'),
+			url: "/recycle",
+			icon: Recycle,
+		},
+		{
+			title: t('menu.news'),
+			url: "/news",
+			icon: Newspaper,
+		},
+		{
+			title: t('menu.store'),
+			url: "/store",
+			icon: Store,
+		},
+		{
+			title: t('menu.game'),
+			url: "/game",
+			icon: Gamepad2,
+		},
+		{
+			title: t('menu.about'),
+			url: "/about",
+			icon: Info,
+		},
+	];
+	// Event dashboard items.
+	const dashboardItems = [
+		{
+			title: t('dashboard.overview'),
+			url: "/organizer",
+			icon: RxDashboard,
+		},
+		{
+			title: t('dashboard.addEvent'),
+			url: "/organizer/manage",
+			icon: MdOutlineAddToPhotos,
+		},
+		{
+			title: t('dashboard.eventDetails'),
+			url: "/organizer/details",
+			icon: MdOutlineEventRepeat,
+		},
+		{
+			title: t('dashboard.browseEvents'),
+			url: "/organizer/browse",
+			icon: PiListMagnifyingGlassBold,
+		},
+	];
   // Restaurant dashboard items.
   const restaurantItems = [
     {
@@ -150,7 +149,7 @@ export default function SideBar() {
       icon: MdEventAvailable,
     },
   ];
-
+  // recycle dashboard items.
   const recycleItems = [
     {
       title: t("menu.recycle"),
