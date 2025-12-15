@@ -18,7 +18,7 @@ export interface IOrderService {
 	createOrder(userId: string, orderData: CreateOrderDTO): Promise<IOrder>;
 	getUserOrders(userId: string): Promise<IOrder[]>;
 	getOrderById(orderId: string): Promise<IOrder>;
-	handleStripeEvent(event: Stripe.Event): Promise<any>;
+	handleStripeEvent(event: Stripe.Event): Promise<void>;
 	updateOrderStatus(orderId: string, status: OrderStatus): Promise<IOrder>;
 	deleteOrder(orderId: string): Promise<IOrder>;
 	getRestaurantRevenue(restaurantId: string): Promise<revenuePerRest[]>;
@@ -85,23 +85,24 @@ export class OrderService implements IOrderService {
 		};
 
 		const order = await this.orderRepository.makeOrder(orderNewData);
+		await this.userService.saveUserCart(userId, [])
 		return order;
 	}
 
-	async handleStripeEvent(event: Stripe.Event) {
+	async handleStripeEvent(event: Stripe.Event): Promise<void> {
 		console.log(event, "event");
 		const intent = event.data.object as Stripe.PaymentIntent;
 		switch (event.type) {
 			case "payment_intent.succeeded": {
 				const orderId = intent.metadata.orderId;
 				if (!orderId) return;
+				console.log(intent.metadata, "metaData")
 
-				const order = await this.orderRepository.updateOrderStatus(orderId, {
+				await this.orderRepository.updateOrderStatus(orderId, {
 					status: "preparing",
 					paidAt: new Date(intent.created),
 					paymentProvider: "stripe",
 				});
-				console.log(order, "order in the service layer");
 				break;
 			}
 			case "payment_intent.payment_failed": {
