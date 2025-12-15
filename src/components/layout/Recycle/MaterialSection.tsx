@@ -36,7 +36,7 @@ const MaterialSection = ({
 
   return (
     <div className="space-y-6">
-      <div className="flex  items-center text-muted-foreground gap-3 pb-3 border-b-2 border-primary/30">
+      <div className="flex items-center text-muted-foreground gap-3 pb-3 border-b-2 border-primary/30">
         <Package className="w-6 h-6" />
         <span className="text-sm font-extrabold uppercase">{t("title")}</span>
       </div>

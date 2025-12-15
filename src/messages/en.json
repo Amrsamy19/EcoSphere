@@ -797,7 +797,8 @@
     "materialSection": {
       "addButton": "Add Another Item",
       "typeLabel": "Type",
-      "weightLabel": "Est. Weight (kg)"
+      "weightLabel": "Est. Weight (kg)",
+      "title": "Recyclable Materials"
     },
     "selectField": {
       "selectOption": "Select an option"

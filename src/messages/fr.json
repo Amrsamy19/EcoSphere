@@ -794,7 +794,8 @@
     "materialSection": {
       "addButton": "Ajouter un autre élément",
       "typeLabel": "Type",
-      "weightLabel": "Poids estimé (kg)"
+      "weightLabel": "Poids estimé (kg)",
+      "title": "Articles à Recycler"
     },
     "selectField": {
       "selectOption": "Sélectionner une option"

@@ -798,7 +798,8 @@
     "materialSection": {
       "addButton": "إضافة عنصر آخر",
       "typeLabel": "النوع",
-      "weightLabel": "الوزن التقديري (كجم)"
+      "weightLabel": "الوزن التقديري (كجم)",
+      "title": "عناصر المادة"
     },
     "selectField": {
       "selectOption": "اختر خياراً"

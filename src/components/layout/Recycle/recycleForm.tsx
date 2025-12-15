@@ -199,7 +199,7 @@ const RecycleForm = () => {
                 onClick={() => setEntryMethod("manual")}
                 className={`px-6 py-2 font-bold transition-all cursor-pointer ${
                   entryMethod === "manual"
-                    ? "hover:bg-primary-foreground/10 text-foreground border-0"
+                    ? "bg-primary-foreground text-primary border-b-2 border-primary"
                     : "hover:bg-primary-foreground/10 text-foreground border-0"
                 }`}
               >
@@ -210,7 +210,7 @@ const RecycleForm = () => {
                 onClick={() => setEntryMethod("vision")}
                 className={`px-6 py-2 font-bold transition-all cursor-pointer ${
                   entryMethod === "vision"
-                    ? "hover:bg-primary-foreground/10 text-foreground border-0"
+                    ? "bg-primary-foreground text-primary border-b-2 border-primary"
                     : "hover:bg-primary-foreground/10 text-foreground border-0"
                 }`}
               >
