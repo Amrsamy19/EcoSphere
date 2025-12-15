@@ -12,7 +12,7 @@ export interface IRestaurantRepository {
     workingHours: string,
     phoneNumber: string,
     avatar: string,
-    description: string,
+    description: string
   ): Promise<IRestaurant>;
   getAll(): Promise<IRestaurant[]>;
   getById(id: string): Promise<IRestaurant>;
@@ -32,7 +32,7 @@ class RestaurantRepository {
     workingHours: string,
     phoneNumber: string,
     avatar: string,
-    description: string,
+    description: string
   ): Promise<IRestaurant> {
     await DBInstance.getConnection();
     return await RestaurantModel.create({
@@ -78,7 +78,7 @@ class RestaurantRepository {
 
   async updateById(
     id: string,
-    data: Partial<IRestaurant>,
+    data: Partial<IRestaurant>
   ): Promise<IRestaurant> {
     await DBInstance.getConnection();
     const restaurant = await this.getById(id);
@@ -86,7 +86,8 @@ class RestaurantRepository {
       throw new Error(`Restaurant with id ${id} not found`);
     }
     Object.assign(restaurant, data);
-    return await restaurant.save();
+    const saved = await restaurant.save();
+    return saved;
   }
 
   async deleteById(id: string): Promise<IRestaurant> {

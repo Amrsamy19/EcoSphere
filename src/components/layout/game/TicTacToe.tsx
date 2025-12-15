@@ -157,9 +157,10 @@ export default function TicTacToe() {
           //Update user points based on the diffculty
           if (b[x] === "X" && status === "authenticated") {
             await updateUser();
-          } else if (b[x] === "X" && status === "unauthenticated"){
+          } else if (b[x] === "X" && status === "unauthenticated") {
             toast.info(t("status.loginForPoints"));
-          } return;
+          }
+          return;
         }
       }
 
@@ -409,22 +410,24 @@ export default function TicTacToe() {
         </div>
 
         {/* Left Section - Score Board */}
-        <div className="w-full  sm:w-[60%] md:w-[50%] lg:w-80 space-y-6">
+        <div className="w-full  sm:w-[60%] md:w-[50%] lg:w-[22rem] space-y-6">
           {/* Title Card - Only on large screens */}
-          <div className="hidden  bg-primary/10 lg:flex justify-evenly backdrop-blur-md rounded-3xl p-8 shadow-2xl text-center transform hover:scale-105 transition-transform">
-            <div className="flex items-center gap-1.5">
+          <div className="hidden bg-primary/10 lg:flex justify-between items-center backdrop-blur-md rounded-3xl p-6 shadow-2xl text-center transform hover:scale-105 transition-transform gap-2">
+            <div className="flex flex-col items-center gap-1 shrink-0">
               <BiSolidLeaf
                 className="text-xl md:text-4xl text-primary animate-spin"
                 style={{ animationDuration: "4s" }}
               />
-              <span className="text-sm md:text-3xl font-semibold text-secondary-foreground">
+              <span className="text-sm md:text-xl font-semibold text-secondary-foreground whitespace-nowrap">
                 {t("hero.you")}
               </span>
             </div>
-            <span className="text-gray-400 md:text-2xl">{t("hero.vs")}</span>
-            <div className="flex items-center gap-1.5">
+            <span className="text-gray-400 md:text-xl px-2">
+              {t("hero.vs")}
+            </span>
+            <div className="flex flex-col items-center gap-1 shrink-0">
               <MdDoNotDisturbAlt className="text-xl md:text-4xl text-primary animate-pulse" />
-              <span className="text-sm md:text-3xl font-semibold text-secondary-foreground">
+              <span className="text-sm md:text-xl font-semibold text-secondary-foreground whitespace-nowrap">
                 {t("hero.ai")}
               </span>
             </div>

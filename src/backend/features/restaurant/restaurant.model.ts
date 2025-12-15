@@ -39,7 +39,7 @@ export interface IRestaurant extends Document {
   };
   createdAt?: Date;
   updatedAt?: Date;
-  isHeddin: boolean; // needed
+  isHidden: boolean; // needed
   comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
@@ -78,6 +78,7 @@ const restaurantSchema = new Schema<IRestaurant>(
       key: { type: String, required: false },
     },
     description: { type: String, required: true },
+    isHidden: { type: Boolean, default: false },
     subscribed: { type: Boolean, default: false },
     subscriptionPeriod: { type: Date, required: false, default: Date.now() },
     menus: { type: [menuItemSchema], default: [] },

@@ -45,7 +45,7 @@ import UserBtn from "../UserBtn/UserBtn";
 import LanguageSwitcher from "../LanguageSwitcher/LanguageSwitcher";
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { useAppSelector } from "@/frontend/redux/hooks";
 import { selectCartItemCount } from "@/frontend/redux/selector/cartSelector";
 
@@ -170,9 +170,15 @@ export default function SideBar() {
   ];
 
   const pathname = usePathname();
+  const locale = useLocale();
   const { favProducts } = useSelector((state: RootState) => state.fav);
   return (
-    <Sidebar collapsible="icon" variant="floating" className="bg-background ">
+    <Sidebar
+      side={locale === "ar" ? "right" : "left"}
+      collapsible="icon"
+      variant="floating"
+      className="bg-background "
+    >
       <SidebarHeader>
         <SidebarTrigger />
       </SidebarHeader>
@@ -245,7 +251,7 @@ export default function SideBar() {
         )}
         {session?.user.role == "admin" && (
           <SidebarGroup>
-            <SidebarGroupLabel>admin</SidebarGroupLabel>
+            <SidebarGroupLabel>{t("groups.admin")}</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
                 {adminItems.map((item) => (

@@ -5,6 +5,7 @@ import {
 } from "@stripe/react-stripe-js";
 import { useState } from "react";
 import { Loader2, Lock } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface CheckoutFormProps {
   amount: number;
@@ -12,6 +13,8 @@ interface CheckoutFormProps {
 }
 
 export const CheckoutForm = ({ amount, onSuccess }: CheckoutFormProps) => {
+  const tForm = useTranslations("Checkout.form");
+  const tVer = useTranslations("Checkout.verification");
   const stripe = useStripe();
   const elements = useElements();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -36,13 +39,13 @@ export const CheckoutForm = ({ amount, onSuccess }: CheckoutFormProps) => {
       });
 
       if (error) {
-        setErrorMessage(error.message || "An unexpected error occurred.");
+        setErrorMessage(error.message || tForm("unexpectedError"));
       } else if (paymentIntent?.status === "succeeded") {
         setIsSuccess(true);
         if (onSuccess) onSuccess();
       }
     } catch (e) {
-      setErrorMessage("An unexpected error occurred.");
+      setErrorMessage(tForm("unexpectedError"));
     }
 
     setIsLoading(false);
@@ -67,10 +70,10 @@ export const CheckoutForm = ({ amount, onSuccess }: CheckoutFormProps) => {
           </svg>
         </div>
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-          Payment Successful!
+          {tVer("successTitle")}
         </h2>
         <p className="text-zinc-500 dark:text-zinc-400">
-          Thank you for your purchase. A confirmation email has been sent.
+          {tVer("successDesc")}
         </p>
       </div>
     );
@@ -83,10 +86,10 @@ export const CheckoutForm = ({ amount, onSuccess }: CheckoutFormProps) => {
     >
       <div className="mb-6 text-center">
         <h2 className="text-2xl font-bold bg-clip-text text-transparent bg-linear-to-r from-primary to-primary/50 ">
-          Secure Payment
+          {tForm("securePayment")}
         </h2>
         <p className="text-zinc-500 dark:text-zinc-400 mt-2">
-          Complete your purchase securely.
+          {tForm("securePaymentDesc")}
         </p>
       </div>
 
@@ -113,16 +116,16 @@ export const CheckoutForm = ({ amount, onSuccess }: CheckoutFormProps) => {
         {isLoading ? (
           <>
             <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-            Processing...
+            {tForm("processing")}
           </>
         ) : (
-          `Pay ${(amount / 100).toFixed(2)} EGP`
+          tForm("pay", { amount: (amount / 100).toFixed(2) })
         )}
       </button>
 
       <div className="mt-6 flex justify-center items-center gap-2 text-xs text-zinc-400 dark:text-zinc-600">
         <Lock className="w-3 h-3" />
-        <span>Payments secured by Stripe</span>
+        <span>{tForm("securedByStripe")}</span>
       </div>
     </form>
   );

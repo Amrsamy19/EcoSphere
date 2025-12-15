@@ -6,7 +6,10 @@ import {
   MdPendingActions,
 } from "react-icons/md";
 import { RiNumbersLine } from "react-icons/ri";
+import { useTranslations } from "next-intl";
+
 const EventHero = () => {
+  const t = useTranslations("Admin.Events");
   const [shops] = useState([
     {
       id: 1,
@@ -44,17 +47,17 @@ const EventHero = () => {
 
   const stats = [
     {
-      label: "Total Events",
+      label: t("stats.total"),
       value: shops.length,
       icon: <RiNumbersLine className="w-5 h-5" />,
     },
     {
-      label: "Active",
+      label: t("stats.active"),
       value: shops.filter((s) => s.status === "active").length,
       icon: <MdCheckCircleOutline className="w-5 h-5" />,
     },
     {
-      label: "Pending",
+      label: t("stats.pending"),
       value: shops.filter((s) => s.status === "pending").length,
       icon: <MdPendingActions className="w-5 h-5" />,
     },
@@ -64,15 +67,12 @@ const EventHero = () => {
       <div className="max-w-7xl mx-auto flex flex-col items-center">
         {/* Header */}
         <div className="flex items-center justify-center gap-3 mb-3">
-          <MdEvent  className="w-8 h-8" />
-          <h1 className="text-2xl sm:text-3xl font-bold">
-            Event Requests Dashboard
-          </h1>
+          <MdEvent className="w-8 h-8" />
+          <h1 className="text-2xl sm:text-3xl font-bold">{t("title")}</h1>
         </div>
 
         <p className="text-primary-foreground/80 text-sm sm:text-base max-w-2xl mb-6 text-center">
-          Manage and monitor all event registration requests. Review, approve,
-          and control event.
+          {t("description")}
         </p>
 
         {/* Stats */}

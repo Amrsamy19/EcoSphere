@@ -31,7 +31,7 @@ export default function NotFound() {
       {/* Action Buttons */}
       <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
         {/* Client-side Go Back button */}
-        <GoBackButton />
+        <GoBackButton text={t("goBack")} />
 
         {/* Server-side link to home */}
 

@@ -62,10 +62,10 @@ const ProductCard = (product: IProduct) => {
     e.stopPropagation();
     if (isInCart) {
       dispatch(removeItem(_id));
-      toast.success("removed from cart");
+      toast.success(t("removedFromCart"));
     } else {
       dispatch(addItem({ ...product, quantity: 1 }));
-      toast.success("added to cart");
+      toast.success(t("addedToCart"));
     }
   };
 
@@ -150,7 +150,7 @@ const ProductCard = (product: IProduct) => {
         <div className="flex justify-between items-center">
           <p className="text-lg font-semibold mt-auto ml-10">
             {price}
-            <span className="text-primary ml-1">EGP</span>
+            <span className="text-primary ml-1">{t("currency")}</span>
           </p>
           <div className=" flex gap-3 text-2xl">
             <button

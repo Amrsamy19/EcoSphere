@@ -11,13 +11,24 @@ interface DeleteProductDialogProps {
   productTitle?: string;
 }
 
+import { useTranslations } from "next-intl";
+
+interface DeleteProductDialogProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm: () => Promise<void>;
+  isDeleting: boolean;
+  productTitle?: string;
+}
+
 export default function DeleteProductDialog({
   isOpen,
   onClose,
   onConfirm,
   isDeleting,
   productTitle,
-}: DeleteProductDialogProps) {
+}: Readonly<DeleteProductDialogProps>) {
+  const t = useTranslations("Restaurant.Products.deleteDialog");
   if (!isOpen) return null;
 
   return (
@@ -30,39 +41,35 @@ export default function DeleteProductDialog({
 
           <div className="space-y-2">
             <h2 className="text-xl font-bold text-card-foreground">
-              Delete Product
+              {t("title")}
             </h2>
             <p className="text-muted-foreground">
-              Are you sure you want to delete{" "}
-              <span className="font-semibold text-foreground">
-                {productTitle ? `"${productTitle}"` : "this product"}
-              </span>
-              ? This action cannot be undone.
+              {productTitle
+                ? t("description", { title: productTitle })
+                : t("descriptionNoTitle")}
             </p>
           </div>
 
           <div className="flex w-full gap-3 pt-4">
             <Button
-              variant="outline"
-              className="flex-1"
+              className="flex-1 myBtnPrimary bg-transparent text-foreground hover:bg-secondary/80 border border-input shadow-sm"
               onClick={onClose}
               disabled={isDeleting}
             >
-              Cancel
+              {t("cancel")}
             </Button>
             <Button
-              variant="destructive"
-              className="flex-1"
+              className="flex-1 myBtnPrimary bg-red-600 hover:bg-red-700 text-white border-none"
               onClick={onConfirm}
               disabled={isDeleting}
             >
               {isDeleting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Deleting...
+                  {t("deleting")}
                 </>
               ) : (
-                "Delete"
+                t("confirm")
               )}
             </Button>
           </div>
