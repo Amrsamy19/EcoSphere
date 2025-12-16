@@ -23,11 +23,11 @@ export default function ProductsClient({
   restaurantId,
   initialProducts,
   initialMetadata,
-}: {
+}: Readonly<{
   restaurantId: string;
   initialProducts: ProductResponse[];
   initialMetadata: any;
-}) {
+}>) {
   const t = useTranslations("Restaurant.Products");
 
   const [products, setProducts] = useState<ProductResponse[]>(initialProducts);
@@ -57,7 +57,7 @@ export default function ProductsClient({
       const res = await fetch(
         `/api/restaurants/${restaurantId}/products?${params}`
       );
-      if (!res.ok) throw new Error();
+      if (!res.ok) throw new Error(res.statusText);
 
       const { data } = await res.json();
 
@@ -69,7 +69,8 @@ export default function ProductsClient({
       }
     } catch (error) {
       toast.error(t("toasts.loadError"));
-      console.error(error);
+			console.error(error);
+			
     } finally {
       setLoading(false);
     }
@@ -87,7 +88,7 @@ export default function ProductsClient({
         body: JSON.stringify(payload),
       });
 
-      if (!res.ok) throw new Error();
+      if (!res.ok) throw new Error(res.statusText);
 
       toast.success(t("toasts.createSuccess"));
       setIsPopupOpen(false);
@@ -110,7 +111,7 @@ export default function ProductsClient({
         }
       );
 
-      if (!res.ok) throw new Error();
+      if (!res.ok) throw new Error(res.statusText);
 
       toast.success(t("toasts.updateSuccess"));
       setEditingProduct(undefined);
@@ -130,7 +131,7 @@ export default function ProductsClient({
         { method: "DELETE" }
       );
 
-      if (!res.ok) throw new Error();
+      if (!res.ok) throw new Error(res.statusText);
 
       toast.success(t("toasts.deleteSuccess"));
       setDeleteProductId(null);
@@ -146,7 +147,7 @@ export default function ProductsClient({
       return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {Array.from({ length: 8 }).map((_, i) => (
-            <Skeleton key={i} className="h-[300px] w-full rounded-xl" />
+            <Skeleton key={i} className="h-75 w-full rounded-xl" />
           ))}
         </div>
       );

@@ -1,13 +1,13 @@
 export interface IProduct {
-  _id: string;
+  id: string;
   restaurantId: string;
-  title: string;
-  subtitle: string;
-  avatar?: {
-    url?: string;
-    key: string;
-  };
-  price: number;
+  shopName: string;
+  shopSubtitle: string;
+  productImg: string;
+  productName: string;
+  productPrice: number;
+  productSubtitle: string;
+  productDescription: string;
   availableOnline?: boolean;
   sustainabilityScore?: number;
   sustainabilityReason?: string;

@@ -16,7 +16,7 @@ const ProductSliderSection = () => {
       >
         <div className="flex flex-nowrap gap-5 py-5 ">
           {products.map((p) => (
-            <div key={p.id} className="shrink-0 w-[260px]">
+            <div key={p.id} className="shrink-0 w-65">
               <ProductCard {...p} />
             </div>
           ))}

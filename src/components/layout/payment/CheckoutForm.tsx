@@ -45,6 +45,7 @@ export const CheckoutForm = ({ amount, onSuccess }: CheckoutFormProps) => {
         if (onSuccess) onSuccess();
       }
     } catch (e) {
+      console.error(e);
       setErrorMessage(tForm("unexpectedError"));
     }
 

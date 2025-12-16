@@ -1,7 +1,7 @@
 "use client";
 import { IProduct } from "@/types/ProductType";
 import Image from "next/image";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Heart, ShoppingCart, Star, Plus, Minus } from "lucide-react";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,18 +13,18 @@ import { useTranslations } from 'next-intl';
 const ProductDetailsCard = ({ product }: { product: IProduct }) => {
   const t = useTranslations('ProductDetails.card');
   const {
-    _id,
-    title,
-    subtitle,
-    avatar,
-    price,
+    id,
+    shopName,
+    shopSubtitle,
+    productImg,
+    productPrice,
     availableOnline
   } = product;
 
   console.log('ProductDetailsCard product:', product);
 
   const [count, setCount] = useState(1);
-  const isFav = useSelector((state: RootState) => isInFavSelector(state, _id));
+  const isFav = useSelector((state: RootState) => isInFavSelector(state, id));
   const dispatch = useDispatch<AppDispatch>()
   const handleFav = () => {
     dispatch(toggleFavoriteAsync(product));
@@ -52,9 +52,9 @@ const ProductDetailsCard = ({ product }: { product: IProduct }) => {
           <Image
             width={600}
             height={400}
-            src={avatar?.url || "/store img/product-placeholder.png"}
-            alt={title}
-            className="w-[500px] rounded-lg "
+            src={productImg || "/store img/product-placeholder.png"}
+            alt={shopName}
+            className="w-125 rounded-lg "
           />
           {/* top right decorative SVG */}
           <div className="w-[30%] h-[30%] absolute -top-[6%] -right-[6%]  ">
@@ -114,9 +114,9 @@ const ProductDetailsCard = ({ product }: { product: IProduct }) => {
           {/* Product name and subtitle */}
           <div>
             <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
-              {title}
+              {shopName}
             </h1>
-            <p className="text-lg text-muted-foreground">{subtitle}</p>
+            <p className="text-lg text-muted-foreground">{shopSubtitle}</p>
           </div>
 
           {/* Rating */}
@@ -134,14 +134,14 @@ const ProductDetailsCard = ({ product }: { product: IProduct }) => {
 
           {/* Price */}
           <div className="text-3xl font-bold text-primary">
-            ${price}
+            ${productPrice.toFixed(2)}
           </div>
 
           {/* Description */}
           <div>
             <h3 className="text-lg font-semibold mb-2">{t('description')}</h3>
             <p className="text-muted-foreground leading-relaxed">
-              {subtitle}
+              {shopSubtitle}
             </p>
           </div>
 

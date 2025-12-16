@@ -4,9 +4,9 @@ import RelatedProducts from "@/components/layout/Store/productDetails/RelatedPro
 import TextComponent from "@/components/layout/Store/productDetails/TextComponent";
 
 interface Props {
-  params: {
+  params: Promise<{
     productId: string;
-  };
+  }>;
 }
 
 const ProductPage = async ({ params }: Props) => {

@@ -257,7 +257,7 @@ export default function ManageEvent({
                       <div className="relative">
                         <Textarea
                           placeholder={t("fields.descriptionPlaceholder")}
-                          className="min-h-[100px]"
+                          className="min-h-25"
                           {...field}
                         />
                       </div>

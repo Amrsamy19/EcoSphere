@@ -1,3 +1,5 @@
+"use client"
+
 import { clearFav, toggleFavView } from "@/frontend/redux/Slice/FavSlice";
 import { RootState, AppDispatch } from "@/frontend/redux/store";
 import { CiGrid2H, CiGrid41 } from "react-icons/ci";

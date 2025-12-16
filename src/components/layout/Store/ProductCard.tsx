@@ -30,22 +30,21 @@ import {
 const ProductCard = (product: IProduct) => {
   const t = useTranslations("Store.product");
   const {
-    _id,
-    title,
-    subtitle,
-    availableOnline,
-    avatar,
-    price,
+    id,
+    productName,
+    productSubtitle,
+    productImg,
+    productPrice,
     sustainabilityScore,
     sustainabilityReason,
   } = product;
-
+  console.log(product, "products")
   const router = useRouter();
 
   const dispatch = useAppDispatch();
-  const isFav = useSelector((state: RootState) => isInFavSelector(state, _id));
+  const isFav = useSelector((state: RootState) => isInFavSelector(state, id));
   const isInCart = useSelector((state: RootState) =>
-    isInCartSelector(state, _id)
+    isInCartSelector(state, id)
   );
 
   const handleFav = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -61,7 +60,7 @@ const ProductCard = (product: IProduct) => {
   const handleCart = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     if (isInCart) {
-      dispatch(removeItem(_id));
+      dispatch(removeItem(id));
       toast.success(t("removedFromCart"));
     } else {
       dispatch(addItem({ ...product, quantity: 1 }));
@@ -78,8 +77,8 @@ const ProductCard = (product: IProduct) => {
 
   return (
     <motion.div
-      className="rounded-tr-[80px] rounded-bl-[80px] shadow-2xl h-[440px] flex flex-col overflow-hidden hover:scale-105 transition-transform duration-300 dark:bg-primary/10 cursor-pointer relative group"
-      onClick={() => router.push(`/store/${_id}`)}
+      className="rounded-tr-[80px] rounded-bl-[80px] shadow-2xl h-110 flex flex-col overflow-hidden hover:scale-105 transition-transform duration-300 dark:bg-primary/10 cursor-pointer relative group"
+      onClick={() => router.push(`/store/${id}`)}
     >
       {/* Sustainability Badge with Shadcn Tooltip */}
       {sustainabilityScore && (
@@ -97,7 +96,7 @@ const ProductCard = (product: IProduct) => {
             </TooltipTrigger>
             <TooltipContent
               side="left"
-              className="max-w-[200px] text-xs z-50 bg-black/90 text-white border-none"
+              className="max-w-50 text-xs z-50 bg-black/90 text-white border-none"
             >
               <p>{sustainabilityReason}</p>
             </TooltipContent>
@@ -111,16 +110,16 @@ const ProductCard = (product: IProduct) => {
           <Image
             width={1000}
             height={1000}
-            src={avatar?.url || "/store img/2.jpg"}
-            alt={title}
+            src={productImg || "/store img/2.jpg"}
+            alt={productName}
             className="w-10 h-10 rounded-full shrink-0"
           />
           <div className="min-w-0 flex-1">
             <p className="line-clamp-1 font-medium text-sm leading-tight">
-              {title}
+              {productName}
             </p>
             <p className="text-xs text-secondary-foreground line-clamp-1">
-              {subtitle}
+              {productSubtitle}
             </p>
           </div>
         </div>
@@ -129,11 +128,11 @@ const ProductCard = (product: IProduct) => {
       </div>
 
       {/* product img - fixed height */}
-      <div className="w-full h-[170px] shrink-0">
+      <div className="w-full h-42.5 shrink-0">
         <Image
           width={1000}
           height={1000}
-          src={avatar?.url || "/store img/2.jpg"}
+          src={productImg || "/store img/2.jpg"}
           alt="product"
           className="w-full h-full object-cover"
         />
@@ -141,15 +140,15 @@ const ProductCard = (product: IProduct) => {
 
       {/* product details - flexible but controlled */}
       <div className="p-5 flex flex-col flex-1 min-h-0">
-        <p className="text-lg font-semibold line-clamp-1 mb-1">{title}</p>
+        <p className="text-lg font-semibold line-clamp-1 mb-1">{productName}</p>
         <div className="grow ">
           <p className="text-sm text-secondary-foreground/90 line-clamp-3 mb-3   ">
-            {subtitle}
+            {productSubtitle}
           </p>
         </div>
         <div className="flex justify-between items-center">
           <p className="text-lg font-semibold mt-auto ml-10">
-            {price}
+            {productPrice}
             <span className="text-primary ml-1">{t("currency")}</span>
           </p>
           <div className=" flex gap-3 text-2xl">

@@ -11,6 +11,8 @@ import {
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 
+export type requestState = "completed" | "reviewing" | "pending" | "out for delivery";
+
 const RecycleDashboard = () => {
   const t = useTranslations("RecycleDashboard");
   const [activeTab, setActiveTab] = useState("pending");
@@ -22,7 +24,7 @@ const RecycleDashboard = () => {
       email: "john.smith@email.com",
       phone: "+1 (555) 123-4567",
       location: "123 Main St, New York, NY",
-      status: "reviewing",
+      status: "reviewing" as requestState,
     },
     {
       id: 2,
@@ -30,7 +32,7 @@ const RecycleDashboard = () => {
       email: "sarah.j@email.com",
       phone: "+1 (555) 234-5678",
       location: "456 Oak Ave, Los Angeles, CA",
-      status: "pending",
+      status: "pending" as requestState
     },
     {
       id: 3,
@@ -38,7 +40,7 @@ const RecycleDashboard = () => {
       email: "mike.brown@email.com",
       phone: "+1 (555) 345-6789",
       location: "789 Pine Rd, Chicago, IL",
-      status: "completed",
+      status: "completed" as requestState
     },
     {
       id: 4,
@@ -46,7 +48,7 @@ const RecycleDashboard = () => {
       email: "emily.d@email.com",
       phone: "+1 (555) 456-7890",
       location: "321 Elm St, Houston, TX",
-      status: "out for delivery",
+      status: "out for delivery" as requestState
     },
     {
       id: 5,
@@ -54,19 +56,17 @@ const RecycleDashboard = () => {
       email: "david.w@email.com",
       phone: "+1 (555) 567-8901",
       location: "654 Maple Dr, Phoenix, AZ",
-      status: "completed",
-    },
+      status: "completed" as requestState
+    }
   ]);
 
   const pendingRequests = requests.filter((r) => r.status !== "completed");
   const completedRequests = requests.filter((r) => r.status === "completed");
 
-  const handleStatusChange = (id: number, newStatus: string) => {
-    setRequests(
-      requests.map((req) =>
-        req.id === id ? { ...req, status: newStatus } : req
-      )
-    );
+  const handleStatusChange = (id: number, newStatus: requestState) => {
+    setRequests(requests.map(req => 
+      req.id === id ? { ...req, status: newStatus } : req
+    ));
     setOpenDropdown(null);
 
     if (newStatus === "completed") {
@@ -80,37 +80,37 @@ const RecycleDashboard = () => {
   /* eslint-disable react-hooks/exhaustive-deps */
   const statusOptions = [
     {
-      value: "reviewing",
+      value: "reviewing" as requestState,
       label: t("status.reviewing"),
       icon: <Eye className="w-4 h-4" />,
     },
     {
-      value: "pending",
+      value: "pending" as requestState,
       label: t("status.pending"),
       icon: <Clock className="w-4 h-4" />,
     },
     {
-      value: "out for delivery",
+      value: "out for delivery" as requestState,
       label: t("status.outForDelivery"),
       icon: <Truck className="w-4 h-4" />,
     },
     {
-      value: "completed",
+      value: "completed" as requestState,
       label: t("status.completed"),
       icon: <CheckCircle className="w-4 h-4" />,
     },
   ];
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "completed":
-        return "bg-green-100 text-green-800";
-      case "reviewing":
-        return "bg-blue-100 text-blue-800";
-      case "pending":
-        return "bg-yellow-100 text-yellow-800";
-      case "out for delivery":
-        return "bg-purple-100 text-purple-800";
+  const getStatusColor = (status: requestState) => {
+    switch(status) {
+      case 'completed':
+        return 'bg-green-100 text-green-800';
+      case 'reviewing':
+        return 'bg-blue-100 text-blue-800';
+      case 'pending':
+        return 'bg-yellow-100 text-yellow-800';
+      case 'out for delivery':
+        return 'bg-purple-100 text-purple-800';
       default:
         return "bg-gray-100 text-gray-800";
     }
