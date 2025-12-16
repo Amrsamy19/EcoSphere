@@ -16,6 +16,7 @@ import { FaLocationDot } from "react-icons/fa6";
 import { ISubEvent } from "@/types/EventTypes";
 import UpdateEventBtn from "./UpdateEventBtn";
 import DeleteEventBtn from "./DeleteEventBtn";
+import AddAttendBtn from "./AddAttendBtn";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function EventDetailsCard({event,state,}: {event: any;state: boolean;}) {
@@ -168,9 +169,7 @@ export default function EventDetailsCard({event,state,}: {event: any;state: bool
                   </div>
                 ) : (
                   <div className="flex gap-4">
-                    <button className="flex-1 py-3 capitalize rounded-xl bg-primary text-primary-foreground font-bold hover:opacity-90 transition">
-                      Attend Event
-                    </button>
+                    <AddAttendBtn/>
                   </div>
                 )}
               </div>

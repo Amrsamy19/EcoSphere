@@ -7,6 +7,9 @@ import Link from "next/link";
 
 export default function DisplayEvents({ events }: EventProps) {
   const t = useTranslations("Dashboard.displayEvents");
+  const sortedEvents = [...events].sort(
+    (a, b) => new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime()
+  );
   return (
     <div className="min-h-screen py-8 w-[85%] mx-auto flex flex-col gap-6">
       <h1 className="capitalize font-bold text-4xl text-center  text-foreground">
@@ -23,7 +26,7 @@ export default function DisplayEvents({ events }: EventProps) {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {events.map((event) => (
+            {sortedEvents.map((event) => (
             <TicketCard key={event._id} event={event} />
           ))}
         </div>

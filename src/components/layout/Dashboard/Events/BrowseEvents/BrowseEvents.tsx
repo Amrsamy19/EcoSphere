@@ -15,10 +15,19 @@ export default function BrowseEvents({ events }: Readonly<EventProps>) {
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
   };
-  const filteredEvents = events.filter((event) => {
-    const query = searchQuery.toLowerCase();
-    return event.name.toLowerCase().includes(query);
-  });
+
+  const now = new Date();
+
+  
+  const filteredEvents = events
+    .filter((event) => {
+      const query = searchQuery.toLowerCase();
+      return event.name.toLowerCase().includes(query);
+    })
+    .filter((event) => new Date(event.eventDate) >= now) // optional: remove past events
+    .sort(
+      (a, b) => new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime()
+    );
   return (
     <section className="min-h-screen py-8 w-[85%] mx-auto flex flex-col gap-6">
       <h1 className="capitalize font-bold text-4xl text-center  text-foreground">
@@ -36,7 +45,7 @@ export default function BrowseEvents({ events }: Readonly<EventProps>) {
           </Button>
         </ButtonGroup>
       </div>
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredEvents.map((event) => (
           <TicketCard key={event._id} event={event} />
         ))}

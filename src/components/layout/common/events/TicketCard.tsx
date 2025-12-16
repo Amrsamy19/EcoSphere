@@ -10,6 +10,7 @@ import EventDetailsCard from "./EventDetailsCard";
 import DeleteEventBtn from "./DeleteEventBtn";
 import UpdateEventBtn from "./UpdateEventBtn";
 import { usePathname } from "next/navigation";
+import AddAttendBtn from "./AddAttendBtn";
 export default function TicketCard({ event }: { event: any }) {
   const pathname = usePathname();
   const segments = pathname.split("/").filter(Boolean);
@@ -31,9 +32,26 @@ export default function TicketCard({ event }: { event: any }) {
           {/* Gradient Overlay */}
           <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/30 to-transparent" />
           {isOrganizerDetails && (
-            <div className="absolute top-4 right-4 z-20 flex gap-2">
-              <UpdateEventBtn id={event._id} detailscard={false} />
-              <DeleteEventBtn id={event._id} detailscard={false} />
+            <div>
+              <div className="absolute top-4 right-4 z-20 flex gap-2">
+                <UpdateEventBtn id={event._id} detailscard={false} />
+                <DeleteEventBtn id={event._id} detailscard={false} />
+              </div>
+              <div className="absolute top-4 left-4 z-20 ">
+                <p
+                  className={`capitalize py-1 px-3 rounded-full text-sm font-medium bg-primary text-primary-foreground
+                      ${event.state === "pending" && "bg-yellow-500 text-white"}
+                      ${event.state === "approved" && "bg-primary text-white"}
+                      ${event.state === "rejected" && "bg-red-600 text-white"}
+                      `}
+                >
+                  {event.state == "pending"
+                    ? "pending..."
+                    : event.state == "approved"
+                      ? "approved"
+                      : "rejected"}
+                </p>
+              </div>
             </div>
           )}
           {/* Event Name */}
@@ -62,15 +80,11 @@ export default function TicketCard({ event }: { event: any }) {
             </div>
           </div>
         </div>
-          {/* Actions */}
-          <div className="flex m-2 gap-3">
-            <EventDetailsCard event={event} state={isOrganizerDetails} />
-            {!isOrganizerDetails && (
-              <button className="flex-1 py-3 capitalize rounded-xl bg-primary text-primary-foreground font-bold text-sm hover:opacity-90 transition">
-                Attend Event
-              </button>
-            )}
-          </div>
+        {/* Actions */}
+        <div className="flex m-2 gap-3">
+          <EventDetailsCard event={event} state={isOrganizerDetails} />
+          {!isOrganizerDetails && <AddAttendBtn />}
+        </div>
       </div>
     </div>
   );

@@ -44,9 +44,7 @@ import z from "zod";
 import { useTranslations } from "next-intl";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function ManageEvent({
-  initialData,
-}: Readonly<{ initialData?: any }>) {
+export default function ManageEvent({initialData,}: Readonly<{ initialData?: any }>) {
   const t = useTranslations("Events.Manage");
   const router = useRouter();
   const form = useForm<z.infer<typeof eventSchema>>({
