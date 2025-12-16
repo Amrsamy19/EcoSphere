@@ -43,14 +43,14 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#f6f6f6]`}
       >
         <Providers locale={locale}>
-            <Toaster position="top-right" />
-            <SideBar />
-            <SidebarInset>
-              <SidebarTriggerBtn />
-              {children}
-              <AIChatWidget />
-            </SidebarInset>
-          </Providers>
+          <Toaster position={locale === "ar" ? "top-left" : "top-right"} />
+          <SideBar />
+          <SidebarInset>
+            <SidebarTriggerBtn />
+            {children}
+            <AIChatWidget />
+          </SidebarInset>
+        </Providers>
       </body>
     </html>
   );
