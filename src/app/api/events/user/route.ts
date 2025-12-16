@@ -1,5 +1,8 @@
 import { rootContainer } from "@/backend/config/container";
-import { organizerOnly } from "@/backend/features/auth/middleware/route.config";
+import {
+  adminOnly,
+  organizerOnly,
+} from "@/backend/features/auth/middleware/route.config";
 import EventController from "@/backend/features/event/event.controller";
 import { EventResponse } from "@/backend/features/event/events.types";
 import { getCurrentUser } from "@/backend/utils/authHelper";
@@ -14,7 +17,9 @@ import { NextRequest, NextResponse } from "next/server";
 
 // const imageService = rootContainer.resolve(ImageService);
 
-export const GET = async (): Promise<NextResponse<ApiResponse<EventResponse[]>>> => {
+export const GET = async (): Promise<
+  NextResponse<ApiResponse<EventResponse[]>>
+> => {
   try {
     const user = await getCurrentUser();
     if (!user?.id) {
@@ -70,20 +75,45 @@ export const PUT = organizerOnly(
 );
 
 export const DELETE = organizerOnly(
-  async (
-    req: NextRequest
-  ): Promise<NextResponse<ApiResponse<EventResponse>>> => {
+  async (req: NextRequest): Promise<NextResponse<ApiResponse<string>>> => {
     try {
       const { eventId } = await req.json();
       const user = await getCurrentUser();
       if (!user?.id) {
         return unauthorized();
       }
-      return ok(
+      await rootContainer
+        .resolve(EventController)
+        .deleteEvent(user.id, eventId);
+      return ok("Event deleted successfully");
+    } catch (error) {
+      console.error(error);
+      return serverError("Something went wrong");
+    }
+  }
+);
+
+export const PATCH = adminOnly(
+  async (req: NextRequest): Promise<NextResponse<ApiResponse<string>>> => {
+    try {
+      const { eventId, action } = await req.json();
+      const user = await getCurrentUser();
+      if (!user?.id) {
+        return unauthorized();
+      }
+      let response;
+      if (action === "accept") {
         await rootContainer
           .resolve(EventController)
-          .deleteEvent(user.id, eventId)
-      );
+          .acceptEvent(eventId);
+        response = "Event accepted successfully";
+      } else if (action === "reject") {
+        await rootContainer
+          .resolve(EventController)
+          .rejectEvent(eventId);
+        response = "Event rejected successfully";
+      }
+      return ok(response);
     } catch (error) {
       console.error(error);
       return serverError("Something went wrong");

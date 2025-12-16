@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   MdCheckCircleOutline,
   MdEvent,
@@ -7,58 +7,37 @@ import {
 } from "react-icons/md";
 import { RiNumbersLine } from "react-icons/ri";
 import { useTranslations } from "next-intl";
+import { IEventDetails } from "@/types/EventTypes";
 
 const EventHero = () => {
   const t = useTranslations("Admin.Events");
-  const [shops] = useState([
-    {
-      id: 1,
-      name: "Tech Haven",
-      email: "contact@techhaven.com",
-      phone: "+1 (555) 123-4567",
-      status: "active",
-      hidden: false,
-    },
-    {
-      id: 2,
-      name: "Fashion Forward",
-      email: "info@fashionforward.com",
-      phone: "+1 (555) 234-5678",
-      status: "pending",
-      hidden: false,
-    },
-    {
-      id: 3,
-      name: "Home Essentials",
-      email: "support@homeessentials.com",
-      phone: "+1 (555) 345-6789",
-      status: "active",
-      hidden: true,
-    },
-    {
-      id: 4,
-      name: "Sports Zone",
-      email: "hello@sportszone.com",
-      phone: "+1 (555) 456-7890",
-      status: "inactive",
-      hidden: false,
-    },
-  ]);
+  const [events, setEvents] = useState<IEventDetails[]>([]);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      const response = await fetch("/api/events");
+      const { data } = await response.json();
+      setEvents(data);
+    };
+    fetchEvents();
+  }, []);
 
   const stats = [
     {
       label: t("stats.total"),
-      value: shops.length,
+      value: events.length,
       icon: <RiNumbersLine className="w-5 h-5" />,
     },
     {
       label: t("stats.active"),
-      value: shops.filter((s) => s.status === "active").length,
+      value: events.filter((e) => e.isAccepted === true).length,
       icon: <MdCheckCircleOutline className="w-5 h-5" />,
     },
     {
       label: t("stats.pending"),
-      value: shops.filter((s) => s.status === "pending").length,
+      value: events.filter(
+        (e) => e.isAccepted === false && e.isEventNew === true
+      ).length,
       icon: <MdPendingActions className="w-5 h-5" />,
     },
   ];

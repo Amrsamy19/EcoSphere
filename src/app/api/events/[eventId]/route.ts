@@ -12,7 +12,9 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (
   req: NextRequest,
-  context: { params: Promise<{ eventId: string }> }
+  context: {
+    params: Promise<{ eventId: string }>;
+  }
 ): Promise<NextResponse<ApiResponse<EventResponse>>> => {
   try {
     const { eventId } = await context.params;

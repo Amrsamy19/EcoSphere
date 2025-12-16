@@ -974,7 +974,14 @@
         "actions": {
           "accept": "Accepter",
           "deny": "Refuser"
-        }
+        },
+        "toasts": {
+          "accepted": "Événement accepté.",
+          "denied": "Événement refusé.",
+          "acceptError": "Échec de l'acceptation de l'événement.",
+          "denyError": "Échec du refus de l'événement."
+        },
+        "Loading": "Chargement des demandes d'événements..."
       }
     },
     "Shops": {
