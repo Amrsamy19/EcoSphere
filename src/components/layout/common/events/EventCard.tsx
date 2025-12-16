@@ -7,11 +7,11 @@ import { formatDate, formatTime } from "@/frontend/utils/Event";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaCalendar } from "react-icons/fa";
 import EventDetailsCard from "./EventDetailsCard";
-import DeleteEventBtn from "./DeleteEventBtn";
-import UpdateEventBtn from "./UpdateEventBtn";
+import DeleteEventBtn from "../../Dashboard/Events/DisplayEvents/DeleteEventBtn";
+import UpdateEventBtn from "../../Dashboard/Events/DisplayEvents/UpdateEventBtn";
 import { usePathname } from "next/navigation";
 import AddAttendBtn from "./AddAttendBtn";
-export default function TicketCard({ event }: { event: any }) {
+export default function EventCard({ event }: { event: any }) {
   const pathname = usePathname();
   const segments = pathname.split("/").filter(Boolean);
   const isOrganizerDetails =

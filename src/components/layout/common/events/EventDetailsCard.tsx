@@ -14,8 +14,8 @@ import { Button } from "@/components/ui/button";
 import { formatDate, formatTime } from "@/frontend/utils/Event";
 import { FaLocationDot } from "react-icons/fa6";
 import { ISubEvent } from "@/types/EventTypes";
-import UpdateEventBtn from "./UpdateEventBtn";
-import DeleteEventBtn from "./DeleteEventBtn";
+import UpdateEventBtn from "../../Dashboard/Events/DisplayEvents/UpdateEventBtn";
+import DeleteEventBtn from "../../Dashboard/Events/DisplayEvents/DeleteEventBtn";
 import AddAttendBtn from "./AddAttendBtn";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
