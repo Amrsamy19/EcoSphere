@@ -28,24 +28,25 @@ export interface ISection extends Document {
 }
 
 export interface IEvent extends Document {
-	name: string;
-	locate: string;
-	ticketPrice: number;
-	description: string;
-	avatar?: {
+  name: string;
+  locate: string;
+  ticketPrice: number;
+  description: string;
+  avatar?: {
     key: string;
     url?: string;
   };
   attenders?: string[];
-	capacity: number;
-	sections?: ISection[];
-	eventDate: Date;
-	startTime: string;
-	endTime: string;
-	createdAt: Date;
-	updatedAt: Date;
-	type: EventType;
-	isAccepted: boolean; // needed
+  capacity: number;
+  sections?: ISection[];
+  eventDate: Date;
+  startTime: string;
+  endTime: string;
+  createdAt: Date;
+  updatedAt: Date;
+  type: EventType;
+  isAccepted: boolean;
+  isEventNew: boolean;
 }
 
 export interface IUser extends Document {
@@ -112,38 +113,40 @@ export const sectionsSchema = new Schema<ISection>(
 );
 
 export const eventSchema = new Schema<IEvent>(
-	{
-		name: { type: String, required: true },
-		locate: { type: String, required: true },
-		ticketPrice: { type: Number, required: true },
-		description: { type: String, required: true },
+  {
+    name: { type: String, required: true },
+    locate: { type: String, required: true },
+    ticketPrice: { type: Number, required: true },
+    description: { type: String, required: true },
     avatar: {
       key: { type: String, required: true },
       url: { type: String, required: false },
     },
     attenders: { type: [Schema.Types.ObjectId], ref: "User", default: [] },
-		capacity: { type: Number, required: true },
-		sections: { type: [sectionsSchema], default: [] },
-		createdAt: { type: Date, required: true, default: Date.now() },
-		updatedAt: { type: Date, required: true, default: Date.now() },
-		type: {
-			type: String,
-			enum: [
-				"Music Festival",
-				"Conference",
-				"Workshop",
-				"Sporting Event",
-				"Exhibition",
-				"Private Party",
-				"Other",
-			],
-			required: true,
-		},
-		startTime: { type: String, required: true },
-		endTime: { type: String, required: true },
-		eventDate: { type: Date, required: true },
-	},
-	{ _id: true, timestamps: true }
+    capacity: { type: Number, required: true },
+    sections: { type: [sectionsSchema], default: [] },
+    createdAt: { type: Date, required: true, default: Date.now() },
+    updatedAt: { type: Date, required: true, default: Date.now() },
+    type: {
+      type: String,
+      enum: [
+        "Music Festival",
+        "Conference",
+        "Workshop",
+        "Sporting Event",
+        "Exhibition",
+        "Private Party",
+        "Other",
+      ],
+      required: true,
+    },
+    startTime: { type: String, required: true },
+    endTime: { type: String, required: true },
+    eventDate: { type: Date, required: true },
+    isAccepted: { type: Boolean, required: true, default: false },
+    isEventNew: { type: Boolean, required: true, default: true },
+  },
+  { _id: true, timestamps: true }
 );
 
 const userSchema = new Schema<IUser>(

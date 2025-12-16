@@ -38,6 +38,13 @@ export interface IEventDetails {
   ticketType: "Priced" | "Free";
   ticketPrice: number;
   sections?: ISubEvent[];
+  isAccepted?: boolean;
+  isEventNew?: boolean;
+  user?: {
+    firstName: string;
+    email: string;
+    phoneNumber: string;
+  };
 }
 
 export interface EventProps {

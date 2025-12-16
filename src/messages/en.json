@@ -980,7 +980,14 @@
         "actions": {
           "accept": "Accept",
           "deny": "Deny"
-        }
+        },
+        "toasts": {
+          "accepted": "Event has been accepted.",
+          "denied": "Event has been denied.",
+          "acceptError": "Failed to accept event.",
+          "denyError": "Failed to deny event."
+        },
+        "Loading": "Loading Events..."
       }
     },
     "Shops": {

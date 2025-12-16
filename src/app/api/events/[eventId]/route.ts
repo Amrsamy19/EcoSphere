@@ -8,12 +8,11 @@ import {
   serverError,
   unauthorized,
 } from "@/types/api-helpers";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export const GET = async (
-  req: NextRequest,
-  context: { params: Promise<{ eventId: string }> }
-): Promise<NextResponse<ApiResponse<EventResponse>>> => {
+export const GET = async (context: {
+  params: Promise<{ eventId: string }>;
+}): Promise<NextResponse<ApiResponse<EventResponse>>> => {
   try {
     const { eventId } = await context.params;
     const user = await getCurrentUser();

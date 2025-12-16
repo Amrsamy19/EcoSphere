@@ -9,6 +9,8 @@ export interface IEventService {
   createEvent: (id: string, event: IEvent) => Promise<IEvent>;
   updateEvent: (id: string, event: Partial<IEvent>) => Promise<IEvent>;
   deleteEvent: (id: string, eventId: string) => Promise<IEvent>;
+  acceptEvent: (eventId: string) => Promise<IEvent>;
+  rejectEvent: (eventId: string) => Promise<IEvent>;
 }
 
 @injectable()
@@ -54,6 +56,16 @@ class EventService {
 
   async deleteEvent(id: string, eventId: string): Promise<IEvent> {
     return await this.eventRepository.deleteEvent(id, eventId);
+  }
+
+  async acceptEvent(eventId: string): Promise<IEvent> {
+    const id = await this.eventRepository.getUserIdByEventId(eventId);
+    return await this.eventRepository.acceptEvent(id._id.toString(), eventId);
+  }
+
+  async rejectEvent(eventId: string): Promise<IEvent> {
+    const id = await this.eventRepository.getUserIdByEventId(eventId);
+    return await this.eventRepository.rejectEvent(id._id.toString(), eventId);
   }
 }
 

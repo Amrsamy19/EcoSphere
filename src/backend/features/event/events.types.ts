@@ -16,6 +16,8 @@ export type EventResponse = {
   capacity: number;
   ticketPrice: number;
   sections?: ISubEvent[];
+  isAccepted: boolean;
+  isEventNew: boolean;
 };
 
 export const mapEventToEventData = (event: IEvent): EventResponse => {
