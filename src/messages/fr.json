@@ -79,7 +79,9 @@
       "subscribe": "S’abonner",
       "profile": "Profil",
       "notifications": "Notifications",
-      "logout": "Déconnexion"
+      "logout": "Déconnexion",
+      "logoutSuccess": "Vous avez été déconnecté avec succès.",
+      "logoutError": "Impossible de se déconnecter. Veuillez réessayer plus tard."
     }
   },
   "About": {
@@ -379,19 +381,22 @@
     },
     "login": {
       "title": "Connexion",
+      "titleLogging": "Connexion en cours...",
       "email": "Email",
       "password": "Mot de passe",
       "forgetPassword": "Mot de passe oublié",
       "forgotPassword": "Mot de passe oublié",
       "or": "ou",
       "newToEcosphere": "Nouveau sur EcoSphere ?",
-      "signUp": "Créer un compte"
+      "signUp": "Créer un compte",
+      "successLogin": "Vous avez bien connecté"
     },
     "signup": {
       "oneOfUs": "Un de nous ?",
       "login": "Connexion",
       "registering": "Enregistrement...",
-      "continue": "Continuer"
+      "continue": "Continuer",
+      "successRegister": "Vous avez bien créé votre compte"
     },
     "forgotPassword": {
       "title": "Mot de passe oublié",

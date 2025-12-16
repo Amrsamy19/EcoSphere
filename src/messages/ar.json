@@ -78,7 +78,9 @@
       "subscribe": "اشتراك",
       "profile": "الملف الشخصي",
       "notifications": "الإشعارات",
-      "logout": "تسجيل الخروج"
+      "logout": "تسجيل الخروج",
+      "logoutSuccess": "تم تسجيل الخروج بنجاح.",
+      "logoutError": "حدث خطأ في تسجيل الخروج."
     }
   },
   "About": {
@@ -378,19 +380,22 @@
     },
     "login": {
       "title": "تسجيل الدخول",
+      "titleLogging": "جاري تسجيل الدخول...",
       "email": "البريد الإلكتروني",
       "password": "كلمة المرور",
       "forgetPassword": "نسيت كلمة المرور",
       "forgotPassword": "نسيت كلمة المرور",
       "or": "أو",
       "newToEcosphere": "جديد على إيكوسفير؟",
-      "signUp": "إنشاء حساب"
+      "signUp": "إنشاء حساب",
+      "successLogin": "لقد تم تسجيل الدخول بنجاح"
     },
     "signup": {
       "oneOfUs": "واحد منا ؟",
       "login": "تسجيل الدخول",
       "registering": "جاري التسجيل...",
-      "continue": "متابعة"
+      "continue": "متابعة",
+      "successRegister": "لقد تم التسجيل بنجاح"
     },
     "forgotPassword": {
       "title": "نسيت كلمة المرور",
