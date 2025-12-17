@@ -12,6 +12,7 @@ import { FcClock } from "react-icons/fc";
 import { Button } from "@/components/ui/button";
 import { formatDate, formatTime } from "@/frontend/utils/Event";
 import { FaLocationDot } from "react-icons/fa6";
+import { IoClose } from "react-icons/io5";
 import { ISubEvent } from "@/types/EventTypes";
 import UpdateEventBtn from "../../Dashboard/Events/DisplayEvents/UpdateEventBtn";
 import DeleteEventBtn from "../../Dashboard/Events/DisplayEvents/DeleteEventBtn";
@@ -57,7 +58,7 @@ export default function EventDetailsCard({
                   variant="secondary"
                   className="absolute top-4 right-4 bg-background/80 hover:bg-background rounded-full p-2 shadow"
                 >
-                  Close
+                  <IoClose className="size-5" />
                 </Button>
               </DialogClose>
               {/* Title */}
