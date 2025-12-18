@@ -12,8 +12,12 @@ import { usePathname } from "next/navigation";
 import AddAttendBtn from "./AddAttendBtn";
 import { useSession } from "next-auth/react";
 import { EventStatus } from "@/types/EventTypes";
-import { FaUserTie } from "react-icons/fa6"
+import { FaUserTie } from "react-icons/fa6";
+import { useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 export default function EventCard({ event }: { event: any }) {
+  const t = useTranslations("Events.displayEvents.EventCard");
+  const locale = useLocale();
   const { data: session } = useSession();
   const pathname = usePathname();
   const segments = pathname.split("/").filter(Boolean);
@@ -26,8 +30,8 @@ export default function EventCard({ event }: { event: any }) {
   const status: EventStatus = event.isAccepted
     ? "approved"
     : event.isEventNew
-      ? "pending"
-      : "rejected";
+    ? "pending"
+    : "rejected";
   const statusStyles: Record<EventStatus, string> = {
     approved: "bg-green-600 text-white",
     pending: "bg-yellow-500 text-white",
@@ -49,17 +53,17 @@ export default function EventCard({ event }: { event: any }) {
           <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/30 to-transparent" />
           {isOrganizerDetails && (
             <div>
-              <div className="absolute top-4 right-4 z-20 flex gap-2">
+              <div className="absolute top-4 ltr:right-4 rtl:left-4  z-20 flex gap-2">
                 <UpdateEventBtn id={event._id} detailscard={false} />
                 <DeleteEventBtn id={event._id} detailscard={false} />
               </div>
-              <div className="absolute top-4 left-4 z-20 ">
+              <div className="absolute top-4 ltr:left-4 rtl:right-4 z-20 ">
                 <p
                   className={`capitalize py-1 px-3 rounded-full text-sm font-medium bg-primary text-primary-foreground
                       ${statusStyles[status]}
                       `}
                 >
-                  {status === "pending" ? "pending..." : status}
+                  {t(`status.${status}`)}
                 </p>
               </div>
             </div>
@@ -76,38 +80,41 @@ export default function EventCard({ event }: { event: any }) {
           <div className="flex  flex-wrap gap-3 text-sm">
             <div className="flex items-center gap-2 rounded-full bg-muted px-4 py-2">
               <FaCalendar className="text-primary" />
-              <span>{formatDate(event.eventDate)}</span>
+              <span>{formatDate(event.eventDate, locale)}</span>
             </div>
             <div className="flex items-center gap-2 rounded-full bg-muted px-4 py-2">
               <MdAccessTime className="text-primary" />
               <span>
-                {formatTime(event.startTime)} – {formatTime(event.endTime)}
+                {formatTime(event.startTime, locale)} –{" "}
+                {formatTime(event.endTime, locale)}
               </span>
             </div>
             <div className="flex items-center gap-2 rounded-full bg-muted px-4 py-2">
               <FaLocationDot className="text-primary" />
               <span>{event.locate}</span>
             </div>
-            <div className="flex items-center gap-2 rounded-full bg-muted px-4 py-2">
-              <FaUserTie className="text-primary" />
+            {!isOrganizerDetails && (
+              <div className="flex items-center gap-2 rounded-full bg-muted px-4 py-2">
+                <FaUserTie className="text-primary" />
 
-              {isEventOrganizer ? (
-                <span className="text-xs text-primary font-semibold">
-                  You are the organizer
-                </span>
-              ) : (
-                <div className="flex flex-col text-sm">
-                  <span className="font-medium text-foreground">
-                    {event.user?.firstName}
+                {!isEventOrganizer ? (
+                  <span className="text-xs text-primary font-semibold">
+                    {t("organizer")}
                   </span>
-                  {canAttend && (
-                    <span className="text-muted-foreground text-xs">
-                      {event.user?.email}
+                ) : (
+                  <div className="flex flex-col text-sm">
+                    <span className="font-medium text-foreground">
+                      {event.user?.firstName}
                     </span>
-                  )}
-                </div>
-              )}
-            </div>
+                    {canAttend && (
+                      <span className="text-muted-foreground text-xs">
+                        {event.user?.email}
+                      </span>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
 
@@ -116,6 +123,7 @@ export default function EventCard({ event }: { event: any }) {
           <EventDetailsCard
             event={event}
             isOrganizerDetails={isOrganizerDetails}
+            isEventOrganizer={isEventOrganizer}
             canAttend={canAttend}
             userId={session?.user?.id || ""}
           />

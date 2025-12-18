@@ -6,8 +6,11 @@ import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Input } from "@/components/ui/input";
 import EventCard from "./EventCard";
+import { useTranslations } from "next-intl";
 
 export default function MainDisplayEvents({ events }: Readonly<EventProps>) {
+  const t = useTranslations("Events.MainDisplayEvents");
+
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,13 +32,13 @@ export default function MainDisplayEvents({ events }: Readonly<EventProps>) {
   return (
     <>
       <div className="w-full flex justify-end">
-        <ButtonGroup>
+        <ButtonGroup className="rtl:flex-row-reverse">
           <Input
-            placeholder={"Search events..."}
+            placeholder={t("searchPlaceholder")}
             value={searchQuery}
             onChange={handleSearchChange}
           />
-          <Button variant="outline" aria-label="Search">
+          <Button variant="outline" aria-label={t("search")}>
             <SearchIcon />
           </Button>
         </ButtonGroup>
@@ -47,8 +50,8 @@ export default function MainDisplayEvents({ events }: Readonly<EventProps>) {
       </div>
       {filteredEvents.length === 0 && (
         <div className="text-center w-full p-8 rounded-xl shadow-md text-muted-foreground border-2 border-primary">
-          <p>No Upcoming Events Found</p>
-          <p>please check later the upcoming events</p>
+          <p>{t("emptyTitle")}</p>
+          <p>{t("emptySubtitle")}</p>
         </div>
       )}
     </>

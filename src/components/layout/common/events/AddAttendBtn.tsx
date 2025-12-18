@@ -1,6 +1,6 @@
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-
+import { useTranslations } from "next-intl";
 export default function AddAttendBtn({
   eventId,
   isFree,
@@ -12,6 +12,7 @@ export default function AddAttendBtn({
   attenders?: string[];
   userId: string | "";
 }) {
+  const t = useTranslations("Events.displayEvents.AddAttendBtn");
   const router = useRouter();
   const isAttending = attenders?.includes(userId);
   const handleAddEvent = async () => {
@@ -28,11 +29,11 @@ export default function AddAttendBtn({
       });
 
       if (response.ok) {
-        toast.success("You have successfully joined the event");
+        toast.success(t("success"));
         router.refresh();
       }
     } catch (error) {
-      console.error(error);
+      console.error(t("error"));
       toast.error("Something went wrong");
     }
   };
@@ -44,7 +45,7 @@ export default function AddAttendBtn({
         isAttending ? "cursor-not-allowed" : "cursor-pointer"
       }`}
     >
-      {isAttending ? "Joined" : "Join Event"}
+      {isAttending ? t("joined") : t("join")}
     </button>
   );
 }

@@ -12,9 +12,7 @@ import Image from "next/image";
 import { EventListItemProps, EventProps, MetricData } from "@/types/EventTypes";
 import React from "react";
 import { formatDate, formatTime } from "@/frontend/utils/Event";
-
-
-
+import { useLocale } from "next-intl";
 const MetricCard: React.FC<MetricData> = ({ title, value, change }) => {
   const isPositive = change && change.startsWith("+");
 
@@ -60,8 +58,8 @@ const EventListItem: React.FC<EventListItemProps> = ({
   locate,
   avatar,
 }) => {
-  const t = useTranslations("Dashboard.overview");
-  
+  const t = useTranslations("Events.overview");
+  const locale = useLocale();
   const buttonText = t("manage");
   const lineColor = "bg-primary";
   const imageSource = avatar || "/events/defaultImgEvent.png";
@@ -100,11 +98,12 @@ const EventListItem: React.FC<EventListItemProps> = ({
         {/* Location */}
         <div className=" flex justify-center items-center flex-col text-sm col-span-1">
           <p className="text-sm text-gray-500 font-medium">
-            {formatDate(eventDate)}
+            {formatDate(eventDate, locale)}
           </p>
           {/* Displaying the Time */}
           <p className="text-sm text-grey-600 font-semibold">
-            {formatTime(startTime)} - {formatTime(endTime)}
+            {formatTime(startTime, locale)} –{" "}
+            {formatTime(endTime, locale)}
           </p>
         </div>
 
