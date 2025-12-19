@@ -10,6 +10,7 @@ import { useTranslations } from "next-intl";
 
 export default function MainDisplayEvents({ events }: Readonly<EventProps>) {
   const t = useTranslations("Events.MainDisplayEvents");
+console.log(events);
 
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -20,15 +21,17 @@ export default function MainDisplayEvents({ events }: Readonly<EventProps>) {
   const now = new Date();
 
   const filteredEvents = events
+    .filter((event) => event.isAccepted === true)
     .filter((event) => {
       const query = searchQuery.toLowerCase();
       return event.name.toLowerCase().includes(query);
     })
-    .filter((event) => new Date(event.eventDate) >= now) // optional: remove past events
+    .filter((event) => new Date(event.eventDate) >= now)
     .sort(
       (a, b) =>
         new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime()
     );
+
   return (
     <>
       <div className="w-full flex justify-end">
