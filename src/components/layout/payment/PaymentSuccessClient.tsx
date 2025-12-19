@@ -100,7 +100,7 @@ export function PaymentSuccessClient({
           {t("totalAmount") || "Total Amount"}
         </span>
         <span className="text-2xl font-bold text-accent-foreground">
-          {formattedAmount + 50} EGP
+          {formattedAmount} EGP
         </span>
       </div>
 
