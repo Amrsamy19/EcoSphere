@@ -23,7 +23,50 @@ export default function TicTacToe() {
   const [isAiTurn, setIsAiTurn] = useState(false);
   const [scores, setScores] = useState({ player: 0, ai: 0, draws: 0 });
   const [difficulty, setDifficulty] = useState<Difficulty>("medium");
+  const [canPlay, setCanPlay] = useState(true);
+  const [remainingPlays, setRemainingPlays] = useState(2);
+  const [gameStarted, setGameStarted] = useState(false);
   const mainAudioRef = useRef<HTMLAudioElement>(null);
+
+  // -------------------------
+  // ⏱️ GAME LIMIT LOGIC (LOCAL)
+  // -------------------------
+  const checkGameLimit = useCallback(() => {
+    const playData = localStorage.getItem("tictactoe_play_data");
+    const today = new Date().toDateString();
+
+    if (playData) {
+      const { date, count } = JSON.parse(playData);
+      if (date === today) {
+        setRemainingPlays(Math.max(0, 2 - count));
+        setCanPlay(count < 2);
+        return;
+      }
+    }
+
+    setRemainingPlays(2);
+    setCanPlay(true);
+  }, []);
+
+  const recordPlayLocally = () => {
+    const today = new Date().toDateString();
+    const playData = localStorage.getItem("tictactoe_play_data");
+    let count = 1;
+
+    if (playData) {
+      const parsed = JSON.parse(playData);
+      if (parsed.date === today) {
+        count = parsed.count + 1;
+      }
+    }
+
+    localStorage.setItem(
+      "tictactoe_play_data",
+      JSON.stringify({ date: today, count })
+    );
+    setRemainingPlays(Math.max(0, 2 - count));
+    if (count >= 2) setCanPlay(false);
+  };
   // -------------------------
   // 💾 LOAD SCORES FROM STORAGE
   // -------------------------
@@ -31,13 +74,14 @@ export default function TicTacToe() {
     if (mainAudioRef.current) {
       mainAudioRef.current.volume = 0.1;
     }
+    checkGameLimit();
     const savedScores = localStorage.getItem("tictactoe_scores");
     if (savedScores) {
       setTimeout(() => {
         setScores(JSON.parse(savedScores));
       }, 500);
     }
-  }, []);
+  }, [checkGameLimit]);
 
   // -------------------------
   // 💾 SAVE SCORES TO STORAGE
@@ -68,7 +112,7 @@ export default function TicTacToe() {
       toast.error(t("status.updatePoints"));
     }
   };
-  
+
   // -------------------------
   // 🏆 CHECK WINNER (SET STATE)
   // -------------------------
@@ -163,7 +207,13 @@ export default function TicTacToe() {
   // 🎮 PLAYER MOVE
   // -------------------------
   const handleClick = (index: number) => {
-    if (board[index] || winner || isAiTurn) return;
+    if (board[index] || winner || isAiTurn || (!canPlay && !gameStarted))
+      return;
+
+    if (!gameStarted) {
+      recordPlayLocally();
+      setGameStarted(true);
+    }
 
     const newBoard = [...board];
     newBoard[index] = "X";
@@ -208,6 +258,8 @@ export default function TicTacToe() {
     setBoard(new Array(9).fill(null));
     setWinner(null);
     setIsAiTurn(false);
+    setGameStarted(false);
+    checkGameLimit();
   };
 
   // -------------------------
@@ -230,40 +282,40 @@ export default function TicTacToe() {
   // 🖥️ UI
   // -------------------------
   const getGameStatus = () => {
-    if (winner) {
-      if (winner === "Draw")
-        return (
-          <div className="flex items-center gap-2 justify-center">
-            {t("status.draw")} <FaHandshakeSimple className="mt-1" />
-          </div>
-        );
-      return (
-        <span className="flex items-center gap-2 justify-center">
-          {winner === "X" ? (
-            <div className="flex items-center gap-3 justify-center">
+    return (
+      <div className="flex flex-col items-center gap-2">
+        <div className="flex items-center gap-2">
+          {winner === "Draw" ? (
+            <div className="flex items-center gap-2">
+              {t("status.draw")} <FaHandshakeSimple className="mt-1" />
+            </div>
+          ) : winner === "X" ? (
+            <div className="flex items-center gap-3">
               <FaRegSmileWink />
               {t("status.youWin")}
             </div>
-          ) : (
-            <div className="flex items-center gap-3 justify-center">
+          ) : winner === "O" ? (
+            <div className="flex items-center gap-3">
               <RiRobot3Line />
               {t("status.aiWin")}
             </div>
+          ) : isAiTurn ? (
+            <div className="flex items-center gap-3">
+              <RiRobot3Line />
+              {t("status.aiThinking")}
+            </div>
+          ) : (
+            <div className="flex items-center gap-3">
+              {t("status.yourTurn")}{" "}
+              <BiSolidLeaf className="text-primary ml-3" />
+            </div>
           )}
-        </span>
-      );
-    }
-    if (isAiTurn)
-      return (
-        <div className="flex items-center gap-3 justify-center">
-          <RiRobot3Line />
-          {t("status.aiThinking")}
         </div>
-      );
-    return (
-      <p className="flex items-center justify-center">
-        {t("status.yourTurn")} <BiSolidLeaf className="text-primary ml-3" />
-      </p>
+
+        <div className="text-sm font-medium text-muted-foreground bg-secondary/20 px-4 py-1 rounded-full">
+          {t("status.remainingPlays", { count: remainingPlays })}
+        </div>
+      </div>
     );
   };
 
@@ -298,49 +350,80 @@ export default function TicTacToe() {
             </div>
           </div>
 
-          {/* Game Board */}
-          <div className="bg-primary/10 backdrop-blur-md rounded-3xl p-8 lg:p-10 shadow-2xl">
-            <div className="grid grid-cols-3 gap-2 lg:gap-6">
-              {board.map((value, index) => (
-                <button
-                  key={index}
-                  onClick={() => handleClick(index)}
-                  disabled={isAiTurn || winner !== null}
-                  className={`
-                    w-20 h-20 sm:w-28 sm:h-28 lg:w-30 lg:h-30
-                    bg-linear-to-br from-primary via-primary to-primary/80 
-                    rounded-3xl flex items-center justify-center shadow-xl
-                    transition-all duration-300 ease-out
-                    ${
-                      !value && !winner && !isAiTurn
-                        ? "hover:scale-110 hover:shadow-2xl hover:rotate-3 active:scale-95"
-                        : ""
-                    }
-                    ${value ? "scale-100" : "scale-95"}
-                    ${
-                      isAiTurn || winner
-                        ? "cursor-not-allowed opacity-60"
-                        : "cursor-pointer"
-                    }
-                  `}
-                >
-                  {renderIcon(value)}
-                </button>
-              ))}
-            </div>
-
-            {/* Action Button */}
-            {winner && (
-              <button
-                onClick={restartGame}
-                className="w-full bg-linear-to-r from-primary to-primary/80 text-primary-foreground py-4 rounded-2xl font-black text-xl
-                  hover:from-primary/90 hover:to-primary/70 flex items-center justify-center gap-3 cursor-pointer 
-                  active:scale-95 transition-all duration-200 shadow-xl hover:shadow-2xl"
-              >
-                <FaPlay />
-                {t("actions.playAgain")}
-              </button>
+          {/* Game Board Section */}
+          <div className="relative w-full flex justify-center">
+            {/* Limit Overlay */}
+            {!canPlay && !gameStarted && (
+              <div className="absolute inset-0 z-20 flex items-center justify-center p-6 text-center">
+                <div className="bg-background/80 backdrop-blur-md rounded-3xl p-8 shadow-2xl border border-primary/20 animate-in fade-in zoom-in duration-500 max-w-[280px]">
+                  <MdDoNotDisturbAlt className="text-5xl text-red-500 mx-auto mb-4 animate-pulse" />
+                  <h2 className="text-2xl font-bold text-red-500 leading-tight">
+                    {t("status.limitReached")}
+                  </h2>
+                  <p className="text-sm text-secondary-foreground/70 mt-3">
+                    {t("status.limitReachedDesc")}
+                  </p>
+                </div>
+              </div>
             )}
+
+            <div
+              className={`
+                bg-primary/10 backdrop-blur-md rounded-3xl p-8 lg:p-10 shadow-2xl transition-all duration-500
+                ${
+                  !canPlay && !gameStarted
+                    ? "opacity-20 grayscale pointer-events-none scale-95 blur-[2px]"
+                    : "opacity-100"
+                }
+              `}
+            >
+              <div className="grid grid-cols-3 gap-2 lg:gap-6">
+                {board.map((value, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleClick(index)}
+                    disabled={
+                      isAiTurn || winner !== null || (!canPlay && !gameStarted)
+                    }
+                    className={`
+                      w-20 h-20 sm:w-28 sm:h-28 lg:w-30 lg:h-30
+                      bg-linear-to-br from-primary via-primary to-primary/80 
+                      rounded-3xl flex items-center justify-center shadow-xl
+                      transition-all duration-300 ease-out
+                      ${
+                        !value &&
+                        !winner &&
+                        !isAiTurn &&
+                        (canPlay || gameStarted)
+                          ? "hover:scale-110 hover:shadow-2xl hover:rotate-3 active:scale-95"
+                          : ""
+                      }
+                      ${value ? "scale-100" : "scale-95"}
+                      ${
+                        isAiTurn || winner || (!canPlay && !gameStarted)
+                          ? "cursor-not-allowed opacity-60"
+                          : "cursor-pointer"
+                      }
+                    `}
+                  >
+                    {renderIcon(value)}
+                  </button>
+                ))}
+              </div>
+
+              {/* Action Button */}
+              {winner && (
+                <button
+                  onClick={restartGame}
+                  className="mt-6 w-full bg-linear-to-r from-primary to-primary/80 text-primary-foreground py-4 rounded-2xl font-black text-xl
+                    hover:from-primary/90 hover:to-primary/70 flex items-center justify-center gap-3 cursor-pointer 
+                    active:scale-95 transition-all duration-200 shadow-xl hover:shadow-2xl"
+                >
+                  <FaPlay />
+                  {t("actions.playAgain")}
+                </button>
+              )}
+            </div>
           </div>
         </div>
 
@@ -374,6 +457,7 @@ export default function TicTacToe() {
                   type="radio"
                   name="difficulty"
                   value="easy"
+                  disabled={!canPlay && !gameStarted}
                   onChange={handleDifficultyChange}
                   className="accent-primary scale-125"
                 />
@@ -385,6 +469,7 @@ export default function TicTacToe() {
                   type="radio"
                   name="difficulty"
                   value="medium"
+                  disabled={!canPlay && !gameStarted}
                   onChange={handleDifficultyChange}
                   defaultChecked
                   className="accent-primary scale-125"
@@ -397,6 +482,7 @@ export default function TicTacToe() {
                   type="radio"
                   name="difficulty"
                   value="hard"
+                  disabled={!canPlay && !gameStarted}
                   onChange={handleDifficultyChange}
                   className="accent-primary scale-125"
                 />
@@ -515,11 +601,7 @@ const getAvailableMoves = (b: Player[]) => {
 // -------------------------
 // 🧠 MINIMAX (recursive, دالة عادية)
 // -------------------------
-const minimax = (
-  b: Player[],
-  depth: number,
-  isMaximizing: boolean
-): number => {
+const minimax = (b: Player[], depth: number, isMaximizing: boolean): number => {
   const winnerNow = checkWinnerReturn(b);
 
   if (winnerNow === "X") return -10 + depth;
