@@ -67,6 +67,7 @@ export interface IUser extends Document {
   points: number;
   role: UserRole;
   subscribed?: boolean;
+  stripeCustomerId?: string;
   accountProvider?: string;
   subscriptionPeriod?: Date;
   address?: string;
@@ -105,7 +106,7 @@ const cartSchema = new Schema<ICart>(
       default: 1,
     },
   },
-  { _id: false }
+  { _id: false },
 );
 
 export const sectionsSchema = new Schema<ISection>(
@@ -115,7 +116,7 @@ export const sectionsSchema = new Schema<ISection>(
     startTime: { type: String, required: true },
     endTime: { type: String, required: true },
   },
-  { _id: false }
+  { _id: false },
 );
 
 export const eventSchema = new Schema<IEvent>(
@@ -152,7 +153,7 @@ export const eventSchema = new Schema<IEvent>(
     isAccepted: { type: Boolean, required: true, default: false },
     isEventNew: { type: Boolean, required: true, default: true },
   },
-  { _id: true, timestamps: true }
+  { _id: true, timestamps: true },
 );
 
 const userSchema = new Schema<IUser>(
@@ -169,6 +170,7 @@ const userSchema = new Schema<IUser>(
     birthDate: { type: String, required: false },
     gender: { type: String, enum: ["male", "female"], required: false },
     subscribed: { type: Boolean, default: false },
+    stripeCustomerId: { type: String, required: false },
     subscriptionPeriod: { type: Date, required: false, default: Date.now() },
     points: { type: Number, default: 1000 },
     accountProvider: { type: String, required: false },
@@ -186,7 +188,7 @@ const userSchema = new Schema<IUser>(
       validTo: { type: Date, required: false },
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 userSchema.pre<IUser>("save", function (): Promise<void> | undefined {
@@ -199,7 +201,7 @@ userSchema.pre<IUser>("save", function (): Promise<void> | undefined {
 });
 
 userSchema.methods.comparePassword = async function (
-  candidatePassword: string
+  candidatePassword: string,
 ): Promise<boolean> {
   return await bcrypt.compare(candidatePassword, this.password);
 };

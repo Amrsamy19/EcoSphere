@@ -61,7 +61,6 @@ export class OrderRepository implements IOrderRepository {
 		orderNewStatus: updatePayment
 	): Promise<IOrder> {
 		await DBInstance.getConnection();
-		console.log(orderNewStatus, "hello");
 		const updatedOrder = await OrderModel.findByIdAndUpdate(
 			{ _id: orderId },
 			{ ...orderNewStatus },

@@ -14,7 +14,7 @@ export const createPaymentIntent = async (
   });
 
   if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
+    const errorData = await response.json().catch((err) => console.error(err));
     throw new Error(errorData.error || "Failed to create payment intent");
   }
 
@@ -23,14 +23,33 @@ export const createPaymentIntent = async (
 
 export const createOrder = async (
   items: OrderRequestItem[],
-): Promise<ApiResponse<IOrder> | undefined> => {
+): Promise<ApiResponse<IOrder>> => {
   const response = await fetch("/api/orders", {
     method: "POST",
     body: JSON.stringify(items),
   });
 
-  if (response.ok) {
-    const data = await response.json();
-    return data;
+  if (!response.ok) {
+    const errorData = await response.json().catch((err) => console.error(err));
+    throw new Error(errorData.error || "Failed to create order");
   }
+
+  const data = await response.json();
+  return data;
+};
+
+export const getOrderById = async (
+  orderId: string,
+): Promise<ApiResponse<IOrder>> => {
+  const response = await fetch(`/api/orders/${orderId}`, {
+    method: "GET",
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.error || "Failed to fetch order");
+  }
+
+  const data = await response.json();
+  return data;
 };

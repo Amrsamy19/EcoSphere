@@ -9,6 +9,8 @@ interface UsePaymentIntentResult {
   clientSecret: string | null;
   loading: boolean;
   error: string | null;
+  onPaymentSuccess?: () => void;
+  orderId: string | null;
 }
 
 export function usePaymentIntent(
@@ -18,8 +20,14 @@ export function usePaymentIntent(
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [orderId, setOrderId] = useState<string | null>(null);
   const cartItems = mapCartBackendData(useAppSelector(selectCartItemsArray));
   const dispatch = useAppDispatch();
+
+  // Callback to clear cart after successful payment
+  const onPaymentSuccess = () => {
+    dispatch(clearCart());
+  };
 
   useEffect(() => {
     if (!enabled || amount <= 0) return;
@@ -32,22 +40,45 @@ export function usePaymentIntent(
 
       try {
         const response = await createOrder(cartItems);
-        dispatch(clearCart());
+
+        // Error handling: Stop flow if order creation fails
+        if (!response?.data?._id) {
+          throw new Error("Failed to create order. Please try again.");
+        }
+
+        // Don't clear cart here - wait for payment confirmation
+        // Cart will be cleared in onSuccess callback after payment succeeds
+        const userId = response.data.userId;
+        // Convert userId to string safely (handles ObjectId or string from backend)
+        let userIdString: string;
+        if (typeof userId === "string") {
+          userIdString = userId;
+        } else if (userId && "toString" in userId) {
+          userIdString = (userId as { toString(): string }).toString();
+        } else {
+          userIdString = "";
+        }
+
+        const currentOrderId = String(response.data._id);
         const { clientSecret } = await createPaymentIntent(
           amount,
           {
-            orderId: `${response!.data!._id}`,
-            userId: `${response!.data!.userId}`, // leave it like this for safety
+            orderId: currentOrderId,
+            userId: userIdString,
           },
           "EGP",
         );
-        if (isMounted) setClientSecret(clientSecret);
-      } catch (err: any) {
         if (isMounted) {
-          setError(
-            err?.message ??
-              "Failed to initialize payment. Please try again later.",
-          );
+          setClientSecret(clientSecret);
+          setOrderId(currentOrderId);
+        }
+      } catch (err) {
+        if (isMounted) {
+          const errorMessage =
+            err instanceof Error
+              ? err.message
+              : "Failed to initialize payment. Please try again later.";
+          setError(errorMessage);
         }
       } finally {
         if (isMounted) setLoading(false);
@@ -59,7 +90,10 @@ export function usePaymentIntent(
     return () => {
       isMounted = false;
     };
+    // cartItems is intentionally excluded - we only want to re-run when amount/enabled changes
+    // cartItems are captured at the time of order creation, not on every cart change
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amount, enabled]);
 
-  return { clientSecret, loading, error };
+  return { clientSecret, loading, error, onPaymentSuccess, orderId };
 }

@@ -98,6 +98,9 @@ export class OrderService implements IOrderService {
 				if (!orderId) return;
 				console.log(intent.metadata, "metaData")
 
+				// Note: Frontend confirmation is authoritative for UX (cart cleared on success).
+				// This webhook ensures server-side order status consistency and audit trail.
+				// If webhook fails, order stays in 'pending' but payment is confirmed client-side.
 				await this.orderRepository.updateOrderStatus(orderId, {
 					status: "preparing",
 					paidAt: new Date(intent.created),

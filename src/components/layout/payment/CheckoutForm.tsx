@@ -6,20 +6,29 @@ import {
 import { useState } from "react";
 import { Loader2, Lock } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { useLocale } from "next-intl";
 
 interface CheckoutFormProps {
   amount: number;
   onSuccess?: () => void;
+  orderId: string | null;
 }
 
-export const CheckoutForm = ({ amount, onSuccess }: CheckoutFormProps) => {
+export const CheckoutForm = ({
+  amount,
+  onSuccess,
+  orderId,
+}: CheckoutFormProps) => {
   const tForm = useTranslations("Checkout.form");
-  const tVer = useTranslations("Checkout.verification");
   const stripe = useStripe();
   const elements = useElements();
+  const router = useRouter();
+  const locale = useLocale();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [, setIsSuccess] = useState(false);
+  const [, setPaymentIntentId] = useState<string | null>(null);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -30,55 +39,54 @@ export const CheckoutForm = ({ amount, onSuccess }: CheckoutFormProps) => {
     setErrorMessage(null);
 
     try {
+      // Build success and cancel URLs with order data
+      const baseUrl = globalThis.location.origin;
+      const successParams = new URLSearchParams();
+      if (orderId) successParams.set("orderId", orderId);
+
+      const cancelParams = new URLSearchParams();
+      if (orderId) cancelParams.set("orderId", orderId);
+
       const { error, paymentIntent } = await stripe.confirmPayment({
         elements,
         confirmParams: {
-          return_url: `${globalThis.location.origin}/payment/success`,
+          return_url: `${baseUrl}/${locale}/payment/success?${successParams}`,
         },
         redirect: "if_required",
       });
 
       if (error) {
-        setErrorMessage(error.message || tForm("unexpectedError"));
+        // Redirect to failed page with error info
+        const failedParams = new URLSearchParams();
+        if (orderId) failedParams.set("orderId", orderId);
+        if (error.code) failedParams.set("errorCode", error.code);
+        if (error.message) failedParams.set("errorMessage", error.message);
+        router.push(`/${locale}/payment/failed?${failedParams.toString()}`);
+        return;
       } else if (paymentIntent?.status === "succeeded") {
+        setPaymentIntentId(paymentIntent.id);
         setIsSuccess(true);
         if (onSuccess) onSuccess();
+        // Redirect to success page with order data
+        const successParams = new URLSearchParams();
+        if (orderId) successParams.set("orderId", orderId);
+        if (paymentIntent.id)
+          successParams.set("paymentIntentId", paymentIntent.id);
+        router.push(`/${locale}/payment/success?${successParams.toString()}`);
       }
     } catch (e) {
       console.error(e);
       setErrorMessage(tForm("unexpectedError"));
+      // Redirect to failed page on unexpected error
+      const failedParams = new URLSearchParams();
+      if (orderId) failedParams.set("orderId", orderId);
+      router.push(`/${locale}/payment/failed?${failedParams.toString()}`);
     }
 
     setIsLoading(false);
   };
 
-  if (isSuccess) {
-    return (
-      <div className="w-full max-w-md mx-auto p-8 bg-white dark:bg-zinc-950 rounded-2xl shadow-xl border border-zinc-200 dark:border-zinc-800 text-center animate-in fade-in zoom-in duration-300">
-        <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-          <svg
-            className="w-8 h-8 text-primary"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M5 13l4 4L19 7"
-            />
-          </svg>
-        </div>
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-          {tVer("successTitle")}
-        </h2>
-        <p className="text-zinc-500 dark:text-zinc-400">
-          {tVer("successDesc")}
-        </p>
-      </div>
-    );
-  }
+  // Removed inline success view - will redirect to success page instead
 
   return (
     <form

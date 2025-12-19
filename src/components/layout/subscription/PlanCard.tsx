@@ -1,10 +1,12 @@
 import React from "react";
 import { Check, Leaf } from "lucide-react";
 import { ISubscribePlan } from "@/types/SubscribePlan";
-import Link from "next/link";
+import SubscribeButton from "./SubscribeButton";
 
-export default async function  PlanCard({ plan , locale  }: Readonly<{ plan: ISubscribePlan , locale: string }>) {
-
+export default async function PlanCard({
+  plan,
+  locale,
+}: Readonly<{ plan: ISubscribePlan; locale: string }>) {
   return (
     <div className="">
       <div className="bg-background rounded-2xl   shadow-xl max-w-sm w-full overflow-hidden transform transition-all hover:scale-105 duration-300 flex flex-col justify-between">
@@ -49,7 +51,8 @@ export default async function  PlanCard({ plan , locale  }: Readonly<{ plan: ISu
 
         {/* CTA Button */}
         <div className="px-8 pb-8">
-          <Link href={"/checkout"} className="w-full myBtnPrimary" >{plan.btnText}</Link>
+          {/* Use SubscribeButton which calls our backend to create a Checkout Session and redirects to Stripe Checkout */}
+          <SubscribeButton planKey={plan.planKey ?? ""} label={plan.btnText} />
         </div>
       </div>
     </div>
