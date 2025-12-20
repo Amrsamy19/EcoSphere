@@ -64,6 +64,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
   const handleFav = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
+    console.log(safeId)
     // Use partial object logic or ensure FavSlice handles it
     dispatch(toggleFavoriteAsync({ ...product, id: safeId } as IProduct));
     if (isFav) {
