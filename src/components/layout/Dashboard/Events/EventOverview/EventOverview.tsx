@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { BackgroundGradient } from "@/components/ui/background-gradient";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -102,8 +102,7 @@ const EventListItem: React.FC<EventListItemProps> = ({
           </p>
           {/* Displaying the Time */}
           <p className="text-sm text-grey-600 font-semibold">
-            {formatTime(startTime, locale)} –{" "}
-            {formatTime(endTime, locale)}
+            {formatTime(startTime, locale)} – {formatTime(endTime, locale)}
           </p>
         </div>
 
@@ -133,34 +132,55 @@ const EventListItem: React.FC<EventListItemProps> = ({
 };
 export default function EventOverview({ events }: EventProps) {
   const t = useTranslations("Events.overview");
+
+  const totalTicketSales =
+    events?.reduce((acc, event) => acc + (event.attenders?.length || 0), 0) ||
+    0;
+
+  const totalRevenue =
+    events?.reduce(
+      (acc, event) =>
+        acc + (event.attenders?.length || 0) * (event.ticketPrice || 0),
+      0
+    ) || 0;
+
+  const confirmedAttendees = totalTicketSales;
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const activeEventsCount =
+    events?.filter((event) => {
+      const eventDate = new Date(event.eventDate);
+      return eventDate >= today && event.isAccepted;
+    }).length || 0;
+
   const dashboardData: MetricData[] = [
     {
       id: 1,
-      title: t("totalTicketSales") ,
-      value: "1,245",
-      change: "+12%",
+      title: t("totalTicketSales"),
+      value: totalTicketSales.toLocaleString(),
+      change: null,
     },
     {
       id: 2,
       title: t("totalRevenue"),
-      value: "EGP 45,200",
-      change: "+8%",
+      value: `EGP ${totalRevenue.toLocaleString()}`,
+      change: null,
     },
     {
       id: 3,
       title: t("confirmedAttendees"),
-      value: "890",
-      change: "+5%",
+      value: confirmedAttendees.toLocaleString(),
+      change: null,
     },
     {
       id: 4,
       title: t("activeEvents"),
-      value: "4",
+      value: activeEventsCount.toString(),
       change: null,
     },
   ];
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
 
   // 2. Filter, Sort, and Limit the events
   const sortedAndLimitedEvents = events

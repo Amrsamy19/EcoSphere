@@ -193,7 +193,10 @@
       "yourTurn": "À votre tour",
       "pointsAdded": "{points} points ajoutés à vos EcoPoints !",
       "updatePoints": "Erreur lors de la mise à jour des EcoPoints. Veuillez réessayer.",
-      "loginForPoints": "Connectez-vous pour gagner des EcoPoints !"
+      "loginForPoints": "Connectez-vous pour gagner des EcoPoints !",
+      "limitReached": "Vous avez atteint votre limite quotidienne de 2 jeux. Revenez demain !",
+      "limitReachedDesc": "Rejoignez-nous demain pour gagner plus d'EcoPoints et tester à nouveau vos compétences !",
+      "remainingPlays": "Il vous reste {count} parties aujourd'hui."
     },
     "difficulty": {
       "easy": "Facile",
@@ -815,128 +818,128 @@
         "icon": "leaf"
       },
 
-			{
-				"title": "Formule Pro",
-				"subtitle": "Pour les boutiques professionnelles et les grands organisateurs d'événements.",
-				"price": "59$ / mois",
-				"btnText": "Passer en Pro",
-				"features": [
-					"Produits ou événements illimités",
-					"Personnalisation complète du tableau de bord",
-					"Analyses avancées avec IA",
-					"Support dédié 24/7",
-					"Accès à tous les outils premium Écosphère"
-				],
-				"icon": "eco-pro",
-				"planKey": "pro_monthly"
-			},
-			{
-				"title": "Formule Croissance",
-				"subtitle": "Parfaite pour les boutiques en expansion ou les organisateurs actifs.",
-				"price": "29$ / mois",
-				"btnText": "Mettre à niveau",
-				"features": [
-					"Téléverser jusqu'à 50 produits ou événements",
-					"Gestion avancée du contenu",
-					"Tableau de bord analytique complet",
-					"Support prioritaire",
-					"Accès aux outils d'éco-événements"
-				],
-				"icon": "growth",
-				"planKey": "growth_monthly"
-			}
-		]
-	},
-	"News": {
-		"page": {
-			"title": "Actualités & Mises à jour",
-			"description": "Restez à jour avec les dernières nouveautés sur EcoSphere. Découvrez les nouveaux restaurants et boutiques écoresponsables qui rejoignent notre communauté."
-		},
-		"recentlyAdded": {
-			"title": "Récemment ajoutés"
-		},
-		"card": {
-			"viewMore": "Voir plus"
-		}
-	},
-	"ForgotPassword": {
-		"logoAlt": "Logo EcoSphere",
-		"forgotPasswordImageAlt": "Illustration Mot de passe oublié",
-		"verifyEmailImageAlt": "Illustration Vérifier l'e-mail",
-		"emailStep": {
-			"title": "Vérifiez votre e-mail",
-			"description": "Entrez votre e-mail pour recevoir un code de vérification."
-		},
-		"resetStep": {
-			"title": "Réinitialiser le mot de passe",
-			"description": "Créez un nouveau mot de passe sécurisé pour votre compte."
-		},
-		"resetPassword": {
-			"title": "Réinitialiser le mot de passe",
-			"description": "Créez un nouveau mot de passe sécurisé pour votre compte",
-			"newPassword": {
-				"label": "Nouveau mot de passe",
-				"placeholder": "Entrez le nouveau mot de passe"
-			},
-			"confirmPassword": {
-				"label": "Confirmer le mot de passe",
-				"placeholder": "Confirmez le nouveau mot de passe",
-				"mismatch": "Les mots de passe ne correspondent pas"
-			},
-			"requirements": {
-				"minLength": "Au moins 8 caractères",
-				"hasNumber": "Contient un chiffre",
-				"hasSpecial": "Contient un caractère spécial"
-			},
-			"showPassword": "Afficher le mot de passe",
-			"hidePassword": "Masquer le mot de passe",
-			"submitButton": "Réinitialiser le mot de passe",
-			"success": {
-				"title": "Mot de passe changé !",
-				"description": "Votre mot de passe a été changé avec succès. Vous serez redirigé vers la page de connexion sous peu.",
-				"button": "Aller à la connexion"
-			}
-		},
-		"emailVerification": {
-			"emailStep": {
-				"title": "Vérifier l'e-mail",
-				"description": "Entrez votre adresse e-mail et nous vous enverrons un code de vérification à 6 chiffres.",
-				"placeholder": "Entrez votre e-mail",
-				"sendButton": "Envoyer le code",
-				"backButton": "Retour à la connexion",
-				"sendError": "Adresse e-mail incorrecte. Veuillez réessayer."
-			},
-			"codeStep": {
-				"title": "Entrer le code",
-				"description": "Nous avons envoyé un code à 6 chiffres à {email}",
-				"inputLabel": "Chiffre {position}",
-				"error": "Veuillez entrer les 6 chiffres.",
-				"verifyButton": "Vérifier le code",
-				"changeEmailButton": "Changer l'e-mail",
-				"responseError": "Code de vérification invalide. Veuillez réessayer."
-			},
-			"Recycle": {
-				"form": {
-					"title": "Demande de recyclage",
-					"subtitle": "Planifiez votre collecte facilement et écologiquement."
-				},
+      {
+        "title": "Formule Pro",
+        "subtitle": "Pour les boutiques professionnelles et les grands organisateurs d'événements.",
+        "price": "59$ / mois",
+        "btnText": "Passer en Pro",
+        "features": [
+          "Produits ou événements illimités",
+          "Personnalisation complète du tableau de bord",
+          "Analyses avancées avec IA",
+          "Support dédié 24/7",
+          "Accès à tous les outils premium Écosphère"
+        ],
+        "icon": "eco-pro",
+        "planKey": "pro_monthly"
+      },
+      {
+        "title": "Formule Croissance",
+        "subtitle": "Parfaite pour les boutiques en expansion ou les organisateurs actifs.",
+        "price": "29$ / mois",
+        "btnText": "Mettre à niveau",
+        "features": [
+          "Téléverser jusqu'à 50 produits ou événements",
+          "Gestion avancée du contenu",
+          "Tableau de bord analytique complet",
+          "Support prioritaire",
+          "Accès aux outils d'éco-événements"
+        ],
+        "icon": "growth",
+        "planKey": "growth_monthly"
+      }
+    ]
+  },
+  "News": {
+    "page": {
+      "title": "Actualités & Mises à jour",
+      "description": "Restez à jour avec les dernières nouveautés sur EcoSphere. Découvrez les nouveaux restaurants et boutiques écoresponsables qui rejoignent notre communauté."
+    },
+    "recentlyAdded": {
+      "title": "Récemment ajoutés"
+    },
+    "card": {
+      "viewMore": "Voir plus"
+    }
+  },
+  "ForgotPassword": {
+    "logoAlt": "Logo EcoSphere",
+    "forgotPasswordImageAlt": "Illustration Mot de passe oublié",
+    "verifyEmailImageAlt": "Illustration Vérifier l'e-mail",
+    "emailStep": {
+      "title": "Vérifiez votre e-mail",
+      "description": "Entrez votre e-mail pour recevoir un code de vérification."
+    },
+    "resetStep": {
+      "title": "Réinitialiser le mot de passe",
+      "description": "Créez un nouveau mot de passe sécurisé pour votre compte."
+    },
+    "resetPassword": {
+      "title": "Réinitialiser le mot de passe",
+      "description": "Créez un nouveau mot de passe sécurisé pour votre compte",
+      "newPassword": {
+        "label": "Nouveau mot de passe",
+        "placeholder": "Entrez le nouveau mot de passe"
+      },
+      "confirmPassword": {
+        "label": "Confirmer le mot de passe",
+        "placeholder": "Confirmez le nouveau mot de passe",
+        "mismatch": "Les mots de passe ne correspondent pas"
+      },
+      "requirements": {
+        "minLength": "Au moins 8 caractères",
+        "hasNumber": "Contient un chiffre",
+        "hasSpecial": "Contient un caractère spécial"
+      },
+      "showPassword": "Afficher le mot de passe",
+      "hidePassword": "Masquer le mot de passe",
+      "submitButton": "Réinitialiser le mot de passe",
+      "success": {
+        "title": "Mot de passe changé !",
+        "description": "Votre mot de passe a été changé avec succès. Vous serez redirigé vers la page de connexion sous peu.",
+        "button": "Aller à la connexion"
+      }
+    },
+    "emailVerification": {
+      "emailStep": {
+        "title": "Vérifier l'e-mail",
+        "description": "Entrez votre adresse e-mail et nous vous enverrons un code de vérification à 6 chiffres.",
+        "placeholder": "Entrez votre e-mail",
+        "sendButton": "Envoyer le code",
+        "backButton": "Retour à la connexion",
+        "sendError": "Adresse e-mail incorrecte. Veuillez réessayer."
+      },
+      "codeStep": {
+        "title": "Entrer le code",
+        "description": "Nous avons envoyé un code à 6 chiffres à {email}",
+        "inputLabel": "Chiffre {position}",
+        "error": "Veuillez entrer les 6 chiffres.",
+        "verifyButton": "Vérifier le code",
+        "changeEmailButton": "Changer l'e-mail",
+        "responseError": "Code de vérification invalide. Veuillez réessayer."
+      },
+      "Recycle": {
+        "form": {
+          "title": "Demande de recyclage",
+          "subtitle": "Planifiez votre collecte facilement et écologiquement."
+        },
 
-				"items": {
-					"title": "Ajouter des éléments",
-					"manual": "Manuel",
-					"vision": "Scan IA"
-				},
+        "items": {
+          "title": "Ajouter des éléments",
+          "manual": "Manuel",
+          "vision": "Scan IA"
+        },
 
-				"buttons": {
-					"submit": "Soumettre la demande",
-					"processing": "Traitement en cours..."
-				},
+        "buttons": {
+          "submit": "Soumettre la demande",
+          "processing": "Traitement en cours..."
+        },
 
-				"success": {
-					"title": "Demande de recyclage envoyée !",
-					"withPoints": "Vous avez économisé {carbon} kg de CO₂ et gagné {points} points éco !",
-					"withoutPoints": "Vous avez économisé {carbon} kg de CO₂ !"
-				},
+        "success": {
+          "title": "Demande de recyclage envoyée !",
+          "withPoints": "Vous avez économisé {carbon} kg de CO₂ et gagné {points} points éco !",
+          "withoutPoints": "Vous avez économisé {carbon} kg de CO₂ !"
+        },
 
         "errors": {
           "noItem": "Veuillez ajouter au moins un élément.",

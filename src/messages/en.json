@@ -192,7 +192,10 @@
       "yourTurn": "Your turn",
       "pointsAdded": "{points} points added to your EcoPoints!",
       "updatePoints": "Error updating EcoPoints. Please try again.",
-      "loginForPoints": "Login to earn EcoPoints!"
+      "loginForPoints": "Login to earn EcoPoints!",
+      "limitReached": "You've reached your daily limit of 2 games. Come back tomorrow!",
+      "limitReachedDesc": "Join us tomorrow to earn more EcoPoints and test your skills again!",
+      "remainingPlays": "You have {count} plays remaining today."
     },
     "difficulty": {
       "easy": "Easy",
@@ -649,21 +652,21 @@
       "emptySubtitle": "Please check back later for upcoming events"
     },
     "WhyEcosphere": {
-    "title": "Why Attend Events on Ecosphere?",
-    "subtitle": "Ecosphere helps you discover, explore, and attend events effortlessly with everything you need in one place.",
-    "card1": {
-      "title": "Centralized Event Discovery",
-      "description": "Find all upcoming events in one unified platform without searching multiple sources."
+      "title": "Why Attend Events on Ecosphere?",
+      "subtitle": "Ecosphere helps you discover, explore, and attend events effortlessly with everything you need in one place.",
+      "card1": {
+        "title": "Centralized Event Discovery",
+        "description": "Find all upcoming events in one unified platform without searching multiple sources."
+      },
+      "card2": {
+        "title": "Detailed Event Information",
+        "description": "View schedules, locations, organizers, and all event details before attending."
+      },
+      "card3": {
+        "title": "Easy Attendance & Tracking",
+        "description": "Join events easily and keep track of the events you plan to attend."
+      }
     },
-    "card2": {
-      "title": "Detailed Event Information",
-      "description": "View schedules, locations, organizers, and all event details before attending."
-    },
-    "card3": {
-      "title": "Easy Attendance & Tracking",
-      "description": "Join events easily and keep track of the events you plan to attend."
-    }
-  },
     "displayEvents": {
       "title": "My Events",
       "addEventBtn": "Add New Event",
@@ -801,235 +804,235 @@
     "boldTitle": "best plan",
     "titleLast": " for your needs",
 
-		"plans": [
-			{
-				"title": "Starter Plan",
-				"subtitle": "Perfect for small shops or new event organizers.",
-				"price": "$9 / month",
-				"btnText": "Get Started",
-				"features": [
-					"Upload up to 10 products or events",
-					"Basic dashboard access",
-					"Simple analytics overview",
-					"Standard support",
-					"Eco-friendly badge included"
-				],
-				"icon": "leaf",
-				"planKey": "starter_monthly"
-			},
+    "plans": [
+      {
+        "title": "Starter Plan",
+        "subtitle": "Perfect for small shops or new event organizers.",
+        "price": "$9 / month",
+        "btnText": "Get Started",
+        "features": [
+          "Upload unlimited products or events",
+          "Basic dashboard access",
+          "Simple analytics overview",
+          "Standard support",
+          "Eco-friendly badge included"
+        ],
+        "icon": "leaf",
+        "planKey": "starter_monthly"
+      },
 
-			{
-				"title": "Pro Plan",
-				"subtitle": "For professional stores and large event organizers.",
-				"price": "$59 / month",
-				"btnText": "Go Pro",
-				"features": [
-					"Unlimited products or events",
-					"Full control panel customization",
-					"Deep AI-powered analytics",
-					"24/7 dedicated support",
-					"Access to all ecosphere premium tools"
-				],
-				"icon": "eco-pro",
-				"planKey": "pro_monthly"
-			},
-			{
-				"title": "Growth Plan",
-				"subtitle": "Great for expanding stores or active event organizers.",
-				"price": "$29 / month",
-				"btnText": "Upgrade Now",
-				"features": [
-					"Upload up to 50 products or events",
-					"Advanced content management",
-					"Full analytics dashboard",
-					"Priority support",
-					"Access to eco-event tools"
-				],
-				"icon": "growth",
-				"planKey": "growth_monthly"
-			}
-		]
-	},
-	"News": {
-		"page": {
-			"title": "News & Updates",
-			"description": "Stay up to date with the latest additions to EcoSphere. Discover new eco-friendly restaurants and shops joining our community."
-		},
-		"recentlyAdded": {
-			"title": "Recently Added"
-		},
-		"card": {
-			"viewMore": "View More"
-		}
-	},
-	"ForgotPassword": {
-		"logoAlt": "EcoSphere Logo",
-		"forgotPasswordImageAlt": "Forgot Password Illustration",
-		"verifyEmailImageAlt": "Verify Email Illustration",
-		"emailStep": {
-			"title": "Verify Your Email",
-			"description": "Enter your email to receive a verification code."
-		},
-		"resetStep": {
-			"title": "Reset Password",
-			"description": "Create a new secure password for your account."
-		},
-		"resetPassword": {
-			"title": "Reset Password",
-			"description": "Create a new secure password for your account",
-			"newPassword": {
-				"label": "New Password",
-				"placeholder": "Enter new password"
-			},
-			"confirmPassword": {
-				"label": "Confirm Password",
-				"placeholder": "Confirm new password",
-				"mismatch": "Passwords do not match"
-			},
-			"requirements": {
-				"minLength": "At least 8 characters",
-				"hasNumber": "Contains a number",
-				"hasSpecial": "Contains a special character"
-			},
-			"showPassword": "Show password",
-			"hidePassword": "Hide password",
-			"submitButton": "Reset Password",
-			"success": {
-				"title": "Password Changed!",
-				"description": "Your password has been successfully changed. You will be redirected to the login page shortly.",
-				"button": "Go to Login"
-			}
-		},
-		"emailVerification": {
-			"emailStep": {
-				"title": "Verify Email",
-				"description": "Enter your email address and we'll send you a 6-digit verification code.",
-				"placeholder": "Enter your email",
-				"sendButton": "Send Code",
-				"backButton": "Back to Login",
-				"sendError": "Wrong email address. Please try again."
-			},
-			"codeStep": {
-				"title": "Enter Code",
-				"description": "We've sent a 6-digit code to {email}",
-				"inputLabel": "Digit {position}",
-				"error": "Please enter all 6 digits.",
-				"verifyButton": "Verify Code",
-				"changeEmailButton": "Change Email",
-				"responseError": "Invalid verification code. Please try again."
-			},
-			"Recycle": {
-				"form": {
-					"title": "Recycling Request",
-					"subtitle": "Schedule a pickup easily in an eco-friendly way."
-				},
+      {
+        "title": "Pro Plan",
+        "subtitle": "For professional stores and large event organizers.",
+        "price": "$59 / month",
+        "btnText": "Go Pro",
+        "features": [
+          "Unlimited products or events",
+          "Full control panel customization",
+          "Deep AI-powered analytics",
+          "24/7 dedicated support",
+          "Access to all ecosphere premium tools"
+        ],
+        "icon": "eco-pro",
+        "planKey": "pro_monthly"
+      },
+      {
+        "title": "Growth Plan",
+        "subtitle": "Great for expanding stores or active event organizers.",
+        "price": "$29 / month",
+        "btnText": "Upgrade Now",
+        "features": [
+          "Upload unlimited products or events",
+          "Advanced content management",
+          "Full analytics dashboard",
+          "Priority support",
+          "Access to eco-event tools"
+        ],
+        "icon": "growth",
+        "planKey": "growth_monthly"
+      }
+    ]
+  },
+  "News": {
+    "page": {
+      "title": "News & Updates",
+      "description": "Stay up to date with the latest additions to EcoSphere. Discover new eco-friendly restaurants and shops joining our community."
+    },
+    "recentlyAdded": {
+      "title": "Recently Added"
+    },
+    "card": {
+      "viewMore": "View More"
+    }
+  },
+  "ForgotPassword": {
+    "logoAlt": "EcoSphere Logo",
+    "forgotPasswordImageAlt": "Forgot Password Illustration",
+    "verifyEmailImageAlt": "Verify Email Illustration",
+    "emailStep": {
+      "title": "Verify Your Email",
+      "description": "Enter your email to receive a verification code."
+    },
+    "resetStep": {
+      "title": "Reset Password",
+      "description": "Create a new secure password for your account."
+    },
+    "resetPassword": {
+      "title": "Reset Password",
+      "description": "Create a new secure password for your account",
+      "newPassword": {
+        "label": "New Password",
+        "placeholder": "Enter new password"
+      },
+      "confirmPassword": {
+        "label": "Confirm Password",
+        "placeholder": "Confirm new password",
+        "mismatch": "Passwords do not match"
+      },
+      "requirements": {
+        "minLength": "At least 8 characters",
+        "hasNumber": "Contains a number",
+        "hasSpecial": "Contains a special character"
+      },
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
+      "submitButton": "Reset Password",
+      "success": {
+        "title": "Password Changed!",
+        "description": "Your password has been successfully changed. You will be redirected to the login page shortly.",
+        "button": "Go to Login"
+      }
+    },
+    "emailVerification": {
+      "emailStep": {
+        "title": "Verify Email",
+        "description": "Enter your email address and we'll send you a 6-digit verification code.",
+        "placeholder": "Enter your email",
+        "sendButton": "Send Code",
+        "backButton": "Back to Login",
+        "sendError": "Wrong email address. Please try again."
+      },
+      "codeStep": {
+        "title": "Enter Code",
+        "description": "We've sent a 6-digit code to {email}",
+        "inputLabel": "Digit {position}",
+        "error": "Please enter all 6 digits.",
+        "verifyButton": "Verify Code",
+        "changeEmailButton": "Change Email",
+        "responseError": "Invalid verification code. Please try again."
+      },
+      "Recycle": {
+        "form": {
+          "title": "Recycling Request",
+          "subtitle": "Schedule a pickup easily in an eco-friendly way."
+        },
 
-				"items": {
-					"title": "Add Items",
-					"manual": "Manual Entry",
-					"vision": "AI Scan"
-				},
+        "items": {
+          "title": "Add Items",
+          "manual": "Manual Entry",
+          "vision": "AI Scan"
+        },
 
-				"buttons": {
-					"submit": "Submit Recycling Request",
-					"processing": "Processing request..."
-				},
+        "buttons": {
+          "submit": "Submit Recycling Request",
+          "processing": "Processing request..."
+        },
 
-				"success": {
-					"title": "Recycling Request Submitted!",
-					"withPoints": "You saved {carbon} kg of CO₂ and earned {points} eco points!",
-					"withoutPoints": "You saved {carbon} kg of CO₂!"
-				},
+        "success": {
+          "title": "Recycling Request Submitted!",
+          "withPoints": "You saved {carbon} kg of CO₂ and earned {points} eco points!",
+          "withoutPoints": "You saved {carbon} kg of CO₂!"
+        },
 
-				"errors": {
-					"noItem": "Please add at least one item.",
-					"noImage": "Please upload at least one image.",
-					"submitFailed": "Failed to submit the request. Please try again.",
-					"unexpected": "An unexpected error occurred."
-				}
-			}
-		}
-	},
-	"RecycleForm": {
-		"title": "Recycle Request",
-		"description": "Schedule your pickup. Eco-friendly and easy.",
-		"submit": {
-			"default": "Submit Recycling Request",
-			"processing": "Processing Request..."
-		},
-		"entryMethod": {
-			"title": "Add Items",
-			"manual": "Manual",
-			"aiScan": "AI Scan"
-		},
-		"vision": {
-			"addImages": "Add Images",
-			"dragDrop": "Drag & drop or click to upload",
-			"imagesReady": "{count} Image{s} Ready"
-		},
-		"errors": {
-			"addItem": "Please add at least one item.",
-			"uploadImage": "Please upload at least one image.",
-			"submissionFailed": "Failed to submit recycling request. Please try again.",
-			"unexpected": "An unexpected error occurred."
-		},
-		"success": {
-			"title": "Recycling Request Submitted!",
-			"description": "You saved {carbonSaved}kg of CO2!",
-			"descriptionWithPoints": "You saved {carbonSaved}kg of CO2 and earned {points} Eco Points! 🎉"
-		},
+        "errors": {
+          "noItem": "Please add at least one item.",
+          "noImage": "Please upload at least one image.",
+          "submitFailed": "Failed to submit the request. Please try again.",
+          "unexpected": "An unexpected error occurred."
+        }
+      }
+    }
+  },
+  "RecycleForm": {
+    "title": "Recycle Request",
+    "description": "Schedule your pickup. Eco-friendly and easy.",
+    "submit": {
+      "default": "Submit Recycling Request",
+      "processing": "Processing Request..."
+    },
+    "entryMethod": {
+      "title": "Add Items",
+      "manual": "Manual",
+      "aiScan": "AI Scan"
+    },
+    "vision": {
+      "addImages": "Add Images",
+      "dragDrop": "Drag & drop or click to upload",
+      "imagesReady": "{count} Image{s} Ready"
+    },
+    "errors": {
+      "addItem": "Please add at least one item.",
+      "uploadImage": "Please upload at least one image.",
+      "submissionFailed": "Failed to submit recycling request. Please try again.",
+      "unexpected": "An unexpected error occurred."
+    },
+    "success": {
+      "title": "Recycling Request Submitted!",
+      "description": "You saved {carbonSaved}kg of CO2!",
+      "descriptionWithPoints": "You saved {carbonSaved}kg of CO2 and earned {points} Eco Points! 🎉"
+    },
 
-		"personalInfoSection": {
-			"title": "Personal Information",
-			"fields": {
-				"firstName": {
-					"label": "First Name",
-					"placeholder": "Enter your first name"
-				},
-				"lastName": {
-					"label": "Last Name",
-					"placeholder": "Enter your last name"
-				},
-				"email": {
-					"label": "Email Address",
-					"placeholder": "Enter email address"
-				},
-				"phone": {
-					"label": "Phone Number",
-					"placeholder": "Enter phone number"
-				}
-			}
-		},
+    "personalInfoSection": {
+      "title": "Personal Information",
+      "fields": {
+        "firstName": {
+          "label": "First Name",
+          "placeholder": "Enter your first name"
+        },
+        "lastName": {
+          "label": "Last Name",
+          "placeholder": "Enter your last name"
+        },
+        "email": {
+          "label": "Email Address",
+          "placeholder": "Enter email address"
+        },
+        "phone": {
+          "label": "Phone Number",
+          "placeholder": "Enter phone number"
+        }
+      }
+    },
 
-		"addressSection": {
-			"title": "Address Details",
-			"fields": {
-				"city": {
-					"label": "City",
-					"placeholder": "Enter city name"
-				},
-				"neighborhood": {
-					"label": "Neighborhood",
-					"placeholder": "Enter neighborhood"
-				},
-				"street": {
-					"label": "Street",
-					"placeholder": "Enter street address"
-				},
-				"building": {
-					"label": "Building",
-					"placeholder": "Building #"
-				},
-				"floor": {
-					"label": "Floor",
-					"placeholder": "Floor #"
-				},
-				"apartment": {
-					"label": "Apartment",
-					"placeholder": "Apt #"
-				}
-			}
-		},
+    "addressSection": {
+      "title": "Address Details",
+      "fields": {
+        "city": {
+          "label": "City",
+          "placeholder": "Enter city name"
+        },
+        "neighborhood": {
+          "label": "Neighborhood",
+          "placeholder": "Enter neighborhood"
+        },
+        "street": {
+          "label": "Street",
+          "placeholder": "Enter street address"
+        },
+        "building": {
+          "label": "Building",
+          "placeholder": "Building #"
+        },
+        "floor": {
+          "label": "Floor",
+          "placeholder": "Floor #"
+        },
+        "apartment": {
+          "label": "Apartment",
+          "placeholder": "Apt #"
+        }
+      }
+    },
 
     "materialSection": {
       "addButton": "Add Another Item",
