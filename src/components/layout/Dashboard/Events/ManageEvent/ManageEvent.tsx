@@ -131,11 +131,11 @@ export default function ManageEvent({initialData,}: Readonly<{ initialData?: any
   }
 
   return (
-    <div className="min-h-screen py-8 w-[80%] mx-auto flex flex-col  gap-6">
+    <div className="min-h-screen py-8 w-[85%] mx-auto flex flex-col gap-6">
       <h1 className="capitalize text-center  font-bold text-4xl  text-foreground">
         {initialData ? t("titleEdit") : t("titleCreate")}
       </h1>
-      <div className=" p-6 sm:p-10 rounded-2xl shadow-2xl border-2 border-primary">
+      <div className=" p-6 sm:p-10 ltr:rounded-tr-[10%] ltr:rounded-bl-[10%] rtl:rounded-tl-[10%] rtl:rounded-br-[10%] shadow-2xl border-2 border-primary">
         <Form {...form}>
           <form
             id="event-form"
@@ -223,12 +223,13 @@ export default function ManageEvent({initialData,}: Readonly<{ initialData?: any
                 control={form.control}
                 name="avatar"
                 render={({ field: { onChange } }) => (
-                  <FormItem>
+                  <FormItem >
                     <FormLabel>{t("fields.image")}</FormLabel>
-                    <FormControl>
+                    <FormControl >
                       <Input
-                        className="cursor-pointer rtl:text-right"
+                        className="cursor-pointer"
                         type="file"
+                        dir="ltr"
                         accept="image/*"
                         onChange={(e) => {
                           const file = e.target.files?.[0];

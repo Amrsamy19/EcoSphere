@@ -177,7 +177,7 @@ export default function EventOverview({ events }: EventProps) {
     })
     .slice(0, 3);
   return (
-    <div className="min-h-screen py-6 w-[80%]  mx-auto flex flex-col gap-6">
+    <div className="min-h-screen py-6 w-[85%]  mx-auto flex flex-col gap-6">
       <h1 className="capitalize font-bold text-3xl md:text-4xl text-center   text-foreground">
         {t("title")}
       </h1>
