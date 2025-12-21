@@ -1,8 +1,8 @@
 {
   "Home": {
     "hero": {
-      "subtitle": "#انضم إلى الحركة",
-      "title": "تبدأ التبرعات الناجحة هنا",
+      "subtitle": "#تحرك_من_أجل_البيئة",
+      "title": "خيارات مستدامة، حياة مستقرة",
       "cta": "المزيد عن إيكوسفير"
     },
     "solidContent": {
@@ -200,7 +200,8 @@
     "difficulty": {
       "easy": "سهل",
       "medium": "متوسط",
-      "hard": "صعب"
+      "hard": "صعب",
+      "points": "نقطة"
     },
     "actions": {
       "playAgain": "العب مجددًا",
@@ -760,6 +761,12 @@
         "title": "عنوان الفعالية",
         "titlePlaceholder": "اسم الفعالية",
         "type": "نوع الفعالية",
+        "EventTypes": {
+    "environmental_seminar": "ندوة أو محاضرة بيئية",
+    "community_cleanup": "فعالية تنظيف مجتمعية",
+    "sustainable_brands_showcase": "عرض العلامات التجارية المستدامة",
+    "other": "أخرى"
+  },
         "typePlaceholder": "اختر نوع الفعالية",
         "image": "صورة الفعالية",
         "description": "وصف قصير",

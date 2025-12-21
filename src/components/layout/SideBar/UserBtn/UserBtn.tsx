@@ -23,7 +23,7 @@ import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 
 export default function UserBtn({ session }: Readonly<{ session: Session }>) {
-  const { isMobile } = useSidebar();
+  const { isMobile, state } = useSidebar();
   const router = useRouter();
   const t = useTranslations("Layout.UserBtn");
 
@@ -34,27 +34,39 @@ export default function UserBtn({ session }: Readonly<{ session: Session }>) {
   };
 
   return (
-    <SidebarMenuItem>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
+    <SidebarMenuItem >
+      <DropdownMenu >
+        <DropdownMenuTrigger asChild className="cursor-pointer">
           <SidebarMenuButton
             size="lg"
-            className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+            tooltip={session?.user.name ?? ""}
+            className="group gap-3 data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground "
           >
-            <Avatar className="h-8 w-8 rounded-lg flex justify-center">
+            <Avatar
+              className="h-9 w-9 rounded-lg transition-all duration-200 group-hover:scale-101 group-hover:shadow-md group-hover:ring-2 group-hover:ring-sidebar-accent"
+            >
               <AvatarImage
                 src={session?.user.image ?? ""}
                 alt={session?.user.name ?? ""}
               />
-              <AvatarFallback className="rounded-lg h-8 w-8 ">
+              <AvatarFallback className="rounded-lg font-semibold">
                 {session?.user.name?.[0] || ""}
               </AvatarFallback>
             </Avatar>
-            <span className="grid flex-1 text-left text-sm leading-tight">
-              <span className="truncate font-medium">{session?.user.name}</span>
-              <span className="truncate text-xs">{session?.user.email}</span>
-            </span>
-            <ChevronsUpDown className="ml-auto size-4" />
+            {/* Hide text when collapsed */}
+            {state !== "collapsed" && (
+              <>
+                <span className="grid flex-1 text-left text-sm leading-tight">
+                  <span className="truncate font-medium">
+                    {session?.user.name}
+                  </span>
+                  <span className="truncate text-xs">
+                    {session?.user.email}
+                  </span>
+                </span>
+                <ChevronsUpDown className="ml-auto size-4" />
+              </>
+            )}
           </SidebarMenuButton>
         </DropdownMenuTrigger>
         <DropdownMenuContent
@@ -64,7 +76,7 @@ export default function UserBtn({ session }: Readonly<{ session: Session }>) {
           sideOffset={4}
         >
           <DropdownMenuLabel className="p-0 font-normal">
-            <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+            <div className="flex rtl:flex-row-reverse items-center gap-2 px-1 py-1.5 text-left text-sm">
               <Avatar className="h-8 w-8 rounded-xl">
                 <AvatarImage
                   src={session?.user.image ?? ""}
@@ -74,7 +86,7 @@ export default function UserBtn({ session }: Readonly<{ session: Session }>) {
                   {session?.user.name?.[0] || ""}
                 </AvatarFallback>
               </Avatar>
-              <div className="grid flex-1 text-left text-sm leading-tight">
+              <div className="grid flex-1 text-left rtl:text-right text-sm leading-tight">
                 <span className="truncate font-medium">
                   {session?.user.name}
                 </span>
@@ -87,7 +99,7 @@ export default function UserBtn({ session }: Readonly<{ session: Session }>) {
           {session?.user?.role === "shop" && (
             <DropdownMenuGroup>
               <Link href="/subscription">
-                <DropdownMenuItem>
+                <DropdownMenuItem className="rtl:flex-row-reverse cursor-pointer">
                   <Sparkles />
                   {t("subscribe")}
                 </DropdownMenuItem>
@@ -96,19 +108,15 @@ export default function UserBtn({ session }: Readonly<{ session: Session }>) {
           )}
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <Link href="/profile">
-              <DropdownMenuItem>
+            <Link href="/profile" >
+              <DropdownMenuItem className="rtl:flex-row-reverse cursor-pointer">
                 <BadgeCheck />
                 {t("profile")}
               </DropdownMenuItem>
             </Link>
-            {/* <DropdownMenuItem>
-              <Bell />
-							{t('notifications')}
-            </DropdownMenuItem> */}
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={handleLogout}>
+          <DropdownMenuItem onClick={handleLogout} className="rtl:flex-row-reverse cursor-pointer">
             <LogOut />
             <span>{t("logout")}</span>
           </DropdownMenuItem>
