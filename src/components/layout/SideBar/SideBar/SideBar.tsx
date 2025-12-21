@@ -84,11 +84,6 @@ export default function SideBar() {
       icon: Calendar,
     },
     {
-      title: t("menu.recycle"),
-      url: "/recycle",
-      icon: Recycle,
-    },
-    {
       title: t("menu.news"),
       url: "/news",
       icon: Newspaper,
@@ -204,20 +199,42 @@ export default function SideBar() {
                   </SidebarMenuItem>
                 ))}
                 {session?.user.role === "customer" && (
-
-                  <SidebarMenuItem >
-                    <SidebarMenuButton
-                      asChild
-                      tooltip={t("menu.recipes")}
-                      isActive={matchPathWithOptionalLocale(pathname, "/recipes")}
-                    >
-                      <Link href="/recipes">
-                        <Salad />
-                        <span className="capitalize">{t("menu.recipes")}</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-
+                  <>
+                    <SidebarMenuItem>
+                      <SidebarMenuButton
+                        asChild
+                        tooltip={t("menu.recipes")}
+                        isActive={matchPathWithOptionalLocale(
+                          pathname,
+                          "/recipes"
+                        )}
+                      >
+                        <Link href="/recipes">
+                          <Salad />
+                          <span className="capitalize">
+                            {t("menu.recipes")}
+                          </span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                    <SidebarMenuItem>
+                      <SidebarMenuButton
+                        asChild
+                        tooltip={t("menu.recycle")}
+                        isActive={matchPathWithOptionalLocale(
+                          pathname,
+                          "/recycle"
+                        )}
+                      >
+                        <Link href="/recycle">
+                          <Recycle />
+                          <span className="capitalize">
+                            {t("menu.recycle")}
+                          </span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  </>
                 )}
               </SidebarMenu>
             </SidebarGroupContent>
@@ -337,7 +354,7 @@ export default function SideBar() {
               <SidebarMenuItem>
                 <SidebarMenuButton
                   asChild
-                  tooltip='favorite'
+                  tooltip="favorite"
                   isActive={matchPathWithOptionalLocale(pathname, "/fav")}
                 >
                   <Link href="/fav" onClick={() => setOpenMobile(false)}>
@@ -352,7 +369,7 @@ export default function SideBar() {
               <SidebarMenuItem>
                 <SidebarMenuButton
                   asChild
-                  tooltip='cart'
+                  tooltip="cart"
                   isActive={matchPathWithOptionalLocale(pathname, "/cart")}
                 >
                   <Link href="/cart" onClick={() => setOpenMobile(false)}>
@@ -373,7 +390,7 @@ export default function SideBar() {
               <SidebarMenuItem>
                 <SidebarMenuButton
                   asChild
-                  tooltip='login'
+                  tooltip="login"
                   isActive={matchPathWithOptionalLocale(pathname, "/auth")}
                 >
                   <Link href="/auth" onClick={() => setOpenMobile(false)}>
