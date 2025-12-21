@@ -181,7 +181,7 @@ class UserService implements IUserService {
   }
 
   async redeemUserPoints(userId: string): Promise<{ message: string }> {
-    const user = await this.getById(userId); // "points email firstName as a second param"
+    const user = await this.getById(userId, "points email firstName");
     if (!user.points || user.points <= 0) {
       throw new Error("User has no enough points to redeem.");
     }
