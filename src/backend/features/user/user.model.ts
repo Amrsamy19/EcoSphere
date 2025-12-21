@@ -6,13 +6,10 @@ export type UserRole = "customer" | "organizer" | "admin" | "recycleMan";
 export type Gender = "male" | "female";
 
 export type EventType =
-  | "Music Festival"
-  | "Conference"
-  | "Workshop"
-  | "Sporting Event"
-  | "Exhibition"
-  | "Private Party"
-  | "Other";
+    "Environmental Seminar / Talk"|
+    "Community Clean-Up Event"|
+    "Sustainable Brands Showcase"|
+    "Other";
 
 export interface ICart extends Document {
   restaurantId: Types.ObjectId | string;
