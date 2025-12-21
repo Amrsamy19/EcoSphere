@@ -112,7 +112,12 @@ class UserService implements IUserService {
     );
 
     // Send Email
-    await sendForgetPasswordMail(email, user.firstName, code, validTo);
+    await sendForgetPasswordMail(
+      email,
+      user.firstName,
+      code,
+      validTo.toLocaleString()
+    );
 
     return {
       message: "A password reset code has been sent to your email.",
