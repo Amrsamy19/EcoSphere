@@ -27,7 +27,7 @@ import {
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
-const SIDEBAR_WIDTH = "12rem";
+const SIDEBAR_WIDTH = "13rem";
 const SIDEBAR_WIDTH_MOBILE = "12rem";
 const SIDEBAR_WIDTH_ICON = "3rem";
 const SIDEBAR_KEYBOARD_SHORTCUT = "b";
@@ -456,7 +456,7 @@ function SidebarMenu({ className, ...props }: React.ComponentProps<"ul">) {
     <ul
       data-slot="sidebar-menu"
       data-sidebar="menu"
-      className={cn("flex w-full min-w-0 flex-col gap-2.5", className)}
+      className={cn("flex w-full min-w-0 flex-col gap-1.5", className)}
       {...props}
     />
   );

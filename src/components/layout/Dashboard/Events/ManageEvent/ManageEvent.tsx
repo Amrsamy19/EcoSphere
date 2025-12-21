@@ -8,7 +8,6 @@ import {
   MapPin,
   Users,
   Ticket,
-  DollarSign,
   Send,
   Loader2,
   Tag,
@@ -16,6 +15,7 @@ import {
   X,
   ListOrdered,
 } from "lucide-react";
+import { LuEuro } from "react-icons/lu";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -46,6 +46,7 @@ import { useTranslations } from "next-intl";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function ManageEvent({initialData,}: Readonly<{ initialData?: any }>) {
   const t = useTranslations("Events.Manage");
+  const tEventTypes = useTranslations("Events.Manage.fields.EventTypes");
   const router = useRouter();
   const form = useForm<z.infer<typeof eventSchema>>({
     resolver: zodResolver(eventSchema),
@@ -131,11 +132,11 @@ export default function ManageEvent({initialData,}: Readonly<{ initialData?: any
   }
 
   return (
-    <div className="min-h-screen py-8 w-[80%] mx-auto flex flex-col  gap-6">
+    <div className="min-h-screen py-8 w-[85%] mx-auto flex flex-col gap-6">
       <h1 className="capitalize text-center  font-bold text-4xl  text-foreground">
         {initialData ? t("titleEdit") : t("titleCreate")}
       </h1>
-      <div className=" p-6 sm:p-10 rounded-2xl shadow-2xl border-2 border-primary">
+      <div className=" p-6 sm:p-10 ltr:rounded-tr-3xl ltr:rounded-bl-3xl rtl:rounded-tl-3xl rtl:rounded-br-3xl  md:ltr:rounded-tr-[10%] md:ltr:rounded-bl-[10%] md:rtl:rounded-tl-[10%] md:rtl:rounded-br-[10%] shadow-2xl border-2 border-primary">
         <Form {...form}>
           <form
             id="event-form"
@@ -191,10 +192,10 @@ export default function ManageEvent({initialData,}: Readonly<{ initialData?: any
                             </SelectTrigger>
                           </div>
                         </FormControl>
-                        <SelectContent>
+                        <SelectContent >
                           {EVENT_TYPES.map((type) => (
-                            <SelectItem key={type} value={type}>
-                              {type}
+                            <SelectItem key={type} value={type} className="rtl:text-right rtl:flex-row-reverse">
+                              {tEventTypes(type)}
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -223,12 +224,13 @@ export default function ManageEvent({initialData,}: Readonly<{ initialData?: any
                 control={form.control}
                 name="avatar"
                 render={({ field: { onChange } }) => (
-                  <FormItem>
+                  <FormItem >
                     <FormLabel>{t("fields.image")}</FormLabel>
-                    <FormControl>
+                    <FormControl >
                       <Input
-                        className="cursor-pointer rtl:text-right"
+                        className="cursor-pointer"
                         type="file"
+                        dir="ltr"
                         accept="image/*"
                         onChange={(e) => {
                           const file = e.target.files?.[0];
@@ -432,7 +434,7 @@ export default function ManageEvent({initialData,}: Readonly<{ initialData?: any
                       <FormLabel>{t("fields.ticketPrice")}</FormLabel>
                       <FormControl>
                         <div className="relative">
-                          <DollarSign className="absolute left-3 rtl:right-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                          <LuEuro className="absolute left-3 rtl:right-3 top-2.5 h-4 w-4 text-muted-foreground" />
                           <Input
                             type="number"
                             min={0}
@@ -570,7 +572,7 @@ export default function ManageEvent({initialData,}: Readonly<{ initialData?: any
             <Button
               type="submit"
               form="event-form"
-              className="w-full h-12 text-lg bg-primary hover:bg-primary/90 cursor-pointer"
+              className="w-full rounded-2xl h-12 text-lg bg-primary hover:bg-primary/90 cursor-pointer"
               disabled={form.formState.isSubmitting}
             >
               {form.formState.isSubmitting ? (

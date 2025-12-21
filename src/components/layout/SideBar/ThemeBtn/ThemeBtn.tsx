@@ -24,12 +24,13 @@ export default function ThemeBtn() {
     <SidebarMenuItem>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <SidebarMenuButton asChild>
+          <SidebarMenuButton asChild className="cursor-pointer">
             <span>
               <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
               <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-              <span className="capitalize" suppressHydrationWarning={true}>
+              <span className="capitalize " suppressHydrationWarning={true}>
                 {mounted && theme
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   ? t("label", { theme: t(theme as any) })
                   : t("label", { theme: "" })}
               </span>
@@ -37,14 +38,11 @@ export default function ThemeBtn() {
           </SidebarMenuButton>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="center" side={"right"}>
-          <DropdownMenuItem onClick={() => setTheme("light")}>
+          <DropdownMenuItem onClick={() => setTheme("light")} className="rtl:flex-row-reverse cursor-pointer">
             {t("light")}
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setTheme("dark")}>
+          <DropdownMenuItem onClick={() => setTheme("dark")} className="rtl:flex-row-reverse cursor-pointer">
             {t("dark")}
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setTheme("system")}>
-            {t("system")}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

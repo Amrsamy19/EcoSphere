@@ -37,7 +37,7 @@ function ShopClient() {
 
     const queryParams = new URLSearchParams();
     queryParams.set("page", page.toString());
-    queryParams.set("limit", "5");
+    queryParams.set("limit", "6");
     if (sortOption !== "default") queryParams.set("sort", sortOption);
     if (searchQuery) queryParams.set("search", searchQuery);
 

@@ -26,21 +26,21 @@ export default function LanguageSwitcher() {
 
     return (
         <SidebarMenuItem>
-            <DropdownMenu>
+            <DropdownMenu >
                 <DropdownMenuTrigger asChild>
-                    <SidebarMenuButton >
+                    <SidebarMenuButton className="cursor-pointer">
                         <Globe className="size-4" />
                         <span className='uppercase'>{locale}</span>
                     </SidebarMenuButton>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="center" side={'right'}>
-                    <DropdownMenuItem onClick={() => onSelectChange("en")}>
+                    <DropdownMenuItem onClick={() => onSelectChange("en")} className="rtl:flex-row-reverse cursor-pointer">
                         English
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => onSelectChange("ar")}>
+                    <DropdownMenuItem onClick={() => onSelectChange("ar")} className="rtl:flex-row-reverse cursor-pointer">
                         العربية
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => onSelectChange("fr")}>
+                    <DropdownMenuItem onClick={() => onSelectChange("fr")} className="rtl:flex-row-reverse cursor-pointer">
                         Français
                     </DropdownMenuItem>
                 </DropdownMenuContent>

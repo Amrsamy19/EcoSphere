@@ -50,7 +50,7 @@ export default function ShopSection({
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-15 auto-rows-auto w-[80%] mx-auto mb-4">
         {loading
-          ? Array.from({ length: 5 }).map((_, idx) => (
+          ? Array.from({ length: 6 }).map((_, idx) => (
               <BasicAnimatedWrapper key={idx} index={idx} delay={idx * 0.1}>
                 <ShopCard loading index={idx} />
               </BasicAnimatedWrapper>

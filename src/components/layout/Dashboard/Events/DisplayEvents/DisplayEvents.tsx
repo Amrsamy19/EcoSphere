@@ -23,7 +23,7 @@ export default function DisplayEvents({ events }: EventProps) {
     (event) => new Date(event.eventDate) < today
   );
   return (
-    <div className="min-h-screen py-8 w-[80%] mx-auto flex flex-col gap-6">
+    <div className="min-h-screen py-8 w-[85%] mx-auto flex flex-col gap-6">
       <h1 className="capitalize font-bold text-4xl text-center  text-foreground">
         {t("title")}
       </h1>
