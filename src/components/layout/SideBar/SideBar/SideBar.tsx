@@ -181,10 +181,10 @@ export default function SideBar() {
         <SidebarTrigger />
       </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>{t("groups.application")}</SidebarGroupLabel>
-          <SidebarGroupContent>
-            {(session?.user.role === "customer" || session === null) && (
+        {(session?.user.role === "customer" || session === null) && (
+          <SidebarGroup>
+            <SidebarGroupLabel>{t("groups.application")}</SidebarGroupLabel>
+            <SidebarGroupContent>
               <SidebarMenu>
                 {useritems.map((item) => (
                   <SidebarMenuItem key={item.title}>
@@ -220,9 +220,9 @@ export default function SideBar() {
 
                 )}
               </SidebarMenu>
-            )}
-          </SidebarGroupContent>
-        </SidebarGroup>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        )}
         {session?.user.role == "organizer" && (
           <SidebarGroup>
             <SidebarGroupLabel>{t("groups.dashboard")}</SidebarGroupLabel>
