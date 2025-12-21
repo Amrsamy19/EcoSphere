@@ -5,7 +5,7 @@ import { StoreProvider } from "./StorePovider";
 import { SessionProvider } from "next-auth/react";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-
+import { TooltipProvider } from "@/components/ui/tooltip";
 export async function Providers({
   children,
   locale,
@@ -20,9 +20,11 @@ export async function Providers({
       <StoreProvider>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <SessionProvider>
-            <SidebarProvider defaultOpen={defaultOpen}>
-              {children}
-            </SidebarProvider>
+            <TooltipProvider delayDuration={200}>
+              <SidebarProvider defaultOpen={defaultOpen}>
+                {children}
+              </SidebarProvider>
+            </TooltipProvider>
           </SessionProvider>
         </ThemeProvider>
       </StoreProvider>

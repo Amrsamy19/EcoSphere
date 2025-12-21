@@ -38,9 +38,17 @@ export const eventSchema = z
 
     locate: z.string().min(2, "Location is required"),
 
-    eventDate: z
-      .string()
-      .refine((val) => !isNaN(Date.parse(val)), { message: "Invalid date" }),
+    eventDate: z.string().refine(
+      (val) => {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const selected = new Date(val);
+        return !isNaN(selected.getTime()) && selected >= today;
+      },
+      {
+        message: "Event date cannot be in the past",
+      }
+    ),
 
     startTime: z.string().min(1, "Start time is required"),
 
@@ -50,18 +58,29 @@ export const eventSchema = z
 
     ticketType: z.enum(["Free", "Priced"]),
 
-    ticketPrice: z.coerce.number<number>().min(30, "Minimum ticket price is 30.00 EGP due to payment processor limits"),
+    ticketPrice: z.coerce.number<number>().min(0),
 
     sections: z.array(agendaSectionSchema).optional(),
   })
   .superRefine((data, ctx) => {
-    // Validation rule: if ticket is "Priced" but price is empty or 0 → error
-    if (data.ticketType === "Priced") {
-      if (!data.ticketPrice || data.ticketPrice <= 0) {
+    /* ---------- Ticket rules ---------- */
+
+    if (data.ticketType === "Free") {
+      if (data.ticketPrice !== 0) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
           path: ["ticketPrice"],
-          message: "Ticket price is required for priced events",
+          message: "Free events must have a ticket price of 0",
+        });
+      }
+    }
+
+    if (data.ticketType === "Priced") {
+      if (data.ticketPrice <= 0) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["ticketPrice"],
+          message: "Ticket price is required for priced events ",
         });
       } else if (data.ticketPrice < 30) {
         ctx.addIssue({
@@ -72,7 +91,9 @@ export const eventSchema = z
         });
       }
     }
-    // Skip if no sections
+
+    /* ---------- Agenda rules (unchanged) ---------- */
+
     if (!data.sections || data.sections.length === 0) return;
 
     const mainStart = createDateTime(data.eventDate, data.startTime);
@@ -86,7 +107,6 @@ export const eventSchema = z
 
       if (!secStart || !secEnd) return;
 
-      // ❌ Section starts before event
       if (secStart < mainStart) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
@@ -95,7 +115,6 @@ export const eventSchema = z
         });
       }
 
-      // ❌ Section ends after event
       if (secEnd > mainEnd) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
@@ -104,7 +123,6 @@ export const eventSchema = z
         });
       }
 
-      // ❌ Section end before start
       if (secEnd <= secStart) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
