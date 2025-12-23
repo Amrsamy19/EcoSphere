@@ -43,6 +43,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
     sustainabilityScore,
     sustainabilityReason,
     availableOnline = false,
+    shopName,
+    shopSubtitle,
   } = product;
 
   // Fallbacks for data mismatch (handling raw IMenuItem structure)
@@ -52,6 +54,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const safeImg =
     productImg || (product as any).avatar?.url || "/store img/2.jpg";
   const safeId = id || (product as any)._id;
+
 
   const router = useRouter();
 
@@ -128,10 +131,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
           />
           <div className="min-w-0 flex-1">
             <p className="line-clamp-1 font-medium text-sm leading-tight">
-              {safeName}
+              {shopName}
             </p>
             <p className="text-xs text-secondary-foreground line-clamp-1">
-              {safeSubtitle}
+              {shopSubtitle}
             </p>
           </div>
         </div>
@@ -187,7 +190,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       {/* product details - flexible but controlled */}
       <div className=" flex flex-col flex-1 min-h-0">
         <div className="text-lg flex justify-between font-semibold line-clamp-1 mb-1">
-          <span className="">{safeName}</span>
+          <span className="line-clamp-1">{safeName}</span>
           <p className="text-lg text-primary font-semibold ">
             {typeof safePrice === "number" ? safePrice.toFixed(2) : "0.00"}
             <span className="text-primary ml-1">€</span>
