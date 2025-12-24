@@ -9,27 +9,7 @@ export type ProductResponse = IMenuItem & {
 };
 
 export const mapResponseToIProduct = (res: ProductResponse): IProduct => {
-  console.log(
-    "[mapResponseToIProduct] Avatar data:",
-    JSON.stringify(
-      {
-        hasAvatar: !!res.avatar,
-        avatar: res.avatar,
-        avatarKey: res.avatar?.key,
-        avatarUrl: res.avatar?.url,
-        productId: res._id?.toString(),
-        productName: res.title,
-      },
-      null,
-      2,
-    ),
-  );
-
   const productImg = res.avatar?.url || "";
-  console.log(
-    "[mapResponseToIProduct] Final productImg:",
-    productImg || "EMPTY",
-  );
 
   return {
     id: `${res._id}`,
@@ -44,7 +24,6 @@ export const mapResponseToIProduct = (res: ProductResponse): IProduct => {
     availableOnline: res.availableOnline,
     sustainabilityScore: res.sustainabilityScore,
     sustainabilityReason: res.sustainabilityReason,
-    itemRating: [],
   };
 };
 
@@ -61,14 +40,14 @@ export interface CreateProductDTO {
   sustainabilityReason?: string;
 }
 
-export interface UpdateProductDTO extends Partial<CreateProductDTO> {}
+export type UpdateProductDTO = Partial<CreateProductDTO>;
 
 export interface ProductPageOptions {
   page?: number;
   limit?: number;
   search?: string;
-  sortBy?: "price" | "title" | "itemRating" | "createdAt";
-  sortOrder?: "asc" | "desc";
+  sort?: "default" | "priceLow" | "priceHigh";
+  category?: string;
 }
 
 export interface PaginatedProductResponse {
