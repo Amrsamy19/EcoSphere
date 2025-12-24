@@ -13,25 +13,25 @@ import { PipelineStage } from "mongoose";
 
 export interface IProductRepository {
   findAllProducts(
-    options?: ProductPageOptions
+    options?: ProductPageOptions,
   ): Promise<PaginatedProductResponse>;
   findProductById(productId: string): Promise<ProductResponse | null>;
   findProductsByRestaurantId(
     restaurantId: string,
-    options?: ProductPageOptions
+    options?: ProductPageOptions,
   ): Promise<PaginatedProductResponse | ProductResponse[]>;
   addProduct(
     restaurantId: string,
-    productData: CreateProductDTO
+    productData: CreateProductDTO,
   ): Promise<IRestaurant | null>;
   updateProduct(
     restaurantId: string,
     productId: string,
-    productData: UpdateProductDTO
+    productData: UpdateProductDTO,
   ): Promise<IRestaurant | null>;
   deleteProduct(
     restaurantId: string,
-    productId: string
+    productId: string,
   ): Promise<IRestaurant | null>;
   addProductReview(productId: string, review: any): Promise<IRestaurant | null>;
 }
@@ -39,7 +39,7 @@ export interface IProductRepository {
 @injectable()
 export class ProductRepository implements IProductRepository {
   async findAllProducts(
-    options?: ProductPageOptions
+    options?: ProductPageOptions,
   ): Promise<PaginatedProductResponse> {
     await DBInstance.getConnection();
 
@@ -47,24 +47,26 @@ export class ProductRepository implements IProductRepository {
       page = 1,
       limit = 10,
       search = "",
-      sortBy = "title",
-      sortOrder = "asc",
+      sort = "default",
+      category = "default",
     } = options ?? {};
 
     const skip = (page - 1) * limit;
 
-    const SORT_FIELDS_MAP: Record<string, string> = {
-      title: "title",
-      price: "price",
-      rating: "itemRating",
-    };
-
-    const sortField = SORT_FIELDS_MAP[sortBy] || "title";
-    const sortDirection = sortOrder === "desc" ? -1 : 1;
-
     const pipeline: PipelineStage[] = [
-      { $unwind: "$menus" },
+      // 1️⃣ Filter visible restaurants (uses index)
+      {
+        $match: {
+          isHidden: false,
+        },
+      },
 
+      // 2️⃣ Unwind menus
+      {
+        $unwind: "$menus",
+      },
+
+      // 3️⃣ Project only what we need
       {
         $project: {
           _id: "$menus._id",
@@ -77,49 +79,58 @@ export class ProductRepository implements IProductRepository {
           availableOnline: "$menus.availableOnline",
           sustainabilityScore: "$menus.sustainabilityScore",
           sustainabilityReason: "$menus.sustainabilityReason",
+          category: "$menus.category",
           itemRating: "$menus.itemRating",
-        },
-      },
-
-      {
-        $match: {
-          $or: [
-            { title: { $regex: search, $options: "i" } },
-            { subtitle: { $regex: search, $options: "i" } },
-          ],
-        },
-      },
-
-      {
-        $group: {
-          _id: "$_id",
-          restaurantId: { $first: "$restaurantId" },
-          restaurantName: { $first: "$restaurantName" },
-          title: { $first: "$title" },
-          subtitle: { $first: "$subtitle" },
-          price: { $first: "$price" },
-          avatar: { $first: "$avatar" },
-          availableOnline: { $first: "$availableOnline" },
-          sustainabilityScore: { $first: "$sustainabilityScore" },
-          sustainabilityReason: { $first: "$sustainabilityReason" },
-          itemRating: { $first: "$itemRating" },
-        },
-      },
-
-      { $sort: { [sortField]: sortDirection } },
-
-      {
-        $facet: {
-          metadata: [{ $count: "total" }],
-          data: [{ $skip: skip }, { $limit: limit }],
         },
       },
     ];
 
+    if (sort === "priceLow") {
+      pipeline.push({ $sort: { price: 1 } });
+    }
+
+    if (sort === "priceHigh") {
+      pipeline.push({ $sort: { price: -1 } });
+    }
+
+    //Optional search & category filters
+    const matchConditions: any[] = [];
+
+    if (search.trim()) {
+      matchConditions.push({
+        $or: [
+          { title: { $regex: search, $options: "i" } },
+          { subtitle: { $regex: search, $options: "i" } },
+        ],
+      });
+    }
+
+    if (category !== "default") {
+      matchConditions.push({
+        category: category,
+      });
+    }
+
+    if (matchConditions.length > 0) {
+      pipeline.push({
+        $match: {
+          $and: matchConditions,
+        },
+      });
+    }
+
+    //Pagination
+    pipeline.push({
+      $facet: {
+        metadata: [{ $count: "total" }],
+        data: [{ $skip: skip }, { $limit: limit }],
+      },
+    });
+
     const result = await RestaurantModel.aggregate(pipeline).exec();
 
-    const data = result[0]?.data || [];
-    const total = result[0]?.metadata[0]?.total || 0;
+    const data = result[0]?.data ?? [];
+    const total = result[0]?.metadata[0]?.total ?? 0;
 
     return {
       data,
@@ -150,6 +161,7 @@ export class ProductRepository implements IProductRepository {
           sustainabilityScore: "$menus.sustainabilityScore",
           sustainabilityReason: "$menus.sustainabilityReason",
           itemRating: "$menus.itemRating",
+          category: "$menus.category",
         },
       },
     ]).exec();
@@ -159,7 +171,7 @@ export class ProductRepository implements IProductRepository {
 
   async findProductsByRestaurantId(
     restaurantId: string,
-    options?: ProductPageOptions
+    options?: ProductPageOptions,
   ): Promise<PaginatedProductResponse> {
     await DBInstance.getConnection();
 
@@ -167,24 +179,22 @@ export class ProductRepository implements IProductRepository {
       page = 1,
       limit = 10,
       search = "",
-      sortBy = "title",
-      sortOrder = "asc",
+      sort = "default",
+      category = "default",
     } = options ?? {};
 
     const skip = (page - 1) * limit;
 
-    const SORT_FIELDS_MAP: Record<string, string> = {
-      title: "title",
-      price: "price",
-      rating: "itemRating",
-    };
-
-    const sortField = SORT_FIELDS_MAP[sortBy] || "title";
-    const sortDirection = sortOrder === "desc" ? -1 : 1;
-
     const pipeline: PipelineStage[] = [
-      { $match: { _id: new mongoose.Types.ObjectId(restaurantId) } },
+      // 1️⃣ Filter by restaurant ID
+      {
+        $match: { _id: new mongoose.Types.ObjectId(restaurantId) },
+      },
+
+      // 2️⃣ Unwind menus
       { $unwind: "$menus" },
+
+      // 3️⃣ Project only needed fields
       {
         $project: {
           _id: "$menus._id",
@@ -197,30 +207,52 @@ export class ProductRepository implements IProductRepository {
           availableOnline: "$menus.availableOnline",
           sustainabilityScore: "$menus.sustainabilityScore",
           sustainabilityReason: "$menus.sustainabilityReason",
+          category: "$menus.category",
           itemRating: "$menus.itemRating",
-        },
-      },
-      {
-        $match: {
-          $or: [
-            { title: { $regex: search, $options: "i" } },
-            { subtitle: { $regex: search, $options: "i" } },
-            // Add description if it exists in the schema, though subtitle seems to be the one used for description in this context
-          ],
-        },
-      },
-      { $sort: { [sortField]: sortDirection } },
-      {
-        $facet: {
-          metadata: [{ $count: "total" }],
-          data: [{ $skip: skip }, { $limit: limit }],
         },
       },
     ];
 
+    // 4️⃣ Sorting
+    if (sort === "priceLow") {
+      pipeline.push({ $sort: { price: 1, title: 1 } });
+    } else if (sort === "priceHigh") {
+      pipeline.push({ $sort: { price: -1, title: 1 } });
+    } else {
+      pipeline.push({ $sort: { title: 1 } });
+    }
+
+    // 5️⃣ Optional search & category filters
+    const matchConditions: any[] = [];
+
+    if (search.trim()) {
+      matchConditions.push({
+        $or: [
+          { title: { $regex: search, $options: "i" } },
+          { subtitle: { $regex: search, $options: "i" } },
+        ],
+      });
+    }
+
+    if (category !== "default") {
+      matchConditions.push({ category });
+    }
+
+    if (matchConditions.length > 0) {
+      pipeline.push({ $match: { $and: matchConditions } });
+    }
+
+    // 6️⃣ Pagination
+    pipeline.push({
+      $facet: {
+        metadata: [{ $count: "total" }],
+        data: [{ $skip: skip }, { $limit: limit }],
+      },
+    });
+
     const result = await RestaurantModel.aggregate(pipeline).exec();
-    const data = result[0]?.data || [];
-    const total = result[0]?.metadata[0]?.total || 0;
+    const data = result[0]?.data ?? [];
+    const total = result[0]?.metadata[0]?.total ?? 0;
 
     return {
       data,
@@ -235,7 +267,7 @@ export class ProductRepository implements IProductRepository {
 
   async addProduct(
     restaurantId: string,
-    productData: CreateProductDTO
+    productData: CreateProductDTO,
   ): Promise<IRestaurant | null> {
     await DBInstance.getConnection();
     return await RestaurantModel.findByIdAndUpdate(
@@ -243,14 +275,14 @@ export class ProductRepository implements IProductRepository {
       {
         $push: { menus: productData },
       },
-      { new: true, runValidators: true }
+      { new: true, runValidators: true },
     ).exec();
   }
 
   async updateProduct(
     restaurantId: string,
     productId: string,
-    productData: UpdateProductDTO
+    productData: UpdateProductDTO,
   ): Promise<IRestaurant | null> {
     await DBInstance.getConnection();
 
@@ -262,13 +294,13 @@ export class ProductRepository implements IProductRepository {
     return await RestaurantModel.findOneAndUpdate(
       { _id: restaurantId, "menus._id": productId },
       { $set: updateQuery },
-      { new: true }
+      { new: true },
     ).exec();
   }
 
   async deleteProduct(
     restaurantId: string,
-    productId: string
+    productId: string,
   ): Promise<IRestaurant | null> {
     await DBInstance.getConnection();
     return await RestaurantModel.findByIdAndUpdate(
@@ -276,13 +308,13 @@ export class ProductRepository implements IProductRepository {
       {
         $pull: { menus: { _id: productId } },
       },
-      { new: true }
+      { new: true },
     ).exec();
   }
 
   async addProductReview(
     productId: string,
-    review: any
+    review: any,
   ): Promise<IRestaurant | null> {
     await DBInstance.getConnection();
     return await RestaurantModel.findOneAndUpdate(
@@ -290,7 +322,7 @@ export class ProductRepository implements IProductRepository {
       {
         $push: { "menus.$.itemRating": review },
       },
-      { new: true }
+      { new: true },
     ).exec();
   }
 }
