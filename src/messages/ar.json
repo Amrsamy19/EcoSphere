@@ -391,7 +391,30 @@
         "errors": {
           "titleRequired": "العنوان مطلوب",
           "subtitleRequired": "الوصف مطلوب",
-          "priceRequired": "السعر مطلوب"
+          "priceRequired": "السعر مطلوب",
+          "categoryRequired": "يرجى اختيار فئة"
+        }
+      },
+      "Categories": {
+        "label": "الفئة",
+        "placeholder": "اختر فئة",
+        "fruits": "فواكه",
+        "vegetables": "خضروات",
+        "meat": "لحوم",
+        "dairy": "ألبان",
+        "bakery": "مخبوزات",
+        "beverages": "مشروبات",
+        "snacks": "وجبات خفيفة",
+        "other": "أخرى"
+      },
+      "filter": {
+        "category": "الفئة",
+        "allCategories": "جميع الفئات",
+        "sortBy": "الترتيب حسب",
+        "sortOptions": {
+          "name": "الاسم",
+          "price": "السعر",
+          "sustainability": "درجة الاستدامة"
         }
       },
       "deleteDialog": {
