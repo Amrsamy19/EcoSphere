@@ -13,25 +13,25 @@ import { PipelineStage } from "mongoose";
 
 export interface IProductRepository {
   findAllProducts(
-    options?: ProductPageOptions
+    options?: ProductPageOptions,
   ): Promise<PaginatedProductResponse>;
   findProductById(productId: string): Promise<ProductResponse | null>;
   findProductsByRestaurantId(
     restaurantId: string,
-    options?: ProductPageOptions
+    options?: ProductPageOptions,
   ): Promise<PaginatedProductResponse | ProductResponse[]>;
   addProduct(
     restaurantId: string,
-    productData: CreateProductDTO
+    productData: CreateProductDTO,
   ): Promise<IRestaurant | null>;
   updateProduct(
     restaurantId: string,
     productId: string,
-    productData: UpdateProductDTO
+    productData: UpdateProductDTO,
   ): Promise<IRestaurant | null>;
   deleteProduct(
     restaurantId: string,
-    productId: string
+    productId: string,
   ): Promise<IRestaurant | null>;
   addProductReview(productId: string, review: any): Promise<IRestaurant | null>;
 }
@@ -39,7 +39,7 @@ export interface IProductRepository {
 @injectable()
 export class ProductRepository implements IProductRepository {
   async findAllProducts(
-    options?: ProductPageOptions
+    options?: ProductPageOptions,
   ): Promise<PaginatedProductResponse> {
     await DBInstance.getConnection();
 
@@ -54,13 +54,19 @@ export class ProductRepository implements IProductRepository {
     const skip = (page - 1) * limit;
 
     const pipeline: PipelineStage[] = [
-      // 1. Filter out hidden restaurants first if possible (performance)
-      { $match: { isHidden: { $ne: true } } },
+      // 1️⃣ Filter visible restaurants (uses index)
+      {
+        $match: {
+          isHidden: false,
+        },
+      },
 
-      // 2. Unwind menus array
-      { $unwind: "$menus" },
+      // 2️⃣ Unwind menus
+      {
+        $unwind: "$menus",
+      },
 
-      // 3. Project fields for easier matching and sorting
+      // 3️⃣ Project only what we need
       {
         $project: {
           _id: "$menus._id",
@@ -73,33 +79,24 @@ export class ProductRepository implements IProductRepository {
           availableOnline: "$menus.availableOnline",
           sustainabilityScore: "$menus.sustainabilityScore",
           sustainabilityReason: "$menus.sustainabilityReason",
-          itemRating: "$menus.itemRating",
           category: "$menus.category",
-        },
-      },
-
-      // 4. Calculate average rating
-      {
-        $addFields: {
-          itemRatingAvg: {
-            $cond: [
-              {
-                $and: [
-                  { $isArray: "$itemRating" },
-                  { $gt: [{ $size: "$itemRating" }, 0] },
-                ],
-              },
-              { $avg: "$itemRating.rate" },
-              0,
-            ],
-          },
+          itemRating: "$menus.itemRating",
         },
       },
     ];
 
-    // 5. Build match conditions (Search & Category)
+    if (sort === "priceLow") {
+      pipeline.push({ $sort: { price: 1 } });
+    }
+
+    if (sort === "priceHigh") {
+      pipeline.push({ $sort: { price: -1 } });
+    }
+
+    //Optional search & category filters
     const matchConditions: any[] = [];
-    if (search && search.trim() !== "") {
+
+    if (search.trim()) {
       matchConditions.push({
         $or: [
           { title: { $regex: search, $options: "i" } },
@@ -108,41 +105,21 @@ export class ProductRepository implements IProductRepository {
       });
     }
 
-    if (category && category !== "default") {
+    if (category !== "default") {
       matchConditions.push({
-        category: { $regex: new RegExp(`^${category}$`, "i") },
+        category: category,
       });
     }
 
     if (matchConditions.length > 0) {
-      pipeline.push({ $match: { $and: matchConditions } });
+      pipeline.push({
+        $match: {
+          $and: matchConditions,
+        },
+      });
     }
 
-    // 6. Sorting logic
-    let sortStage: { [key: string]: 1 | -1 } = { title: 1 }; // Default
-
-    switch (sort) {
-      case "highestRating":
-        sortStage = { itemRatingAvg: -1, title: 1 };
-        break;
-      case "lowestRating":
-        sortStage = { itemRatingAvg: 1, title: 1 };
-        break;
-      case "priceHigh":
-        sortStage = { price: -1, title: 1 };
-        break;
-      case "priceLow":
-        sortStage = { price: 1, title: 1 };
-        break;
-      case "default":
-      default:
-        sortStage = { title: 1 };
-        break;
-    }
-
-    pipeline.push({ $sort: sortStage });
-
-    // 7. Paginate with $facet
+    //Pagination
     pipeline.push({
       $facet: {
         metadata: [{ $count: "total" }],
@@ -152,8 +129,8 @@ export class ProductRepository implements IProductRepository {
 
     const result = await RestaurantModel.aggregate(pipeline).exec();
 
-    const data = result[0]?.data || [];
-    const total = result[0]?.metadata[0]?.total || 0;
+    const data = result[0]?.data ?? [];
+    const total = result[0]?.metadata[0]?.total ?? 0;
 
     return {
       data,
@@ -194,7 +171,7 @@ export class ProductRepository implements IProductRepository {
 
   async findProductsByRestaurantId(
     restaurantId: string,
-    options?: ProductPageOptions
+    options?: ProductPageOptions,
   ): Promise<PaginatedProductResponse> {
     await DBInstance.getConnection();
 
@@ -311,7 +288,7 @@ export class ProductRepository implements IProductRepository {
 
   async addProduct(
     restaurantId: string,
-    productData: CreateProductDTO
+    productData: CreateProductDTO,
   ): Promise<IRestaurant | null> {
     await DBInstance.getConnection();
     return await RestaurantModel.findByIdAndUpdate(
@@ -319,14 +296,14 @@ export class ProductRepository implements IProductRepository {
       {
         $push: { menus: productData },
       },
-      { new: true, runValidators: true }
+      { new: true, runValidators: true },
     ).exec();
   }
 
   async updateProduct(
     restaurantId: string,
     productId: string,
-    productData: UpdateProductDTO
+    productData: UpdateProductDTO,
   ): Promise<IRestaurant | null> {
     await DBInstance.getConnection();
 
@@ -338,13 +315,13 @@ export class ProductRepository implements IProductRepository {
     return await RestaurantModel.findOneAndUpdate(
       { _id: restaurantId, "menus._id": productId },
       { $set: updateQuery },
-      { new: true }
+      { new: true },
     ).exec();
   }
 
   async deleteProduct(
     restaurantId: string,
-    productId: string
+    productId: string,
   ): Promise<IRestaurant | null> {
     await DBInstance.getConnection();
     return await RestaurantModel.findByIdAndUpdate(
@@ -352,13 +329,13 @@ export class ProductRepository implements IProductRepository {
       {
         $pull: { menus: { _id: productId } },
       },
-      { new: true }
+      { new: true },
     ).exec();
   }
 
   async addProductReview(
     productId: string,
-    review: any
+    review: any,
   ): Promise<IRestaurant | null> {
     await DBInstance.getConnection();
     return await RestaurantModel.findOneAndUpdate(
@@ -366,7 +343,7 @@ export class ProductRepository implements IProductRepository {
       {
         $push: { "menus.$.itemRating": review },
       },
-      { new: true }
+      { new: true },
     ).exec();
   }
 }

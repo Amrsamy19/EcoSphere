@@ -46,12 +46,7 @@ export interface ProductPageOptions {
   page?: number;
   limit?: number;
   search?: string;
-  sort?:
-    | "highestRating"
-    | "lowestRating"
-    | "priceHigh"
-    | "priceLow"
-    | "default";
+  sort?: "default" | "priceLow" | "priceHigh";
   category?: string;
 }
 

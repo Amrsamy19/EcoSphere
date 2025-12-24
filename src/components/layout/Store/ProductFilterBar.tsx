@@ -12,12 +12,8 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 
-export type ProductSortOption =
-  | "default"
-  | "highestRating"
-  | "lowestRating"
-  | "priceHigh"
-  | "priceLow";
+export type ProductSortOption = "default" | "priceHigh" | "priceLow";
+
 export type ProductCategoryOption =
   | "default"
   | "Fruits"
@@ -50,16 +46,10 @@ export default function ProductFilterBar({
   const t = useTranslations("Store.filter");
 
   const [openDropdown, setOpenDropdown] = useState<"sort" | "filter" | null>(
-    null
+    null,
   );
 
-  const sortOptions: ProductSortOption[] = [
-    "default",
-    "highestRating",
-    "lowestRating",
-    "priceHigh",
-    "priceLow",
-  ];
+  const sortOptions: ProductSortOption[] = ["default", "priceHigh", "priceLow"];
 
   const categoryOptions: ProductCategoryOption[] = [
     "default",
