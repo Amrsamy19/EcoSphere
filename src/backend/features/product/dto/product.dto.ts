@@ -21,14 +21,14 @@ export const mapResponseToIProduct = (res: ProductResponse): IProduct => {
         productName: res.title,
       },
       null,
-      2,
-    ),
+      2
+    )
   );
 
   const productImg = res.avatar?.url || "";
   console.log(
     "[mapResponseToIProduct] Final productImg:",
-    productImg || "EMPTY",
+    productImg || "EMPTY"
   );
 
   return {
@@ -67,8 +67,13 @@ export interface ProductPageOptions {
   page?: number;
   limit?: number;
   search?: string;
-  sortBy?: "price" | "title" | "itemRating" | "createdAt";
-  sortOrder?: "asc" | "desc";
+  sort?:
+    | "highestRating"
+    | "lowestRating"
+    | "priceHigh"
+    | "priceLow"
+    | "default";
+  category?: string;
 }
 
 export interface PaginatedProductResponse {

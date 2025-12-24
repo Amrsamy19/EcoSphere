@@ -47,20 +47,11 @@ export class ProductRepository implements IProductRepository {
       page = 1,
       limit = 10,
       search = "",
-      sortBy = "title",
-      sortOrder = "asc",
+      sort = "default",
+      category = "default",
     } = options ?? {};
 
     const skip = (page - 1) * limit;
-
-    const SORT_FIELDS_MAP: Record<string, string> = {
-      title: "title",
-      price: "price",
-      rating: "itemRating",
-    };
-
-    const sortField = SORT_FIELDS_MAP[sortBy] || "title";
-    const sortDirection = sortOrder === "desc" ? -1 : 1;
 
     const pipeline: PipelineStage[] = [
       { $unwind: "$menus" },
@@ -77,40 +68,68 @@ export class ProductRepository implements IProductRepository {
           sustainabilityScore: "$menus.sustainabilityScore",
           sustainabilityReason: "$menus.sustainabilityReason",
           itemRating: "$menus.itemRating",
+          category: "$menus.category",
+        },
+      },
+      {
+        $addFields: {
+          itemRatingAvg: {
+            $cond: [
+              {
+                $and: [
+                  { $isArray: "$itemRating" },
+                  { $gt: [{ $size: "$itemRating" }, 0] },
+                ],
+              },
+              { $avg: "$itemRating.rate" },
+              0,
+            ],
+          },
         },
       },
       {
         $match: {
-          $or: [
-            { title: { $regex: search, $options: "i" } },
-            { subtitle: { $regex: search, $options: "i" } },
+          $and: [
+            search
+              ? {
+                  $or: [
+                    { title: { $regex: search, $options: "i" } },
+                    { subtitle: { $regex: search, $options: "i" } },
+                  ],
+                }
+              : {},
+            category && category !== "default"
+              ? { category: { $regex: new RegExp(`^${category}$`, "i") } }
+              : {},
           ],
         },
       },
-      { $sort: { [sortField]: sortDirection } },
-      {
-        $facet: {
-          metadata: [{ $count: "total" }],
-          data: [{ $skip: skip }, { $limit: limit }],
-        },
-      },
     ];
+
+    // Sorting logic
+    if (sort === "highestRating") {
+      pipeline.push({ $sort: { itemRatingAvg: -1 } });
+    } else if (sort === "lowestRating") {
+      pipeline.push({ $sort: { itemRatingAvg: 1 } });
+    } else if (sort === "priceHigh") {
+      pipeline.push({ $sort: { price: -1 } });
+    } else if (sort === "priceLow") {
+      pipeline.push({ $sort: { price: 1 } });
+    } else {
+      pipeline.push({ $sort: { title: 1 } });
+    }
+
+    pipeline.push({
+      $facet: {
+        metadata: [{ $count: "total" }],
+        data: [{ $skip: skip }, { $limit: limit }],
+      },
+    });
 
     const result = await RestaurantModel.aggregate(pipeline).exec();
 
     const data = result[0]?.data || [];
     const total = result[0]?.metadata[0]?.total || 0;
-
-    console.log(
-      "[findAllProducts] Page sample:",
-      data.length > 0
-        ? {
-            productId: data[0]._id?.toString(),
-            productName: data[0].title,
-            hasAvatar: !!data[0].avatar,
-          }
-        : "No products found"
-    );
 
     return {
       data,
@@ -158,20 +177,10 @@ export class ProductRepository implements IProductRepository {
       page = 1,
       limit = 10,
       search = "",
-      sortBy = "title",
-      sortOrder = "asc",
+      sort = "default",
     } = options ?? {};
 
     const skip = (page - 1) * limit;
-
-    const SORT_FIELDS_MAP: Record<string, string> = {
-      title: "title",
-      price: "price",
-      rating: "itemRating",
-    };
-
-    const sortField = SORT_FIELDS_MAP[sortBy] || "title";
-    const sortDirection = sortOrder === "desc" ? -1 : 1;
 
     const pipeline: PipelineStage[] = [
       { $match: { _id: new mongoose.Types.ObjectId(restaurantId) } },
@@ -192,22 +201,50 @@ export class ProductRepository implements IProductRepository {
         },
       },
       {
+        $addFields: {
+          itemRatingAvg: {
+            $cond: [
+              {
+                $and: [
+                  { $isArray: "$itemRating" },
+                  { $gt: [{ $size: "$itemRating" }, 0] },
+                ],
+              },
+              { $avg: "$itemRating.rate" },
+              0,
+            ],
+          },
+        },
+      },
+      {
         $match: {
           $or: [
             { title: { $regex: search, $options: "i" } },
             { subtitle: { $regex: search, $options: "i" } },
-            // Add description if it exists in the schema, though subtitle seems to be the one used for description in this context
           ],
         },
       },
-      { $sort: { [sortField]: sortDirection } },
-      {
-        $facet: {
-          metadata: [{ $count: "total" }],
-          data: [{ $skip: skip }, { $limit: limit }],
-        },
-      },
     ];
+
+    // Sorting logic
+    if (sort === "highestRating") {
+      pipeline.push({ $sort: { itemRatingAvg: -1 } });
+    } else if (sort === "lowestRating") {
+      pipeline.push({ $sort: { itemRatingAvg: 1 } });
+    } else if (sort === "priceHigh") {
+      pipeline.push({ $sort: { price: -1 } });
+    } else if (sort === "priceLow") {
+      pipeline.push({ $sort: { price: 1 } });
+    } else {
+      pipeline.push({ $sort: { title: 1 } });
+    }
+
+    pipeline.push({
+      $facet: {
+        metadata: [{ $count: "total" }],
+        data: [{ $skip: skip }, { $limit: limit }],
+      },
+    });
 
     const result = await RestaurantModel.aggregate(pipeline).exec();
     const data = result[0]?.data || [];
