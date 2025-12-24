@@ -24,7 +24,7 @@ export default function EventCard({ event }: { event: any }) {
   const isOrganizerDetails =
     segments.length >= 2 &&
     segments[1] === "organizer" &&
-    segments[2] === "details";
+    segments[2] === "upcomingEvents";
   const isEventOrganizer = session?.user?.id === event.user._id;
   const canAttend = !isOrganizerDetails && !isEventOrganizer;
   const status: EventStatus = event.isAccepted

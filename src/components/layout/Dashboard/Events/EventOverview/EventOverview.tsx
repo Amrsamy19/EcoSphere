@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { MdAddCircleOutline } from "react-icons/md";
 import { FaRegRectangleList } from "react-icons/fa6";
-import { TbListSearch } from "react-icons/tb";
 import { TrendingUp, TrendingDown } from "lucide-react";
 import { MapPin } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -13,6 +12,7 @@ import { EventListItemProps, EventProps, MetricData } from "@/types/EventTypes";
 import React from "react";
 import { formatDate, formatTime } from "@/frontend/utils/Event";
 import { useLocale } from "next-intl";
+import { LuHistory } from "react-icons/lu";
 const MetricCard: React.FC<MetricData> = ({ title, value, change }) => {
   const isPositive = change && change.startsWith("+");
 
@@ -212,16 +212,16 @@ export default function EventOverview({ events }: EventProps) {
               <span className="capitalize">{t("createNewEvent")}</span>
             </Button>
           </Link>
-          <Link href="/organizer/details" className="col-span-1 ">
+          <Link href="/organizer/upcomingEvents" className="col-span-1 ">
             <Button className="w-full py-6 text-xl cursor-pointer text-primary-foreground rounded-2xl">
               <FaRegRectangleList className="size-6" />
-              <span className="capitalize">{t("viewAllEvents")}</span>
+              <span className="capitalize">{t("upcomingEvents")}</span>
             </Button>
           </Link>
-          <Link href="/organizer/browse" className="col-span-1 ">
+          <Link href="/organizer/history" className="col-span-1 ">
             <Button className="w-full py-6 text-xl cursor-pointer text-primary-foreground rounded-2xl">
-              <TbListSearch className="size-6" />
-              <span className="capitalize">{t("browseEvents")}</span>
+              <LuHistory className="size-6" />
+              <span className="capitalize">{t("history")}</span>
             </Button>
           </Link>
         </div>

@@ -58,9 +58,9 @@
       },
       "dashboard": {
         "overview": "نظرة عامة",
-        "addEvent": "إضافة فعالية",
-        "browseEvents": "تصفح الفعاليات",
-        "eventDetails": "تفاصيل الفعالية",
+        "mangeevent": "إدارة الفعاليات",
+        "upcomingevents": "الفعاليات القادمة",
+        "history": "السجل",
         "products": "المنتجات",
         "orders": "الطلبات",
         "shops": "المتاجر",
@@ -678,8 +678,6 @@
       "title": "نظرة عامة على لوحة التحكم",
       "quickActions": "إجراءات سريعة",
       "createNewEvent": "إنشاء فعالية جديدة",
-      "viewAllEvents": "عرض جميع فعالياتك",
-      "browseEvents": "تصفح الفعاليات",
       "keyMetrics": "المؤشرات الرئيسية",
       "realTimeData": "البيانات اللحظية",
       "totalTicketSales": "إجمالي مبيعات التذاكر",
@@ -687,6 +685,7 @@
       "confirmedAttendees": "الحضور المؤكد",
       "activeEvents": "الفعاليات النشطة",
       "upcomingEvents": "الفعاليات القادمة",
+      "history": "سجل الفعاليات",
       "viewAll": "عرض الكل",
       "manage": "إدارة",
       "noUpcomingEvents": "لا توجد فعاليات قادمة."
@@ -718,8 +717,10 @@
       "title": "فعالياتي",
       "addEventBtn": "إضافة فعالية جديد",
       "UpComingEvents": "الفعاليات القادمة",
-      "PastEvents": "الفعاليات السابقة",
+      "history": "سجل الفعاليات",
       "noEvents": "لا توجد فعاليات",
+      "noupcomingEvents": "لا توجد فعاليات قادمة",
+      "nohistory": "لم يتم العثور على فعاليات سابقة",
       "EventCard": {
         "organizer": "أنت منظم الفعالية",
         "status": {

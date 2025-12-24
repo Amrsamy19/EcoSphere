@@ -1,7 +1,7 @@
 "use client";
 import { useSelector } from "react-redux";
 import { RootState } from "@/frontend/redux/store";
-import { PiListMagnifyingGlassBold } from "react-icons/pi";
+import { LuCalendarClock } from "react-icons/lu";
 import {
   Gamepad2,
   Calendar,
@@ -112,19 +112,19 @@ export default function SideBar() {
       icon: RxDashboard,
     },
     {
-      title: t("dashboard.addEvent"),
+      title: t("dashboard.mangeevent"),
       url: "/organizer/manage",
       icon: MdOutlineAddToPhotos,
     },
     {
-      title: t("dashboard.eventDetails"),
-      url: "/organizer/details",
-      icon: MdOutlineEventRepeat,
+      title: t("dashboard.upcomingevents"),
+      url: "/organizer/upcomingEvents",
+      icon: LuCalendarClock,
     },
     {
-      title: t("dashboard.browseEvents"),
-      url: "/organizer/browse",
-      icon: PiListMagnifyingGlassBold,
+      title: t("dashboard.history"),
+      url: "/organizer/history",
+      icon: MdOutlineEventRepeat,
     },
   ];
   // Restaurant dashboard items.
