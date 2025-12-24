@@ -10,7 +10,7 @@ import {
 export interface IAIRepository {
   getProductContext(productId: string): Promise<ProductContextDTO | null>;
   getRestaurantContext(
-    restaurantId: string
+    restaurantId: string,
   ): Promise<RestaurantContextDTO | null>;
   getStaticPageContext(pageId: string): string;
   getGlobalStructure(): Promise<string>;
@@ -23,10 +23,12 @@ export class AIRepository implements IAIRepository {
     @inject("ProductRepository")
     private readonly productRepository: IProductRepository,
     @inject("IRestaurantRepository")
-    private readonly restaurantRepository: IRestaurantRepository
+    private readonly restaurantRepository: IRestaurantRepository,
   ) {}
 
-  async getProductContext(productId: string): Promise<ProductContextDTO | null> {
+  async getProductContext(
+    productId: string,
+  ): Promise<ProductContextDTO | null> {
     const product = await this.productRepository.findProductById(productId);
     if (!product) return null;
 
@@ -34,14 +36,13 @@ export class AIRepository implements IAIRepository {
       title: product.title,
       price: product.price,
       description: product.subtitle ?? "No description available",
-      rating: +(product.itemRating ?? 0),
       availableOnline: product.availableOnline,
       soldBy: product.restaurantName,
     };
   }
 
   async getRestaurantContext(
-    restaurantId: string
+    restaurantId: string,
   ): Promise<RestaurantContextDTO | null> {
     const restaurant = await this.restaurantRepository.getById(restaurantId);
     if (!restaurant) return null;
@@ -67,27 +68,23 @@ export class AIRepository implements IAIRepository {
 
   async getGlobalStructure(): Promise<string> {
     try {
-      const [restaurants, products] = await Promise.all([
+      const [restaurantRes, products] = await Promise.all([
         this.restaurantRepository.getAll(),
         this.productRepository.findAllProducts(),
       ]);
 
-      const restaurantNames = restaurants
-        .map((r) => `${r.name} (ID: ${r._id})`)
-        .join(", ");
+      const restaurantList =
+        restaurantRes && "data" in restaurantRes
+          ? restaurantRes.data
+          : restaurantRes;
 
-      const topProducts = [...products.data]
-        .sort((a, b) => Number(b.itemRating ?? 0) - Number(a.itemRating ?? 0))
-        .slice(0, 5)
-        .map(
-          (p) => `${p.title} (ID: ${p._id}, Price: $${p.price})`
-        )
+      const restaurantNames = restaurantList
+        .map((r) => `${r.name} (ID: ${r._id})`)
         .join(", ");
 
       return `
         REAL TIME DATABASE SNAPSHOT:
         - Restaurants: ${restaurantNames || "None available"}.
-        - Top Products: ${topProducts || "None available"}.
       `;
     } catch (err) {
       console.error("Failed to fetch global structure", err);

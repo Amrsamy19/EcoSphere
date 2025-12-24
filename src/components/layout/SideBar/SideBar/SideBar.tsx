@@ -84,11 +84,6 @@ export default function SideBar() {
       icon: Calendar,
     },
     {
-      title: t("menu.recycle"),
-      url: "/recycle",
-      icon: Recycle,
-    },
-    {
       title: t("menu.news"),
       url: "/news",
       icon: Newspaper,
@@ -108,14 +103,9 @@ export default function SideBar() {
       url: "/about",
       icon: Info,
     },
-    {
-      title: t("menu.recipes"),
-      url: "/recipes",
-      icon: Salad,
-    },
   ];
   // Event dashboard items.
-  const dashboardItems = [
+  const OrganizerItems = [
     {
       title: t("dashboard.overview"),
       url: "/organizer",
@@ -195,6 +185,7 @@ export default function SideBar() {
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton
                       asChild
+                      tooltip={item.title}
                       isActive={matchPathWithOptionalLocale(pathname, item.url)}
                     >
                       <Link
@@ -207,6 +198,44 @@ export default function SideBar() {
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}
+                {session?.user.role === "customer" && (
+                  <>
+                    <SidebarMenuItem>
+                      <SidebarMenuButton
+                        asChild
+                        tooltip={t("menu.recipes")}
+                        isActive={matchPathWithOptionalLocale(
+                          pathname,
+                          "/recipes"
+                        )}
+                      >
+                        <Link href="/recipes">
+                          <Salad />
+                          <span className="capitalize">
+                            {t("menu.recipes")}
+                          </span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                    <SidebarMenuItem>
+                      <SidebarMenuButton
+                        asChild
+                        tooltip={t("menu.recycle")}
+                        isActive={matchPathWithOptionalLocale(
+                          pathname,
+                          "/recycle"
+                        )}
+                      >
+                        <Link href="/recycle">
+                          <Recycle />
+                          <span className="capitalize">
+                            {t("menu.recycle")}
+                          </span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  </>
+                )}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
@@ -216,10 +245,11 @@ export default function SideBar() {
             <SidebarGroupLabel>{t("groups.dashboard")}</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
-                {dashboardItems.map((item) => (
+                {OrganizerItems.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton
                       asChild
+                      tooltip={item.title}
                       isActive={matchPathWithOptionalLocale(pathname, item.url)}
                     >
                       <Link
@@ -245,6 +275,7 @@ export default function SideBar() {
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton
                       asChild
+                      tooltip={item.title}
                       isActive={matchPathWithOptionalLocale(pathname, item.url)}
                     >
                       <Link
@@ -270,6 +301,7 @@ export default function SideBar() {
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton
                       asChild
+                      tooltip={item.title}
                       isActive={matchPathWithOptionalLocale(pathname, item.url)}
                     >
                       <Link
@@ -288,7 +320,7 @@ export default function SideBar() {
         )}
 
         {/* **! change the role to be recycleMan */}
-        {session?.user.role == "admin" && (
+        {session?.user.role == "recycleMan" && (
           <SidebarGroup>
             <SidebarGroupLabel>{t("groups.dashboard")}</SidebarGroupLabel>
             <SidebarGroupContent>
@@ -297,6 +329,7 @@ export default function SideBar() {
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton
                       asChild
+                      tooltip={item.title}
                       isActive={matchPathWithOptionalLocale(pathname, item.url)}
                     >
                       <Link
@@ -321,6 +354,7 @@ export default function SideBar() {
               <SidebarMenuItem>
                 <SidebarMenuButton
                   asChild
+                  tooltip="favorite"
                   isActive={matchPathWithOptionalLocale(pathname, "/fav")}
                 >
                   <Link href="/fav" onClick={() => setOpenMobile(false)}>
@@ -335,6 +369,7 @@ export default function SideBar() {
               <SidebarMenuItem>
                 <SidebarMenuButton
                   asChild
+                  tooltip="cart"
                   isActive={matchPathWithOptionalLocale(pathname, "/cart")}
                 >
                   <Link href="/cart" onClick={() => setOpenMobile(false)}>
@@ -355,6 +390,7 @@ export default function SideBar() {
               <SidebarMenuItem>
                 <SidebarMenuButton
                   asChild
+                  tooltip="login"
                   isActive={matchPathWithOptionalLocale(pathname, "/auth")}
                 >
                   <Link href="/auth" onClick={() => setOpenMobile(false)}>

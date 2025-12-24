@@ -21,7 +21,7 @@ const ShopTable = () => {
           // Backend: IRestaurant { isHidden, ... }
           // Frontend state expects: { id (display purposes?), ... }
           // We can just use the backend data directly, but need to map _id to key
-          setShops(data.data || []);
+          setShops(data.data.data || []);
         }
       } catch (error) {
         console.error("Failed to fetch shops:", error);

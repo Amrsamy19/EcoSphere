@@ -20,7 +20,7 @@ const ShopHero = () => {
         const response = await fetch("/api/shops");
         if (response.ok) {
           const data = await response.json();
-          setShops(data.data || []);
+          setShops(data.data.data || []);
         }
       } catch (error) {
         console.error("Failed to fetch shops for hero:", error);
