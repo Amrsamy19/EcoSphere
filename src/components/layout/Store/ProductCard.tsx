@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { RiShoppingCartFill, RiShoppingCartLine } from "react-icons/ri";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
@@ -110,8 +109,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
     if (score >= 5) return "bg-yellow-500 text-black";
     return "bg-red-500/60 text-white";
   };
-
-  console.log(availableOnline);
 
   return (
     <div
