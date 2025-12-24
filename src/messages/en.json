@@ -65,7 +65,8 @@
         "orders": "Orders",
         "shops": "Shops",
         "events": "Events",
-        "recycling": "Recycling"
+        "recycling": "Recycling",
+        "news": "News"
       },
       "footer": {
         "favorite": "Favorite",
