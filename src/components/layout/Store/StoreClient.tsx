@@ -48,9 +48,9 @@ export default function StoreClient() {
           sort,
           category,
         });
-
         if (response.success) {
           const result = response.data;
+
           if (Array.isArray(result)) {
             setProducts(result);
             setTotalPages(1);
@@ -90,27 +90,17 @@ export default function StoreClient() {
         searchValue={search}
       />
 
-      {isLoading ? (
-        <div className="flex justify-center items-center min-h-[400px]">
-          <div className="text-lg">Loading products...</div>
-        </div>
-      ) : (
-        <>
-          <ProductCardSection products={products} />
-          {products.length === 0 && (
-            <p className="text-center text-foreground py-10">
-              {t("noProducts")}
-            </p>
-          )}
-          <div className="flex justify-center mt-8 mb-8">
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages > 0 ? totalPages : 1}
-              onPageChange={handlePageChange}
-            />
-          </div>
-        </>
+      <ProductCardSection products={products} />
+      {products.length === 0 && (
+        <p className="text-center text-foreground py-10">{t("noProducts")}</p>
       )}
+      <div className="flex justify-center mt-8 mb-8">
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages > 0 ? totalPages : 1}
+          onPageChange={handlePageChange}
+        />
+      </div>
     </div>
   );
 }
