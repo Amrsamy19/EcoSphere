@@ -40,7 +40,7 @@ export interface CreateProductDTO {
   sustainabilityReason?: string;
 }
 
-export interface UpdateProductDTO extends Partial<CreateProductDTO> {}
+export type UpdateProductDTO = Partial<CreateProductDTO>;
 
 export interface ProductPageOptions {
   page?: number;
