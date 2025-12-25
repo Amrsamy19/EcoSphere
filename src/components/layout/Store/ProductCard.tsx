@@ -208,7 +208,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
                 </span>
               </p>
             )}
-          {product.quantity === 0 && (
+          {(!product.quantity || product.quantity <= 0) && (
             <p>
               <span className="text-sm capitalize text-red-500 font-semibold line-clamp-1">
                 {t("outOfStock")}
@@ -220,14 +220,16 @@ const ProductCard = ({ product }: ProductCardProps) => {
         <div className=" flex gap-3 text-2xl ">
           <button
             className={`myBtnPrimary rounded-tl-none! rounded-br-none! w-full  mx-auto ${
-              !availableOnline || product.quantity === 0
+              !availableOnline || !product.quantity || product.quantity <= 0
                 ? "cursor-not-allowed! opacity-50"
                 : ""
             }`}
             onClick={handleCart}
-            disabled={!availableOnline || product.quantity === 0}
+            disabled={
+              !availableOnline || !product.quantity || product.quantity <= 0
+            }
           >
-            {!availableOnline || product.quantity === 0 ? (
+            {!availableOnline || !product.quantity || product.quantity <= 0 ? (
               <div className="flex gap-2 justify-evenly text-nowrap items-center">
                 <RiShoppingCartLine />
                 <span className="mr-2">{t("outOfStock")}</span>
