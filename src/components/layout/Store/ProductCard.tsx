@@ -94,6 +94,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
           shopSubtitle: "", // Not passed currently
           productDescription: "",
           quantity: 1,
+          maxQuantity: product.quantity || 1,
+          inStock: product.inStock !== undefined ? product.inStock : true,
           availableOnline: product.availableOnline || false,
           sustainabilityScore,
           sustainabilityReason,
@@ -157,7 +159,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       {/* badges */}
       <div className=" flex  items-center gap-2 ">
         <div className="w-fit px-2 py-1 rounded-full text-xs font-bold flex items-center gap-1 shadow-md cursor-help bg-primary text-primary-foreground">
-          category
+          {product.category || "Other"}
         </div>
         {/* Sustainability Badge with Shadcn Tooltip */}
         {sustainabilityScore !== undefined && (
@@ -196,37 +198,50 @@ const ProductCard = ({ product }: ProductCardProps) => {
           <p className="text-sm   text-secondary-foreground/90 line-clamp-1   ">
             {safeSubtitle}
           </p>
-          <p>
-            <span className="text-sm capitalize  text-red-400 line-clamp-1">
-              Only 3 left !
-            </span>
-          </p>
+          {/* Dynamic Stock Display */}
+          {product.quantity !== undefined &&
+            product.quantity > 0 &&
+            product.quantity <= 10 && (
+              <p>
+                <span className="text-sm capitalize text-red-400 line-clamp-1">
+                  {t("lowStock", { count: product.quantity })}
+                </span>
+              </p>
+            )}
+          {product.quantity === 0 && (
+            <p>
+              <span className="text-sm capitalize text-red-500 font-semibold line-clamp-1">
+                {t("outOfStock")}
+              </span>
+            </p>
+          )}
         </div>
 
         <div className=" flex gap-3 text-2xl ">
           <button
             className={`myBtnPrimary rounded-tl-none! rounded-br-none! w-full  mx-auto ${
-              !availableOnline
+              !availableOnline || product.quantity === 0
                 ? "cursor-not-allowed! opacity-50"
-                : " cursor-pointer!"
+                : ""
             }`}
             onClick={handleCart}
-            disabled={!availableOnline}
+            disabled={!availableOnline || product.quantity === 0}
           >
-            {availableOnline ? (
-              isInCart ? (
-                <div className="flex gap-2 justify-evenly text-nowrap items-center">
-                  <RiShoppingCartFill />
-                  <span className="mr-2">Remove from Cart</span>
-                </div>
-              ) : (
-                <div className="flex justify-evenly gap-2 items-center">
-                  <RiShoppingCartLine />
-                  <span className="mr-2">Add to Cart</span>
-                </div>
-              )
+            {!availableOnline || product.quantity === 0 ? (
+              <div className="flex gap-2 justify-evenly text-nowrap items-center">
+                <RiShoppingCartLine />
+                <span className="mr-2">{t("outOfStock")}</span>
+              </div>
+            ) : isInCart ? (
+              <div className="flex gap-2 justify-evenly text-nowrap items-center">
+                <RiShoppingCartFill />
+                <span className="mr-2">{t("removedFromCart")}</span>
+              </div>
             ) : (
-              "Not available online"
+              <div className="flex justify-evenly gap-2 items-center">
+                <RiShoppingCartLine />
+                <span className="mr-2">{t("addedToCart")}</span>
+              </div>
             )}
           </button>
         </div>

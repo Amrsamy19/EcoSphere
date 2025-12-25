@@ -1,5 +1,5 @@
 import { Types } from "mongoose";
-import { IMenuItem } from "../../restaurant/restaurant.model";
+import { IMenuItem, MenuItemCategory } from "../../restaurant/restaurant.model";
 import { IProduct } from "@/types/ProductType";
 
 // Single unified response type - always includes restaurant context
@@ -24,6 +24,9 @@ export const mapResponseToIProduct = (res: ProductResponse): IProduct => {
     availableOnline: res.availableOnline,
     sustainabilityScore: res.sustainabilityScore,
     sustainabilityReason: res.sustainabilityReason,
+    category: res.category,
+    quantity: res.quantity,
+    inStock: res.inStock,
   };
 };
 
@@ -31,6 +34,8 @@ export interface CreateProductDTO {
   title: string;
   subtitle: string;
   price: number;
+  category: MenuItemCategory;
+  quantity?: number; // Optional - defaults to 1 in schema
   avatar?: {
     key: string;
     url?: string;

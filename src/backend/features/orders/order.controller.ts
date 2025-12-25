@@ -5,69 +5,97 @@ import Stripe from "stripe";
 
 @injectable()
 export class OrderController {
-	constructor(
-		@inject("OrderService") private readonly orderService: IOrderService
-	) {}
+  constructor(
+    @inject("OrderService") private readonly orderService: IOrderService
+  ) {}
 
-	async createOrder(order: CreateOrderDTO) {
-		if (!order) return;
-		const savedOrder = await this.orderService.createOrder(order.userId, order);
-		if (!savedOrder) return;
-		return savedOrder;
-	}
+  async createOrder(order: CreateOrderDTO) {
+    if (!order) return;
+    const savedOrder = await this.orderService.createOrder(order.userId, order);
+    if (!savedOrder) return;
+    return savedOrder;
+  }
 
-	async handleStripeEvent(event: Stripe.Event) {
-		const response = await this.orderService.handleStripeEvent(event);
-		return response;
-	}
+  async handleStripeEvent(event: Stripe.Event) {
+    if (event.type === "payment_intent.succeeded") {
+      const paymentIntent = event.data.object as Stripe.PaymentIntent;
+      console.log("✅ Payment succeeded:", paymentIntent.id);
 
-	async getUserOrders(userId: string) {
-		if (!userId) return;
-		const orders = await this.orderService.getUserOrders(userId);
-		return orders;
-	}
+      // Extract metadata
+      const userId = paymentIntent.metadata.userId;
+      const restaurantId = paymentIntent.metadata.restaurantId;
+      const items = JSON.parse(paymentIntent.metadata.items || "[]");
 
-	async getOrderById(orderId: string) {
-		if (!orderId) return;
-		const order = await this.orderService.getOrderById(orderId);
-		return order;
-	}
+      if (!userId || !items || items.length === 0) {
+        console.error("❌ Missing metadata in payment intent");
+        return;
+      }
 
-	async updateOrderStatus(orderId: string, status: OrderStatus) {
-		if (!orderId || !status) return;
-		const updatedOrder = await this.orderService.updateOrderStatus(
-			orderId,
-			status
-		);
-		return updatedOrder;
-	}
+      try {
+        // Create order
+        await this.orderService.createOrder(userId, {
+          items,
+          userId,
+          paymentMethod: "stripe",
+        });
 
-	async deleteOrder(orderId: string) {
-		if (!orderId) return;
-		const deletedOrder = await this.orderService.deleteOrder(orderId);
-		return deletedOrder;
-	}
+        // Decrease stock for each item
+        await this.orderService.decreaseStockForOrder(items, restaurantId);
 
-	async getRestaurantRevenue(restaurantId: string) {
-		return await this.orderService.getRestaurantRevenue(restaurantId);
-	}
+        console.log("✅ Order created and stock decreased successfully");
+      } catch (error) {
+        console.error("❌ Error processing payment success:", error);
+      }
+    }
+  }
 
-	async getBestSellingProducts() {
-		return await this.orderService.getBestSellingProducts();
-	}
+  async getUserOrders(userId: string) {
+    if (!userId) return;
+    const orders = await this.orderService.getUserOrders(userId);
+    return orders;
+  }
 
-	async getTopCustomers() {
-		return await this.orderService.getTopCustomers();
-	}
+  async getOrderById(orderId: string) {
+    if (!orderId) return;
+    const order = await this.orderService.getOrderById(orderId);
+    return order;
+  }
 
-	async getDailySales() {
-		return await this.orderService.getDailySales();
-	}
+  async updateOrderStatus(orderId: string, status: OrderStatus) {
+    if (!orderId || !status) return;
+    const updatedOrder = await this.orderService.updateOrderStatus(
+      orderId,
+      status
+    );
+    return updatedOrder;
+  }
 
-	async getActiveRestaurantOrders(restaurantId: string) {
-		return await this.orderService.getActiveRestaurantOrders(restaurantId);
-	}
-	async getRevenueByDateRange(startDate: string, endDate: string) {
-		return await this.orderService.getRevenueByDateRange(startDate, endDate);
-	}
+  async deleteOrder(orderId: string) {
+    if (!orderId) return;
+    const deletedOrder = await this.orderService.deleteOrder(orderId);
+    return deletedOrder;
+  }
+
+  async getRestaurantRevenue(restaurantId: string) {
+    return await this.orderService.getRestaurantRevenue(restaurantId);
+  }
+
+  async getBestSellingProducts() {
+    return await this.orderService.getBestSellingProducts();
+  }
+
+  async getTopCustomers() {
+    return await this.orderService.getTopCustomers();
+  }
+
+  async getDailySales() {
+    return await this.orderService.getDailySales();
+  }
+
+  async getActiveRestaurantOrders(restaurantId: string) {
+    return await this.orderService.getActiveRestaurantOrders(restaurantId);
+  }
+  async getRevenueByDateRange(startDate: string, endDate: string) {
+    return await this.orderService.getRevenueByDateRange(startDate, endDate);
+  }
 }

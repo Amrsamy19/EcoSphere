@@ -15,6 +15,7 @@ import {
   ProductResponse,
   CreateProductDTO,
 } from "@/backend/features/product/dto/product.dto";
+import { MenuItemCategory } from "@/backend/features/restaurant/restaurant.model";
 import { Plus, Search } from "lucide-react";
 import { toast } from "sonner";
 import { useDebounce } from "@/hooks/use-debounce";
@@ -37,6 +38,12 @@ export default function ProductsClient({
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
   const debouncedSearch = useDebounce(searchTerm, 500);
+
+  const [selectedCategory, setSelectedCategory] = useState<
+    MenuItemCategory | "all"
+  >("all");
+  const [sort, setSort] = useState<"price" | "sustainabilityScore">("price");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<
@@ -243,6 +250,8 @@ export default function ProductsClient({
                 subtitle: editingProduct.subtitle,
                 price: editingProduct.price,
                 availableOnline: editingProduct.availableOnline,
+                category: editingProduct.category,
+                quantity: editingProduct.quantity,
                 avatar: editingProduct.avatar,
               }
             : undefined
