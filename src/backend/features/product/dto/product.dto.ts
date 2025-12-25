@@ -20,7 +20,7 @@ export const mapResponseToIProduct = (res: ProductResponse): IProduct => {
     productName: res.title,
     productPrice: res.price,
     productSubtitle: res.subtitle,
-    productDescription: "", // res.description is not available in ProductResponse
+    productDescription: "",
     availableOnline: res.availableOnline,
     sustainabilityScore: res.sustainabilityScore || 0,
     sustainabilityReason: res.sustainabilityReason,
@@ -40,7 +40,6 @@ export interface CreateProductDTO {
   availableOnline?: boolean; // Optional - defaults to true in schema
   sustainabilityScore?: number;
   sustainabilityReason?: string;
-  category?: string;
 }
 
 export type UpdateProductDTO = Partial<CreateProductDTO>;
@@ -49,17 +48,12 @@ export interface ProductPageOptions {
   page?: number;
   limit?: number;
   search?: string;
-<<<<<<< HEAD
   sort?:
     | "default"
     | "priceLow"
     | "priceHigh"
     | "sustainabilityLow"
     | "sustainabilityHigh";
-=======
-  sort?: "default" | "priceLow" | "priceHigh" | "price" | "sustainabilityScore";
-  sortOrder?: "asc" | "desc";
->>>>>>> 39586735f91437c8f566711397a949c0a1c0c912
   category?: string;
 }
 
