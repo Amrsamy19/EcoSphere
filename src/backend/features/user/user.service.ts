@@ -242,7 +242,6 @@ class UserService implements IUserService {
 
     const rests = await this.restRepo.getRestaurantsByIdes(restaurantIds);
 
-    console.log("[getCart] Retrieved", rests.length, "restaurants with menus");
 
     // Step 4: Create lookup map for efficient access
     // Key format: "restaurantId-menuItemId"
@@ -262,12 +261,7 @@ class UserService implements IUserService {
 
           // Log first menu item structure
           if (menuItemMap.size === 1) {
-            console.log("[getCart] First menu item from restaurant:", {
-              menuId: menu._id,
-              menuTitle: menu.title,
-              hasAvatar: !!menu.avatar,
-              avatarStructure: JSON.stringify(menu.avatar),
-            });
+          
           }
         });
       }
@@ -286,36 +280,18 @@ class UserService implements IUserService {
 
         const { menuItem, restaurant } = data;
 
-        console.log(
-          "[getCart] MenuItem avatar:",
-          JSON.stringify(
-            {
-              menuItemId: menuItem._id?.toString(),
-              menuItemTitle: menuItem.title,
-              hasAvatar: !!menuItem.avatar,
-              avatar: menuItem.avatar,
-              avatarKey: menuItem.avatar?.key,
-              avatarUrl: menuItem.avatar?.url,
-              avatarType: typeof menuItem.avatar,
-            },
-            null,
-            2
-          )
-        );
+      
 
         const avatarKey = menuItem.avatar?.key;
         let productImg = "";
         if (avatarKey && typeof avatarKey === "string") {
           try {
             productImg = await this.populateAvatar(avatarKey);
-            console.log("[getCart] Generated productImg:", productImg);
           } catch (error) {
             console.error("[getCart] Error generating image URL:", error);
           }
         } else {
-          console.log(
-            "[getCart] No valid avatar key, productImg will be empty"
-          );
+         
         }
 
         return {
@@ -380,17 +356,11 @@ class UserService implements IUserService {
   private async attachSignedUrl(
     product: ProductResponse
   ): Promise<ProductResponse> {
-    console.log("[userService.attachSignedUrl] Product:", {
-      productId: product._id,
-      hasAvatar: !!product.avatar,
-      avatarKey: product.avatar?.key,
-      avatarUrlBefore: product.avatar?.url,
-    });
+    
 
     if (product?.avatar?.key) {
       try {
         const url = await this.imageService.getSignedUrl(product.avatar.key);
-        console.log("[userService.attachSignedUrl] Generated URL:", url);
         product.avatar.url = url;
       } catch (error) {
         console.error(
@@ -399,9 +369,7 @@ class UserService implements IUserService {
         );
       }
     } else {
-      console.log(
-        "[userService.attachSignedUrl] No avatar.key found, skipping URL generation"
-      );
+     
     }
     return product;
   }

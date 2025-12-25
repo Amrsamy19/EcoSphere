@@ -28,15 +28,8 @@ export const GET = async (): Promise<NextResponse<ApiResponse<IProduct[]>>> => {
       favoritesIds as string[]
     );
 
-    console.log("[API /users/favorites] Returning", result.length, "favorites");
-    if (result.length > 0) {
-      console.log("[API /users/favorites] Sample favorite:", {
-        id: result[0].id,
-        productName: result[0].productName,
-        productImg: result[0].productImg || "EMPTY",
-        hasImg: !!result[0].productImg,
-      });
-    }
+   
+    
     return ok(result);
   } catch (error) {
     console.error(error);
@@ -65,7 +58,6 @@ export const PATCH = async (
     const result = await controller.getFavoriteMenuItems(
       favoritesIds as string[]
     );
-    console.log(result, "form route")
     return ok(result);
   } catch (error) {
     console.error(error);

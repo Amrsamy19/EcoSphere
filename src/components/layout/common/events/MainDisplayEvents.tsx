@@ -10,7 +10,6 @@ import { useTranslations } from "next-intl";
 
 export default function MainDisplayEvents({ events }: Readonly<EventProps>) {
   const t = useTranslations("Events.MainDisplayEvents");
-  console.log(events);
 
   const [searchQuery, setSearchQuery] = useState("");
 

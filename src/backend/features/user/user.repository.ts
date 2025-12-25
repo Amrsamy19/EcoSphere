@@ -202,21 +202,7 @@ class UserRepository implements IUserRepository {
     restaurants.forEach((restaurant) => {
       restaurant.menus.forEach((menu: IMenuItem) => {
         if (objectIds.some((id) => id.equals(menu._id))) {
-          console.log(
-            "[getFavoriteMenuItems] Menu item from DB:",
-            JSON.stringify(
-              {
-                menuId: menu._id?.toString(),
-                menuTitle: menu.title,
-                hasAvatar: !!menu.avatar,
-                avatar: menu.avatar,
-                avatarKey: menu.avatar?.key,
-                avatarUrl: menu.avatar?.url,
-              },
-              null,
-              2,
-            ),
-          );
+          
 
           favoriteItems.push({
             ...menu,
@@ -227,11 +213,7 @@ class UserRepository implements IUserRepository {
       });
     });
 
-    console.log(
-      "[getFavoriteMenuItems] Returning",
-      favoriteItems.length,
-      "items",
-    );
+   
     return favoriteItems;
   }
 

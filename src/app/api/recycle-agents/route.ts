@@ -10,8 +10,6 @@ export async function GET(request: NextRequest) {
     // Convert map to array of agents
     const agents = Array.from(recycleAgents.values());
     
-    console.log("[GET] Fetching agents. Store size:", recycleAgents.size);
-    console.log("[GET] Agent IDs:", Array.from(recycleAgents.keys()));
     
     return NextResponse.json(
       {
@@ -108,8 +106,6 @@ export async function POST(request: NextRequest) {
 
     recycleAgents.set(newAgent._id, newAgent);
 
-    console.log("[POST] Agent created:", newAgent._id);
-    console.log("[POST] Total agents in store:", recycleAgents.size);
 
     return NextResponse.json(
       {

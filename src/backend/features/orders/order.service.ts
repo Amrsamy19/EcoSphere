@@ -115,13 +115,11 @@ export class OrderService implements IOrderService {
   }
 
   async handleStripeEvent(event: Stripe.Event): Promise<void> {
-    console.log(event, "event");
     const intent = event.data.object as Stripe.PaymentIntent;
     switch (event.type) {
       case "payment_intent.succeeded": {
         const orderId = intent.metadata.orderId;
         if (!orderId) return;
-        console.log(intent.metadata, "metaData");
 
         // Note: Frontend confirmation is authoritative for UX (cart cleared on success).
         // This webhook ensures server-side order status consistency and audit trail.

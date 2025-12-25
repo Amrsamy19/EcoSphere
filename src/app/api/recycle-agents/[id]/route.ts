@@ -13,13 +13,10 @@ export async function PATCH(
     const { id } = params;
     const body = await request.json();
 
-    console.log("[PATCH] Looking for agent:", id);
-    console.log("[PATCH] Store size:", recycleAgents.size);
-    console.log("[PATCH] Store keys:", Array.from(recycleAgents.keys()));
+
 
     const agent = recycleAgents.get(id);
     if (!agent) {
-      console.log("[PATCH] Agent not found:", id);
       return NextResponse.json(
         {
           success: false,
@@ -38,8 +35,7 @@ export async function PATCH(
 
     recycleAgents.set(id, updatedAgent);
 
-    console.log("[PATCH] Agent updated:", id);
-    console.log("[PATCH] Updated agent:", updatedAgent);
+    
 
     return NextResponse.json(
       {
