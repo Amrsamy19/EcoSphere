@@ -6,7 +6,7 @@ import { EventResponse, mapEventToEventData } from "./events.types";
 @injectable()
 class EventController {
   constructor(
-    @inject("IEventService") private readonly eventService: IEventService,
+    @inject("IEventService") private readonly eventService: IEventService
   ) {}
 
   async getEvents(): Promise<EventResponse[]> {
@@ -28,7 +28,7 @@ class EventController {
 
   async createEvent(
     user: { id: string; role: string },
-    event: IEvent,
+    event: IEvent
   ): Promise<EventResponse> {
     const response = await this.eventService.createEvent(user, event);
     return mapEventToEventData(response);
@@ -36,7 +36,7 @@ class EventController {
 
   async updateEvent(
     id: string,
-    event: Partial<IEvent>,
+    event: Partial<IEvent>
   ): Promise<EventResponse> {
     const response = await this.eventService.updateEvent(id, event);
     return mapEventToEventData(response);

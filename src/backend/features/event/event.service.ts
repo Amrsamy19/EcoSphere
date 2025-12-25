@@ -1,60 +1,57 @@
 import { inject, injectable } from "tsyringe";
-import { IEvent, EventPopulated } from "./event.model";
+import { IEvent } from "./event.model";
 import type { IEventRepository } from "./event.repository";
 
 export interface IEventService {
-  getEvents: () => Promise<EventPopulated[]>;
-  getEventById: (id: string, eventId: string) => Promise<EventPopulated>;
-  getEventsByUserId: (id: string) => Promise<EventPopulated[]>;
+  getEvents: () => Promise<IEvent[]>;
+  getEventById: (id: string, eventId: string) => Promise<IEvent>;
+  getEventsByUserId: (id: string) => Promise<IEvent[]>;
   createEvent: (
     user: { id: string; role: string },
-    event: IEvent,
-  ) => Promise<EventPopulated>;
-  updateEvent: (id: string, event: Partial<IEvent>) => Promise<EventPopulated>;
-  deleteEvent: (id: string, eventId: string) => Promise<EventPopulated>;
-  acceptEvent: (eventId: string) => Promise<EventPopulated>;
-  rejectEvent: (eventId: string) => Promise<EventPopulated>;
-  attendEvent: (id: string, eventId: string) => Promise<EventPopulated>;
+    event: IEvent
+  ) => Promise<IEvent>;
+  updateEvent: (id: string, event: Partial<IEvent>) => Promise<IEvent>;
+  deleteEvent: (id: string, eventId: string) => Promise<IEvent>;
+  acceptEvent: (eventId: string) => Promise<IEvent>;
+  rejectEvent: (eventId: string) => Promise<IEvent>;
+  attendEvent: (id: string, eventId: string) => Promise<IEvent>;
 }
 
 @injectable()
 class EventService {
   constructor(
     @inject("IEventRepository")
-    private readonly eventRepository: IEventRepository,
+    private readonly eventRepository: IEventRepository
   ) {}
 
-  async getEvents(): Promise<EventPopulated[]> {
+  async getEvents(): Promise<IEvent[]> {
     return await this.eventRepository.getEvents();
   }
 
-  async getEventById(id: string, eventId: string): Promise<EventPopulated> {
+  async getEventById(id: string, eventId: string): Promise<IEvent> {
     return await this.eventRepository.getEvent(id, eventId);
   }
 
-  async getEventsByUserId(id: string): Promise<EventPopulated[]> {
+  async getEventsByUserId(id: string): Promise<IEvent[]> {
     return await this.eventRepository.getEventsByUserId(id);
   }
 
   async createEvent(
     user: { id: string; role: string },
-    data: IEvent,
-  ): Promise<EventPopulated> {
+    data: IEvent
+  ): Promise<IEvent> {
     const createdEvent = await this.eventRepository.createEvent(user, data);
 
     if (!createdEvent) {
       throw new Error(
-        `User ${user.id} not found or event could not be created.`,
+        `User ${user.id} not found or event could not be created.`
       );
     }
 
     return createdEvent;
   }
 
-  async updateEvent(
-    userId: string,
-    event: Partial<IEvent>,
-  ): Promise<EventPopulated> {
+  async updateEvent(userId: string, event: Partial<IEvent>): Promise<IEvent> {
     const updated = await this.eventRepository.updateEvent(userId, event);
 
     if (!updated) {
@@ -64,19 +61,19 @@ class EventService {
     return updated;
   }
 
-  async deleteEvent(id: string, eventId: string): Promise<EventPopulated> {
+  async deleteEvent(id: string, eventId: string): Promise<IEvent> {
     return await this.eventRepository.deleteEvent(id, eventId);
   }
 
-  async acceptEvent(eventId: string): Promise<EventPopulated> {
+  async acceptEvent(eventId: string): Promise<IEvent> {
     return await this.eventRepository.acceptEvent("", eventId);
   }
 
-  async rejectEvent(eventId: string): Promise<EventPopulated> {
+  async rejectEvent(eventId: string): Promise<IEvent> {
     return await this.eventRepository.rejectEvent("", eventId);
   }
 
-  async attendEvent(id: string, eventId: string): Promise<EventPopulated> {
+  async attendEvent(id: string, eventId: string): Promise<IEvent> {
     return await this.eventRepository.attendEvent(id, eventId);
   }
 }

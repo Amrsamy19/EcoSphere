@@ -1,5 +1,5 @@
 import { ISubEvent } from "@/types/EventTypes";
-import { EventPopulated } from "./event.model";
+import { IEvent } from "./event.model";
 
 export type EventResponse = {
   _id: string;
@@ -17,20 +17,15 @@ export type EventResponse = {
   attenders?: string[];
   isAccepted: boolean;
   isEventNew: boolean;
-  user?: {
-    _id: string;
-    firstName?: string;
-    email?: string;
-    phoneNumber?: string;
-  };
+  user?: string;
 };
 
-export const mapEventToEventData = (event: EventPopulated): EventResponse => {
+export const mapEventToEventData = (event: IEvent): EventResponse => {
   return {
     _id: event._id.toString(),
     name: event.name,
     type: event.type,
-    avatar: event.avatar,
+    avatar: JSON.parse(JSON.stringify(event.avatar)),
     description: event.description,
     locate: event.locate,
     eventDate: event.eventDate.toISOString(),
@@ -42,12 +37,6 @@ export const mapEventToEventData = (event: EventPopulated): EventResponse => {
     attenders: event.attenders?.map(String),
     isAccepted: event.isAccepted,
     isEventNew: event.isEventNew,
-    user: {
-      _id: event.owner._id.toString(),
-      firstName:
-        (event.owner as any).firstName || (event.owner as any).name || "",
-      email: event.owner.email,
-      phoneNumber: event.owner.phoneNumber,
-    },
+    user: event.owner,
   };
 };
