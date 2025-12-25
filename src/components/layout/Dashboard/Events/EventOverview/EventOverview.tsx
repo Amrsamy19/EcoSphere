@@ -62,7 +62,7 @@ const EventListItem: React.FC<EventListItemProps> = ({
   const locale = useLocale();
   const buttonText = t("manage");
   const lineColor = "bg-primary";
-  const imageSource = avatar || "/events/defaultImgEvent.png";
+  const imageSource = avatar as string || "/events/defaultImgEvent.png";
   return (
     <div
       className="
@@ -141,7 +141,7 @@ export default function EventOverview({ events }: EventProps) {
     events?.reduce(
       (acc, event) =>
         acc + (event.attenders?.length || 0) * (event.ticketPrice || 0),
-      0
+      0,
     ) || 0;
 
   const confirmedAttendees = totalTicketSales;
@@ -272,8 +272,8 @@ export default function EventOverview({ events }: EventProps) {
                 endTime={event.endTime}
                 locate={event.locate}
                 avatar={
-                  typeof event.avatar === "string"
-                    ? event.avatar
+                  typeof event.avatar?.url === "string"
+                    ? event.avatar?.url
                     : "/events/defaultImgEvent.png"
                 }
               />

@@ -44,12 +44,12 @@ type ApiHandler<T extends unknown[], R> = (...args: T) => Promise<R> | R;
 
 const checkRole = async (
   roles: string[],
-  userRole: string,
+  userRole: string
 ): Promise<NextResponse<ApiResponse<string>> | null> => {
   if (!roles.includes(userRole)) {
     return NextResponse.json(
       { success: false, message: "Forbidden" },
-      { status: 403 },
+      { status: 403 }
     );
   }
 
@@ -73,7 +73,7 @@ const createGuard = (roles: Role[]) => {
 };
 
 export const adminOnly = createGuard(["admin"]);
-export const organizerOnly = createGuard(["organizer", "shop"]);
+export const organizerOnly = createGuard(["organizer", "shop", "restaurant"]);
 export const shopOnly = createGuard(["shop"]);
 export const recycleManOnly = createGuard(["recycleMan"]);
 export const userOnly = createGuard(["customer"]);

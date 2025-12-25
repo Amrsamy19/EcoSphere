@@ -8,7 +8,10 @@ export interface IEventRepository {
   getEvents(): Promise<IEvent[]>;
   getEvent(id: string, eventId: string): Promise<IEvent>;
   getEventsByUserId(id: string): Promise<IEvent[]>;
-  createEvent(user: { id: string; role: string }, data: IEvent): Promise<IEvent>;
+  createEvent(
+    user: { id: string; role: string },
+    data: IEvent
+  ): Promise<IEvent>;
   updateEvent(id: string, data: Partial<IEvent>): Promise<IEvent>;
   deleteEvent(id: string, eventId: string): Promise<IEvent>;
   acceptEvent(id: string, eventId: string): Promise<IEvent>;
@@ -26,7 +29,7 @@ class EventRepository {
       eventDate: { $gte: new Date() },
       isAccepted: true,
     })
-      .populate("owner", "firstName phoneNumber email")
+      .populate("owner")
       .lean()
       .exec();
   }
@@ -36,7 +39,7 @@ class EventRepository {
 
     const event = await EventModel.findOne({
       _id: eventId,
-      user: userId,
+      owner: userId,
     })
       .lean()
       .exec();
@@ -51,12 +54,12 @@ class EventRepository {
   async getEventsByUserId(userId: string): Promise<IEvent[]> {
     await DBInstance.getConnection();
 
-    return EventModel.find({ user: userId }).lean().exec();
+    return EventModel.find({ owner: userId }).lean().exec();
   }
 
   async createEvent(
     user: { id: string; role: string },
-    data: IEvent,
+    data: IEvent
   ): Promise<IEvent> {
     await DBInstance.getConnection();
 
@@ -73,9 +76,9 @@ class EventRepository {
     await DBInstance.getConnection();
 
     const event = await EventModel.findOneAndUpdate(
-      { _id: data._id, user: userId },
+      { _id: data._id, owner: userId },
       { ...data, updatedAt: new Date() },
-      { new: true },
+      { new: true }
     )
       .lean()
       .exec();
@@ -92,7 +95,7 @@ class EventRepository {
 
     const event = await EventModel.findOneAndDelete({
       _id: eventId,
-      user: userId,
+      owner: userId,
     })
       .lean()
       .exec();
@@ -108,7 +111,7 @@ class EventRepository {
     await DBInstance.getConnection();
     const response = await UserModel.findOne(
       { "events._id": eventId },
-      { _id: 1 },
+      { _id: 1 }
     )
       .lean<IUser>()
       .exec();
@@ -121,7 +124,7 @@ class EventRepository {
     const event = await EventModel.findByIdAndUpdate(
       eventId,
       { isAccepted: true, isEventNew: false },
-      { new: true },
+      { new: true }
     )
       .lean()
       .exec();
@@ -137,7 +140,7 @@ class EventRepository {
     const event = await EventModel.findByIdAndUpdate(
       eventId,
       { isAccepted: false, isEventNew: false },
-      { new: true },
+      { new: true }
     )
       .lean()
       .exec();
@@ -156,7 +159,7 @@ class EventRepository {
         $addToSet: { attenders: new Types.ObjectId(userId) },
         $set: { updatedAt: new Date() },
       },
-      { new: true },
+      { new: true }
     )
       .lean()
       .exec();

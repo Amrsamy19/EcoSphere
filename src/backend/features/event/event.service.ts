@@ -8,7 +8,7 @@ export interface IEventService {
   getEventsByUserId: (id: string) => Promise<IEvent[]>;
   createEvent: (
     user: { id: string; role: string },
-    event: IEvent,
+    event: IEvent
   ) => Promise<IEvent>;
   updateEvent: (id: string, event: Partial<IEvent>) => Promise<IEvent>;
   deleteEvent: (id: string, eventId: string) => Promise<IEvent>;
@@ -21,7 +21,7 @@ export interface IEventService {
 class EventService {
   constructor(
     @inject("IEventRepository")
-    private readonly eventRepository: IEventRepository,
+    private readonly eventRepository: IEventRepository
   ) {}
 
   async getEvents(): Promise<IEvent[]> {
@@ -38,13 +38,13 @@ class EventService {
 
   async createEvent(
     user: { id: string; role: string },
-    data: IEvent,
+    data: IEvent
   ): Promise<IEvent> {
     const createdEvent = await this.eventRepository.createEvent(user, data);
 
     if (!createdEvent) {
       throw new Error(
-        `User ${user.id} not found or event could not be created.`,
+        `User ${user.id} not found or event could not be created.`
       );
     }
 
@@ -66,13 +66,11 @@ class EventService {
   }
 
   async acceptEvent(eventId: string): Promise<IEvent> {
-    const id = await this.eventRepository.getUserIdByEventId(eventId);
-    return await this.eventRepository.acceptEvent(id._id.toString(), eventId);
+    return await this.eventRepository.acceptEvent("", eventId);
   }
 
   async rejectEvent(eventId: string): Promise<IEvent> {
-    const id = await this.eventRepository.getUserIdByEventId(eventId);
-    return await this.eventRepository.rejectEvent(id._id.toString(), eventId);
+    return await this.eventRepository.rejectEvent("", eventId);
   }
 
   async attendEvent(id: string, eventId: string): Promise<IEvent> {

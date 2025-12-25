@@ -8,9 +8,11 @@ export type EventType =
   | "sustainable_brands_showcase"
   | "other";
 
-export type EventUnpopulated = IEvent & { user: Types.ObjectId };
-export type IsEventPopulated = Omit<IEvent, "user"> & { user: IUser };
+export type EventUnpopulated = IEvent & { owner: string };
 export type EventOwner = IUser | IRestaurant;
+export type IsEventPopulated = Omit<IEvent, "owner"> & {
+  owner: EventOwner;
+};
 
 export interface ISection extends Document {
   title: string;
@@ -40,7 +42,7 @@ export interface IEvent extends Document {
   isAccepted: boolean;
   isEventNew: boolean;
   // user: Types.ObjectId | IUser | IRestaurant;
-  owner: Types.ObjectId | EventOwner;
+  owner: string;
   ownerModel: "User" | "Restaurant";
 }
 
@@ -51,7 +53,7 @@ export const sectionsSchema = new Schema<ISection>(
     startTime: { type: String, required: true },
     endTime: { type: String, required: true },
   },
-  { _id: false },
+  { _id: false }
 );
 
 export const eventSchema = new Schema<IEvent>(
@@ -86,7 +88,7 @@ export const eventSchema = new Schema<IEvent>(
     isEventNew: { type: Boolean, required: true, default: true },
     // user: { type: Schema.Types.ObjectId, ref: "User", required: true },
     owner: {
-      type: Schema.Types.ObjectId,
+      type: String,
       required: true,
       refPath: "ownerModel",
     },
@@ -96,7 +98,7 @@ export const eventSchema = new Schema<IEvent>(
       enum: ["User", "Restaurant"],
     },
   },
-  { _id: true, timestamps: true },
+  { _id: true, timestamps: true }
 );
 
 export const EventModel = models.Event || model<IEvent>("Event", eventSchema);

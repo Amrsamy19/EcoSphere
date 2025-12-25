@@ -2,8 +2,6 @@ import { ISubEvent } from "@/types/EventTypes";
 import { IsEventPopulated } from "./event.model";
 
 export type EventResponse = {
-  attenders?: string[];
-  events?: any;
   _id: string;
   name: string;
   type: string;
@@ -16,28 +14,40 @@ export type EventResponse = {
   capacity: number;
   ticketPrice: number;
   sections?: ISubEvent[];
+  attenders?: string[];
   isAccepted: boolean;
   isEventNew: boolean;
   user?: {
     _id: string;
-    firstName: string;
-    email: string;
-    phoneNumber: string;
+    firstName?: string;
+    email?: string;
+    phoneNumber?: string;
   };
 };
 
 export const mapEventToEventData = (event: IsEventPopulated): EventResponse => {
-  console.log(event);
   return {
-    ...event,
-    attenders: event.attenders?.map((attender) => `${attender}`),
-    user: {
-      _id: event.user._id.toString(),
-      firstName: event.user.firstName,
-      email: event.user.email,
-      phoneNumber: event.user.phoneNumber,
-    },
-    eventDate: event.eventDate.toString(),
     _id: event._id.toString(),
+    name: event.name,
+    type: event.type,
+    avatar: event.avatar,
+    description: event.description,
+    locate: event.locate,
+    eventDate: event.eventDate.toISOString(),
+    startTime: event.startTime,
+    endTime: event.endTime,
+    capacity: event.capacity,
+    ticketPrice: event.ticketPrice,
+    sections: event.sections,
+    attenders: event.attenders?.map(String),
+    isAccepted: event.isAccepted,
+    isEventNew: event.isEventNew,
+    user: {
+      _id: event.owner._id.toString(),
+      firstName:
+        (event.owner as any).firstName || (event.owner as any).name || "",
+      email: event.owner.email,
+      phoneNumber: event.owner.phoneNumber,
+    },
   };
 };
