@@ -1,5 +1,4 @@
 "use client";
-import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -9,6 +8,7 @@ import {
 } from "@/components/ui/select";
 import { MenuItemCategory } from "@/backend/features/restaurant/restaurant.model";
 import { useTranslations } from "next-intl";
+import { Label } from "@/components/ui/label";
 
 interface CategorySelectProps {
   value: MenuItemCategory | undefined;
@@ -16,34 +16,37 @@ interface CategorySelectProps {
   error?: string;
 }
 
+const CATEGORIES: MenuItemCategory[] = [
+  "Fruits",
+  "Vegetables",
+  "Meat",
+  "Dairy",
+  "Bakery",
+  "Beverages",
+  "Snacks",
+  "Other",
+];
+
 export default function CategorySelect({
   value,
   onChange,
   error,
-}: CategorySelectProps) {
-  const t = useTranslations("Restaurant.Products");
+}: Readonly<CategorySelectProps>) {
+  const t = useTranslations("Restaurant.Products.Categories");
 
   return (
     <div className="space-y-2">
-      <Label htmlFor="category">{t("popup.categoryLabel")}</Label>
-      <Select
-        value={value}
-        onValueChange={(val) => onChange(val as MenuItemCategory)}
-      >
-        <SelectTrigger id="category">
-          <SelectValue placeholder={t("popup.categoryPlaceholder")} />
+      <Label htmlFor="category">{t("label")}</Label>
+      <Select value={value} onValueChange={onChange}>
+        <SelectTrigger className={error ? "border-red-500" : ""}>
+          <SelectValue placeholder={t("placeholder")} />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="Fruits">{t("Categories.fruits")}</SelectItem>
-          <SelectItem value="Vegetables">
-            {t("Categories.vegetables")}
-          </SelectItem>
-          <SelectItem value="Meat">{t("Categories.meat")}</SelectItem>
-          <SelectItem value="Dairy">{t("Categories.dairy")}</SelectItem>
-          <SelectItem value="Bakery">{t("Categories.bakery")}</SelectItem>
-          <SelectItem value="Beverages">{t("Categories.beverages")}</SelectItem>
-          <SelectItem value="Snacks">{t("Categories.snacks")}</SelectItem>
-          <SelectItem value="Other">{t("Categories.other")}</SelectItem>
+          {CATEGORIES.map((category) => (
+            <SelectItem key={category} value={category}>
+              {t(category.toLowerCase())}
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
       {error && <span className="text-sm text-red-500">{error}</span>}

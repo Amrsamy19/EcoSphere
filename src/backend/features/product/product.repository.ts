@@ -1,6 +1,7 @@
 import { injectable } from "tsyringe";
 import { DBInstance } from "@/backend/config/dbConnect";
 import { RestaurantModel, IRestaurant } from "../restaurant/restaurant.model";
+import { buildProductsPipeline } from "./dto/product.dto";
 import mongoose from "mongoose";
 import {
   ProductResponse,
@@ -143,9 +144,9 @@ export class ProductRepository implements IProductRepository {
       data,
       metadata: {
         total,
-        page,
-        limit,
-        totalPages: Math.ceil(total / limit),
+        page: options?.page ?? 1,
+        limit: options?.limit ?? 10,
+        totalPages: Math.ceil(total / (options?.limit ?? 10)),
       },
     };
   }
@@ -262,6 +263,7 @@ export class ProductRepository implements IProductRepository {
     });
 
     const result = await RestaurantModel.aggregate(pipeline).exec();
+
     const data = result[0]?.data ?? [];
     const total = result[0]?.metadata[0]?.total ?? 0;
 
@@ -269,9 +271,9 @@ export class ProductRepository implements IProductRepository {
       data,
       metadata: {
         total,
-        page,
-        limit,
-        totalPages: Math.ceil(total / limit),
+        page: options?.page ?? 1,
+        limit: options?.limit ?? 10,
+        totalPages: Math.ceil(total / (options?.limit ?? 10)),
       },
     };
   }

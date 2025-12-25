@@ -178,7 +178,6 @@ export default function ProductPopup({
               min={0}
             />
           </div>
-
           <div className="space-y-2">
             <Label>{t("popup.imageLabel")}</Label>
             <div className="h-40 w-full border rounded-md">
@@ -194,6 +193,15 @@ export default function ProductPopup({
                 endpoint="/api/upload/image"
               />
             </div>
+          </div>
+          <div className="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              id="availableOnline"
+              className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+              {...register("availableOnline")}
+            />
+            <Label htmlFor="availableOnline">{t("popup.availableLabel")}</Label>
           </div>
 
           <div className="mt-6 flex justify-end space-x-3">
