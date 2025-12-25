@@ -1,5 +1,6 @@
 import { Document, models, model, Schema, Types } from "mongoose";
 import { IUser } from "../user/user.model";
+import { IRestaurant } from "../restaurant/restaurant.model";
 
 export type EventType =
   | "environmental_seminar"
@@ -9,6 +10,7 @@ export type EventType =
 
 export type EventUnpopulated = IEvent & { user: Types.ObjectId };
 export type IsEventPopulated = Omit<IEvent, "user"> & { user: IUser };
+export type EventOwner = IUser | IRestaurant;
 
 export interface ISection extends Document {
   title: string;
@@ -37,7 +39,9 @@ export interface IEvent extends Document {
   type: EventType;
   isAccepted: boolean;
   isEventNew: boolean;
-  user: Types.ObjectId | IUser;
+  // user: Types.ObjectId | IUser | IRestaurant;
+  owner: Types.ObjectId | EventOwner;
+  ownerModel: "User" | "Restaurant";
 }
 
 export const sectionsSchema = new Schema<ISection>(
@@ -80,7 +84,17 @@ export const eventSchema = new Schema<IEvent>(
     eventDate: { type: Date, required: true },
     isAccepted: { type: Boolean, required: true, default: false },
     isEventNew: { type: Boolean, required: true, default: true },
-    user: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    // user: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    owner: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      refPath: "ownerModel",
+    },
+    ownerModel: {
+      type: String,
+      required: true,
+      enum: ["User", "Restaurant"],
+    },
   },
   { _id: true, timestamps: true },
 );

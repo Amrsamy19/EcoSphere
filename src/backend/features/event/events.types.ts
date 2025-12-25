@@ -27,6 +27,7 @@ export type EventResponse = {
 };
 
 export const mapEventToEventData = (event: IsEventPopulated): EventResponse => {
+  console.log(event);
   return {
     ...event,
     attenders: event.attenders?.map((attender) => `${attender}`),

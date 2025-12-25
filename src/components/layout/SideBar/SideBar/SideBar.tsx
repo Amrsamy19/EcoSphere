@@ -56,7 +56,7 @@ export default function SideBar() {
   const t = useTranslations("Layout.Sidebar");
   const matchPathWithOptionalLocale = (
     pathname: string,
-    targetSegment: string
+    targetSegment: string,
   ) => {
     const base = `\\${targetSegment}`;
     const en = `\\/en\\${targetSegment}`;
@@ -206,7 +206,7 @@ export default function SideBar() {
                         tooltip={t("menu.recipes")}
                         isActive={matchPathWithOptionalLocale(
                           pathname,
-                          "/recipes"
+                          "/recipes",
                         )}
                       >
                         <Link href="/recipes">
@@ -223,7 +223,7 @@ export default function SideBar() {
                         tooltip={t("menu.recycle")}
                         isActive={matchPathWithOptionalLocale(
                           pathname,
-                          "/recycle"
+                          "/recycle",
                         )}
                       >
                         <Link href="/recycle">
@@ -240,12 +240,12 @@ export default function SideBar() {
             </SidebarGroupContent>
           </SidebarGroup>
         )}
-        {session?.user.role == "organizer" && (
+        {session?.user.role == "shop" && (
           <SidebarGroup>
             <SidebarGroupLabel>{t("groups.dashboard")}</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
-                {OrganizerItems.map((item) => (
+                {restaurantItems.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton
                       asChild
@@ -266,12 +266,13 @@ export default function SideBar() {
             </SidebarGroupContent>
           </SidebarGroup>
         )}
-        {session?.user.role == "shop" && (
+        {(session?.user.role == "organizer" ||
+          session?.user.role == "shop") && (
           <SidebarGroup>
             <SidebarGroupLabel>{t("groups.dashboard")}</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
-                {restaurantItems.map((item) => (
+                {OrganizerItems.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton
                       asChild

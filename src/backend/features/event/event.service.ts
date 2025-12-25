@@ -6,7 +6,10 @@ export interface IEventService {
   getEvents: () => Promise<IEvent[]>;
   getEventById: (id: string, eventId: string) => Promise<IEvent>;
   getEventsByUserId: (id: string) => Promise<IEvent[]>;
-  createEvent: (id: string, event: IEvent) => Promise<IEvent>;
+  createEvent: (
+    user: { id: string; role: string },
+    event: IEvent,
+  ) => Promise<IEvent>;
   updateEvent: (id: string, event: Partial<IEvent>) => Promise<IEvent>;
   deleteEvent: (id: string, eventId: string) => Promise<IEvent>;
   acceptEvent: (eventId: string) => Promise<IEvent>;
@@ -33,12 +36,15 @@ class EventService {
     return await this.eventRepository.getEventsByUserId(id);
   }
 
-  async createEvent(userId: string, data: IEvent): Promise<IEvent> {
-    const createdEvent = await this.eventRepository.createEvent(userId, data);
+  async createEvent(
+    user: { id: string; role: string },
+    data: IEvent,
+  ): Promise<IEvent> {
+    const createdEvent = await this.eventRepository.createEvent(user, data);
 
     if (!createdEvent) {
       throw new Error(
-        `User ${userId} not found or event could not be created.`,
+        `User ${user.id} not found or event could not be created.`,
       );
     }
 

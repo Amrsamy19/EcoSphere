@@ -30,8 +30,8 @@ class EventController {
     return mappedData;
   }
 
-  async createEvent(id: string, event: IEvent): Promise<EventResponse> {
-    const response = await this.eventService.createEvent(id, event);
+  async createEvent(user: { id: string; role: string }, event: IEvent): Promise<EventResponse> {
+    const response = await this.eventService.createEvent(user, event);
     return mapEventToEventData(response as IsEventPopulated);
   }
 

@@ -8,7 +8,7 @@ export interface IEventRepository {
   getEvents(): Promise<IEvent[]>;
   getEvent(id: string, eventId: string): Promise<IEvent>;
   getEventsByUserId(id: string): Promise<IEvent[]>;
-  createEvent(id: string, data: IEvent): Promise<IEvent>;
+  createEvent(user: { id: string; role: string }, data: IEvent): Promise<IEvent>;
   updateEvent(id: string, data: Partial<IEvent>): Promise<IEvent>;
   deleteEvent(id: string, eventId: string): Promise<IEvent>;
   acceptEvent(id: string, eventId: string): Promise<IEvent>;
@@ -26,7 +26,7 @@ class EventRepository {
       eventDate: { $gte: new Date() },
       isAccepted: true,
     })
-      .populate("user", "firstName phoneNumber email")
+      .populate("owner", "firstName phoneNumber email")
       .lean()
       .exec();
   }
@@ -54,12 +54,16 @@ class EventRepository {
     return EventModel.find({ user: userId }).lean().exec();
   }
 
-  async createEvent(userId: string, data: IEvent): Promise<IEvent> {
+  async createEvent(
+    user: { id: string; role: string },
+    data: IEvent,
+  ): Promise<IEvent> {
     await DBInstance.getConnection();
 
     const event = await EventModel.create({
       ...data,
-      user: userId,
+      owner: user.id,
+      ownerModel: user.role === "organizer" ? "User" : "Restaurant",
     });
 
     return event.toObject();
