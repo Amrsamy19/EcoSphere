@@ -27,7 +27,8 @@ const RecycleAgentForm: React.FC<Props> = ({
     birthDate: "",
     email: "",
     phoneNumber: "",
-    type: "independent",
+    role: "recycleAgent",
+    agentType: "independent",
     password: "",
   });
 
@@ -42,7 +43,7 @@ const RecycleAgentForm: React.FC<Props> = ({
     /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password);
 
   const handleFormChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
 
@@ -101,7 +102,8 @@ const RecycleAgentForm: React.FC<Props> = ({
       birthDate: "",
       email: "",
       phoneNumber: "",
-      type: "independent",
+      agentType: "independent",
+      role: "recycleAgent",
       password: "",
     });
 
@@ -215,7 +217,11 @@ const RecycleAgentForm: React.FC<Props> = ({
             >
               {t("form.cancel")}
             </Button>
-            <Button type="submit" disabled={isSubmitting} className="  cursor-pointer hover:scale-105">
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              className="  cursor-pointer hover:scale-105"
+            >
               {isSubmitting ? "Loading..." : t("form.submit")}
             </Button>
           </div>

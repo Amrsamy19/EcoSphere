@@ -1,12 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
-import {
-  MdCheckCircleOutline,
-  MdRecycling,
-  MdGroups,
-} from "react-icons/md";
+import { MdCheckCircleOutline, MdRecycling, MdGroups } from "react-icons/md";
 import { RiNumbersLine } from "react-icons/ri";
 import { useTranslations } from "next-intl";
+import { RecycleAgent } from "@/types/recycleAgent";
 
 const RecycleAgentHero = () => {
   const t = useTranslations("Admin.RecycleAgents");
@@ -23,7 +20,11 @@ const RecycleAgentHero = () => {
           setAgents(list);
         } else {
           const txt = await response.text().catch(() => "");
-          console.error("Failed to fetch recycle agents:", response.status, txt);
+          console.error(
+            "Failed to fetch recycle agents:",
+            response.status,
+            txt,
+          );
         }
       } catch (error) {
         console.error("Failed to fetch recycle agents:", error);
@@ -42,12 +43,16 @@ const RecycleAgentHero = () => {
     },
     {
       label: t("stats.organizational"),
-      value: agents.filter((agent) => agent.type === "organizational").length,
+      value: agents.filter(
+        (agent: RecycleAgent) => agent.agentType === "organizational",
+      ).length,
       icon: <MdGroups className="w-5 h-5" />,
     },
     {
       label: t("stats.independent"),
-      value: agents.filter((agent) => agent.type === "independent").length,
+      value: agents.filter(
+        (agent: RecycleAgent) => agent.agentType === "independent",
+      ).length,
       icon: <MdCheckCircleOutline className="w-5 h-5" />,
     },
   ];

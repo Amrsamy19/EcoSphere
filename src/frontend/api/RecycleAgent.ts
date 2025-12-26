@@ -1,4 +1,7 @@
-import type { RecycleAgent, NewRecycleAgentFormData } from "@/types/recycleAgent";
+import type {
+  RecycleAgent,
+  NewRecycleAgentFormData,
+} from "@/types/recycleAgent";
 
 interface ApiResponse<T> {
   success: boolean;
@@ -9,9 +12,9 @@ interface ApiResponse<T> {
 /**
  * Fetch all recycle agents
  */
-export async function fetchRecycleAgents(): Promise<RecycleAgent[]> {
+export async function fetchRecycleAgents(): Promise<any> {
   try {
-    const response = await fetch("/api/recycle-agents", {
+    const response = await fetch("/api/users/recycle/agents", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -22,8 +25,9 @@ export async function fetchRecycleAgents(): Promise<RecycleAgent[]> {
       throw new Error(`Failed to fetch agents: ${response.statusText}`);
     }
 
-    const result: ApiResponse<RecycleAgent[]> = await response.json();
-    return result.data || [];
+    const result = await response.json();
+    console.log(result?.data?.data);
+    return result.data;
   } catch (error) {
     console.error("Error fetching recycle agents:", error);
     throw error;
@@ -34,10 +38,10 @@ export async function fetchRecycleAgents(): Promise<RecycleAgent[]> {
  * Create a new recycle agent
  */
 export async function createRecycleAgent(
-  formData: NewRecycleAgentFormData
+  formData: NewRecycleAgentFormData,
 ): Promise<RecycleAgent> {
   try {
-    const response = await fetch("/api/recycle-agents", {
+    const response = await fetch("/api/users/recycle/agents/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -50,7 +54,9 @@ export async function createRecycleAgent(
 
     if (!response.ok) {
       const error = await response.json().catch(() => ({}));
-      throw new Error(error.message || `Failed to create agent: ${response.statusText}`);
+      throw new Error(
+        error.message || `Failed to create agent: ${response.statusText}`,
+      );
     }
 
     const result: ApiResponse<RecycleAgent> = await response.json();
@@ -70,10 +76,11 @@ export async function createRecycleAgent(
  */
 export async function updateRecycleAgentStatus(
   id: string,
-  isActive: boolean
+  isActive: boolean,
 ): Promise<RecycleAgent> {
   try {
-    const response = await fetch(`/api/recycle-agents/${id}`, {
+    // console.log(isActive);
+    const response = await fetch(`/api/users/recycle/agents/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -83,14 +90,14 @@ export async function updateRecycleAgentStatus(
 
     if (!response.ok) {
       const error = await response.json().catch(() => ({}));
-      throw new Error(error.message || `Failed to update agent: ${response.statusText}`);
+      throw new Error(
+        error.message || `Failed to update agent: ${response.statusText}`,
+      );
     }
-
     const result: ApiResponse<RecycleAgent> = await response.json();
     if (!result.data) {
       throw new Error("No agent data returned from server");
     }
-
     return result.data;
   } catch (error) {
     console.error("Error updating recycle agent status:", error);
@@ -112,7 +119,9 @@ export async function deleteRecycleAgent(id: string): Promise<void> {
 
     if (!response.ok) {
       const error = await response.json().catch(() => ({}));
-      throw new Error(error.message || `Failed to delete agent: ${response.statusText}`);
+      throw new Error(
+        error.message || `Failed to delete agent: ${response.statusText}`,
+      );
     }
   } catch (error) {
     console.error("Error deleting recycle agent:", error);

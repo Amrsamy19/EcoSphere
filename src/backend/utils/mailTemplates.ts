@@ -23,7 +23,7 @@ const baseStyles = {
 
 const formatName = (name?: string) => name?.trim() || "EcoSphere friend";
 
-export type UserType = "customer" | "organizer" | "shop";
+export type UserType = "customer" | "organizer" | "shop" | "recycleAgent";
 
 export function getRegistrationSubject(userType: UserType): string {
   switch (userType) {
@@ -129,7 +129,7 @@ export function shopWelcomeTemplate(user: BasicUserInfo): string {
 
 export function getRegistrationTemplate(
   userType: UserType,
-  user: BasicUserInfo
+  user: BasicUserInfo,
 ): string {
   switch (userType) {
     case "customer":
@@ -156,7 +156,7 @@ export function newEventSubject(event: Partial<EventInfo>): string {
 
 export function newEventTemplate(
   user: BasicUserInfo,
-  event: EventInfo
+  event: EventInfo,
 ): string {
   const name = formatName(user.name);
 
@@ -198,7 +198,7 @@ export const redeemCouponTemplate = (
   code: string,
   validTo: Date,
   rate: number,
-  name: string = "EcoSphere friend"
+  name: string = "EcoSphere friend",
 ): string => {
   return `
     <div style="${baseStyles.wrapper}">
@@ -259,7 +259,7 @@ export const redeemCouponTemplate = (
 export const forgetPasswordTemplate = (
   code: string,
   validTo: string,
-  name: string = "EcoSphere friend"
+  name: string = "EcoSphere friend",
 ): string => {
   return `
     <div style="${baseStyles.wrapper}">

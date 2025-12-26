@@ -1,18 +1,26 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Store, Plus } from "lucide-react";
 import Pagination from "@/components/ui/Pagination";
 import { useTranslations } from "next-intl";
 import RecycleAgentForm from "./recycleAgentForm";
-import type { RecycleAgent, NewRecycleAgentFormData } from "@/types/recycleAgent";
+import {
+  mapUserToAgent,
+  type RecycleAgent,
+  type NewRecycleAgentFormData,
+} from "@/types/recycleAgent";
 import {
   fetchRecycleAgents,
   createRecycleAgent,
   updateRecycleAgentStatus,
 } from "@/frontend/api/RecycleAgent";
+import { PagingMeta } from "@/backend/features/user/user.types";
+import { UserRole } from "@/backend/features/user/user.model";
+import { UserType } from "@/backend/utils/mailTemplates";
 
 const RecycleAgentTable = () => {
   const t = useTranslations("Admin.RecycleAgents");
+  const [pagingData, setPagingData] = useState<PagingMeta | null>(null);
   const [agents, setAgents] = useState<RecycleAgent[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [showForm, setShowForm] = useState<boolean>(false);
@@ -23,7 +31,8 @@ const RecycleAgentTable = () => {
     const load = async () => {
       try {
         const list = await fetchRecycleAgents();
-        setAgents(list);
+        setAgents(mapUserToAgent(list.data));
+        setPagingData(list.meta);
       } catch (err) {
         console.error("Failed to load recycle agents:", err);
       } finally {
@@ -34,15 +43,15 @@ const RecycleAgentTable = () => {
     load();
   }, []);
 
-  const toggleStatus = async (id: string, currentStatus: boolean): Promise<void> => {
-    // Avoid toggling temporary optimistic entries that don't have a server id yet
-    if (id.startsWith("temp-")) {
-      console.warn("Attempted to toggle status for a temp agent before server persisted it:", id);
-      return;
-    }
+  const toggleStatus = async (
+    id: string,
+    currentStatus: boolean,
+  ): Promise<void> => {
     // Optimistic update
     setAgents((prev) =>
-      prev.map((agent) => (agent._id === id ? { ...agent, isActive: !agent.isActive } : agent))
+      prev.map((agent) =>
+        agent.id === id ? { ...agent, isActive: !agent.isActive } : agent,
+      ),
     );
 
     try {
@@ -50,7 +59,9 @@ const RecycleAgentTable = () => {
     } catch (err) {
       // Revert optimistic update on failure
       setAgents((prev) =>
-        prev.map((agent) => (agent._id === id ? { ...agent, isActive: currentStatus } : agent))
+        prev.map((agent) =>
+          agent.id === id ? { ...agent, isActive: currentStatus } : agent,
+        ),
       );
       console.error("Error updating agent status:", err);
       alert(t("table.toasts.updateError") || "Failed to update agent status");
@@ -63,26 +74,30 @@ const RecycleAgentTable = () => {
     // optimistic add (temporary id)
     const tempId = `temp-${Date.now()}`;
     const tempAgent = {
-      _id: tempId,
+      id: tempId,
       firstName: formData.firstName,
       lastName: formData.lastName,
       email: formData.email,
       phoneNumber: formData.phoneNumber,
       birthDate: formData.birthDate,
-      type: formData.type,
+      type: "recycleAgent",
+      agnetType: "independent",
       isActive: true,
     };
 
     setAgents((prev) => [tempAgent, ...prev]);
 
     try {
-      const created = await createRecycleAgent(formData);
+      const created = await createRecycleAgent({
+        ...formData,
+        role: "recycleAgent" as UserType,
+      });
       // replace temp
-      setAgents((prev) => prev.map((a) => (a._id === tempId ? created : a)));
+      setAgents((prev) => prev.map((a) => (a.id === tempId ? created : a)));
       setShowForm(false);
       alert(t("form.toasts.success"));
     } catch (err) {
-      setAgents((prev) => prev.filter((a) => a._id !== tempId));
+      setAgents((prev) => prev.filter((a) => a.id !== tempId));
       console.error("Error creating recycle agent:", err);
       alert(t("form.toasts.error"));
     } finally {
@@ -139,14 +154,17 @@ const RecycleAgentTable = () => {
               <tbody className="divide-y divide-primary">
                 {agents.length === 0 ? (
                   <tr>
-                    <td colSpan={4} className="px-6 py-8 text-center text-foreground/60">
+                    <td
+                      colSpan={4}
+                      className="px-6 py-8 text-center text-foreground/60"
+                    >
                       No recycle agents found.
                     </td>
                   </tr>
                 ) : (
                   agents.map((agent) => (
                     <tr
-                      key={agent._id}
+                      key={agent.id}
                       className="hover:bg-primary/10 transition-colors text-center"
                     >
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -167,9 +185,9 @@ const RecycleAgentTable = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <button
-                          onClick={() => toggleStatus(agent._id, agent.isActive)}
-                          disabled={agent._id?.toString().startsWith("temp-")}
-                          className={`myBtnPrimary text-sm p-2 px-3 ${agent._id?.toString().startsWith("temp-") ? "opacity-50 cursor-not-allowed" : ""}`}
+                          onClick={() => toggleStatus(agent.id, agent.isActive)}
+                          disabled={agent.id?.toString().startsWith("temp-")}
+                          className={`myBtnPrimary text-sm p-2 px-3 ${agent.id?.toString().startsWith("temp-") ? "opacity-50 cursor-not-allowed" : ""}`}
                         >
                           {agent.isActive
                             ? t("table.actions.disable")
@@ -183,7 +201,10 @@ const RecycleAgentTable = () => {
             </table>
           </div>
         </div>
-        <Pagination />
+        <Pagination
+          currentPage={pagingData?.page}
+          totalPages={pagingData?.total}
+        />
       </div>
     </div>
   );

@@ -3,10 +3,10 @@ import RecycleAgentHero from "@/components/layout/Dashboard/Admin/recycleAgent/r
 
 const page = () => {
   return (
-    <div>
+    <>
       <RecycleAgentHero />
       <RecycleAgentTable />
-    </div>
+    </>
   );
 };
 
