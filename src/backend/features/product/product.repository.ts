@@ -12,38 +12,38 @@ import {
 
 export interface IProductRepository {
   findAllProducts(
-    options?: ProductPageOptions,
+    options?: ProductPageOptions
   ): Promise<PaginatedProductResponse>;
   findProductById(productId: string): Promise<ProductResponse | null>;
   findProductsByRestaurantId(
     restaurantId: string,
-    options?: ProductPageOptions,
+    options?: ProductPageOptions
   ): Promise<PaginatedProductResponse | ProductResponse[]>;
   addProduct(
     restaurantId: string,
-    productData: CreateProductDTO,
+    productData: CreateProductDTO
   ): Promise<IRestaurant | null>;
   updateProduct(
     restaurantId: string,
     productId: string,
-    productData: UpdateProductDTO,
+    productData: UpdateProductDTO
   ): Promise<IRestaurant | null>;
   deleteProduct(
     restaurantId: string,
-    productId: string,
+    productId: string
   ): Promise<IRestaurant | null>;
   addProductReview(productId: string, review: any): Promise<IRestaurant | null>;
   decreaseStock(
     restaurantId: string,
     productId: string,
-    quantityToDecrease: number,
+    quantityToDecrease: number
   ): Promise<IRestaurant | null>;
 }
 
 @injectable()
 export class ProductRepository implements IProductRepository {
   async findAllProducts(
-    options?: ProductPageOptions,
+    options?: ProductPageOptions
   ): Promise<PaginatedProductResponse> {
     await DBInstance.getConnection();
 
@@ -89,23 +89,6 @@ export class ProductRepository implements IProductRepository {
           itemRating: "$menus.itemRating",
         },
       },
-      {
-        $group: {
-          _id: "$restaurantId",
-          restaurantName: { $first: "$restaurantName" },
-          title: { $first: "$title" },
-          subtitle: { $first: "$subtitle" },
-          price: { $first: "$price" },
-          avatar: { $first: "$avatar" },
-          availableOnline: { $first: "$availableOnline" },
-          sustainabilityScore: { $first: "$sustainabilityScore" },
-          sustainabilityReason: { $first: "$sustainabilityReason" },
-          category: { $first: "$category" },
-          quantity: { $first: "$quantity" },
-          inStock: { $first: "$inStock" },
-          itemRating: { $first: "$itemRating" },
-        },
-      },
     ];
 
     if (sort === "priceLow") {
@@ -116,7 +99,6 @@ export class ProductRepository implements IProductRepository {
       pipeline.push({ $sort: { price: -1 } });
     }
 
-    //Optional search & category filters
     const matchConditions: any[] = [];
 
     if (search.trim()) {
@@ -142,7 +124,6 @@ export class ProductRepository implements IProductRepository {
       });
     }
 
-    //Pagination
     pipeline.push({
       $facet: {
         metadata: [{ $count: "total" }],
@@ -196,7 +177,7 @@ export class ProductRepository implements IProductRepository {
 
   async findProductsByRestaurantId(
     restaurantId: string,
-    options?: ProductPageOptions,
+    options?: ProductPageOptions
   ): Promise<PaginatedProductResponse> {
     await DBInstance.getConnection();
 
@@ -295,7 +276,7 @@ export class ProductRepository implements IProductRepository {
 
   async addProduct(
     restaurantId: string,
-    productData: CreateProductDTO,
+    productData: CreateProductDTO
   ): Promise<IRestaurant | null> {
     await DBInstance.getConnection();
     return await RestaurantModel.findByIdAndUpdate(
@@ -303,14 +284,14 @@ export class ProductRepository implements IProductRepository {
       {
         $push: { menus: productData },
       },
-      { new: true, runValidators: true },
+      { new: true, runValidators: true }
     ).exec();
   }
 
   async updateProduct(
     restaurantId: string,
     productId: string,
-    productData: UpdateProductDTO,
+    productData: UpdateProductDTO
   ): Promise<IRestaurant | null> {
     await DBInstance.getConnection();
 
@@ -322,13 +303,13 @@ export class ProductRepository implements IProductRepository {
     return await RestaurantModel.findOneAndUpdate(
       { _id: restaurantId, "menus._id": productId },
       { $set: updateQuery },
-      { new: true },
+      { new: true }
     ).exec();
   }
 
   async deleteProduct(
     restaurantId: string,
-    productId: string,
+    productId: string
   ): Promise<IRestaurant | null> {
     await DBInstance.getConnection();
     return await RestaurantModel.findByIdAndUpdate(
@@ -336,13 +317,13 @@ export class ProductRepository implements IProductRepository {
       {
         $pull: { menus: { _id: productId } },
       },
-      { new: true },
+      { new: true }
     ).exec();
   }
 
   async addProductReview(
     productId: string,
-    review: any,
+    review: any
   ): Promise<IRestaurant | null> {
     await DBInstance.getConnection();
     return await RestaurantModel.findOneAndUpdate(
@@ -350,14 +331,14 @@ export class ProductRepository implements IProductRepository {
       {
         $push: { "menus.$.itemRating": review },
       },
-      { new: true },
+      { new: true }
     ).exec();
   }
 
   async decreaseStock(
     restaurantId: string,
     productId: string,
-    quantityToDecrease: number,
+    quantityToDecrease: number
   ): Promise<IRestaurant | null> {
     await DBInstance.getConnection();
 
@@ -371,7 +352,7 @@ export class ProductRepository implements IProductRepository {
       {
         $inc: { "menus.$.quantity": -quantityToDecrease },
       },
-      { new: true },
+      { new: true }
     ).exec();
   }
 }

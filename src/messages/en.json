@@ -597,7 +597,8 @@
         "orderId": "Order ID",
         "date": "Date",
         "total": "Total",
-        "status": "Status"
+        "status": "Status",
+        "loading": "Loading..."
       },
       "recyclingHistory": {
         "title": "Recycling History",
