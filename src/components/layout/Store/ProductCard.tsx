@@ -25,6 +25,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { IProduct } from "@/types/ProductType";
+import Link from "next/link";
 
 interface ProductCardProps {
   product: IProduct;
@@ -59,15 +60,14 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
   const dispatch = useAppDispatch();
   const isFav = useSelector((state: RootState) =>
-    isInFavSelector(state, safeId),
+    isInFavSelector(state, safeId)
   );
   const isInCart = useSelector((state: RootState) =>
-    isInCartSelector(state, safeId),
+    isInCartSelector(state, safeId)
   );
 
   const handleFav = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    console.log(safeId);
     // Use partial object logic or ensure FavSlice handles it
     dispatch(toggleFavoriteAsync({ ...product, id: safeId } as IProduct));
     if (isFav) {
@@ -100,7 +100,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           availableOnline: product.availableOnline || false,
           sustainabilityScore,
           sustainabilityReason,
-        }),
+        })
       );
       toast.success(t("addedToCart"));
     }
@@ -139,7 +139,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
         </div>
         {/* Removed blue dot since badge is better indicator, or keep it if it means 'active' */}
         <div
-          className={`rounded-full w-3 h-3 bg-primary shrink-0 mr-5 ${availableOnline ? "bg-green-500" : "bg-red-500/60"}`}
+          className={`rounded-full w-3 h-3 bg-primary shrink-0 mr-5 ${
+            availableOnline ? "bg-green-500" : "bg-red-500/60"
+          }`}
         ></div>
       </div>
 
@@ -171,7 +173,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
               <TooltipTrigger asChild>
                 <div
                   className={` w-fit px-2 py-1 rounded-full text-xs font-bold flex items-center gap-1 shadow-md cursor-help ${getScoreColor(
-                    sustainabilityScore,
+                    sustainabilityScore
                   )}`}
                 >
                   <span>🌿</span>

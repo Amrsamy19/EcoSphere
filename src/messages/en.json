@@ -65,7 +65,8 @@
         "orders": "Orders",
         "shops": "Shops",
         "events": "Events",
-        "recycling": "Recycling"
+        "recycling": "Recycling",
+        "news": "News"
       },
       "footer": {
         "favorite": "Favorite",
@@ -535,7 +536,17 @@
       "shopStep3": {
         "title": "Shop Details",
         "location": "Enter shop location",
-        "workingHours": "e.g., Mon-Fri 9:00 AM - 6:00 PM"
+        "workingHours": "e.g., Mon-Fri 9:00 AM - 6:00 PM",
+
+        "selectCategory": "Select a category",
+        "categories": {
+          "supermarket": "Supermarket",
+          "hypermarket": "Hypermarket",
+          "grocery": "Grocery",
+          "bakery": "Bakery",
+          "cafe": "Cafe",
+          "other": "Other"
+        }
       },
       "lastStep": {
         "title": "Final Step",
@@ -587,13 +598,19 @@
       "recyclingHistory": {
         "title": "Recycling History",
         "date": "Date",
-        "items": "Items",
+        "createdAt": "Created At",
+        "updatedAt": "last Update was at",
+        "items": "items count",
         "itemsCount": "items",
-        "weight": "Weight (kg)",
+        "weight": "es. Weight (kg)",
         "carbonSaved": "Carbon Saved",
         "status": "Status",
         "verified": "Verified",
         "pending": "Pending",
+        "completed": "Completed",
+        "review": "Review",
+        "rejected": "Rejected",
+        "processing": "Processing",
         "noRecyclingOrders": "No recycling orders yet",
         "noRecyclingOrdersDescription": "Start recycling to see your eco-impact here",
         "browseRecycling": "Start Recycling"
