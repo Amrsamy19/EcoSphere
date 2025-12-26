@@ -115,7 +115,8 @@ export class ToolExecutor {
 
         // ==================== ORDER READ METHODS ====================
         case "getRecentOrders":
-          return await this.orderRepo.getRecentOrders(args.limit || 10);
+          if (!session?.userId) throw new Error("AUTHENTICATION_REQUIRED");
+          return await this.orderRepo.getOrdersByUser(session.userId);
 
         case "getTotalRevenue":
           return await this.orderRepo.getTotalRevenue();
