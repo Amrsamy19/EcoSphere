@@ -20,7 +20,7 @@ export default function DeleteEventBtn({
     if (res) {
       toast.success(t("success"));
       if (detailscard) {
-        router.push("/organizer/details");
+        router.push("/organizer/upcomingEvents");
       }
       router.refresh();
     }
@@ -31,7 +31,7 @@ export default function DeleteEventBtn({
   return detailscard ? (
     <Button
       onClick={() => onDelete(id)}
-      className="p-3 text-white bg-red-600 rounded-full hover:bg-red-700  transition duration-150"
+      className="p-3 text-white bg-red-600 rounded-full hover:bg-red-700   transition duration-150"
     >
       <RiDeleteBin6Fill className=" size-4 items-baseline " />
       {t("delete")}
