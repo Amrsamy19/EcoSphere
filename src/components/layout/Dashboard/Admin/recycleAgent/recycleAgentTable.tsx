@@ -105,7 +105,7 @@ const RecycleAgentTable = () => {
       />
 
       {/* Table Section */}
-      <div className="max-w-7xl mx-auto px-6 py-12 bg-secondary rounded-xl p-4 sm:p-6 lg:p-8">
+      <div className="max-w-7xl mx-auto px-6 my-10  bg-secondary rounded-xl p-4 sm:p-6 lg:p-8">
         {/* Add Button - Right Side */}
         <div className="mb-6 flex justify-end">
           <button
@@ -139,7 +139,7 @@ const RecycleAgentTable = () => {
               <tbody className="divide-y divide-primary">
                 {agents.length === 0 ? (
                   <tr>
-                    <td colSpan="4" className="px-6 py-8 text-center text-foreground/60">
+                    <td colSpan={4} className="px-6 py-8 text-center text-foreground/60">
                       No recycle agents found.
                     </td>
                   </tr>

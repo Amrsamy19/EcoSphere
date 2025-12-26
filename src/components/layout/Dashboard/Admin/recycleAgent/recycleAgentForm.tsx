@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { NewRecycleAgentFormData } from "@/types/recycleAgent";
+import { Button } from "@/components/ui/button";
 
 interface Props {
   isOpen: boolean;
@@ -67,14 +68,11 @@ const RecycleAgentForm: React.FC<Props> = ({
     if (!formData.firstName.trim())
       newErrors.firstName = "First name is required";
 
-    if (!formData.lastName.trim())
-      newErrors.lastName = "Last name is required";
+    if (!formData.lastName.trim()) newErrors.lastName = "Last name is required";
 
-    if (!formData.birthDate)
-      newErrors.birthDate = "Birth date is required";
+    if (!formData.birthDate) newErrors.birthDate = "Birth date is required";
 
-    if (!formData.email.trim())
-      newErrors.email = "Email is required";
+    if (!formData.email.trim()) newErrors.email = "Email is required";
     else if (!validateEmail(formData.email))
       newErrors.email = "Invalid email format";
 
@@ -85,8 +83,7 @@ const RecycleAgentForm: React.FC<Props> = ({
     else if (!formData.phoneNumber.startsWith("01"))
       newErrors.phoneNumber = "Phone number must start with 01";
 
-    if (!formData.password)
-      newErrors.password = "Password is required";
+    if (!formData.password) newErrors.password = "Password is required";
     else if (!validatePassword(formData.password))
       newErrors.password =
         "Password must be 8+ characters with at least 1 number and 1 special character";
@@ -122,7 +119,7 @@ const RecycleAgentForm: React.FC<Props> = ({
           </h2>
           <button
             onClick={onClose}
-            className="text-foreground/60 hover:text-foreground"
+            className="bg-primary text-primary-foreground p-2 rounded-full cursor-pointer hover:scale-105"
           >
             <X className="w-5 h-5" />
           </button>
@@ -130,31 +127,27 @@ const RecycleAgentForm: React.FC<Props> = ({
 
         <form onSubmit={handleFormSubmit} className="space-y-4">
           {[
-              { name: "firstName", label: t("form.firstName"), type: "text" },
-              { name: "lastName", label: t("form.lastName"), type: "text" },
-              { name: "email", label: t("form.email"), type: "email" },
-            ].map(({ name, label, type }) => (
-              <div key={name}>
-                <label className="block text-sm font-medium mb-1">{label}</label>
-                <input
-                  type={type}
-                  name={name}
-                  value={(formData as any)[name]}
-                  placeholder={label}
-                  onChange={handleFormChange}
-                  className={`w-full px-3 py-2 border rounded-lg bg-background ${
-                    errors[name]
-                      ? "border-destructive"
-                      : "border-primary/20"
-                  }`}
-                />
-                {errors[name] && (
-                  <p className="text-destructive text-xs mt-1">
-                    {errors[name]}
-                  </p>
-                )}
-              </div>
-            ))}
+            { name: "firstName", label: t("form.firstName"), type: "text" },
+            { name: "lastName", label: t("form.lastName"), type: "text" },
+            { name: "email", label: t("form.email"), type: "email" },
+          ].map(({ name, label, type }) => (
+            <div key={name}>
+              <label className="block text-sm font-medium mb-1">{label}</label>
+              <input
+                type={type}
+                name={name}
+                value={(formData as any)[name]}
+                placeholder={label}
+                onChange={handleFormChange}
+                className={`w-full px-3 py-2 border rounded-lg bg-background ${
+                  errors[name] ? "border-destructive" : "border-primary/20"
+                }`}
+              />
+              {errors[name] && (
+                <p className="text-destructive text-xs mt-1">{errors[name]}</p>
+              )}
+            </div>
+          ))}
 
           <div>
             <label className="block text-sm font-medium mb-1">Birthdate</label>
@@ -173,7 +166,9 @@ const RecycleAgentForm: React.FC<Props> = ({
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Phone Number</label>
+            <label className="block text-sm font-medium mb-1">
+              Phone Number
+            </label>
             <input
               type="tel"
               inputMode="numeric"
@@ -183,9 +178,7 @@ const RecycleAgentForm: React.FC<Props> = ({
               maxLength={11}
               placeholder="01xxxxxxxxx"
               className={`w-full px-3 py-2 border rounded-lg bg-background ${
-                errors.phoneNumber
-                  ? "border-destructive"
-                  : "border-primary/20"
+                errors.phoneNumber ? "border-destructive" : "border-primary/20"
               }`}
             />
             {errors.phoneNumber && (
@@ -205,33 +198,26 @@ const RecycleAgentForm: React.FC<Props> = ({
               value={formData.password}
               onChange={handleFormChange}
               className={`w-full px-3 py-2 border rounded-lg bg-background ${
-                errors.password
-                  ? "border-destructive"
-                  : "border-primary/20"
+                errors.password ? "border-destructive" : "border-primary/20"
               }`}
             />
             {errors.password && (
-              <p className="text-destructive text-xs mt-1">
-                {errors.password}
-              </p>
+              <p className="text-destructive text-xs mt-1">{errors.password}</p>
             )}
           </div>
 
-          <div className="flex gap-2 pt-4">
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="myBtnPrimary flex-1 disabled:opacity-50"
-            >
-              {isSubmitting ? "Loading..." : t("form.submit")}
-            </button>
-            <button
+          <div className="flex justify-center  md:justify-end gap-2 ">
+            <Button
               type="button"
               onClick={onClose}
-              className="flex-1 bg-primary/20 rounded-lg"
+              className=" cursor-pointer hover:scale-105"
+              variant={"outline"}
             >
               {t("form.cancel")}
-            </button>
+            </Button>
+            <Button type="submit" disabled={isSubmitting} className="  cursor-pointer hover:scale-105">
+              {isSubmitting ? "Loading..." : t("form.submit")}
+            </Button>
           </div>
         </form>
       </div>
