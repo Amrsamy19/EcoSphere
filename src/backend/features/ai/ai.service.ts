@@ -22,7 +22,7 @@ export interface IAIService {
 @injectable()
 export class AIService implements IAIService {
   private readonly hfToken = process.env.HUGGING_FACE_ACCESS_TOKEN;
-  private readonly model = "meta-llama/Meta-Llama-3-8B-Instruct";
+  private readonly model = "Qwen/Qwen2.5-7B-Instruct";
   // The new standard router URL for OpenAI-compatible chat completions
   private readonly apiUrl = "https://router.huggingface.co/v1/chat/completions";
 
@@ -144,6 +144,9 @@ export class AIService implements IAIService {
         });
 
         if (!response.ok) {
+          const errorText = await response.text();
+          console.error(`HF API Error (${response.status}):`, errorText);
+
           if (response.status === 429) {
             throw new Error("RATE_LIMIT");
           }

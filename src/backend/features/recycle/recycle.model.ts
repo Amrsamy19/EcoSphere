@@ -25,6 +25,8 @@ export interface IRecycle extends Document {
   totalCarbonSaved?: number;
   imageKeys?: string[];
   isVerified?: boolean;
+  status?: "pending" | "approved" | "completed" | "rejected";
+  assignedTo?: string; // ID of the RecycleMan assigned
   createdAt: Date;
   updatedAt?: Date;
 }
@@ -53,6 +55,12 @@ export const recycleSchema = new Schema<IRecycle>(
     totalCarbonSaved: { type: Number, default: 0 },
     imageKeys: [{ type: String }],
     isVerified: { type: Boolean, default: false },
+    status: {
+      type: String,
+      enum: ["pending", "approved", "completed", "rejected"],
+      default: "pending",
+    },
+    assignedTo: { type: String },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
   },

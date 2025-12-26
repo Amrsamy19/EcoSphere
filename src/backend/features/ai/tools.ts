@@ -538,6 +538,30 @@ export const AI_TOOLS = [
       },
     },
   },
+  {
+    type: "function",
+    function: {
+      name: "viewMyCart",
+      description:
+        "Get all items currently in the user's shopping cart. Use when user asks 'what's in my cart' or 'view cart'. Requires authentication.",
+      parameters: {
+        type: "object",
+        properties: {},
+      },
+    },
+  },
+  {
+    type: "function",
+    function: {
+      name: "viewMyFavorites",
+      description:
+        "Get all products the user has added to their favorites. Use when user asks 'show my favorites' or 'view favorites'. Requires authentication.",
+      parameters: {
+        type: "object",
+        properties: {},
+      },
+    },
+  },
 
   // ==================== RESTAURANT CRUD OPERATIONS ====================
   {
@@ -669,8 +693,15 @@ export const AI_TOOLS = [
           },
           status: {
             type: "string",
-            enum: ["pending", "processing", "completed", "cancelled"],
-            description: "New order status",
+            enum: [
+              "pending",
+              "preparing",
+              "delivering",
+              "completed",
+              "canceled",
+            ],
+            description:
+              "New order status (pending, preparing, delivering, completed, canceled)",
           },
         },
         required: ["orderId", "status"],
@@ -704,12 +735,44 @@ export const AI_TOOLS = [
             type: "string",
             description: "Event description",
           },
-          maxAttendees: {
+          type: {
+            type: "string",
+            enum: [
+              "environmental_seminar",
+              "community_cleanup",
+              "sustainable_brands_showcase",
+              "other",
+            ],
+            description: "Category of the event",
+          },
+          ticketPrice: {
             type: "number",
-            description: "Maximum number of attendees (optional)",
+            description: "Price of the ticket (0 for free)",
+            default: 0,
+          },
+          capacity: {
+            type: "number",
+            description: "Maximum number of attendees",
+            default: 50,
+          },
+          startTime: {
+            type: "string",
+            description: "Event start time (e.g., '10:00 AM')",
+          },
+          endTime: {
+            type: "string",
+            description: "Event end time (e.g., '02:00 PM')",
           },
         },
-        required: ["title", "date", "location", "description"],
+        required: [
+          "title",
+          "date",
+          "location",
+          "description",
+          "type",
+          "startTime",
+          "endTime",
+        ],
       },
     },
   },

@@ -146,6 +146,39 @@ export class ToolExecutor {
         case "getTopUsersByPoints":
           return await this.userRepo.getTopUsersByPoints(args.limit || 10);
 
+        case "viewMyCart":
+          if (!session?.userId) throw new Error("AUTHENTICATION_REQUIRED");
+          const userWithCart = await this.userRepo.getById(session.userId);
+          const cartItems = userWithCart.cart || [];
+
+          // Enrich cart items with product details
+          const enrichedCart = await Promise.all(
+            cartItems.map(async (item: any) => {
+              const product = await this.productRepo.findProductById(
+                item.productId.toString()
+              );
+              return {
+                ...item,
+                productTitle: product?.title || "Unknown Product",
+                productPrice: product?.price || 0,
+              };
+            })
+          );
+          return enrichedCart;
+
+        case "viewMyFavorites":
+          if (!session?.userId) throw new Error("AUTHENTICATION_REQUIRED");
+          const userWithFavs = await this.userRepo.getById(session.userId);
+          if (
+            !userWithFavs.favoritesIds ||
+            userWithFavs.favoritesIds.length === 0
+          ) {
+            return [];
+          }
+          return await this.userRepo.getFavoriteMenuItems(
+            userWithFavs.favoritesIds as any
+          );
+
         // ==================== CUSTOMER CRUD OPERATIONS ====================
         case "addToCart":
           if (!session?.userId) throw new Error("AUTHENTICATION_REQUIRED");
@@ -207,9 +240,11 @@ export class ToolExecutor {
 
         case "removeFromFavorites":
           if (!session?.userId) throw new Error("AUTHENTICATION_REQUIRED");
-          // updateFavorites toggles, so calling it twice removes
-          // TODO: Check actual implementation - might need different method
-          await this.userRepo.updateFavorites(session.userId, args.productId);
+          // Repository has updateFavorites which toggles. To explicitly remove, we use pull.
+          await this.userRepo.updateById(session.userId, {
+            // @ts-ignore - Using MongoDB pull operator
+            $pull: { favoritesIds: args.productId },
+          } as any);
           return { success: true, message: "Removed from favorites" };
 
         // ==================== RESTAURANT CRUD OPERATIONS ====================
@@ -220,8 +255,9 @@ export class ToolExecutor {
             title: args.title,
             subtitle: args.description || "",
             price: args.price,
+            category: args.category,
             availableOnline: args.availableOnline ?? true,
-          });
+          } as any);
           return { success: true, message: "Product created successfully" };
 
         case "updateProduct":
@@ -238,7 +274,10 @@ export class ToolExecutor {
           await this.productRepo.updateProduct(
             session.restaurantId,
             args.productId,
-            updateData
+            {
+              ...args,
+              subtitle: args.description, // map description to subtitle
+            } as any
           );
           return { success: true, message: "Product updated successfully" };
 
@@ -269,57 +308,107 @@ export class ToolExecutor {
         case "updateOrderStatus":
           if (!session?.restaurantId)
             throw new Error("RESTAURANT_AUTH_REQUIRED");
-          // TODO: Implement order status update with restaurant ownership check
+
+          const order = await this.orderRepo.getOrderById(args.orderId);
+          if (!order) throw new Error("Order not found");
+
+          // Check if order belongs to this restaurant
+          if (order.restaurantId !== session.restaurantId) {
+            throw new Error("UNAUTHORIZED_ORDER_ACCESS");
+          }
+
+          await this.orderRepo.updateOrderStatus(args.orderId, {
+            status: args.status,
+          } as any);
+
           return {
             success: true,
-            message: "Order status updated (implementation pending)",
+            message: `Order status updated to ${args.status}`,
           };
 
         // ==================== ORGANIZER CRUD OPERATIONS ====================
         case "createEvent":
           if (!session?.userId || session.userRole !== "organizer")
             throw new Error("ORGANIZER_AUTH_REQUIRED");
-          // TODO: Implement event creation
+
+          const newEvent = await this.eventRepo.createEvent(session.userId, {
+            name: args.title,
+            eventDate: new Date(args.date),
+            locate: args.location,
+            description: args.description,
+            capacity: args.capacity || 50,
+            ticketPrice: args.ticketPrice || 0,
+            type: args.type,
+            startTime: args.startTime,
+            endTime: args.endTime,
+            isAccepted: false,
+            isEventNew: true,
+          } as any);
+
           return {
             success: true,
-            message: "Event created (implementation pending)",
+            message: "Event created successfully and is pending approval",
+            eventId: (newEvent as any)._id,
           };
 
         case "updateEvent":
           if (!session?.userId || session.userRole !== "organizer")
             throw new Error("ORGANIZER_AUTH_REQUIRED");
-          // TODO: Implement event update with ownership check
+
+          const updatedEvent = await this.eventRepo.updateEvent(
+            session.userId,
+            {
+              _id: args.eventId,
+              name: args.title,
+              locate: args.location,
+              ...args,
+            } as any
+          );
+
           return {
             success: true,
-            message: "Event updated (implementation pending)",
+            message: "Event updated successfully",
+            event: updatedEvent,
           };
 
         case "deleteEvent":
           if (!session?.userId || session.userRole !== "organizer")
             throw new Error("ORGANIZER_AUTH_REQUIRED");
-          // TODO: Implement event deletion with ownership check
+
+          await this.eventRepo.deleteEvent(session.userId, args.eventId);
+
           return {
             success: true,
-            message: "Event deleted (implementation pending)",
+            message: "Event deleted successfully",
           };
 
         // ==================== RECYCLEMAN CRUD OPERATIONS ====================
         case "updateRecyclingRequestStatus":
           if (!session?.userId || session.userRole !== "recycleMan")
             throw new Error("RECYCLEMAN_AUTH_REQUIRED");
-          // TODO: Implement recycling request status update
+
+          await this.recycleRepo.updateRecycleEntry(args.requestId, {
+            status: args.status,
+            isVerified: args.status === "completed",
+          });
+
           return {
             success: true,
-            message: "Request status updated (implementation pending)",
+            message: `Recycling request ${args.requestId} updated to ${args.status}`,
           };
 
         case "assignRecyclingRequest":
           if (!session?.userId || session.userRole !== "recycleMan")
             throw new Error("RECYCLEMAN_AUTH_REQUIRED");
-          // TODO: Implement request assignment
+
+          await this.recycleRepo.updateRecycleEntry(args.requestId, {
+            assignedTo: session.userId,
+            status: "approved",
+          } as any);
+
           return {
             success: true,
-            message: "Request assigned (implementation pending)",
+            message: "Recycling request assigned to you",
           };
 
         default:
@@ -349,6 +438,8 @@ export class ToolExecutor {
       "clearCart",
       "addToFavorites",
       "removeFromFavorites",
+      "viewMyCart",
+      "viewMyFavorites",
       // Restaurant tools
       "createProduct",
       "updateProduct",
@@ -380,6 +471,8 @@ export class ToolExecutor {
         "clearCart",
         "addToFavorites",
         "removeFromFavorites",
+        "viewMyCart",
+        "viewMyFavorites",
       ].includes(toolName)
     ) {
       if (!session.userId) {
