@@ -126,7 +126,7 @@ export default function ManageEvent({
         await PostEvent(formData);
         toast.success(t("successCreate"));
       }
-      router.push("/organizer/details");
+      router.push("/organizer/upcomingEvents");
     } catch (err) {
       console.error(err);
       toast.error(t("error"));
