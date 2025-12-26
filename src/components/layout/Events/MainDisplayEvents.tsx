@@ -5,7 +5,7 @@ import { SearchIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Input } from "@/components/ui/input";
-import EventCard from "./EventCard";
+import EventCard from "../common/events/EventCard";
 import { useTranslations } from "next-intl";
 import {
   Select,
@@ -19,13 +19,7 @@ export default function MainDisplayEvents({ events }: Readonly<EventProps>) {
   const t = useTranslations("Events.MainDisplayEvents");
   const [searchQuery, setSearchQuery] = useState("");
   const [priceFilter, setPriceFilter] = useState<"all" | "free" | "paid">("all");
-
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(event.target.value);
-  };
-
   const now = new Date();
-
   const filteredEvents = events
     .filter((event) => event.isAccepted === true)
     .filter((event) =>
@@ -41,9 +35,9 @@ export default function MainDisplayEvents({ events }: Readonly<EventProps>) {
       (a, b) =>
         new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime()
     );
-
-
-
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+  };
   return (
     <div className="flex flex-col gap-4 py-5">
       <div className="w-full gap-4 flex justify-center md:justify-end">

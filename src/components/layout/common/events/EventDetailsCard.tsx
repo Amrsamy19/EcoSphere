@@ -17,7 +17,7 @@ import { IoClose } from "react-icons/io5";
 import { ISubEvent } from "@/types/EventTypes";
 import UpdateEventBtn from "../../Dashboard/Events/DisplayEvents/UpdateEventBtn";
 import DeleteEventBtn from "../../Dashboard/Events/DisplayEvents/DeleteEventBtn";
-import AddAttendBtn from "./AddAttendBtn";
+import AddAttendBtn from "../../Events/AddAttendBtn";
 import { FaUserTie } from "react-icons/fa6";
 import { useTranslations, useLocale } from "next-intl";
 export default function EventDetailsCard({

@@ -9,7 +9,7 @@ import EventDetailsCard from "./EventDetailsCard";
 import DeleteEventBtn from "../../Dashboard/Events/DisplayEvents/DeleteEventBtn";
 import UpdateEventBtn from "../../Dashboard/Events/DisplayEvents/UpdateEventBtn";
 import { usePathname } from "next/navigation";
-import AddAttendBtn from "./AddAttendBtn";
+import AddAttendBtn from "../../Events/AddAttendBtn";
 import { useSession } from "next-auth/react";
 import { EventStatus } from "@/types/EventTypes";
 import { FaUserTie } from "react-icons/fa6";
