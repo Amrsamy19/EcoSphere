@@ -165,11 +165,14 @@ export class ToolExecutor {
           // Enrich cart items with product details
           const enrichedCart = await Promise.all(
             cartItems.map(async (item: any) => {
+              // Ensure we have a plain object
+              const itemData = item.toObject ? item.toObject() : item;
               const product = await this.productRepo.findProductById(
-                item.productId.toString()
+                itemData.productId.toString()
               );
               return {
-                ...item,
+                productId: itemData.productId,
+                quantity: itemData.quantity || 1,
                 productTitle: product?.title || "Unknown Product",
                 productPrice: product?.price || 0,
               };
@@ -183,14 +186,20 @@ export class ToolExecutor {
             session.userId,
             "favoritesIds"
           );
+          console.log(userWithFavs);
+          // Ensure we have a plain object to avoid Mongoose-specific behavior
+          const userFavsObj = userWithFavs.toObject
+            ? userWithFavs.toObject()
+            : userWithFavs;
+
           if (
-            !userWithFavs.favoritesIds ||
-            userWithFavs.favoritesIds.length === 0
+            !userFavsObj.favoritesIds ||
+            userFavsObj.favoritesIds.length === 0
           ) {
             return [];
           }
           return await this.userRepo.getFavoriteMenuItems(
-            userWithFavs.favoritesIds as any
+            userFavsObj.favoritesIds
           );
 
         // ==================== CUSTOMER CRUD OPERATIONS ====================

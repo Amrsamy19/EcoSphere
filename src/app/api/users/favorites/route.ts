@@ -60,12 +60,25 @@ export const PATCH = async (
   }
 
   try {
-    const { favoritesIds } = await controller.updateFavorites(session.id, ids);
+    let result;
+    if (Array.isArray(ids)) {
+      // Syncing multiple favorites (e.g., from Guest session)
+      const { favoritesIds } = await controller.saveFavorites(session.id, ids);
+      result = await controller.getFavoriteMenuItems(favoritesIds as string[]);
+    } else if (ids === "clear") {
+      // Clearing all favorites
+      const { favoritesIds } = await controller.clearFavorites(session.id);
+      result = await controller.getFavoriteMenuItems(favoritesIds as string[]);
+    } else {
+      // Toggling a single favorite
+      const { favoritesIds } = await controller.updateFavorites(
+        session.id,
+        ids as string
+      );
+      result = await controller.getFavoriteMenuItems(favoritesIds as string[]);
+    }
 
-    const result = await controller.getFavoriteMenuItems(
-      favoritesIds as string[]
-    );
-    console.log(result, "form route")
+    console.log(result, "from route");
     return ok(result);
   } catch (error) {
     console.error(error);

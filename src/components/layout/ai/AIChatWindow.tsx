@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useRef, useEffect, useState } from "react";
-import { Send, X, Eraser, Sparkles } from "lucide-react";
+import React, { useRef, useEffect } from "react";
+import { X, Eraser, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ChatMessage } from "./ChatMessage";
 import { ThinkingIndicator } from "./ThinkingIndicator";
@@ -34,9 +34,7 @@ export const AIChatWindow: React.FC<AIChatWindowProps> = ({
   const t = useTranslations("AI.window");
   const locale = useLocale();
   const isRTL = locale === "ar";
-  const [input, setInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLTextAreaElement>(null);
   const { data: session } = useSession();
 
   // Determine user role for suggested prompts
@@ -49,14 +47,14 @@ export const AIChatWindow: React.FC<AIChatWindowProps> = ({
     | "admin" => {
     if (!session?.user) return "guest";
     const role = session.user.role as string;
-    if (
-      ["customer", "restaurant", "organizer", "recycleMan", "admin"].includes(
-        role
-      )
-    ) {
-      return role as any;
-    }
-    return "guest";
+    const validRoles = [
+      "customer",
+      "restaurant",
+      "organizer",
+      "recycleMan",
+      "admin",
+    ];
+    return validRoles.includes(role) ? (role as any) : "guest";
   };
 
   const scrollToBottom = () => {
@@ -66,28 +64,6 @@ export const AIChatWindow: React.FC<AIChatWindowProps> = ({
   useEffect(() => {
     scrollToBottom();
   }, [messages, isLoading, isOpen]);
-
-  // Focus input when opened
-  useEffect(() => {
-    if (isOpen) {
-      setTimeout(() => inputRef.current?.focus(), 100);
-    }
-  }, [isOpen]);
-
-  const handleSubmit = (e?: React.FormEvent) => {
-    e?.preventDefault();
-    if (!input.trim() || isLoading) return;
-
-    onSendMessage(input);
-    setInput("");
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleSubmit();
-    }
-  };
 
   const handlePromptClick = (promptText: string) => {
     onSendMessage(promptText);
@@ -100,7 +76,7 @@ export const AIChatWindow: React.FC<AIChatWindowProps> = ({
   return (
     <div
       className={cn(
-        "fixed bottom-24 w-[90vw] md:w-[400px] h-[600px] max-h-[75vh] bg-card text-card-foreground",
+        "fixed bottom-24 w-[90vw] md:w-[400px] h-[650px] max-h-[85vh] bg-card text-card-foreground",
         isRTL ? "left-6" : "right-6",
         "rounded-3xl shadow-2xl border border-border flex flex-col overflow-hidden z-60",
         "animate-in slide-in-from-bottom-10 fade-in duration-300"
@@ -135,31 +111,22 @@ export const AIChatWindow: React.FC<AIChatWindowProps> = ({
       </div>
 
       {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto p-5 space-y-4 bg-muted/30 scrollbar-thin scrollbar-thumb-muted-foreground/20">
+      <div className="flex-1 overflow-y-auto p-5 space-y-6 bg-muted/20 scrollbar-thin scrollbar-thumb-muted-foreground/20">
         {messages.length === 0 && (
           <div className="flex flex-col items-center justify-center h-full text-center p-6 text-muted-foreground">
-            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 text-primary">
-              <Sparkles size={32} />
+            <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mb-6 text-primary animate-pulse">
+              <Sparkles size={40} />
             </div>
-            <p className="font-medium text-foreground">
+            <p className="font-bold text-xl text-foreground mb-2">
               {t("emptyState.title")}
             </p>
-            <p className="text-sm mt-2 opacity-75">
+            <p className="text-sm opacity-75 max-w-[250px]">
               {t("emptyState.subtitle")}
             </p>
-
-            {/* Suggested Prompts - NEW */}
-            <div className="mt-6 w-full">
-              <SuggestedPrompts
-                userRole={userRole}
-                onPromptClick={handlePromptClick}
-              />
-            </div>
           </div>
         )}
 
         {messages.map((msg, idx) => {
-          // Get previous user message for feedback context
           const prevUserMsg =
             idx > 0 && messages[idx - 1].role === "user"
               ? messages[idx - 1].content
@@ -180,36 +147,33 @@ export const AIChatWindow: React.FC<AIChatWindowProps> = ({
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input Area */}
-      <div className="p-4 bg-card border-t border-border shrink-0">
-        <div className="relative flex items-end gap-2">
-          <textarea
-            ref={inputRef}
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder={t("input.placeholder")}
-            className="flex-1 myInput resize-none max-h-32 min-h-12"
-            rows={1}
-            style={{ minHeight: "48px" }}
-          />
-          <button
-            onClick={() => handleSubmit()}
-            disabled={!input.trim() || isLoading}
-            className={cn(
-              "p-3 rounded-full mb-1 transition-all duration-300",
-              input.trim() && !isLoading
-                ? "bg-primary text-primary-foreground shadow-md hover:scale-105 active:scale-95"
-                : "bg-muted text-muted-foreground cursor-not-allowed"
+      {/* Persistent Action Area (Categorized) */}
+      <div className="p-4 bg-card border-t border-border shrink-0 shadow-[0_-4px_10px_-5px_rgba(0,0,0,0.05)]">
+        <div className="flex flex-col gap-3">
+          <div className="flex items-center justify-between px-1">
+            <p className="text-[11px] font-bold text-muted-foreground uppercase tracking-widest">
+              {isLoading ? "EcoSphere is thinking..." : "Quick Actions"}
+            </p>
+            {isLoading && (
+              <div className="flex gap-1">
+                <div className="w-1 h-1 bg-primary rounded-full animate-bounce" />
+                <div className="w-1 h-1 bg-primary rounded-full animate-bounce [animation-delay:0.2s]" />
+                <div className="w-1 h-1 bg-primary rounded-full animate-bounce [animation-delay:0.4s]" />
+              </div>
             )}
-          >
-            <Send
-              size={18}
-              className={input.trim() && !isLoading ? "ml-0.5" : ""}
+          </div>
+
+          <div className="max-h-[220px] overflow-y-auto pr-2 custom-scrollbar transition-all duration-300">
+            <SuggestedPrompts
+              userRole={userRole}
+              onPromptClick={handlePromptClick}
+              disabled={isLoading}
+              showHeader={false}
             />
-          </button>
+          </div>
         </div>
-        <p className="text-[10px] text-center text-muted-foreground mt-2">
+
+        <p className="text-[10px] text-center text-muted-foreground mt-4 opacity-60">
           {t("disclaimer")}
         </p>
       </div>

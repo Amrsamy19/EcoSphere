@@ -18,67 +18,54 @@ export const getFavorites = createAsyncThunk(
   "fav/getFavorites",
   async (_, { getState }) => {
     const state = getState() as RootState;
-    const { isLoggedIn } = state.user;
 
-    // If not logged in, return current favorites from local state (persist)
-    if (!isLoggedIn) {
-      return state.fav.favProducts || [];
+    if (!state.user.isLoggedIn) {
+      return state.fav.favProducts;
     }
 
     const res = await fetch("/api/users/favorites", {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
       credentials: "include",
     });
 
     if (!res.ok) throw new Error("Failed to fetch favorites");
 
     const { data } = await res.json();
+    return data ?? [];
+  }
+);
 
-    const existingFavs = state.fav.favProducts || [];
+export const syncGuestFavorites = createAsyncThunk(
+  "fav/syncGuestFavorites",
+  async (_, { getState }) => {
+    const state = getState() as RootState;
+    const ids = state.fav.favProducts.map((p) => p.id);
 
-    // Merge backend favorites with local favorites (optional but good for sync)
-    const merged = Array.from(
-      new Map(
-        [...existingFavs, ...data].map((item: any) => [item.id, item])
-      ).values()
-    );
+    if (!ids.length) return;
 
-    return merged;
+    await fetch("/api/users/favorites", {
+      method: "PATCH",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ids }),
+    });
   }
 );
 
 export const toggleFavoriteAsync = createAsyncThunk(
   "fav/toggleFavoriteAsync",
-  async (product: Partial<IProduct>, { getState }) => {
-    const state = getState() as RootState;
-    const { isLoggedIn } = state.user;
+  async (product: IProduct) => {
+    const res = await fetch("/api/users/favorites", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ ids: product.id }),
+    });
 
-    if (isLoggedIn) {
-      const res = await fetch("/api/users/favorites", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ ids: product.id }),
-      });
-
-      if (!res.ok) throw new Error("Failed to toggle favorite");
-
-      const { data } = await res.json();
-      return data;
-    } else {
-      // Logic for non-logged in users (local state)
-      const currentFavs = state.fav.favProducts || [];
-      const isFav = currentFavs.some((p) => p.id === product.id);
-
-      if (isFav) {
-        // Remove from favorites
-        return currentFavs.filter((p) => p.id !== product.id);
-      } else {
-        // Add to favorites
-        return [...currentFavs, product as IProduct];
-      }
+    if (!res.ok) {
+      throw new Error("Failed to toggle favorite");
     }
+
+    return product;
   }
 );
 
@@ -100,15 +87,22 @@ const FavSlice = createSlice({
       })
       .addCase(getFavorites.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.favProducts = action.payload;
+        state.favProducts = action.payload || [];
       })
       .addCase(getFavorites.rejected, (state) => {
         state.status = "failed";
       })
 
       .addCase(toggleFavoriteAsync.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.favProducts = action.payload;
+        const product = action.payload;
+        const exists = state.favProducts.some((p) => p.id === product.id);
+
+        state.favProducts = exists
+          ? state.favProducts.filter((p) => p.id !== product.id)
+          : [...state.favProducts, product];
+      })
+      .addCase(toggleFavoriteAsync.rejected, (state) => {
+        state.status = "failed";
       });
   },
 });

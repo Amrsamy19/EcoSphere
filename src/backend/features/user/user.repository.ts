@@ -24,6 +24,8 @@ export interface IUserRepository {
   updateFavorites(id: string, data: string): Promise<IUser>;
   addToFavorites(id: string, productId: string): Promise<IUser>;
   removeFromFavorites(id: string, productId: string): Promise<IUser>;
+  saveFavorites(userId: string, favorites: string[]): Promise<IUser>;
+  clearFavorites(userId: string): Promise<IUser>;
   deleteById(id: string): Promise<IUser>;
   savePasswordResetCode(
     userId: string,
@@ -67,9 +69,7 @@ class UserRepository implements IUserRepository {
         });
     }
 
-    const user = await UserModel.findById(id, projection)
-      .populate("favoritesIds")
-      .exec();
+    const user = await UserModel.findById(id, projection).exec();
 
     if (!user) {
       throw new Error(`User with id ${id} not found`);
@@ -211,11 +211,52 @@ class UserRepository implements IUserRepository {
     return updatedUser!;
   }
 
+  async saveFavorites(userId: string, favorites: string[]): Promise<IUser> {
+    await DBInstance.getConnection();
+    const user = await UserModel.findByIdAndUpdate(
+      userId,
+      { $set: { favoritesIds: favorites } },
+      { new: true, projection: { favoritesIds: 1, _id: 0 } }
+    )
+      .lean<IUser>()
+      .exec();
+    return user!;
+  }
+
+  async clearFavorites(userId: string): Promise<IUser> {
+    await DBInstance.getConnection();
+    const user = await UserModel.findByIdAndUpdate(
+      userId,
+      { $set: { favoritesIds: [] } },
+      { new: true, projection: { favoritesIds: 1, _id: 0 } }
+    )
+      .lean<IUser>()
+      .exec();
+    return user!;
+  }
+
   async getFavoriteMenuItems(itemIds: string[]): Promise<ProductResponse[]> {
-    if (itemIds.length === 0) return [];
+    if (!itemIds || itemIds.length === 0) return [];
     await DBInstance.getConnection();
 
-    const objectIds = itemIds.map((id) => new Types.ObjectId(id));
+    console.log("[UserRepo] Fetching details for favorite IDs:", itemIds);
+
+    // Safely convert to ObjectIds
+    const objectIds = itemIds
+      .map((id) => {
+        try {
+          return new Types.ObjectId(id);
+        } catch (e) {
+          console.warn(`[UserRepo] Invalid ObjectId encountered: ${id}`);
+          return null;
+        }
+      })
+      .filter((id): id is Types.ObjectId => id !== null);
+
+    if (objectIds.length === 0) {
+      console.warn("[UserRepo] No valid ObjectIds found in favorites list.");
+      return [];
+    }
 
     const restaurants = await RestaurantModel.find({
       "menus._id": { $in: objectIds },
@@ -224,27 +265,14 @@ class UserRepository implements IUserRepository {
       .lean()
       .exec();
 
+    console.log(`[UserRepo] Found ${restaurants.length} restaurants containing favorites.`);
+
     const favoriteItems: ProductResponse[] = [];
 
     restaurants.forEach((restaurant) => {
       restaurant.menus.forEach((menu: IMenuItem) => {
-        if (objectIds.some((id) => id.equals(menu._id))) {
-          console.log(
-            "[getFavoriteMenuItems] Menu item from DB:",
-            JSON.stringify(
-              {
-                menuId: menu._id?.toString(),
-                menuTitle: menu.title,
-                hasAvatar: !!menu.avatar,
-                avatar: menu.avatar,
-                avatarKey: menu.avatar?.key,
-                avatarUrl: menu.avatar?.url,
-              },
-              null,
-              2
-            )
-          );
-
+        // Use loose equality or string comparison for safety
+        if (objectIds.some((id) => id.toString() === menu._id?.toString())) {
           favoriteItems.push({
             ...menu,
             restaurantId: restaurant._id,
@@ -254,11 +282,7 @@ class UserRepository implements IUserRepository {
       });
     });
 
-    console.log(
-      "[getFavoriteMenuItems] Returning",
-      favoriteItems.length,
-      "items"
-    );
+    console.log(`[UserRepo] Total favorite items resolved: ${favoriteItems.length}`);
     return favoriteItems;
   }
 
