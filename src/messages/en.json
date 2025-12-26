@@ -347,7 +347,11 @@
     },
     "slider": {
       "title": "Our Partner Stores",
-      "scrollHint": "Scroll to explore more stores"
+      "scrollHint": "Scroll to explore more stores",
+      "loading": "Loading top stores...",
+      "error": "Failed to load stores. Please try again.",
+      "retry": "Retry",
+      "noStores": "No stores available at the moment"
     },
     "product": {
       "addedToFavorites": "Added to favorites",
