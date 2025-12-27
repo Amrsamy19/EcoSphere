@@ -24,7 +24,7 @@ export default function CartItem({ item }: Readonly<{ item: IProductCart }>) {
           )}
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="text-base font-medium text-foreground">
+          <h3 className="text-base font-medium text-foreground max-w-30 line-clamp-1">
             {item.productName}
           </h3>
           {item.productSubtitle && (

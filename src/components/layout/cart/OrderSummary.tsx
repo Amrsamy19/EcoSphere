@@ -1,7 +1,8 @@
 "use client";
+
 import { useAppDispatch, useAppSelector } from "@/frontend/redux/hooks";
 import { useState } from "react";
-import { Check } from "lucide-react";
+import { FieldChoiceCard, PaymentMethod } from "@/components/ui/ChoiceCard";
 import {
   selectCartItems,
   selectCartTotal,
@@ -11,6 +12,16 @@ import { toast } from "sonner";
 import { clearCart } from "@/frontend/redux/Slice/CartSlice";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { createOrder } from "@/frontend/api/Payment";
+import { IProductCart } from "@/types/ProductType";
+import { OrderRequestItem } from "@/backend/features/orders/order.types";
+
+const mapCartItemsToIOrderItems = (items: IProductCart[]): OrderRequestItem[] =>
+  items.map((item) => ({
+    restaurantId: item.restaurantId,
+    productId: item.id,
+    quantity: item.quantity,
+  }));
 
 export default function OrderSummary() {
   const t = useTranslations("Cart.orderSummary");
@@ -18,17 +29,17 @@ export default function OrderSummary() {
   const { data: session } = useSession();
   const [couponCode, setCouponCode] = useState("");
   const [discountRate, setDiscountRate] = useState(0);
+  const [paymentMethod, setPaymentMethod] =
+    useState<PaymentMethod>("Credit card");
 
   const subtotalCents = useAppSelector(selectCartTotal);
-  const dispatch = useAppDispatch();
   const cartItems = useAppSelector(selectCartItems);
+  const dispatch = useAppDispatch();
 
-  const discountCents = Math.round(subtotalCents! * discountRate);
-  let deliveryCents = 0;
+  const discountCents = Math.round(subtotalCents! * (discountRate / 100));
 
-  if (subtotalCents) deliveryCents = 50;
-
-  const total = subtotalCents - discountCents + deliveryCents;
+  let total = subtotalCents - discountCents;
+  if (paymentMethod === "Cash on delivery") total += 30;
 
   const handleApplyCoupon = () => {
     fetch(`/api/discount/${couponCode.trim()}`, { method: "POST" })
@@ -49,7 +60,18 @@ export default function OrderSummary() {
       toast.error(t("toasts.notCustomer"));
       router.push("/auth?reason=unauthorized");
       return;
-    }
+    } else if (paymentMethod === "Credit card") stripePayment();
+    else if (paymentMethod === "Cash on delivery") cashOnDelivery();
+  };
+
+  const cashOnDelivery = () =>
+    createOrder(mapCartItemsToIOrderItems(Object.values(cartItems)))
+      .then(() => {
+        fetch("/api");
+      })
+      .catch((err) => console.error(err));
+
+  const stripePayment = () =>
     fetch("/api/payment/checkout", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -70,13 +92,12 @@ export default function OrderSummary() {
         console.error(error);
         toast.error(t("toasts.paymentFailed"));
       });
-  };
 
   return (
-    <div className="rounded-2xl p-6 shadow-md  border border-primary">
+    <div className="rounded-2xl p-6 shadow-md border border-primary">
       <h2 className="text-xl font-semibold mb-6 text-center">{t("title")}</h2>
       <div className="mb-6">
-        <div className="flex flex-col :flex-row gap-3">
+        <div className="flex flex-col gap-3">
           <input
             type="text"
             placeholder={t("promoCode")}
@@ -113,41 +134,38 @@ export default function OrderSummary() {
         {!!discountRate && (
           <div className="flex justify-between text-sm">
             <span className="text-primary">
-              {t("discount", { percent: discountRate * 100 })}
+              {t("discount", { percent: discountRate })}
             </span>
             <span className="font-medium text-primary">
               -{discountCents.toFixed(2)} {t("currency")}
             </span>
           </div>
         )}
-        {!!deliveryCents && (
-          <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">{t("deliveryFee")}</span>
-            <span className="font-medium text-foreground">
-              {deliveryCents.toFixed(2)} {t("currency")}
-            </span>
-          </div>
-        )}
       </div>
-      <div className="flex justify-between font-bold text-lg mb-6 pt-4 border-t border-primary">
+      <div className="border-t text-primary" />
+      {total > 0 && (
+        <div className="mb-6">
+          <FieldChoiceCard setPaymentMethod={setPaymentMethod} />
+        </div>
+      )}
+      <div className="flex justify-between font-bold text-lg mb-2 pt-4 border-t border-primary">
         <span>{t("total")}</span>
         <span>
           {total.toFixed(2)} {t("currency")}
         </span>
       </div>
-
-      <div className="flex items-start gap-2 mb-6 p-3 bg-muted/50 rounded-full">
-        <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-        <div className="text-sm">
-          <span>{t("warranty")}</span>{" "}
-          <button className="text-primary hover:underline font-medium">
-            {t("details")}
-          </button>
+      {total < 30 && total > 0 && (
+        <div className="flex text-center justify-center mb-3 text-destructive">
+          30 is the minimum charge
         </div>
-      </div>
+      )}
       <button
         onClick={handleCheckout}
-        className="myBtnPrimary w-full py-3 hover:opacity-90 font-semibold bg-primary text-primary-foreground p-3 rounded-full transition duration-400 hover:scale-102 flex justify-center items-center text-lg gap-2 hover:outline-2 hover:outline-primary hover:outline-offset-4"
+        disabled={total < 30}
+        aria-label={"30 is the minimum charge"}
+        className={`myBtnPrimary w-full font-semibold transition duration-400 hover:scale-102 text-lg ${
+          total < 30 ? "cursor-not-allowed opacity-50" : ""
+        }`}
       >
         {t("checkoutNow")}
       </button>
