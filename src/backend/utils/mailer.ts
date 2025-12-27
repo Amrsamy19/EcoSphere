@@ -5,12 +5,14 @@ import {
   type UserType,
   newEventSubject,
   newEventTemplate,
+  orderReceivedTemplate,
   pointsAddedTemplate,
   recycleRequestReceivedTemplate,
   redeemCouponTemplate,
   forgetPasswordTemplate,
   unregisteredRecycleTemplate,
 } from "./mailTemplates";
+import { OrderEmail } from "../features/orders/order.types";
 
 const transporter = nodemailer.createTransport({
   service: process.env.SMTP_SERVICE,
@@ -178,5 +180,26 @@ export const sendRecycleRequestReceivedEmail = async (
     await transporter.sendMail(mailOptions);
   } catch (error) {
     console.error("Failed to send recycle request received email:", error);
+  }
+};
+
+export const sendOrderReceivedEmail = async (
+  email: string,
+  name: string,
+  products: OrderEmail[],
+) => {
+  if (!ensureSmtpConfigured()) return;
+
+  const mailOptions = {
+    from: `"EcoSphere" <no-reply@ecosphere.com>`,
+    to: email,
+    subject: "Your EcoSphere Order Is Confirmed 🛍️🌱",
+    html: orderReceivedTemplate({ name }, products),
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+  } catch (error) {
+    console.error("Failed to send order received email:", error);
   }
 };

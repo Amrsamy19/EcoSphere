@@ -1,5 +1,9 @@
 import { IOrder } from "@/backend/features/orders/order.model";
-import { OrderRequestItem } from "@/backend/features/orders/order.types";
+import {
+  OrderRequestItem,
+  OrderStatus,
+  PaymentMethod,
+} from "@/backend/features/orders/order.types";
 import { ApiResponse } from "@/types/api-helpers";
 
 export const createPaymentIntent = async (
@@ -23,10 +27,12 @@ export const createPaymentIntent = async (
 
 export const createOrder = async (
   items: OrderRequestItem[],
+  paymentMethod: PaymentMethod = "stripe",
+  orderStatus: OrderStatus = "preparing",
 ): Promise<ApiResponse<IOrder>> => {
   const response = await fetch("/api/orders", {
     method: "POST",
-    body: JSON.stringify(items),
+    body: JSON.stringify({ items, paymentMethod, orderStatus }),
   });
 
   if (!response.ok) {

@@ -39,6 +39,7 @@ export class OrderController {
         console.error("❌ No items found in metadata");
         return;
       }
+      console.log(items)
 
       try {
         // Decrease stock for each item (order already created in PaymentService)

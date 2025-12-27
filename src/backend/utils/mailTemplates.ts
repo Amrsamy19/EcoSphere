@@ -1,3 +1,5 @@
+import { OrderEmail } from "../features/orders/order.types";
+
 type BasicUserInfo = {
   name?: string;
 };
@@ -386,7 +388,7 @@ export function unregisteredRecycleTemplate(user: BasicUserInfo): string {
 
       <p style="${baseStyles.paragraph}">
         The good news? Creating an EcoSphere account is quick, free 🌱
-        and you will get a 1000 point as a registration gift 
+        and you will get a 1000 point as a registration gift
         Next time you recycle while logged in, you’ll automatically earn
         Eco Points for every eco-friendly action you take.
       </p>
@@ -464,6 +466,78 @@ export function recycleRequestReceivedTemplate(user: BasicUserInfo): string {
 
       <div style="${baseStyles.footer}">
         You received this email because you submitted a recycling request on EcoSphere.
+      </div>
+    </div>
+  </div>
+  `;
+}
+
+export function orderReceivedTemplate(
+  user: BasicUserInfo,
+  products: OrderEmail[],
+): string {
+  const name = formatName(user.name);
+
+  const productsList = products
+    .map(
+      (product) => `
+        <li style="margin-bottom: 6px;">
+          ${product.productName} × ${product.quantity} form ${product.shopName}
+        </li>
+      `,
+    )
+    .join("");
+
+  return `
+  <div style="${baseStyles.wrapper}">
+    <div style="${baseStyles.card}">
+      <h2 style="${baseStyles.title}">
+        Thank you for your order, ${name}! 🛍️💚
+      </h2>
+
+      <p style="${baseStyles.subtitle}">
+        We’ve received your order successfully!
+      </p>
+
+      <p style="${baseStyles.paragraph}">
+        Your order from the EcoSphere Store has been confirmed and is
+        currently being prepared by our team.
+      </p>
+
+      <p style="${baseStyles.paragraph}">
+        <strong>Estimated delivery time:</strong>
+        Your products will be shipped within
+        <strong>2 to 5 business days</strong>.
+      </p>
+
+      <p style="${baseStyles.paragraph}">
+        <strong>Items in your order:</strong>
+      </p>
+
+      <ul style="
+        font-size: 14px;
+        margin: 0 0 14px 18px;
+        padding: 0;
+      ">
+        ${productsList}
+      </ul>
+
+      <p style="${baseStyles.paragraph}">
+        We’ll notify you once your order is on the way 🚚.
+        Please make sure your contact details are correct so we can reach you
+        if needed.
+      </p>
+
+      <p style="${baseStyles.paragraph}">
+        Thank you for choosing sustainable products and supporting a greener future 🌍,
+      </p>
+
+      <p style="${baseStyles.paragraph}">
+        <strong>The EcoSphere Team</strong>
+      </p>
+
+      <div style="${baseStyles.footer}">
+        You received this email because you placed an order on the EcoSphere Store.
       </div>
     </div>
   </div>

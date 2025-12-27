@@ -244,7 +244,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
                 <span className="mr-2">{t("removeFromCart")}</span>
               </div>
             ) : (
-              <div className="flex justify-evenly gap-2 items-center">
+              <div className="flex justify-evenly gap-2 text-nowrap items-center">
                 <RiShoppingCartLine />
                 <span className="mr-2">{t("addToCart")}</span>
               </div>

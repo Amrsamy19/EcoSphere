@@ -49,7 +49,7 @@ export default function ProductsSection({
             </div>
           </>
         ) : (
-          <div className="flex justify-center items-center py-12 h-20 md:h-35 lg:h-99">
+          <div className="flex justify-center items-center py-12 h-20 md:h-35 lg:h-77">
             <Image
               width={430}
               height={270}
