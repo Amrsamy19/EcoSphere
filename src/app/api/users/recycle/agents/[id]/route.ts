@@ -10,7 +10,6 @@ export const PATCH = async (
   const { id } = await params;
   const body = await req.json();
 
-  console.log(body, id, "data in the patch");
   try {
     const response = await rootContainer
       .resolve(UserController)

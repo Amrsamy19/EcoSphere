@@ -13,8 +13,7 @@ export class RecycleAgentRegistration implements IRegistrationStrategy {
     if (!registerDTO) throw new Error("Missing data.");
     const isAgentExists = await this.authRepo.existsByEmail(registerDTO.email);
     if (isAgentExists) throw new Error("Agent already exists.");
-    const agent = await this.authRepo.saveNewUser(registerDTO);
-    console.log(agent)
+    await this.authRepo.saveNewUser(registerDTO);
     return { success: true };
   }
 }

@@ -37,7 +37,6 @@ class UserController {
   
   async getRecycleAgents() { 
     const agents = await this.userService.getRecycleAgents();
-    console.log(agents);
     return agents;
   }
 

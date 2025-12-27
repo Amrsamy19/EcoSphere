@@ -5,7 +5,6 @@ import { ok, serverError } from "@/types/api-helpers";
 export const GET = async () => {
   try {
     const res = await rootContainer.resolve(UserController).getRecycleAgents();
-    console.log(res)
     return ok(res);
   } catch (error) {
     console.error(error);

@@ -278,17 +278,14 @@ class UserRepository implements IUserRepository {
 		if (!itemIds || itemIds.length === 0) return [];
 		await DBInstance.getConnection();
 
-		console.log("[UserRepo] Fetching details for favorite IDs:", itemIds);
-
 		// Safely convert to ObjectIds
 		const objectIds = itemIds
 			.map((id) => {
 				try {
 					return new Types.ObjectId(id);
 				} catch (e) {
-					console.warn(
-						`[UserRepo] Invalid ObjectId encountered: ${id}, error fair ${e}`
-					);
+					console.warn(`[UserRepo] Invalid ObjectId encountered: ${id}
+            error fair ${e}`);
 					return null;
 				}
 			})
@@ -306,16 +303,12 @@ class UserRepository implements IUserRepository {
 			.lean()
 			.exec();
 
-		console.log(
-			`[UserRepo] Found ${restaurants.length} restaurants containing favorites.`
-		);
-
 		const favoriteItems: ProductResponse[] = [];
 
 		restaurants.forEach((restaurant) => {
 			restaurant.menus.forEach((menu: IMenuItem) => {
 				// Use loose equality or string comparison for safety
-				if (objectIds.some((id) => `${id}` === `${menu._id}`)) {
+				if (objectIds.some((id) => `${id}` === menu._id?.toString())) {
 					favoriteItems.push({
 						...menu,
 						restaurantId: restaurant._id,

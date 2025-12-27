@@ -64,7 +64,7 @@ export const PATCH = async (
 			// Toggling a single favorite
 			const { favoritesIds } = await controller.updateFavorites(
 				session.id,
-				ids as string
+				ids
 			);
 			result = await controller.getFavoriteMenuItems(favoritesIds as string[]);
 		}

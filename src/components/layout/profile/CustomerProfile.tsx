@@ -247,7 +247,6 @@ const RecyclingHistoryComponent = ({ id }: { id: string }) => {
     };
     fetchRecyclingEntries();
   }, []);
-  console.log(recyclingEntries);
   const totalPages = Math.ceil(recyclingEntries.length / itemsPerPage);
   const currentEntries = recyclingEntries.slice(
     (currentPage - 1) * itemsPerPage,

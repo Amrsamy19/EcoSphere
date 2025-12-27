@@ -26,7 +26,6 @@ export async function fetchRecycleAgents(): Promise<any> {
     }
 
     const result = await response.json();
-    console.log(result?.data?.data);
     return result.data;
   } catch (error) {
     console.error("Error fetching recycle agents:", error);
@@ -79,7 +78,6 @@ export async function updateRecycleAgentStatus(
   isActive: boolean,
 ): Promise<RecycleAgent> {
   try {
-    // console.log(isActive);
     const response = await fetch(`/api/users/recycle/agents/${id}`, {
       method: "PATCH",
       headers: {

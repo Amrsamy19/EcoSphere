@@ -187,9 +187,6 @@ export class RecycleService implements IRecycleService {
 
 			// Add to dominant key
 			aggregatedCounts[maxKey] += unknownTotal;
-			console.log(
-				`🔄 Redistributed ${unknownTotal} unknown items to ${maxKey}`
-			);
 		}
 
 		const items = Object.entries(aggregatedCounts).map(([key, count]) => {
