@@ -23,10 +23,11 @@ const FavCard = ({ product }: FavCardProps) => {
   const router = useRouter();
   const { view } = useAppSelector((state: RootState) => state.fav);
   const isInCart = useAppSelector((state: RootState) =>
-    isInCartSelector(state, product.id),
+    isInCartSelector(state, product.id)
   );
   const dispatch = useAppDispatch();
-  const handleRemoveFromFav = () => {
+  const handleRemoveFromFav = (e: React.MouseEvent) => {
+    e.stopPropagation();
     dispatch(toggleFavoriteAsync(product));
     toast.success(t("removedFromFavorites"));
   };
@@ -42,7 +43,7 @@ const FavCard = ({ product }: FavCardProps) => {
           ...product,
           quantity: 1,
           maxQuantity: product.quantity || 999,
-        }),
+        })
       );
       toast.success(t("addedToCart"));
     }
