@@ -15,7 +15,6 @@ import {
   updateRecycleAgentStatus,
 } from "@/frontend/api/RecycleAgent";
 import { PagingMeta } from "@/backend/features/user/user.types";
-import { UserRole } from "@/backend/features/user/user.model";
 import { UserType } from "@/backend/utils/mailTemplates";
 
 const RecycleAgentTable = () => {
