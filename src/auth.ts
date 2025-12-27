@@ -114,7 +114,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       // Google provider flow: the 'user' may not include DB-mapped subscription fields
       // because we create/find the DB user separately. For Google logins we keep existing
       // behavior (role=customer) — customers don't get subscription fields in token.
-      if (["google", "github"].includes(account!.provider)) {
+      if (["google", "github"].includes(account?.provider ?? "")) {
         token.role = "customer";
         token.image =
           profile?.picture ??
