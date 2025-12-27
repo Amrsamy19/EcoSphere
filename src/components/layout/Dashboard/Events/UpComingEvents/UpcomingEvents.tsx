@@ -16,6 +16,9 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { EventType } from "@/backend/features/event/event.model";
+import BasicAnimatedWrapper from "@/components/layout/common/BasicAnimatedWrapper";
+import EventCardSkeleton from "@/components/layout/common/events/EventCardSkeleton";
+import { TbCalendarEvent } from "react-icons/tb";
 
 export const getEventStartDateTime = (event: any) => {
   return new Date(
@@ -29,9 +32,17 @@ export const getEventEndDateTime = (event: any) => {
   );
 };
 
+export const isEventLiveNow = (event: any, now: Date) => {
+  const start = getEventStartDateTime(event);
+  const end = getEventEndDateTime(event);
+
+  return event.isAccepted && start <= now && end >= now;
+};
+
+
 export default function UpcomingEvents({ events }: Readonly<EventProps>) {
   const t = useTranslations("Events.displayEvents");
-
+  const [isLoading, setIsLoading] = useState(true);
   const [resetKey, setResetKey] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [typeFilter, setTypeFilter] = useState<EventType | undefined>(
@@ -82,10 +93,24 @@ export default function UpcomingEvents({ events }: Readonly<EventProps>) {
 
       return true;
     })
-    .sort(
-      (a, b) =>
-        getEventStartDateTime(a).getTime() - getEventStartDateTime(b).getTime()
-    );
+    .sort((a, b) => {
+      const aLive = isEventLiveNow(a, now);
+      const bLive = isEventLiveNow(b, now);
+
+      // LIVE events first
+      if (aLive && !bLive) return -1;
+      if (!aLive && bLive) return 1;
+
+      // Otherwise sort by start time
+      return (
+        getEventStartDateTime(a).getTime() -
+        getEventStartDateTime(b).getTime()
+      );
+    });
+
+  React.useEffect(() => {
+    if (events) setIsLoading(false);
+  }, [events]);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
@@ -103,7 +128,7 @@ export default function UpcomingEvents({ events }: Readonly<EventProps>) {
           placeholder={t("searchPlaceholder")}
           value={searchQuery}
           onChange={handleSearchChange}
-          className="h-11 ltr:rounded-l-full rtl:rounded-r-full"
+          className="h-11 border-primary ltr:rounded-l-full rtl:rounded-r-full"
         />
         <Button className="h-11 ltr:rounded-r-full ltr:rounded-l-none rtl:rounded-l-full rtl:rounded-r-none px-15">
           {t("search")}
@@ -111,14 +136,14 @@ export default function UpcomingEvents({ events }: Readonly<EventProps>) {
       </div>
 
       {/* Filters */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  gap-3 items-center w-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 items-center w-full">
         {/* Event Type */}
         <Select
           key={`type-${resetKey}`}
           value={typeFilter}
           onValueChange={(v) => setTypeFilter(v as EventType)}
         >
-          <SelectTrigger className="h-10 rounded-full w-full px-4 rtl:flex-row-reverse">
+          <SelectTrigger className="h-10 rounded-full border-primary w-full px-4 rtl:flex-row-reverse cursor-pointer">
             <SelectValue placeholder={t("eventType")} />
           </SelectTrigger>
           <SelectContent className="rtl:text-right">
@@ -141,7 +166,7 @@ export default function UpcomingEvents({ events }: Readonly<EventProps>) {
           value={dateFilter}
           onValueChange={(v) => setDateFilter(v as any)}
         >
-          <SelectTrigger className="h-10 rounded-full w-full px-4 rtl:flex-row-reverse">
+          <SelectTrigger className="h-10 rounded-full border-primary w-full px-4 rtl:flex-row-reverse cursor-pointer">
             <SelectValue placeholder={t("date")} />
           </SelectTrigger>
           <SelectContent className="rtl:text-right">
@@ -157,7 +182,7 @@ export default function UpcomingEvents({ events }: Readonly<EventProps>) {
           value={priceFilter}
           onValueChange={(v) => setPriceFilter(v as any)}
         >
-          <SelectTrigger className="h-10 rounded-full w-full px-4 rtl:flex-row-reverse">
+          <SelectTrigger className="h-10 rounded-full border-primary w-full px-4 rtl:flex-row-reverse cursor-pointer">
             <SelectValue placeholder={t("price")} />
           </SelectTrigger>
           <SelectContent className="rtl:text-right">
@@ -182,22 +207,44 @@ export default function UpcomingEvents({ events }: Readonly<EventProps>) {
       </div>
 
       {/* Upcoming Events */}
-      {upcomingEvents.length > 0 ? (
+
+      {isLoading ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-5 gap-6 items-stretch">
+          {Array.from({ length: 6 }).map((_, index) => (
+            <BasicAnimatedWrapper key={index} index={index}>
+              <EventCardSkeleton />
+            </BasicAnimatedWrapper>
+          ))}
+        </div>
+      ) : (upcomingEvents.length == 0 ? (
+        <div className="flex items-center justify-center md:p-20 p-5 bg-primary/10 rounded-xl mt-10 my-10">
+          <div className="text-center max-w-md px-6">
+            <div className="mb-4 inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/20 ">
+              <TbCalendarEvent className="w-10 h-10 text-primary" />
+            </div>
+
+            <h2 className="text-2xl font-semibold text-foreground mb-2">
+              {t("UpComingEvents")}
+            </h2>
+
+            <p className="text-secondary-foreground mb-4">{t("noupcomingEvents")}</p>
+              <Link href="/organizer/manage" className="px-20! myBtnPrimary w-full  mx-auto">
+              {t("addEventBtn")}
+            </Link>
+          </div>
+        </div>
+      ) : (
+
         <section className="space-y-4 pt-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 opacity-80">
-            {upcomingEvents.map((event) => (
-              <EventCard key={event._id} event={event} />
+            {upcomingEvents.map((event, index) => (
+              <BasicAnimatedWrapper key={event._id} index={index}>
+                <EventCard event={event} />
+              </BasicAnimatedWrapper>
             ))}
           </div>
         </section>
-      ) : (
-        <div className="text-center w-full p-8 rounded-xl shadow-md text-muted-foreground border-2 border-primary space-y-4">
-          <p className="mb-3">{t("noupcomingEvents")}</p>
-          <Button asChild className="capitalize">
-            <Link href="/organizer/manage">{t("addEventBtn")}</Link>
-          </Button>
-        </div>
-      )}
+      ))}
     </div>
   );
 }
