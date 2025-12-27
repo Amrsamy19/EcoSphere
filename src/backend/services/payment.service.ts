@@ -158,8 +158,66 @@ export class PaymentService {
         orderId: `${order._id}`,
         items: JSON.stringify(itemsForStock), // Items for stock decrease on payment success
       },
-      // Allow promotion codes and automatic tax behavior if desired
-      allow_promotion_codes: true,
+    });
+    return session;
+  }
+
+  async createEventSession({
+    successUrl,
+    cancelUrl,
+    eventItem,
+    userEmail,
+    userId,
+  }: {
+    successUrl: string;
+    cancelUrl: string;
+    eventItem: {
+      id: string;
+      name: string;
+      image: string;
+      quantity: number;
+    };
+    userEmail: string;
+    userId: string;
+  }) {
+    const order = await this.orderService.createOrder(userId, {
+      userId,
+      items: [
+        {
+          eventId: eventItem.id,
+          quantity: eventItem.quantity,
+        },
+      ] as any,
+      paymentMethod: "stripe",
+    });
+
+    const session = await stripe.checkout.sessions.create({
+      mode: "payment",
+      payment_method_types: ["card"],
+      line_items: [
+        {
+          quantity: eventItem.quantity,
+          price_data: {
+            currency: "egp",
+            unit_amount: Math.round(
+              (order.orderPrice * 100) / eventItem.quantity
+            ), // Calculate unit price from total order price
+            product_data: {
+              name: eventItem.name,
+              images: [eventItem.image],
+            },
+          },
+        },
+      ],
+      success_url: `${successUrl}?orderId=${order._id}`,
+      cancel_url: `${cancelUrl}?orderId=${order._id}`,
+      customer_email: userEmail,
+      metadata: {
+        userId,
+        orderId: `${order._id}`,
+        eventId: eventItem.id,
+        type: "event_ticket",
+      },
     });
     return session;
   }

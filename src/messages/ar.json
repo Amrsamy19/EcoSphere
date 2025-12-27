@@ -635,7 +635,9 @@
     "toasts": {
       "passwordChanged": "تم تغيير كلمة المرور بنجاح",
       "passwordChangeFailed": "فشل تغيير كلمة المرور",
-      "redeemFailed": "فشل استبدال النقاط. يرجى المحاولة مرة أخرى."
+      "redeemFailed": "فشل استبدال النقاط. يرجى المحاولة مرة أخرى.",
+      "profileUpdated": "تم تحديث الملف الشخصي بنجاح",
+      "profileUpdateFailed": "فشل تحديث الملف الشخصي"
     },
     "states": {
       "loading": "جاري تحميل الملف الشخصي...",
@@ -833,10 +835,14 @@
       "nohistory": "لم يتم العثور على فعاليات سابقة",
       "EventCard": {
         "organizer": "أنت منظم الفعالية",
+        "live": "يُبث الآن",
         "status": {
-          "approved": "تمت الموافقة",
-          "pending": "قيد المراجعة...",
-          "rejected": "مرفوض"
+          "status": {
+            "approved": "موافق عليه",
+            "pending": "قيد المراجعة ..",
+            "rejected": "مرفوض",
+            "live": "يُبث الآن"
+          }
         }
       },
       "EventCardDetails": {
@@ -851,7 +857,8 @@
         "ticketPrice": "سعر التذكرة",
         "free": "مجاني",
         "schedule": "الجدول",
-        "organizer": "أنت منظم الفعالية"
+        "organizer": "أنت منظم الفعالية",
+        "liveActionsDisabled": "لا يمكن تعديل أو حذف الحدث أثناء البث المباشر"
       },
       "AddAttendBtn": {
         "join": "انضم إلى الفعالية",

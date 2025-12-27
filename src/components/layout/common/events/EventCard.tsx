@@ -4,7 +4,7 @@ import Image from "next/image";
 import { MdAccessTime } from "react-icons/md";
 import { formatDate, formatTime } from "@/frontend/utils/Event";
 import { FaLocationDot } from "react-icons/fa6";
-import { FaCalendar } from "react-icons/fa";
+import { FaCalendar, FaPlay } from "react-icons/fa";
 import EventDetailsCard from "./EventDetailsCard";
 import DeleteEventBtn from "../../Dashboard/Events/DisplayEvents/DeleteEventBtn";
 import UpdateEventBtn from "../../Dashboard/Events/DisplayEvents/UpdateEventBtn";
@@ -31,14 +31,10 @@ export default function EventCard({ event }: { event: any }) {
 
   // --- Route flags ---
   const isEventsPage = routeSegment === "events";
-  const isOrganizerUpcoming = routeSegment === "organizer" && secondSegment === "upcomingEvents";
-  const isOrganizerHistory = routeSegment === "organizer" && secondSegment === "history";
-
-  const status: EventStatus = event.isAccepted
-    ? "approved"
-    : event.isEventNew
-      ? "pending"
-      : "rejected";
+  const isOrganizerUpcoming =
+    routeSegment === "organizer" && secondSegment === "upcomingEvents";
+  const isOrganizerHistory =
+    routeSegment === "organizer" && secondSegment === "history";
 
   const statusStyles: Record<EventStatus, string> = {
     approved: "bg-green-600 text-white",
@@ -46,10 +42,33 @@ export default function EventCard({ event }: { event: any }) {
     rejected: "bg-red-600 text-white",
   };
 
-  return (
-    <div className="col-span-1 flex justify-center">
-      <div className="w-full flex flex-col max-w-sm rounded-2xl overflow-hidden border border-primary/20 bg-background shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+  const now = new Date();
 
+  const start = new Date(
+    `${event.eventDate.split("T")[0]}T${event.startTime ?? "00:00"}`
+  );
+  const end = new Date(
+    `${event.eventDate.split("T")[0]}T${event.endTime ?? "23:59"}`
+  );
+
+  // LIVE only if approved AND time matches
+  const isLiveNow = event.isAccepted && start <= now && end >= now;
+
+  const status: EventStatus = event.isAccepted
+    ? "approved"
+    : event.isEventNew
+    ? "pending"
+    : "rejected";
+
+  const badgeClass = isLiveNow
+    ? "bg-red-600 text-white animate-pulse"
+    : statusStyles[status];
+
+  return (
+    <div className="col-span-1 flex h-full justify-center">
+      <div
+        className={`w-full h-full flex flex-col max-w-sm ltr:rounded-tr-4xl ltr:rounded-bl-4xl rtl:rounded-tl-4xl rtl:rounded-br-4xl overflow-hidden border border-primary/20 bg-background shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2`}
+      >
         {/* Image Header */}
         <div className="relative h-52">
           <Image
@@ -63,18 +82,13 @@ export default function EventCard({ event }: { event: any }) {
           {/* Edit/Delete buttons & status for organizer upcoming */}
           {isOrganizerUpcoming && (
             <div>
-              <div className="absolute top-4 ltr:right-4 rtl:left-4 z-20 flex gap-2">
-                <UpdateEventBtn id={event._id} detailscard={false} />
-                <DeleteEventBtn id={event._id} detailscard={false} />
-              </div>
-              <div className="absolute top-4 ltr:left-4 rtl:right-4 z-20">
-                <p
-                  className={`capitalize py-1 px-3 rounded-full text-sm font-medium bg-primary text-primary-foreground
-                    ${statusStyles[status]}`}
-                >
-                  {t(`status.${status}`)}
-                </p>
-              </div>
+              {/* Edit / Delete → ONLY if NOT live */}
+              {!isLiveNow && (
+                <div className="absolute top-4 ltr:right-4 rtl:left-4 z-20 flex gap-2">
+                  <UpdateEventBtn id={event._id} detailscard={false} />
+                  <DeleteEventBtn id={event._id} detailscard={false} />
+                </div>
+              )}
             </div>
           )}
 
@@ -94,7 +108,7 @@ export default function EventCard({ event }: { event: any }) {
         </div>
 
         {/* Content */}
-        <div className="p-5 flex-1 space-y-4">
+        <div className="p-5  flex-1 space-y-4">
           <div className="flex flex-wrap gap-1.5 text-sm">
             <div className="flex items-center gap-2 rounded-full bg-muted px-4 py-2">
               <FaCalendar className="text-primary" />
@@ -103,20 +117,29 @@ export default function EventCard({ event }: { event: any }) {
             <div className="flex items-center gap-2 rounded-full bg-muted px-4 py-2">
               <MdAccessTime className="text-primary" />
               <span>
-                {formatTime(event.startTime, locale)} – {formatTime(event.endTime, locale)}
+                {formatTime(event.startTime, locale)} –{" "}
+                {formatTime(event.endTime, locale)}
               </span>
             </div>
             <div className="flex items-center gap-2 rounded-full bg-muted px-4 py-2">
               <FaLocationDot className="text-primary" />
               <span>{event.locate}</span>
             </div>
+            {isLiveNow && (
+              <div className="flex items-center gap-2 rounded-full bg-muted px-4 py-2">
+                <FaPlay className="text-primary" />
+                {t("live")}
+              </div>
+            )}
 
             {/* Organizer info only on /events */}
             {isEventsPage && (
               <div className="flex items-center gap-2 rounded-full bg-muted px-4 py-2">
                 <FaUserTie className="text-primary" />
                 <div className="flex flex-col text-sm">
-                  <span className="font-medium text-foreground">{event.user?.name}</span>
+                  <span className="font-medium text-foreground">
+                    {event.user?.name}
+                  </span>
                 </div>
               </div>
             )}
@@ -124,12 +147,9 @@ export default function EventCard({ event }: { event: any }) {
         </div>
 
         {/* Actions */}
-        <div className="flex m-2 gap-3">
+        <div className="flex m-2 gap-3 mt-auto">
           {/* Details card */}
-          <EventDetailsCard
-            event={event}
-            userId={session?.user?.id || ""}
-          />
+          <EventDetailsCard event={event} userId={session?.user?.id || ""} />
 
           {/* Attend button only on /events */}
           {isEventsPage && (

@@ -177,7 +177,7 @@ const ProductDetailsCard = ({ product }: { product: IProduct }) => {
           </div>
 
           {/* Rating */}
-          <div className="flex items-center gap-2">
+          {/* <div className="flex items-center gap-2">
             <div className="flex items-center gap-1">
               {[1, 2, 3, 4, 5].map((star) => (
                 <Star
@@ -187,7 +187,7 @@ const ProductDetailsCard = ({ product }: { product: IProduct }) => {
               ))}
             </div>
             <span className="text-sm text-muted-foreground">(5.0)</span>
-          </div>
+          </div> */}
 
           {/* Price */}
           <div className="text-3xl font-bold text-primary">
@@ -219,35 +219,37 @@ const ProductDetailsCard = ({ product }: { product: IProduct }) => {
           </div>
 
           {/* Quantity selector */}
-          <div className="flex items-center gap-4">
-            <span className="text-sm font-medium">{t("quantity")}</span>
-            <div className="flex items-center rounded-full text-primary border border-primary p-2">
-              <button
-                onClick={handleDecrement}
-                className="w-8 h-8 cursor-pointer text-foreground flex items-center justify-center rounded hover:bg-muted transition duration-400"
-                aria-label="Decrease quantity"
-              >
-                <Minus className="w-4 h-4" strokeWidth={3} />
-              </button>
-              <motion.div
-                key={count}
-                animate={{ scale: [1, 1.1, 1] }}
-                transition={{ duration: 0.2 }}
-                className="border-x"
-              >
-                <span className="w-12 px-4 text-center font-semibold">
-                  {count}
-                </span>
-              </motion.div>
-              <button
-                onClick={handleIncrement}
-                className="w-8 h-8 cursor-pointer flex items-center justify-center rounded hover:bg-muted transition-colors"
-                aria-label="Increase quantity"
-              >
-                <Plus className="w-4 h-4" strokeWidth={3} />
-              </button>
+          {product.quantity !== undefined && product.quantity > 0 && (
+            <div className="flex items-center gap-4">
+              <span className="text-sm font-medium">{t("quantity")}</span>
+              <div className="flex items-center rounded-full text-primary border border-primary p-2">
+                <button
+                  onClick={handleDecrement}
+                  className="w-8 h-8 cursor-pointer text-foreground flex items-center justify-center rounded hover:bg-muted transition duration-400"
+                  aria-label="Decrease quantity"
+                >
+                  <Minus className="w-4 h-4" strokeWidth={3} />
+                </button>
+                <motion.div
+                  key={count}
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ duration: 0.2 }}
+                  className="border-x"
+                >
+                  <span className="w-12 px-4 text-center font-semibold">
+                    {count}
+                  </span>
+                </motion.div>
+                <button
+                  onClick={handleIncrement}
+                  className="w-8 h-8 cursor-pointer flex items-center justify-center rounded hover:bg-muted transition-colors"
+                  aria-label="Increase quantity"
+                >
+                  <Plus className="w-4 h-4" strokeWidth={3} />
+                </button>
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Action buttons */}
           <div className="flex gap-4 mt-4">
@@ -255,7 +257,7 @@ const ProductDetailsCard = ({ product }: { product: IProduct }) => {
               onClick={handleCartToggle}
               disabled={!product.inStock}
               className={cn(
-                "w-full",
+                "w-full h-full myBtnPrimary",
                 isInCart && "bg-red-500 hover:bg-red-600"
               )}
             >

@@ -1,94 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// "use client";
-// import { EventProps } from "@/types/EventTypes";
-// import React, { useState } from "react";
-// import { SearchIcon } from "lucide-react";
-// import { Button } from "@/components/ui/button";
-// import { ButtonGroup } from "@/components/ui/button-group";
-// import { Input } from "@/components/ui/input";
-// import EventCard from "../common/events/EventCard";
-// import { useTranslations } from "next-intl";
-// import {
-//   Select,
-//   SelectContent,
-//   SelectItem,
-//   SelectTrigger,
-//   SelectValue,
-// } from "@/components/ui/select";
-
-// export default function MainDisplayEvents({ events }: Readonly<EventProps>) {
-//   const t = useTranslations("Events.MainDisplayEvents");
-//   const [searchQuery, setSearchQuery] = useState("");
-//   const [priceFilter, setPriceFilter] = useState<"all" | "free" | "paid">("all");
-//   const now = new Date();
-//   const filteredEvents = events
-//     .filter((event) => event.isAccepted === true)
-//     .filter((event) =>
-//       event.name.toLowerCase().includes(searchQuery.toLowerCase())
-//     )
-//     .filter((event) => new Date(event.eventDate) >= now)
-//     .filter((event) => {
-//       if (priceFilter === "free") return event.ticketPrice === 0;
-//       if (priceFilter === "paid") return event.ticketPrice > 0;
-//       return true;
-//     })
-//     .sort(
-//       (a, b) =>
-//         new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime()
-//     );
-//   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-//     setSearchQuery(event.target.value);
-//   };
-//   return (
-//     <div className="flex flex-col gap-4 py-5">
-//       <div className="w-full gap-4 flex justify-center md:justify-end">
-//         {/* Price Filter Select */}
-//         <Select value={priceFilter} onValueChange={(value) => setPriceFilter(value as "all" | "free" | "paid")}>
-//           <SelectTrigger className="w-full md:w-45">
-//             <SelectValue placeholder={t("filterByPrice")} />
-//           </SelectTrigger>
-//           <SelectContent>
-//             <SelectItem value="all">{t("all")}</SelectItem>
-//             <SelectItem value="free">{t("free")}</SelectItem>
-//             <SelectItem value="paid">{t("paid")}</SelectItem>
-//           </SelectContent>
-//         </Select>
-//         <ButtonGroup className="rtl:flex-row-reverse w-[80%] md:w-fit">
-//           <Input
-//             placeholder={t("searchPlaceholder")}
-//             value={searchQuery}
-//             onChange={handleSearchChange}
-//             className="rounded-r-none border-r-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-//           />
-//           <Button
-//             aria-label={t("search")}
-//             className="rounded-l-none border-l-0 px-3"
-//           >
-//             <SearchIcon className="h-4 w-4" />
-//           </Button>
-//         </ButtonGroup>
-//       </div>
-
-//       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-//         {filteredEvents.map((event) => (
-//           <EventCard key={event._id} event={event} />
-//         ))}
-//       </div>
-//       {filteredEvents.length === 0 && (
-//         <div className="text-center w-full p-8 rounded-xl shadow-md text-muted-foreground border-2 border-primary">
-//           <p>{t("emptyTitle")}</p>
-//           <p>{t("emptySubtitle")}</p>
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
 "use client";
 import { EventProps } from "@/types/EventTypes";
 import React, { useState } from "react";
-import { SearchIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ButtonGroup } from "@/components/ui/button-group";
 import { Input } from "@/components/ui/input";
 import EventCard from "../common/events/EventCard";
 import { useTranslations } from "next-intl";
@@ -100,6 +14,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { EventType } from "@/backend/features/event/event.model";
+import BasicAnimatedWrapper from "../common/BasicAnimatedWrapper";
+import { TbCalendarEvent } from "react-icons/tb";
+import EventCardSkeleton from "../common/events/EventCardSkeleton";
 
 const parseEventDate = (dateStr: string) => {
   if (dateStr.includes("-")) {
@@ -128,7 +45,7 @@ const getEventStartDateTime = (event: any) => {
 
 export default function MainDisplayEvents({ events }: Readonly<EventProps>) {
   const t = useTranslations("Events.MainDisplayEvents");
-
+  const [isLoading, setIsLoading] = useState(true);
   const [resetKey, setResetKey] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [priceFilter, setPriceFilter] = useState<"free" | "paid" | undefined>(
@@ -180,13 +97,17 @@ export default function MainDisplayEvents({ events }: Readonly<EventProps>) {
         getEventStartDateTime(a).getTime() - getEventStartDateTime(b).getTime()
     );
 
+  React.useEffect(() => {
+    if (events) setIsLoading(false);
+  }, [events]);
+
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
   };
 
   return (
     <div className="flex flex-col gap-4 py-5">
-      <h2 className="text-3xl capitalize text-center md:text-4xl font-bold mb-4">
+      <h2 className="text-3xl font-bold text-foreground mb-4 text-center">
         {t("upcomingEvents")}
       </h2>
       {/* Search */}
@@ -195,7 +116,7 @@ export default function MainDisplayEvents({ events }: Readonly<EventProps>) {
           placeholder={t("searchPlaceholder")}
           value={searchQuery}
           onChange={handleSearchChange}
-          className="h-11 ltr:rounded-l-full rtl:rounded-r-full"
+          className="h-11 border-primary ltr:rounded-l-full rtl:rounded-r-full"
         />
         <Button className="h-11 ltr:rounded-r-full ltr:rounded-l-none rtl:rounded-l-full rtl:rounded-r-none px-15">
           {t("search")}
@@ -210,7 +131,7 @@ export default function MainDisplayEvents({ events }: Readonly<EventProps>) {
           value={typeFilter}
           onValueChange={(v) => setTypeFilter(v as EventType)}
         >
-          <SelectTrigger className="h-10 rounded-full w-full px-4 rtl:flex-row-reverse">
+          <SelectTrigger className="h-10 rounded-full border-primary w-full px-4 rtl:flex-row-reverse cursor-pointer">
             <SelectValue placeholder={t("eventType")} />
           </SelectTrigger>
           <SelectContent>
@@ -233,7 +154,7 @@ export default function MainDisplayEvents({ events }: Readonly<EventProps>) {
           value={dateFilter}
           onValueChange={(v) => setDateFilter(v as any)}
         >
-          <SelectTrigger className="h-10 rounded-full w-full px-4 rtl:flex-row-reverse">
+          <SelectTrigger className="h-10 rounded-full border-primary w-full px-4 rtl:flex-row-reverse cursor-pointer">
             <SelectValue placeholder={t("date")} />
           </SelectTrigger>
           <SelectContent className="rtl:text-right">
@@ -249,7 +170,7 @@ export default function MainDisplayEvents({ events }: Readonly<EventProps>) {
           value={priceFilter}
           onValueChange={(v) => setPriceFilter(v as any)}
         >
-          <SelectTrigger className="h-10 rounded-full w-full px-4  rtl:flex-row-reverse">
+          <SelectTrigger className="h-10 rounded-full border-primary w-full px-4  rtl:flex-row-reverse cursor-pointer">
             <SelectValue placeholder={t("price")} />
           </SelectTrigger>
           <SelectContent className=" text-right">
@@ -273,18 +194,40 @@ export default function MainDisplayEvents({ events }: Readonly<EventProps>) {
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-5 gap-6">
-        {filteredEvents.map((event) => (
-          <EventCard key={event._id} event={event} />
-        ))}
-      </div>
-
-      {filteredEvents.length === 0 && (
-        <div className="text-center w-full p-8 rounded-xl shadow-md text-muted-foreground border-2 border-primary">
-          <p>{t("emptyTitle")}</p>
-          <p>{t("emptySubtitle")}</p>
+      {/* Display Events */}
+      {isLoading ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-5 gap-6 items-stretch">
+          {Array.from({ length: 6 }).map((_, index) => (
+            <BasicAnimatedWrapper key={index} index={index}>
+              <EventCardSkeleton />
+            </BasicAnimatedWrapper>
+          ))}
         </div>
-      )}
+      ) : (filteredEvents.length === 0 ? (
+        <div className="flex items-center justify-center md:p-20 p-5 bg-primary/10 rounded-xl mt-10 my-10">
+          <div className="text-center max-w-md px-6">
+            <div className="mb-4 inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/20 ">
+              <TbCalendarEvent className="w-10 h-10 text-primary" />
+            </div>
+
+            <h2 className="text-2xl font-semibold text-foreground mb-2">
+              {t("title")}
+            </h2>
+
+            <p className="text-secondary-foreground ">{t("emptyTitle")}</p>
+            <p className="text-secondary-foreground mb-6">{t("emptySubtitle")}</p>
+          </div>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-5 gap-6">
+          {filteredEvents.map((event, index) => (
+            <BasicAnimatedWrapper key={event._id} index={index}>
+              <EventCard event={event} />
+            </BasicAnimatedWrapper>
+          ))}
+        </div>
+      ))
+      }
     </div>
   );
 }

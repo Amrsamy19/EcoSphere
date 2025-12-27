@@ -575,15 +575,19 @@ export class ProductRepository implements IProductRepository {
 
 		// Use atomic operation to prevent race conditions
 		return await RestaurantModel.findOneAndUpdate(
-			{
-				_id: restaurantId,
-				"menus._id": productId,
-				"menus.quantity": { $gte: quantityToDecrease }, // Ensure enough stock
-			},
-			{
-				$inc: { "menus.$.quantity": -quantityToDecrease },
-			},
-			{ new: true }
-		).exec();
-	}
+      {
+        _id: new mongoose.Types.ObjectId(restaurantId),
+        menus: {
+          $elemMatch: {
+            _id: new mongoose.Types.ObjectId(productId),
+            quantity: { $gte: quantityToDecrease },
+          },
+        },
+      },
+      {
+        $inc: { "menus.$.quantity": -quantityToDecrease },
+      },
+      { new: true },
+    ).exec();
+  }
 }
