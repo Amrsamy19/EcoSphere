@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { BackgroundGradient } from "@/components/ui/background-gradient";
 import { Button } from "@/components/ui/button";
@@ -16,6 +17,13 @@ import { LuHistory } from "react-icons/lu";
 import BasicAnimatedWrapper from "@/components/layout/common/BasicAnimatedWrapper";
 import { TbCalendarEvent } from "react-icons/tb";
 import EventListCardSkeleton from "./EventListCardSkeleton";
+
+const getStartDateTime = (event: any) =>
+  new Date(`${event.eventDate.split("T")[0]}T${event.startTime ?? "00:00"}`);
+
+const getEndDateTime = (event: any) =>
+  new Date(`${event.eventDate.split("T")[0]}T${event.endTime ?? "23:59"}`);
+
 const MetricCard: React.FC<MetricData> = ({ title, value, change }) => {
   const isPositive = change && change.startsWith("+");
 
@@ -60,73 +68,125 @@ const EventListItem: React.FC<EventListItemProps> = ({
   locate,
   avatar,
 }) => {
+  // const t = useTranslations("Events.overview");
+  // const locale = useLocale();
+  // const buttonText = t("manage");
+  // const lineColor = "bg-primary";
+  // const imageSource = (avatar as string) || "/events/defaultImgEvent.png";
+  // return (
+  //   <div
+  //     className="
+  //     flex items-center p-2 pr-6  rounded-xl shadow-md border-2 border-muted
+  //     transition duration-200 hover:shadow-lg hover:border-primary
+  //   "
+  //   >
+  //     {/* 1. Leading Color Line */}
+  //     <div
+  //       className={`w-1.5 h-16 rounded-full mr-4 ${lineColor} self-center shrink-0`}
+  //     ></div>
+
+  //     {/* 2. Event Image */}
+  //     <Image
+  //       src={imageSource}
+  //       alt={`Image for ${name}`}
+  //       className="w-14 h-14 object-cover rounded-md mr-4 ml-2 shrink-0"
+  //       width={100}
+  //       height={100}
+  //     />
+
+  //     {/* 3. Main Content Area */}
+  //     <div className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center gap-4">
+  //       {/* Title, Date, and Time */}
+  //       <div className="flex flex-col col-span-1">
+  //         <h3 className="text-base font-semibold ">{name}</h3>
+  //         <p className="flex items-center text-gray-600">
+  //           <MapPin className="w-4 h-4 mr-1.5 text-muted-foreground" />
+  //           <span>{locate}</span>
+  //         </p>
+  //       </div>
+
+  //       {/* Location */}
+  //       <div className=" flex justify-center items-center flex-col text-sm col-span-1">
+  //         <p className="text-sm text-gray-500 font-medium">
+  //           {formatDate(eventDate, locale)}
+  //         </p>
+  //         {/* Displaying the Time */}
+  //         <p className="text-sm text-grey-600 font-semibold">
+  //           {formatTime(startTime, locale)} – {formatTime(endTime, locale)}
+  //         </p>
+  //       </div>
+
+  //       {/* Placeholder column */}
+  //       <div className="hidden lg:block col-span-1">{/* Empty */}</div>
+  //     </div>
+
+  //     {/* 4. Action Button */}
+  //     <Link href={`/organizer/manage/${_id}`}>
+  //       <button
+  //         className="
+  //       cursor-pointer
+  //       ml-4 px-4 py-2 text-sm font-medium
+  //       border border-primary rounded-lg
+  //       text-foreground
+  //       hover:bg-primary hover:border-gray-400 hover:text-primary-foreground
+  //       focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2
+  //       whitespace-nowrap
+  //       shrink-0
+  //     "
+  //       >
+  //         {buttonText}
+  //       </button>
+  //     </Link>
+  //   </div>
+  // );
   const t = useTranslations("Events.overview");
   const locale = useLocale();
-  const buttonText = t("manage");
-  const lineColor = "bg-primary";
-  const imageSource = (avatar as string) || "/events/defaultImgEvent.png";
-  return (
-    <div
-      className="
-      flex items-center p-2 pr-6  rounded-xl shadow-md border-2 border-muted
-      transition duration-200 hover:shadow-lg hover:border-primary
-    "
-    >
-      {/* 1. Leading Color Line */}
-      <div
-        className={`w-1.5 h-16 rounded-full mr-4 ${lineColor} self-center shrink-0`}
-      ></div>
 
-      {/* 2. Event Image */}
+  const imageSource = typeof avatar === "string" ? avatar : avatar?.url || "/events/defaultImgEvent.png";
+
+  const start = new Date(`${eventDate.split("T")[0]}T${startTime ?? "00:00"}`);
+  const end = new Date(`${eventDate.split("T")[0]}T${endTime ?? "23:59"}`);
+  const isLive = start <= new Date() && end >= new Date();
+
+  return (
+    <div className="flex items-center p-2 pr-6 rounded-xl shadow-md border-2 border-muted hover:border-primary transition">
+      <div className="w-1.5 h-16 rounded-full bg-primary mr-4" />
+
       <Image
         src={imageSource}
-        alt={`Image for ${name}`}
-        className="w-14 h-14 object-cover rounded-md mr-4 ml-2 shrink-0"
+        alt={name}
         width={100}
         height={100}
+        className="w-14 h-14 rounded-md object-cover mr-4"
       />
 
-      {/* 3. Main Content Area */}
-      <div className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center gap-4">
-        {/* Title, Date, and Time */}
-        <div className="flex flex-col col-span-1">
-          <h3 className="text-base font-semibold ">{name}</h3>
-          <p className="flex items-center text-gray-600">
-            <MapPin className="w-4 h-4 mr-1.5 text-muted-foreground" />
-            <span>{locate}</span>
+      <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <h3 className="font-semibold flex items-center gap-2">
+            {name}
+            {isLive && (
+              <span className="text-xs px-2 py-0.5 rounded-full bg-red-500 text-white">
+                LIVE
+              </span>
+            )}
+          </h3>
+          <p className="flex items-center text-muted-foreground text-sm">
+            <MapPin className="w-4 h-4 mr-1" />
+            {locate}
           </p>
         </div>
 
-        {/* Location */}
-        <div className=" flex justify-center items-center flex-col text-sm col-span-1">
-          <p className="text-sm text-gray-500 font-medium">
-            {formatDate(eventDate, locale)}
-          </p>
-          {/* Displaying the Time */}
-          <p className="text-sm text-grey-600 font-semibold">
+        <div className="text-sm text-center">
+          <p>{formatDate(eventDate, locale)}</p>
+          <p className="font-semibold">
             {formatTime(startTime, locale)} – {formatTime(endTime, locale)}
           </p>
         </div>
-
-        {/* Placeholder column */}
-        <div className="hidden lg:block col-span-1">{/* Empty */}</div>
       </div>
 
-      {/* 4. Action Button */}
       <Link href={`/organizer/manage/${_id}`}>
-        <button
-          className="
-        cursor-pointer
-        ml-4 px-4 py-2 text-sm font-medium
-        border border-primary rounded-lg
-        text-foreground
-        hover:bg-primary hover:border-gray-400 hover:text-primary-foreground
-        focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2
-        whitespace-nowrap
-        shrink-0
-      "
-        >
-          {buttonText}
+        <button className="ml-4 px-4 py-2 border border-primary rounded-lg hover:bg-primary hover:text-primary-foreground">
+          {t("manage")}
         </button>
       </Link>
     </div>
@@ -142,7 +202,6 @@ export default function EventOverview({ events }: EventProps) {
   const totalTicketSales =
     events?.reduce((acc, event) => acc + (event.attenders?.length || 0), 0) ||
     0;
-
   const totalRevenue =
     events?.reduce(
       (acc, event) =>
@@ -151,15 +210,14 @@ export default function EventOverview({ events }: EventProps) {
     ) || 0;
 
   const confirmedAttendees = totalTicketSales;
-
+  const now = new Date();
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-
   const activeEventsCount =
-    events?.filter((event) => {
-      const eventDate = new Date(event.eventDate);
-      return eventDate >= today && event.isAccepted;
-    }).length || 0;
+    events?.filter(
+      (event) =>
+        event.isAccepted && getEndDateTime(event) >= now
+    ).length || 0;
 
   const dashboardData: MetricData[] = [
     {
@@ -209,19 +267,24 @@ export default function EventOverview({ events }: EventProps) {
   ]
 
   // 2. Filter, Sort, and Limit the events
-  const sortedAndLimitedEvents = events
-    ?.filter((event) => {
-      // Filter out past events. Parse YYYY-MM-DD string into Date object.
-      const eventDate = new Date(event.eventDate);
-      return eventDate >= today;
+  const upcomingEvents = events
+    ?.filter((e) => e.isAccepted)
+    ?.filter((e) => getEndDateTime(e) >= now)
+    ?.sort((a, b) => {
+      const aStart = getStartDateTime(a).getTime();
+      const aEnd = getEndDateTime(a).getTime();
+      const bStart = getStartDateTime(b).getTime();
+      const bEnd = getEndDateTime(b).getTime();
+
+      const aLive = aStart <= now.getTime() && aEnd >= now.getTime();
+      const bLive = bStart <= now.getTime() && bEnd >= now.getTime();
+
+      if (aLive && !bLive) return -1;
+      if (!aLive && bLive) return 1;
+
+      return aStart - bStart;
     })
-    .sort((a, b) => {
-      // Sort by date from nearest (earlier) to furthest (later)
-      const dateA = new Date(a.eventDate).getTime();
-      const dateB = new Date(b.eventDate).getTime();
-      return dateA - dateB;
-    })
-    .slice(0, 3);
+    ?.slice(0, 3);
   return (
     <div className="min-h-screen py-6 w-[85%]  mx-auto flex flex-col gap-6">
       <h1 className="capitalize font-bold text-3xl md:text-4xl text-center   text-foreground">
@@ -286,7 +349,7 @@ export default function EventOverview({ events }: EventProps) {
             ))}
           </div>
         ) : (
-          sortedAndLimitedEvents.length! == 0 ? (
+          upcomingEvents.length! == 0 ? (
             <div className="flex items-center justify-center md:p-20 p-5 bg-primary/10 rounded-xl ">
               <div className="text-center max-w-md px-6">
                 <div className="mb-4 inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/20 ">
@@ -299,7 +362,7 @@ export default function EventOverview({ events }: EventProps) {
             </div>
           ) : (
             <div className="flex flex-col gap-2">
-              {sortedAndLimitedEvents!.map((event, index) => (
+              {upcomingEvents!.map((event, index) => (
                 <BasicAnimatedWrapper key={event._id} index={index}>
                   <EventListItem
                     _id={event._id}
