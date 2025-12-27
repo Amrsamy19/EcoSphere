@@ -7,6 +7,7 @@ import { Toaster } from "sonner";
 import { SidebarInset } from "@/components/ui/sidebar";
 import SidebarTriggerBtn from "@/components/layout/SideBar/SidebarTriggerBtn/SidebarTriggerBtn";
 import { AIChatWidget } from "@/components/layout/ai/AIChatWidget";
+import "reflect-metadata";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
