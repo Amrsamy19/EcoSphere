@@ -22,7 +22,12 @@ export const getFavorites = createAsyncThunk("fav/getFavorites", async (_) => {
   if (!res.ok) throw new Error("Failed to fetch favorites");
 
   const { data } = await res.json();
-  return data;
+
+  // Normalize _id to id to ensure consistency
+  return data.map((item: any) => ({
+    ...item,
+    id: item.id || item._id,
+  }));
 });
 
 export const syncGuestFavorites = createAsyncThunk(
@@ -59,6 +64,12 @@ export const toggleFavoriteAsync = createAsyncThunk(
       if (!res.ok) {
         throw new Error("Failed to toggle favorite");
       }
+
+      const { data } = await res.json();
+      return data.map((item: any) => ({
+        ...item,
+        id: item.id || item._id,
+      }));
     }
 
     return product;
@@ -90,12 +101,16 @@ const FavSlice = createSlice({
       })
 
       .addCase(toggleFavoriteAsync.fulfilled, (state, action) => {
-        const product = action.payload;
-        const exists = state.favProducts.some((p) => p.id === product.id);
+        if (Array.isArray(action.payload)) {
+          state.favProducts = action.payload;
+        } else {
+          const product = action.payload;
+          const exists = state.favProducts.some((p) => p.id === product.id);
 
-        state.favProducts = exists
-          ? state.favProducts.filter((p) => p.id !== product.id)
-          : [...state.favProducts, product];
+          state.favProducts = exists
+            ? state.favProducts.filter((p) => p.id !== product.id)
+            : [...state.favProducts, product];
+        }
       })
       .addCase(toggleFavoriteAsync.rejected, (state) => {
         state.status = "failed";
