@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { EventType } from '@/backend/features/event/event.model';
+import BasicAnimatedWrapper from '@/components/layout/common/BasicAnimatedWrapper';
 
 export const getEventStartDateTime = (event: any) => {
     return new Date(
@@ -80,16 +81,16 @@ export default function EventsHistory({ events }: EventProps) {
                     placeholder={t("searchPlaceholder")}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="h-11 ltr:rounded-l-full rtl:rounded-r-full"
+                    className="h-11 border-primary ltr:rounded-l-full rtl:rounded-r-full"
                 />
                 <Button className="h-11 ltr:rounded-r-full ltr:rounded-l-none rtl:rounded-l-full rtl:rounded-r-none  px-15">{t("search")}</Button>
             </div>
 
             {/* Filters */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 gap-3 items-center w-full">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  gap-3 items-center w-full">
                 {/* Type */}
                 <Select key={`type-${resetKey}`} onValueChange={(v) => setTypeFilter(v as EventType)}>
-                    <SelectTrigger className="h-10 w-full rounded-full px-4 rtl:flex-row-reverse">
+                    <SelectTrigger className="h-10 w-full rounded-full border-primary px-4 rtl:flex-row-reverse">
                         <SelectValue placeholder={t("eventType")} />
                     </SelectTrigger>
                     <SelectContent className="rtl:text-right">
@@ -102,7 +103,7 @@ export default function EventsHistory({ events }: EventProps) {
 
                 {/* Date */}
                 <Select key={`date-${resetKey}`} onValueChange={(v) => setDateFilter(v as any)}>
-                    <SelectTrigger className="h-10 w-full rounded-full px-4 rtl:flex-row-reverse">
+                    <SelectTrigger className="h-10 w-full rounded-full border-primary px-4 rtl:flex-row-reverse">
                         <SelectValue placeholder={t("date")} />
                     </SelectTrigger>
                     <SelectContent className="rtl:text-right">
@@ -114,7 +115,7 @@ export default function EventsHistory({ events }: EventProps) {
 
                 {/* Price */}
                 <Select key={`price-${resetKey}`} onValueChange={(v) => setPriceFilter(v as any)}>
-                    <SelectTrigger className="h-10 w-full rounded-full px-4 rtl:flex-row-reverse">
+                    <SelectTrigger className="h-10 w-full rounded-full border-primary px-4 rtl:flex-row-reverse">
                         <SelectValue placeholder={t("price")} />
                     </SelectTrigger>
                     <SelectContent className="rtl:text-right">
@@ -143,8 +144,10 @@ export default function EventsHistory({ events }: EventProps) {
             {pastEvents.length > 0 ? (
                 <section className="pt-8">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {pastEvents.map(event => (
-                            <EventCard key={event._id} event={event} />
+                        {pastEvents.map((event,index) => (
+                            <BasicAnimatedWrapper key={event._id} index={index}>
+                                <EventCard  event={event} />
+                            </BasicAnimatedWrapper>
                         ))}
                     </div>
                 </section>

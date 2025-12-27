@@ -47,8 +47,8 @@ export default function EventCard({ event }: { event: any }) {
   };
 
   return (
-    <div className="col-span-1 flex justify-center">
-      <div className="w-full flex flex-col max-w-sm rounded-2xl overflow-hidden border border-primary/20 bg-background shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+    <div className="col-span-1 flex h-full justify-center">
+      <div className="w-full h-full flex flex-col max-w-sm ltr:rounded-tr-4xl ltr:rounded-bl-4xl rtl:rounded-tl-4xl rtl:rounded-br-4xl overflow-hidden border border-primary/20 bg-background shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
 
         {/* Image Header */}
         <div className="relative h-52">
@@ -94,7 +94,7 @@ export default function EventCard({ event }: { event: any }) {
         </div>
 
         {/* Content */}
-        <div className="p-5 flex-1 space-y-4">
+        <div className="p-5  flex-1 space-y-4">
           <div className="flex flex-wrap gap-1.5 text-sm">
             <div className="flex items-center gap-2 rounded-full bg-muted px-4 py-2">
               <FaCalendar className="text-primary" />
@@ -124,7 +124,7 @@ export default function EventCard({ event }: { event: any }) {
         </div>
 
         {/* Actions */}
-        <div className="flex m-2 gap-3">
+        <div className="flex m-2 gap-3 mt-auto">
           {/* Details card */}
           <EventDetailsCard
             event={event}

@@ -13,6 +13,8 @@ import React from "react";
 import { formatDate, formatTime } from "@/frontend/utils/Event";
 import { useLocale } from "next-intl";
 import { LuHistory } from "react-icons/lu";
+import BasicAnimatedWrapper from "@/components/layout/common/BasicAnimatedWrapper";
+import { motion } from "framer-motion";
 const MetricCard: React.FC<MetricData> = ({ title, value, change }) => {
   const isPositive = change && change.startsWith("+");
 
@@ -34,9 +36,8 @@ const MetricCard: React.FC<MetricData> = ({ title, value, change }) => {
           <div className="flex items-center ml-2 space-x-1">
             {/* Icon is green for positive trend, red for negative */}
             <Icon
-              className={`w-5 h-5 ${
-                isPositive ? "text-accent-foreground" : "text-red-500"
-              } hidden sm:block`}
+              className={`w-5 h-5 ${isPositive ? "text-accent-foreground" : "text-red-500"
+                } hidden sm:block`}
             />
             <span
               className={`text-sm text-accent-foreground font-semibold  pt-1`}
@@ -181,6 +182,26 @@ export default function EventOverview({ events }: EventProps) {
       change: null,
     },
   ];
+  const buttons = [
+    {
+      id: 1,
+      url: "/organizer/manage",
+      icon: MdAddCircleOutline,
+      title: t("createNewEvent"),
+    },
+    {
+      id: 2,
+      url: "/organizer/upcomingEvents",
+      icon: FaRegRectangleList,
+      title: t("upcomingEvents"),
+    },
+    {
+      id: 3,
+      url: "/organizer/history",
+      icon: LuHistory,
+      title: t("history"),
+    },
+  ]
 
   // 2. Filter, Sort, and Limit the events
   const sortedAndLimitedEvents = events
@@ -206,26 +227,17 @@ export default function EventOverview({ events }: EventProps) {
           {t("quickActions")}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 ">
-          <Link href="/organizer/manage" className="col-span-1 ">
-            <Button className="w-full py-6 text-xl cursor-pointer text-primary-foreground rounded-2xl">
-              <MdAddCircleOutline className="size-6" />
-              <span className="capitalize">{t("createNewEvent")}</span>
-            </Button>
-          </Link>
-          <Link href="/organizer/upcomingEvents" className="col-span-1 ">
-            <Button className="w-full py-6 text-xl cursor-pointer text-primary-foreground rounded-2xl">
-              <FaRegRectangleList className="size-6" />
-              <span className="capitalize">{t("upcomingEvents")}</span>
-            </Button>
-          </Link>
-          <Link href="/organizer/history" className="col-span-1 ">
-            <Button className="w-full py-6 text-xl cursor-pointer text-primary-foreground rounded-2xl">
-              <LuHistory className="size-6" />
-              <span className="capitalize">{t("history")}</span>
-            </Button>
-          </Link>
+          {buttons.map((btn) => (
+            <Link href={btn.url} key={btn.id} className="col-span-1 ">
+              <Button className="w-full py-6 text-xl cursor-pointer text-primary-foreground rounded-2xl">
+                <btn.icon className="size-6" />
+                <span className="capitalize">{btn.title}</span>
+              </Button>
+            </Link>
+          ))}
         </div>
       </div>
+
       <div className="flex flex-col gap-2">
         <div className="flex justify-between">
           <h2 className="capitalize font-bold text-2xl mb-2 text-foreground">
@@ -262,21 +274,22 @@ export default function EventOverview({ events }: EventProps) {
         </div>
         <div className="flex flex-col gap-2">
           {sortedAndLimitedEvents.length! > 0 ? (
-            sortedAndLimitedEvents!.map((event) => (
-              <EventListItem
-                key={event._id}
-                _id={event._id}
-                name={event.name}
-                eventDate={event.eventDate}
-                startTime={event.startTime}
-                endTime={event.endTime}
-                locate={event.locate}
-                avatar={
-                  typeof event.avatar?.url === "string"
-                    ? event.avatar?.url
-                    : "/events/defaultImgEvent.png"
-                }
-              />
+            sortedAndLimitedEvents!.map((event,index) => (
+              <BasicAnimatedWrapper key={event._id} index={index}>
+                <EventListItem
+                  _id={event._id}
+                  name={event.name}
+                  eventDate={event.eventDate}
+                  startTime={event.startTime}
+                  endTime={event.endTime}
+                  locate={event.locate}
+                  avatar={
+                    typeof event.avatar?.url === "string"
+                      ? event.avatar?.url
+                      : "/events/defaultImgEvent.png"
+                  }
+                />
+              </BasicAnimatedWrapper>
             ))
           ) : (
             <div className="text-center p-8 h-full rounded-xl shadow-md text-muted-foreground border-2 border-primary">
@@ -285,6 +298,7 @@ export default function EventOverview({ events }: EventProps) {
           )}
         </div>
       </div>
+
     </div>
   );
 }

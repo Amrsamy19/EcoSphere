@@ -101,7 +101,7 @@ export default function MainDisplayEvents({ events }: Readonly<EventProps>) {
 
   return (
     <div className="flex flex-col gap-4 py-5">
-      <h2 className="text-3xl capitalize text-center md:text-4xl font-bold mb-4">
+      <h2 className="text-3xl font-bold text-foreground mb-4 text-center">
         {t("upcomingEvents")}
       </h2>
       {/* Search */}
@@ -110,7 +110,7 @@ export default function MainDisplayEvents({ events }: Readonly<EventProps>) {
           placeholder={t("searchPlaceholder")}
           value={searchQuery}
           onChange={handleSearchChange}
-          className="h-11 ltr:rounded-l-full rtl:rounded-r-full"
+          className="h-11 border-primary ltr:rounded-l-full rtl:rounded-r-full"
         />
         <Button className="h-11 ltr:rounded-r-full ltr:rounded-l-none rtl:rounded-l-full rtl:rounded-r-none px-15">
           {t("search")}
@@ -125,7 +125,7 @@ export default function MainDisplayEvents({ events }: Readonly<EventProps>) {
           value={typeFilter}
           onValueChange={(v) => setTypeFilter(v as EventType)}
         >
-          <SelectTrigger className="h-10 rounded-full w-full px-4 rtl:flex-row-reverse">
+          <SelectTrigger className="h-10 rounded-full border-primary w-full px-4 rtl:flex-row-reverse">
             <SelectValue placeholder={t("eventType")} />
           </SelectTrigger>
           <SelectContent>
@@ -148,7 +148,7 @@ export default function MainDisplayEvents({ events }: Readonly<EventProps>) {
           value={dateFilter}
           onValueChange={(v) => setDateFilter(v as any)}
         >
-          <SelectTrigger className="h-10 rounded-full w-full px-4 rtl:flex-row-reverse">
+          <SelectTrigger className="h-10 rounded-full border-primary w-full px-4 rtl:flex-row-reverse">
             <SelectValue placeholder={t("date")} />
           </SelectTrigger>
           <SelectContent className="rtl:text-right">
@@ -164,7 +164,7 @@ export default function MainDisplayEvents({ events }: Readonly<EventProps>) {
           value={priceFilter}
           onValueChange={(v) => setPriceFilter(v as any)}
         >
-          <SelectTrigger className="h-10 rounded-full w-full px-4  rtl:flex-row-reverse">
+          <SelectTrigger className="h-10 rounded-full border-primary w-full px-4  rtl:flex-row-reverse">
             <SelectValue placeholder={t("price")} />
           </SelectTrigger>
           <SelectContent className=" text-right">
