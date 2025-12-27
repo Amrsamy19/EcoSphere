@@ -888,7 +888,8 @@
         "join": "Join Event",
         "joined": "Joined",
         "success": "You have successfully joined the event",
-        "error": "Something went wrong"
+        "error": "Something went wrong",
+        "notLoggedIn": "You must log in first"
       },
       "editBtn": "Edit Event",
       "DeleteEventBtn": {

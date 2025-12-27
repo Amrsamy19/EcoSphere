@@ -99,7 +99,7 @@ export default function EventsHistory({ events }: EventProps) {
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="h-11 border-primary ltr:rounded-l-full rtl:rounded-r-full"
                 />
-                <Button className="h-11 ltr:rounded-r-full ltr:rounded-l-none rtl:rounded-l-full rtl:rounded-r-none  px-15">
+                <Button className="h-11 ltr:rounded-r-full ltr:rounded-l-none rtl:rounded-l-full rtl:rounded-r-none  px-7 md:px-15">
                     {t("search")}
                 </Button>
             </div>

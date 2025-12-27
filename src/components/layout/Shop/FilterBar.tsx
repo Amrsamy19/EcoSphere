@@ -70,9 +70,9 @@ export default function FilterBar({
       </div>
 
       {isSorting && (
-        <div className="flex gap-6">
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Sort */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center col-span-1 gap-2">
             <span className="font-semibold whitespace-nowrap">
               {t("sortBy")}
             </span>
@@ -83,7 +83,7 @@ export default function FilterBar({
               onOpenChange={(open) => setOpenDropdown(open ? "sort" : null)}
               onValueChange={(value) => onSortChange(value as SortOption)}
             >
-              <SelectTrigger className="w-48 rounded-full border-primary">
+              <SelectTrigger className=" rounded-full border-primary w-full">
                 <SelectValue />
               </SelectTrigger>
 
@@ -98,7 +98,7 @@ export default function FilterBar({
           </div>
 
           {/* Filter */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center col-span-1 w-full  gap-2">
             <span className="font-semibold whitespace-nowrap">
               {t("filterBy")}
             </span>
@@ -111,7 +111,7 @@ export default function FilterBar({
                 onCategoryChange(value as CategoryOption)
               }
             >
-              <SelectTrigger className="w-48 rounded-full border-primary">
+              <SelectTrigger className="rounded-full border-primary w-full">
                 <SelectValue />
               </SelectTrigger>
 

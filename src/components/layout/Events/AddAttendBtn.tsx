@@ -17,6 +17,13 @@ export default function AddAttendBtn({
   const isFree = ticketPrice === 0;
   const isAttending = attenders?.includes(userId);
   const handleAddEvent = async () => {
+
+    if (!userId) {
+      toast.error(t("notLoggedIn")); 
+      router.push("/auth");
+      return;
+    }
+
     if (!isFree) {
       router.push(`/checkout?eventId=${eventId}&amount=${ticketPrice}`);
       return;
