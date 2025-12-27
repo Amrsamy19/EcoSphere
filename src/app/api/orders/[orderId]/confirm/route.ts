@@ -16,9 +16,7 @@ export const POST = async (
 > => {
   const { orderId } = await context.params;
 
-  if (!orderId) {
-    return badRequest("Order ID is required");
-  }
+  if (!orderId) return badRequest("Order ID is required");
 
   const orderController = rootContainer.resolve(OrderController);
 
@@ -26,9 +24,7 @@ export const POST = async (
     // Get order and decrease stock
     const result = await orderController.confirmOrderAndDecreaseStock(orderId);
 
-    if (!result.success) {
-      return ok({ success: false, message: result.message });
-    }
+    if (!result.success) return ok({ success: false, message: result.message });
 
     return ok({
       success: true,

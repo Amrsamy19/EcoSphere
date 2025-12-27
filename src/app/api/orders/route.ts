@@ -10,7 +10,7 @@ export const POST = async (req: NextRequest) => {
     const user = await requireAuth();
     const order = await rootContainer
       .resolve(OrderController)
-      .createOrder({ items: body, userId: user.id, paymentMethod: "stripe" });
+      .createOrder({ items: body, userId: user.id, paymentMethod: "cashOnDelivery" });
     return ok(order);
   } catch (error) {
     console.error(error);
@@ -18,7 +18,7 @@ export const POST = async (req: NextRequest) => {
   }
 };
 
-export const GET = async (_req: NextRequest) => {
+export const GET = async () => {
   try {
     const user = await requireAuth();
     const orders = await rootContainer
