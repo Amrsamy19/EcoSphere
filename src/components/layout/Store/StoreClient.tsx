@@ -24,6 +24,7 @@ export default function StoreClient() {
   const [sort, setSort] = useState<ProductSortOption>("default");
   const [category, setCategory] = useState<ProductCategoryOption>("default");
   const [inStockOnly, setInStockOnly] = useState(false);
+  const [onlineOnly, setOnlineOnly] = useState(false);
 
   const itemsPerPage = 8;
 
@@ -50,6 +51,7 @@ export default function StoreClient() {
           sort,
           category,
           inStockOnly,
+          onlineOnly,
         });
         if (isMounted && response.success) {
           const result = response.data;
@@ -73,7 +75,7 @@ export default function StoreClient() {
     return () => {
       isMounted = false;
     };
-  }, [currentPage, debouncedSearch, sort, category, inStockOnly]);
+  }, [currentPage, debouncedSearch, sort, category, inStockOnly, onlineOnly]);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -109,9 +111,14 @@ export default function StoreClient() {
           setInStockOnly(checked);
           setCurrentPage(1);
         }}
+        onlineOnly={onlineOnly}
+        onOnlineChange={(checked) => {
+          setOnlineOnly(checked);
+          setCurrentPage(1);
+        }}
       />
 
-      <div className="relative min-h-[400px]">
+      <div className="relative min-h-100">
         {isLoading ? (
           <div className="flex justify-center items-center py-20">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>

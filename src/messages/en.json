@@ -1,1486 +1,1487 @@
 {
-	"Home": {
-		"hero": {
-			"subtitle": "#ActForEarth",
-			"title": "Sustainable Choices, Stable Life ",
-			"cta": "More About EcoSphere"
-		},
-		"solidContent": {
-			"footprint": "reducing your carbon footprint by up to 30% with simple daily actions.",
-			"tips": "Discover over 100+ eco-friendly tips",
-			"community": "Become part of a growing community of more than 10,000 planet-lovers"
-		},
-		"marketplace": {
-			"title": "Our Store",
-			"description": "Shop 100% eco-friendly products and start your journey toward a more sustainable lifestyle. We offer a wide range of certified, toxin-free items carefully selected from trusted eco-friendly stores and partner farms across Egypt and beyond.",
-			"list": {
-				"natural": "Products made from natural, biodegradable, and recycled materials.",
-				"zeroWaste": "A full range of zero-waste essentials you can rely on every day.",
-				"farm": "Fresh and organic farm products sourced responsibly from local eco-farms."
-			},
-			"stats": {
-				"products": "300+ sustainable products",
-				"brands": "50+ green brands"
-			},
-			"cta": "Visit Store"
-		},
-		"partners": {
-			"title": "Eco-Friendly Partner Stores & Farms",
-			"description": "We proudly connect you with top eco-friendly stores and farms that share our mission of promoting a cleaner, more sustainable future. Our network is growing every day, making it easier for you to access trusted, safe, and environmentally responsible products from certified shops and passionate eco farms.",
-			"cta": "Visit Our Partners",
-			"stats": {
-				"partners": "50+",
-				"partnersDesc": "partners committed to sustainability",
-				"products": "1200+",
-				"productsDesc": "natural and toxin-free products",
-				"farms": "15+",
-				"farmsDesc": "certified local farms"
-			}
-		}
-	},
-	"Layout": {
-		"Sidebar": {
-			"groups": {
-				"application": "Application",
-				"dashboard": "Dashboard",
-				"admin": "Admin"
-			},
-			"menu": {
-				"home": "Home",
-				"shops": "Shops",
-				"events": "Events",
-				"recycle": "Recycle",
-				"news": "News",
-				"store": "Store",
-				"game": "Game",
-				"about": "About",
-				"recipes": "Recipes"
-			},
-			"dashboard": {
-				"overview": "OverView",
-				"mangeevent": "Manage Event",
-				"upcomingevents": "upcoming events",
-				"history": "History",
-				"products": "Products",
-				"orders": "Orders",
-				"shops": "Shops",
-				"events": "Events",
-				"recycling": "Recycling",
-				"recycleAgent": "Recycle Agents"
-			},
-			"footer": {
-				"favorite": "Favorite",
-				"cart": "Cart",
-				"login": "Login"
-			},
-			"theme": {
-				"light": "Light",
-				"dark": "Dark",
-				"system": "System",
-				"label": "{theme} Theme"
-			}
-		},
-		"UserBtn": {
-			"subscribe": "Subscribe",
-			"profile": "Profile",
-			"notifications": "Notifications",
-			"logout": "Log out",
-			"logoutSuccess": "You have been logged out successfully.",
-			"logoutError": "Failed to log out. Please try again later."
-		}
-	},
-	"About": {
-		"hero": {
-			"title": "Our Story",
-			"subtitle": "EcoSphere is your trusted destination for eco-friendly products, sustainable gifts, and smart green choices. Browse a variety of earth-conscious items made to help you live cleaner, better, and more naturally every day."
-		},
-		"story": {
-			"label": "About Us",
-			"title": "Building a greener future together Forever",
-			"description": "EcoSphere was created to make sustainable shopping simple, trustworthy, and accessible. With greenwashing becoming widespread, consumers are often overwhelmed or unsure who to trust."
-		},
-		"mission": {
-			"label": "Our Mission",
-			"title": "Making sustainability",
-			"titleHighlight": " effortless & trustworthy.",
-			"description": "EcoSphere exists to bridge the gap between conscious consumers and ethical enterprises. We strip away the guesswork of \"greenwashing\" by providing a rigorously vetted marketplace where every choice is a verified step towards a better planet.",
-			"forConsumers": {
-				"title": "For Consumers",
-				"description": "Instant access to transparent, planet-first products without the research fatigue."
-			},
-			"forBusinesses": {
-				"title": "For Businesses",
-				"description": "High-visibility growth for brands that prioritize integrity over easy profits."
-			}
-		},
-		"vision": {
-			"label": "Our Vision",
-			"title": "A world where",
-			"titleHighlight": " sustainable is standard.",
-			"description": "Our vision is to help create an interconnected, global economy where sustainable and regenerative commerce is the",
-			"descriptionHighlight": "standard, not the exception."
-		},
-		"values": {
-			"label": "Our Core Values",
-			"title": "Preserving The Earth For Future Generations",
-			"cards": {
-				"planetFirst": {
-					"title": "Planet-First",
-					"text": "Every action is measured by its environmental benefit and commitment to regeneration."
-				},
-				"integrity": {
-					"title": "Integrity & Trust",
-					"text": "We demand radical transparency from our partners and communicate openly with our users."
-				},
-				"accessibility": {
-					"title": "Accessibility",
-					"text": "We strive to make sustainable choices the easiest and most convenient option available."
-				},
-				"community": {
-					"title": "Community",
-					"text": "We prioritize connecting ethical enterprises with dedicated customers."
-				}
-			}
-		},
-		"verification": {
-			"label": "Verification",
-			"title": "The EcoSphere",
-			"titleHighlight": " Verification.",
-			"description": "Every partner must pass a structured verification system combining documentation, third-party certifications, and sustainability assessments across four pillars:",
-			"items": {
-				"documentation": "Documentation Review",
-				"certification": "Third-Party Certification Assessment",
-				"questionnaire": "Detailed Impact Questionnaire",
-				"monitoring": "Continuous Compliance Monitoring"
-			}
-		},
-		"keyPillars": {
-			"label": "Our Standards",
-			"title": "Key Pillars",
-			"description": "We don't just take a brand's word for it. We rigorously evaluate every partner against these four non-negotiable standards.",
-			"pillars": {
-				"environmental": {
-					"title": "Environmental Impact",
-					"text": "Sourcing organic, recycled materials with a focus on carbon neutrality and minimal waste."
-				},
-				"ethical": {
-					"title": "Ethical Labor",
-					"text": "Ensuring fair wages, safe working conditions, and absolutely no forced or child labor."
-				},
-				"transparency": {
-					"title": "Supply Chain Transparency",
-					"text": "Providing verifiable proof and complete openness about sourcing, processing, and logistics."
-				},
-				"quality": {
-					"title": "Durability & Quality",
-					"text": "Products designed for longevity, repairability, and circularity — actively fighting waste culture."
-				}
-			}
-		}
-	},
-	"Game": {
-		"hero": {
-			"title": "Tic Tac Toe",
-			"you": "You",
-			"vs": "vs",
-			"ai": "AI"
-		},
-		"status": {
-			"draw": "Draw",
-			"youWin": "You Win",
-			"aiWin": "AI Win",
-			"aiThinking": "AI think...",
-			"yourTurn": "Your turn",
-			"pointsAdded": "{points} points added to your EcoPoints!",
-			"updatePoints": "Error updating EcoPoints. Please try again.",
-			"loginForPoints": "Login to earn EcoPoints!",
-			"limitReached": "You've reached your daily limit of 2 games. Come back tomorrow!",
-			"limitReachedDesc": "Join us tomorrow to earn more EcoPoints and test your skills again!",
-			"remainingPlays": "You have {count} plays remaining today."
-		},
-		"difficulty": {
-			"easy": "Easy",
-			"medium": "Medium",
-			"hard": "Hard",
-			"points": "Points"
-		},
-		"actions": {
-			"playAgain": "Play Again",
-			"resetScores": "Reset Scores"
-		},
-		"scoreBoard": {
-			"title": "SCORE BOARD",
-			"you": "You",
-			"draws": "Draws",
-			"ai": "AI"
-		}
-	},
-	"Shop": {
-		"hero": {
-			"title": "Shops",
-			"subtitle": "Shops for eco-friendly products and gifts made with love for our planet."
-		},
-		"quality": {
-			"title": "Quality You Can Trust",
-			"description": "We check every partner shop with real care keeping things healthy, planet-friendly, and a little fun along the way. Hover over a card to explore it!",
-			"cards": {
-				"planetFriendly": {
-					"title": "Planet-Friendly Products",
-					"text": "Each shop prioritizes items that are inherently sustainable and kind to the environment, minimizing ecological impact."
-				},
-				"ecoConscious": {
-					"title": "Eco-Conscious Sourcing",
-					"text": "They ensure full responsibility and ethical sourcing, favoring materials that are renewable, recycled, or low-waste."
-				},
-				"commitment": {
-					"title": "Commitment to You",
-					"text": "Products are carefully selected to be safe, kind to your health, and promote a holistic, sustainable lifestyle."
-				}
-			}
-		},
-		"filter": {
-			"searchPlaceholder": "Search shops",
-			"sortBy": "Sort by:",
-			"filterBy": "Filter by:",
-			"sortOptions": {
-				"default": "Default",
-				"highestRating": "Highest Rating",
-				"lowestRating": "Lowest Rating"
-			},
-			"filterOptions": {
-				"default": "Default",
-				"supermarket": "Supermarket",
-				"hypermarket": "Hypermarket",
-				"grocery": "Grocery",
-				"bakery": "Bakery",
-				"cafe": "Cafe",
-				"other": "Other"
-			},
-			"noProducts": "No products match your current search criteria."
-		}
-	},
-	"Restaurant": {
-		"Products": {
-			"title": "Products",
-			"subtitle": "Manage your restaurant menu items",
-			"addProduct": "Add Product",
-			"searchPlaceholder": "Search products...",
-			"noProducts": "No products found. Add your first product!",
-			"previous": "Previous",
-			"next": "Next",
-			"page": "Page {current} of {total}",
-			"unavailable": "Unavailable",
-			"noImage": "No Image",
-			"currency": "$",
-			"actions": {
-				"edit": "Edit",
-				"delete": "Delete",
-				"cancel": "Cancel",
-				"save": "Save",
-				"saving": "Saving..."
-			},
-			"deleteDialog": {
-				"title": "Delete Product",
-				"description": "Are you sure you want to delete \"{title}\"? This action cannot be undone.",
-				"descriptionNoTitle": "Are you sure you want to delete this product? This action cannot be undone.",
-				"confirm": "Delete",
-				"cancel": "Cancel",
-				"deleting": "Deleting..."
-			},
-			"popup": {
-				"addTitle": "Add New Product",
-				"editTitle": "Edit Product",
-				"addDescription": "Add a new item to your menu",
-				"editDescription": "Update product details",
-				"titleLabel": "Title",
-				"titlePlaceholder": "e.g. Margherita Pizza",
-				"subtitleLabel": "Subtitle",
-				"subtitlePlaceholder": "Short description...",
-				"priceLabel": "Price (EGP)",
-				"imageLabel": "Product Image",
-				"availableLabel": "Available Online",
-				"quantityLabel": "Quantity",
-				"quantityPlaceholder": "Available quantity",
-				"errors": {
-					"titleRequired": "Title is required",
-					"subtitleRequired": "Subtitle is required",
-					"priceRequired": "Price is required",
-					"categoryRequired": "Please select a category",
-					"quantityRequired": "Quantity is required",
-					"quantityNegative": "Quantity cannot be negative"
-				}
-			},
-			"Categories": {
-				"label": "Category",
-				"placeholder": "Select a category",
-				"fruits": "Fruits",
-				"vegetables": "Vegetables",
-				"meat": "Meat",
-				"dairy": "Dairy",
-				"bakery": "Bakery",
-				"beverages": "Beverages",
-				"snacks": "Snacks",
-				"other": "Other"
-			},
-			"stock": "Stock",
-			"outOfStock": "Out of Stock",
-			"filter": {
-				"category": "Category",
-				"allCategories": "All Categories",
-				"sortBy": "Sort By",
-				"sortOptions": {
-					"name": "Name",
-					"price": "Price",
-					"sustainability": "Sustainability Score"
-				}
-			},
+  "Home": {
+    "hero": {
+      "subtitle": "#ActForEarth",
+      "title": "Sustainable Choices, Stable Life ",
+      "cta": "More About EcoSphere"
+    },
+    "solidContent": {
+      "footprint": "reducing your carbon footprint by up to 30% with simple daily actions.",
+      "tips": "Discover over 100+ eco-friendly tips",
+      "community": "Become part of a growing community of more than 10,000 planet-lovers"
+    },
+    "marketplace": {
+      "title": "Our Store",
+      "description": "Shop 100% eco-friendly products and start your journey toward a more sustainable lifestyle. We offer a wide range of certified, toxin-free items carefully selected from trusted eco-friendly stores and partner farms across Egypt and beyond.",
+      "list": {
+        "natural": "Products made from natural, biodegradable, and recycled materials.",
+        "zeroWaste": "A full range of zero-waste essentials you can rely on every day.",
+        "farm": "Fresh and organic farm products sourced responsibly from local eco-farms."
+      },
+      "stats": {
+        "products": "300+ sustainable products",
+        "brands": "50+ green brands"
+      },
+      "cta": "Visit Store"
+    },
+    "partners": {
+      "title": "Eco-Friendly Partner Stores & Farms",
+      "description": "We proudly connect you with top eco-friendly stores and farms that share our mission of promoting a cleaner, more sustainable future. Our network is growing every day, making it easier for you to access trusted, safe, and environmentally responsible products from certified shops and passionate eco farms.",
+      "cta": "Visit Our Partners",
+      "stats": {
+        "partners": "50+",
+        "partnersDesc": "partners committed to sustainability",
+        "products": "1200+",
+        "productsDesc": "natural and toxin-free products",
+        "farms": "15+",
+        "farmsDesc": "certified local farms"
+      }
+    }
+  },
+  "Layout": {
+    "Sidebar": {
+      "groups": {
+        "application": "Application",
+        "dashboard": "Dashboard",
+        "admin": "Admin"
+      },
+      "menu": {
+        "home": "Home",
+        "shops": "Shops",
+        "events": "Events",
+        "recycle": "Recycle",
+        "news": "News",
+        "store": "Store",
+        "game": "Game",
+        "about": "About",
+        "recipes": "Recipes"
+      },
+      "dashboard": {
+        "overview": "OverView",
+        "mangeevent": "Manage Event",
+        "upcomingevents": "upcoming events",
+        "history": "History",
+        "products": "Products",
+        "orders": "Orders",
+        "shops": "Shops",
+        "events": "Events",
+        "recycling": "Recycling",
+        "recycleAgent": "Recycle Agents"
+      },
+      "footer": {
+        "favorite": "Favorite",
+        "cart": "Cart",
+        "login": "Login"
+      },
+      "theme": {
+        "light": "Light",
+        "dark": "Dark",
+        "system": "System",
+        "label": "{theme} Theme"
+      }
+    },
+    "UserBtn": {
+      "subscribe": "Subscribe",
+      "profile": "Profile",
+      "notifications": "Notifications",
+      "logout": "Log out",
+      "logoutSuccess": "You have been logged out successfully.",
+      "logoutError": "Failed to log out. Please try again later."
+    }
+  },
+  "About": {
+    "hero": {
+      "title": "Our Story",
+      "subtitle": "EcoSphere is your trusted destination for eco-friendly products, sustainable gifts, and smart green choices. Browse a variety of earth-conscious items made to help you live cleaner, better, and more naturally every day."
+    },
+    "story": {
+      "label": "About Us",
+      "title": "Building a greener future together Forever",
+      "description": "EcoSphere was created to make sustainable shopping simple, trustworthy, and accessible. With greenwashing becoming widespread, consumers are often overwhelmed or unsure who to trust."
+    },
+    "mission": {
+      "label": "Our Mission",
+      "title": "Making sustainability",
+      "titleHighlight": " effortless & trustworthy.",
+      "description": "EcoSphere exists to bridge the gap between conscious consumers and ethical enterprises. We strip away the guesswork of \"greenwashing\" by providing a rigorously vetted marketplace where every choice is a verified step towards a better planet.",
+      "forConsumers": {
+        "title": "For Consumers",
+        "description": "Instant access to transparent, planet-first products without the research fatigue."
+      },
+      "forBusinesses": {
+        "title": "For Businesses",
+        "description": "High-visibility growth for brands that prioritize integrity over easy profits."
+      }
+    },
+    "vision": {
+      "label": "Our Vision",
+      "title": "A world where",
+      "titleHighlight": " sustainable is standard.",
+      "description": "Our vision is to help create an interconnected, global economy where sustainable and regenerative commerce is the",
+      "descriptionHighlight": "standard, not the exception."
+    },
+    "values": {
+      "label": "Our Core Values",
+      "title": "Preserving The Earth For Future Generations",
+      "cards": {
+        "planetFirst": {
+          "title": "Planet-First",
+          "text": "Every action is measured by its environmental benefit and commitment to regeneration."
+        },
+        "integrity": {
+          "title": "Integrity & Trust",
+          "text": "We demand radical transparency from our partners and communicate openly with our users."
+        },
+        "accessibility": {
+          "title": "Accessibility",
+          "text": "We strive to make sustainable choices the easiest and most convenient option available."
+        },
+        "community": {
+          "title": "Community",
+          "text": "We prioritize connecting ethical enterprises with dedicated customers."
+        }
+      }
+    },
+    "verification": {
+      "label": "Verification",
+      "title": "The EcoSphere",
+      "titleHighlight": " Verification.",
+      "description": "Every partner must pass a structured verification system combining documentation, third-party certifications, and sustainability assessments across four pillars:",
+      "items": {
+        "documentation": "Documentation Review",
+        "certification": "Third-Party Certification Assessment",
+        "questionnaire": "Detailed Impact Questionnaire",
+        "monitoring": "Continuous Compliance Monitoring"
+      }
+    },
+    "keyPillars": {
+      "label": "Our Standards",
+      "title": "Key Pillars",
+      "description": "We don't just take a brand's word for it. We rigorously evaluate every partner against these four non-negotiable standards.",
+      "pillars": {
+        "environmental": {
+          "title": "Environmental Impact",
+          "text": "Sourcing organic, recycled materials with a focus on carbon neutrality and minimal waste."
+        },
+        "ethical": {
+          "title": "Ethical Labor",
+          "text": "Ensuring fair wages, safe working conditions, and absolutely no forced or child labor."
+        },
+        "transparency": {
+          "title": "Supply Chain Transparency",
+          "text": "Providing verifiable proof and complete openness about sourcing, processing, and logistics."
+        },
+        "quality": {
+          "title": "Durability & Quality",
+          "text": "Products designed for longevity, repairability, and circularity — actively fighting waste culture."
+        }
+      }
+    }
+  },
+  "Game": {
+    "hero": {
+      "title": "Tic Tac Toe",
+      "you": "You",
+      "vs": "vs",
+      "ai": "AI"
+    },
+    "status": {
+      "draw": "Draw",
+      "youWin": "You Win",
+      "aiWin": "AI Win",
+      "aiThinking": "AI think...",
+      "yourTurn": "Your turn",
+      "pointsAdded": "{points} points added to your EcoPoints!",
+      "updatePoints": "Error updating EcoPoints. Please try again.",
+      "loginForPoints": "Login to earn EcoPoints!",
+      "limitReached": "You've reached your daily limit of 2 games. Come back tomorrow!",
+      "limitReachedDesc": "Join us tomorrow to earn more EcoPoints and test your skills again!",
+      "remainingPlays": "You have {count} plays remaining today."
+    },
+    "difficulty": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard",
+      "points": "Points"
+    },
+    "actions": {
+      "playAgain": "Play Again",
+      "resetScores": "Reset Scores"
+    },
+    "scoreBoard": {
+      "title": "SCORE BOARD",
+      "you": "You",
+      "draws": "Draws",
+      "ai": "AI"
+    }
+  },
+  "Shop": {
+    "hero": {
+      "title": "Shops",
+      "subtitle": "Shops for eco-friendly products and gifts made with love for our planet."
+    },
+    "quality": {
+      "title": "Quality You Can Trust",
+      "description": "We check every partner shop with real care keeping things healthy, planet-friendly, and a little fun along the way. Hover over a card to explore it!",
+      "cards": {
+        "planetFriendly": {
+          "title": "Planet-Friendly Products",
+          "text": "Each shop prioritizes items that are inherently sustainable and kind to the environment, minimizing ecological impact."
+        },
+        "ecoConscious": {
+          "title": "Eco-Conscious Sourcing",
+          "text": "They ensure full responsibility and ethical sourcing, favoring materials that are renewable, recycled, or low-waste."
+        },
+        "commitment": {
+          "title": "Commitment to You",
+          "text": "Products are carefully selected to be safe, kind to your health, and promote a holistic, sustainable lifestyle."
+        }
+      }
+    },
+    "filter": {
+      "searchPlaceholder": "Search shops",
+      "sortBy": "Sort by:",
+      "filterBy": "Filter by:",
+      "sortOptions": {
+        "default": "Default",
+        "highestRating": "Highest Rating",
+        "lowestRating": "Lowest Rating"
+      },
+      "filterOptions": {
+        "default": "Default",
+        "supermarket": "Supermarket",
+        "hypermarket": "Hypermarket",
+        "grocery": "Grocery",
+        "bakery": "Bakery",
+        "cafe": "Cafe",
+        "other": "Other"
+      },
+      "noProducts": "No products match your current search criteria."
+    }
+  },
+  "Restaurant": {
+    "Products": {
+      "title": "Products",
+      "subtitle": "Manage your restaurant menu items",
+      "addProduct": "Add Product",
+      "searchPlaceholder": "Search products...",
+      "noProducts": "No products found. Add your first product!",
+      "previous": "Previous",
+      "next": "Next",
+      "page": "Page {current} of {total}",
+      "unavailable": "Unavailable",
+      "noImage": "No Image",
+      "currency": "$",
+      "actions": {
+        "edit": "Edit",
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "save": "Save",
+        "saving": "Saving..."
+      },
+      "deleteDialog": {
+        "title": "Delete Product",
+        "description": "Are you sure you want to delete \"{title}\"? This action cannot be undone.",
+        "descriptionNoTitle": "Are you sure you want to delete this product? This action cannot be undone.",
+        "confirm": "Delete",
+        "cancel": "Cancel",
+        "deleting": "Deleting..."
+      },
+      "popup": {
+        "addTitle": "Add New Product",
+        "editTitle": "Edit Product",
+        "addDescription": "Add a new item to your menu",
+        "editDescription": "Update product details",
+        "titleLabel": "Title",
+        "titlePlaceholder": "e.g. Margherita Pizza",
+        "subtitleLabel": "Subtitle",
+        "subtitlePlaceholder": "Short description...",
+        "priceLabel": "Price (EGP)",
+        "imageLabel": "Product Image",
+        "availableLabel": "Available Online",
+        "quantityLabel": "Quantity",
+        "quantityPlaceholder": "Available quantity",
+        "errors": {
+          "titleRequired": "Title is required",
+          "subtitleRequired": "Subtitle is required",
+          "priceRequired": "Price is required",
+          "categoryRequired": "Please select a category",
+          "quantityRequired": "Quantity is required",
+          "quantityNegative": "Quantity cannot be negative"
+        }
+      },
+      "Categories": {
+        "label": "Category",
+        "placeholder": "Select a category",
+        "fruits": "Fruits",
+        "vegetables": "Vegetables",
+        "meat": "Meat",
+        "dairy": "Dairy",
+        "bakery": "Bakery",
+        "beverages": "Beverages",
+        "snacks": "Snacks",
+        "other": "Other"
+      },
+      "stock": "Stock",
+      "outOfStock": "Out of Stock",
+      "filter": {
+        "category": "Category",
+        "allCategories": "All Categories",
+        "sortBy": "Sort By",
+        "sortOptions": {
+          "name": "Name",
+          "price": "Price",
+          "sustainability": "Sustainability Score"
+        }
+      },
 
-			"toasts": {
-				"loadError": "Failed to load products",
-				"createSuccess": "Product created successfully",
-				"createError": "Failed to create product",
-				"updateSuccess": "Product updated successfully",
-				"updateError": "Failed to update product",
-				"deleteSuccess": "Product deleted successfully",
-				"deleteError": "Failed to delete product"
-			}
-		}
-	},
-	"Store": {
-		"hero": {
-			"title": "Our Store",
-			"subtitle": "EcoSphere is your trusted destination for eco-friendly products, sustainable gifts, and smart green choices. Browse a variety of earth-conscious items made to help you live cleaner, better, and more naturally every day."
-		},
-		"slider": {
-			"title": "Our Partner Stores",
-			"scrollHint": "Scroll to explore more stores",
-			"loading": "Loading top stores...",
-			"error": "Failed to load stores. Please try again.",
-			"retry": "Retry",
-			"noStores": "No stores available at the moment"
-		},
-		"product": {
-			"addedToFavorites": "Added to favorites",
-			"removedFromFavorites": "Removed from favorites",
-			"addToCart": "Add to Cart",
-			"availableOnlyOffline": "Offline only",
-			"removeFromCart": "Remove from Cart",
-			"addedToCart": "Added to cart",
-			"removedFromCart": "Removed from cart",
-			"outOfStock": "Out of Stock",
-			"lowStock": "Only {count} left!",
-			"availability": "Availability",
-			"inStock": "{count} available",
-			"sustainability": "Sustainability Score",
-			"currency": "EGP"
-		},
-		"filter": {
-			"searchPlaceholder": "Search products",
-			"sortBy": "Sort by:",
-			"filterBy": "Filter by:",
-			"sortOptions": {
-				"default": "Default",
-				"priceHigh": "Price: High to Low",
-				"priceLow": "Price: Low to High",
-				"sustainabilityLow": "Sustainability: Low to High",
-				"sustainabilityHigh": "Sustainability: High to Low"
-			},
-			"filterOptions": {
-				"default": "Default",
-				"Fruits": "Fruits",
-				"Vegetables": "Vegetables",
-				"Meat": "Meat",
-				"Dairy": "Dairy",
-				"Beverages": "Beverages",
-				"Snacks": "Snacks",
-				"Other": "Other"
-			},
-			"noProducts": "No products match your current search criteria.",
-			"inStockOnly": "In stock only"
-		}
-	},
-	"ProductDetails": {
-		"hero": {
-			"title": "Store",
-			"breadcrumb": {
-				"home": "Home",
-				"store": "Store",
-				"product": "Product"
-			}
-		},
-		"card": {
-			"description": "Description",
-			"quantity": "Quantity:",
-			"addToCart": "Add to Cart",
-			"availableOnlyOffline": "Offline only",
-			"removeFromCart": "Remove from Cart",
-			"addedToFavorites": "Added to favorites",
-			"removedFromFavorites": "Removed from favorites",
-			"addedToCart": "Added to cart",
-			"removedFromCart": "Removed from cart",
-			"outOfStock": "Out of Stock",
-			"availability": "Availability",
-			"inStock": "{count} available",
-			"availableOnline": "Available Online",
-			"notAvailableOnline": "Unavailable Online"
-		},
-		"tabs": {
-			"description": "description",
-			"reviews": "reviews",
-			"reviewsComingSoon": "reviews section coming soon..."
-		},
-		"related": {
-			"title": "Related Products",
-			"subtitle": "explore our wide range of related products"
-		}
-	},
-	"ShopDetails": {
-		"hero": {
-			"title": "Shop",
-			"breadcrumb": {
-				"home": "Home",
-				"shop": "Shop",
-				"defaultShop": "Shop"
-			}
-		},
-		"card": {
-			"workingHours": "Working Hours:",
-			"about": "About",
-			"visitShop": "Visit Shop",
-			"contact": "Contact"
-		},
-		"reviews": {
-			"title": "Reviews",
-			"noReviews": "No reviews yet. Be the first to review this shop!"
-		},
-		"related": {
-			"title": "Related Shops",
-			"subtitle": "explore our wide range of related shops"
-		},
-		"products": {
-			"title": "Shop Products",
-			"subtitle": "explore products from this shop",
-			"noProducts": "No products available for this shop."
-		}
-	},
-	"Auth": {
-		"page": {
-			"newToEcosphere": "New to Ecosphere?",
-			"signUpText": "sign up to get started with Ecosphere",
-			"signUp": "Sign Up",
-			"oneOfUs": "One Of Us?",
-			"signInText": "we are happy to see you back",
-			"signIn": "Sign In"
-		},
-		"login": {
-			"title": "Login",
-			"titleLogging": "Logging in...",
-			"email": "Email",
-			"password": "Password",
-			"forgetPassword": "Forget Password",
-			"forgotPassword": "Forgot Password",
-			"or": "or",
-			"newToEcosphere": "New to EcoSphere ?",
-			"signUp": "Sign up",
-			"successLogin": "You have successfully logged in"
-		},
-		"signup": {
-			"oneOfUs": "One of us ?",
-			"login": "Login",
-			"registering": "Registering...",
-			"continue": "Continue",
-			"successRegister": "You have successfully registered"
-		},
-		"forgotPassword": {
-			"title": "Forgot Password",
-			"resetPassword": "Reset Password",
-			"enterEmailDescription": "Enter your email address and we'll send you a link to reset your password.",
-			"enterVerificationCodeAndPassword": "Enter the verification code sent to your email and create a new password.",
-			"email": "Email",
-			"newPassword": "New Password",
-			"confirmPassword": "Confirm Password",
-			"verificationCode": "Verification Code",
-			"sendVerificationCode": "Send Verification Code",
-			"sending": "Sending",
-			"resettingPassword": "Resetting Password",
-			"emailSent": "Check Your Email",
-			"checkEmailInstructions": "We've sent a verification code to",
-			"useAnotherEmail": "Use Another Email",
-			"backToLogin": "Back to Login",
-			"rememberPassword": "Remember your password?",
-			"login": "Login",
-			"passwordResetSuccess": "Password Reset Successful",
-			"passwordResetSuccessMessage": "Your password has been reset successfully. You can now log in with your new password.",
-			"passwordsDoNotMatch": "Passwords do not match",
-			"sidePanel": {
-				"checkEmailTitle": "Check Your Email",
-				"checkEmailDescription": "Follow the instructions to verify your address.",
-				"resetTitle": "Reset",
-				"resetDescription": "Enter your email and new password to reset."
-			}
-		},
-		"steps": {
-			"step1": {
-				"title": "Sign Up",
-				"user": "normal user",
-				"organizer": "event organizer",
-				"shop": "shop"
-			},
-			"userStep2": {
-				"title": "User Details",
-				"firstName": "Enter Your First Name",
-				"lastName": "Enter Your Last Name",
-				"phoneNumber": "Enter Your Phone Number",
-				"female": "Female",
-				"male": "Male",
-				"addressPlaceholder": "Enter Your Address"
-			},
-			"shopStep2": {
-				"title": "Shop Details",
-				"name": "Enter shop name",
-				"description": "Description",
-				"phoneNumber": "Phone Number",
-				"hotline": "Hotline"
-			},
-			"shopStep3": {
-				"title": "Shop Details",
-				"location": "Enter shop location",
-				"workingHours": "e.g., Mon-Fri 9:00 AM - 6:00 PM",
+      "toasts": {
+        "loadError": "Failed to load products",
+        "createSuccess": "Product created successfully",
+        "createError": "Failed to create product",
+        "updateSuccess": "Product updated successfully",
+        "updateError": "Failed to update product",
+        "deleteSuccess": "Product deleted successfully",
+        "deleteError": "Failed to delete product"
+      }
+    }
+  },
+  "Store": {
+    "hero": {
+      "title": "Our Store",
+      "subtitle": "EcoSphere is your trusted destination for eco-friendly products, sustainable gifts, and smart green choices. Browse a variety of earth-conscious items made to help you live cleaner, better, and more naturally every day."
+    },
+    "slider": {
+      "title": "Our Partner Stores",
+      "scrollHint": "Scroll to explore more stores",
+      "loading": "Loading top stores...",
+      "error": "Failed to load stores. Please try again.",
+      "retry": "Retry",
+      "noStores": "No stores available at the moment"
+    },
+    "product": {
+      "addedToFavorites": "Added to favorites",
+      "removedFromFavorites": "Removed from favorites",
+      "addToCart": "Add to Cart",
+      "availableOnlyOffline": "Offline only",
+      "removeFromCart": "Remove from Cart",
+      "addedToCart": "Added to cart",
+      "removedFromCart": "Removed from cart",
+      "outOfStock": "Out of Stock",
+      "lowStock": "Only {count} left!",
+      "availability": "Availability",
+      "inStock": "{count} available",
+      "sustainability": "Sustainability Score",
+      "currency": "EGP"
+    },
+    "filter": {
+      "searchPlaceholder": "Search products",
+      "sortBy": "Sort by:",
+      "filterBy": "Filter by:",
+      "sortOptions": {
+        "default": "Default",
+        "priceHigh": "Price: High to Low",
+        "priceLow": "Price: Low to High",
+        "sustainabilityLow": "Sustainability: Low to High",
+        "sustainabilityHigh": "Sustainability: High to Low"
+      },
+      "filterOptions": {
+        "default": "Default",
+        "Fruits": "Fruits",
+        "Vegetables": "Vegetables",
+        "Meat": "Meat",
+        "Dairy": "Dairy",
+        "Beverages": "Beverages",
+        "Snacks": "Snacks",
+        "Other": "Other"
+      },
+      "noProducts": "No products match your current search criteria.",
+      "inStockOnly": "Stock only",
+      "onlineOnly": "Online only"
+    }
+  },
+  "ProductDetails": {
+    "hero": {
+      "title": "Store",
+      "breadcrumb": {
+        "home": "Home",
+        "store": "Store",
+        "product": "Product"
+      }
+    },
+    "card": {
+      "description": "Description",
+      "quantity": "Quantity:",
+      "addToCart": "Add to Cart",
+      "availableOnlyOffline": "Offline only",
+      "removeFromCart": "Remove from Cart",
+      "addedToFavorites": "Added to favorites",
+      "removedFromFavorites": "Removed from favorites",
+      "addedToCart": "Added to cart",
+      "removedFromCart": "Removed from cart",
+      "outOfStock": "Out of Stock",
+      "availability": "Availability",
+      "inStock": "{count} available",
+      "availableOnline": "Available Online",
+      "notAvailableOnline": "Unavailable Online"
+    },
+    "tabs": {
+      "description": "description",
+      "reviews": "reviews",
+      "reviewsComingSoon": "reviews section coming soon..."
+    },
+    "related": {
+      "title": "Related Products",
+      "subtitle": "explore our wide range of related products"
+    }
+  },
+  "ShopDetails": {
+    "hero": {
+      "title": "Shop",
+      "breadcrumb": {
+        "home": "Home",
+        "shop": "Shop",
+        "defaultShop": "Shop"
+      }
+    },
+    "card": {
+      "workingHours": "Working Hours:",
+      "about": "About",
+      "visitShop": "Visit Shop",
+      "contact": "Contact"
+    },
+    "reviews": {
+      "title": "Reviews",
+      "noReviews": "No reviews yet. Be the first to review this shop!"
+    },
+    "related": {
+      "title": "Related Shops",
+      "subtitle": "explore our wide range of related shops"
+    },
+    "products": {
+      "title": "Shop Products",
+      "subtitle": "explore products from this shop",
+      "noProducts": "No products available for this shop."
+    }
+  },
+  "Auth": {
+    "page": {
+      "newToEcosphere": "New to Ecosphere?",
+      "signUpText": "sign up to get started with Ecosphere",
+      "signUp": "Sign Up",
+      "oneOfUs": "One Of Us?",
+      "signInText": "we are happy to see you back",
+      "signIn": "Sign In"
+    },
+    "login": {
+      "title": "Login",
+      "titleLogging": "Logging in...",
+      "email": "Email",
+      "password": "Password",
+      "forgetPassword": "Forget Password",
+      "forgotPassword": "Forgot Password",
+      "or": "or",
+      "newToEcosphere": "New to EcoSphere ?",
+      "signUp": "Sign up",
+      "successLogin": "You have successfully logged in"
+    },
+    "signup": {
+      "oneOfUs": "One of us ?",
+      "login": "Login",
+      "registering": "Registering...",
+      "continue": "Continue",
+      "successRegister": "You have successfully registered"
+    },
+    "forgotPassword": {
+      "title": "Forgot Password",
+      "resetPassword": "Reset Password",
+      "enterEmailDescription": "Enter your email address and we'll send you a link to reset your password.",
+      "enterVerificationCodeAndPassword": "Enter the verification code sent to your email and create a new password.",
+      "email": "Email",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm Password",
+      "verificationCode": "Verification Code",
+      "sendVerificationCode": "Send Verification Code",
+      "sending": "Sending",
+      "resettingPassword": "Resetting Password",
+      "emailSent": "Check Your Email",
+      "checkEmailInstructions": "We've sent a verification code to",
+      "useAnotherEmail": "Use Another Email",
+      "backToLogin": "Back to Login",
+      "rememberPassword": "Remember your password?",
+      "login": "Login",
+      "passwordResetSuccess": "Password Reset Successful",
+      "passwordResetSuccessMessage": "Your password has been reset successfully. You can now log in with your new password.",
+      "passwordsDoNotMatch": "Passwords do not match",
+      "sidePanel": {
+        "checkEmailTitle": "Check Your Email",
+        "checkEmailDescription": "Follow the instructions to verify your address.",
+        "resetTitle": "Reset",
+        "resetDescription": "Enter your email and new password to reset."
+      }
+    },
+    "steps": {
+      "step1": {
+        "title": "Sign Up",
+        "user": "normal user",
+        "organizer": "event organizer",
+        "shop": "shop"
+      },
+      "userStep2": {
+        "title": "User Details",
+        "firstName": "Enter Your First Name",
+        "lastName": "Enter Your Last Name",
+        "phoneNumber": "Enter Your Phone Number",
+        "female": "Female",
+        "male": "Male",
+        "addressPlaceholder": "Enter Your Address"
+      },
+      "shopStep2": {
+        "title": "Shop Details",
+        "name": "Enter shop name",
+        "description": "Description",
+        "phoneNumber": "Phone Number",
+        "hotline": "Hotline"
+      },
+      "shopStep3": {
+        "title": "Shop Details",
+        "location": "Enter shop location",
+        "workingHours": "e.g., Mon-Fri 9:00 AM - 6:00 PM",
 
-				"selectCategory": "Select a category",
-				"categories": {
-					"supermarket": "Supermarket",
-					"hypermarket": "Hypermarket",
-					"grocery": "Grocery",
-					"bakery": "Bakery",
-					"cafe": "Cafe",
-					"other": "Other"
-				}
-			},
-			"lastStep": {
-				"title": "Final Step",
-				"email": "Email",
-				"password": "Password",
-				"confirmPassword": "Confirm Password"
-			}
-		}
-	},
-	"Profile": {
-		"page": {
-			"pleaseLogin": "Please log in to view your profile.",
-			"loading": "Loading..."
-		},
-		"common": {
-			"editProfile": "Edit Profile",
-			"changePassword": "Change Password",
-			"personalInformation": "Personal Information",
-			"email": "Email",
-			"phoneNumber": "Phone Number",
-			"address": "Address",
-			"birthDate": "Birth Date",
-			"gender": "Gender",
-			"ecoPoints": "EcoPoints",
-			"redeem": "Redeem",
-			"redeeming": "Redeeming...",
-			"na": "N/A",
-			"cancel": "Cancel",
-			"saveChanges": "Save Changes",
-			"firstName": "First Name",
-			"lastName": "Last Name",
-			"selectGender": "Select Gender",
-			"male": "Male",
-			"female": "Female"
-		},
-		"customer": {
-			"role": "Customer",
-			"orderHistory": {
-				"title": "Order History",
-				"orderCount": "You have {count} past order(s).",
-				"noOrders": "No orders yet",
-				"noOrdersDescription": "Start adding products to your Orders to see them here",
-				"browseOrders": "Browse Orders",
-				"orderId": "Order ID",
-				"date": "Date",
-				"total": "Total",
-				"status": "Status",
-				"loading": "Loading..."
-			},
-			"recyclingHistory": {
-				"title": "Recycling History",
-				"date": "Date",
-				"createdAt": "Created At",
-				"updatedAt": "last Update was at",
-				"items": "items count",
-				"itemsCount": "items",
-				"weight": "es. Weight (kg)",
-				"carbonSaved": "Carbon Saved",
-				"status": "Status",
-				"verified": "Verified",
-				"pending": "Pending",
-				"completed": "Completed",
-				"review": "Review",
-				"rejected": "Rejected",
-				"processing": "Processing",
-				"noRecyclingOrders": "No recycling orders yet",
-				"noRecyclingOrdersDescription": "Start recycling to see your eco-impact here",
-				"browseRecycling": "Start Recycling"
-			},
-			"editModalTitle": "Edit Profile"
-		},
-		"toasts": {
-			"passwordChanged": "Password changed successfully",
-			"passwordChangeFailed": "Failed to change password",
-			"redeemFailed": "Failed to redeem points. Please try again."
-		},
-		"states": {
-			"loading": "Loading profile...",
-			"notFound": "User not found."
-		},
-		"security": {
-			"title": "Security",
-			"currentPassword": "Current Password",
-			"currentPasswordPlaceholder": "Enter current password",
-			"newPassword": "New Password",
-			"newPasswordPlaceholder": "Enter new password",
-			"confirmPassword": "Confirm Password",
-			"confirmPasswordPlaceholder": "Confirm new password",
-			"changePassword": "Change Password"
-		},
-		"organizer": {
-			"role": "Event Organizer",
-			"organizationName": "Organization Name",
-			"eventsOrganized": "Events Organized",
-			"editModalTitle": "Edit Profile",
-			"subscriptionManagement": "Subscription Management",
-			"expiryDate": "Expiry Date",
-			"renewSubscription": "Renew Subscription",
-			"renewFeatureComingSoon": "Renew Subscription feature coming soon!"
-		},
-		"restaurant": {
-			"role": "shop",
-			"shopName": "Shop Name",
-			"description": "Description",
-			"location": "Location",
-			"workingHours": "Working Hours",
-			"hotline": "Hotline",
-			"editModalTitle": "Edit Shop Profile",
-			"restaurantInformation": "Restaurant Information",
-			"noDescription": "No description available.",
-			"orders": {
-				"title": "Order Management",
-				"totalOrders": "Total Orders",
-				"orderId": "Order ID",
-				"customer": "Customer",
-				"date": "Date",
-				"total": "Total",
-				"status": "Status",
-				"actions": "Actions",
-				"noOrders": "No orders found.",
-				"fetchError": "Failed to fetch orders.",
-				"statusUpdated": "Status updated successfully.",
-				"updateError": "Failed to update status.",
-				"changeStatus": "Change Status",
-				"statuses": {
-					"pending": "Pending",
-					"paid": "Paid",
-					"preparing": "Preparing",
-					"delivering": "Delivering",
-					"completed": "Completed",
-					"canceled": "Canceled"
-				},
-				"page": "Page",
-				"of": "of"
-			}
-		}
-	},
-	"Cart": {
-		"hero": {
-			"title": "Shopping Cart",
-			"home": "Home",
-			"cart": "Cart"
-		},
-		"productsSection": {
-			"product": "Product",
-			"productCode": "Product Code",
-			"quantity": "Quantity",
-			"total": "Total",
-			"action": "Action",
-			"clearAll": "Clear all",
-			"emptyCart": "Your cart is empty"
-		},
-		"removeButton": {
-			"confirm": "Confirm?",
-			"removeItem": "Remove item",
-			"clickToConfirm": "Click again to confirm"
-		},
-		"quantitySelector": {
-			"decrease": "Decrease quantity",
-			"increase": "Increase quantity"
-		},
-		"orderSummary": {
-			"title": "Order Summary",
-			"promoCode": "Promo Code",
-			"apply": "Apply",
-			"couponApplied": "Coupon Applied",
-			"subTotal": "Subtotal",
-			"discount": "Discount ({percent}%)",
-			"deliveryFee": "Delivery Fee",
-			"total": "Total",
-			"warranty": "90 Day Limited Warranty up to manufacturer's elements",
-			"details": "Details",
-			"checkoutNow": "Checkout Now",
-			"currency": "EGP",
-			"toasts": {
-				"couponApplied": "Coupon Applied",
-				"invalidCoupon": "Not valid coupon"
-			},
-			"no-coupon": "No Coupon"
-		}
-	},
-	"Checkout": {
-		"page": {
-			"title": "Checkout",
-			"payWithCard": "Pay with Card",
-			"payWithCash": "Cash on Delivery",
-			"somethingWentWrong": "Something went wrong",
-			"youWillPay": "You will pay",
-			"directlyToCourier": "directly to the courier upon delivery.",
-			"confirmOrder": "Confirm Order"
-		},
-		"form": {
-			"initializing": "Initializing Secure Payment...",
-			"securePayment": "Secure Payment",
-			"securePaymentDesc": "Complete your purchase securely.",
-			"errorTitle": "Error",
-			"unexpectedError": "An unexpected error occurred.",
-			"processing": "Processing...",
-			"pay": "Pay {amount}",
-			"securedByStripe": "Payments secured by Stripe"
-		},
-		"verification": {
-			"orderId": "Order ID",
-			"successTitle": "Payment Confirmed",
-			"successDesc": "Thank you for contributing to a greener future.",
-			"transactionId": "Transaction ID",
-			"totalAmount": "Total Amount",
-			"returnHome": "Return Home",
-			"downloadReceipt": "Download Receipt",
-			"failedTitle": "Payment Failed",
-			"failedDesc": "We encountered an issue processing your eco-contribution. No funds were deducted.",
-			"errorCode": "Error Code: {code}",
-			"cardDeclined": "Card declined. Please check your card details or try a different payment method.",
-			"tryAgain": "Try Again"
-		}
-	},
-	"Events": {
-		"hero": {
-			"title": "Never Miss an Event in Ecosphere",
-			"subTitle": "Explore upcoming events across the Ecosphere platform, get all the details you need, and take part in experiences that bring the community together"
-		},
-		"overview": {
-			"title": "Dashboard Overview",
-			"quickActions": "Quick Actions",
-			"createNewEvent": "Create new Event",
-			"keyMetrics": "Key Metrics",
-			"realTimeData": "Real-time data",
-			"totalTicketSales": "Total Ticket Sales",
-			"totalRevenue": "Total Revenue",
-			"confirmedAttendees": "Confirmed Attendees",
-			"activeEvents": "Active Events",
-			"upcomingEvents": "upcoming events",
-			"history": "History",
-			"viewAll": "view all",
-			"manage": "Manage",
-			"noUpcomingEvents": "No upcoming events found."
-		},
-		"MainDisplayEvents": {
-			"title": "Browse Events",
-			"search": "Search",
-			"upcomingEvents": "Upcoming Events",
-			"searchPlaceholder": "Search events...",
-			"filterByPrice": "Filter by price",
-			"all": "All",
-			"free": "Free",
-			"paid": "Paid",
-			"emptyTitle": "No upcoming events found",
-			"emptySubtitle": "Please check back later for upcoming events",
-			"eventType": "Event Type",
-			"date": "Date",
-			"price": "Price",
-			"clearFilters": "Clear Filters",
-			"filterByType": "Filter by Type",
-			"filterByDate": "Filter by Date",
-			"today": "Today",
-			"thisWeek": "This Week",
-			"thisMonth": "This Month",
-			"environmental_seminar": "Environmental Seminar",
-			"community_cleanup": "Community Cleanup",
-			"sustainable_brands_showcase": "Sustainable Brands Showcase",
-			"other": "Other"
-		},
-		"WhyEcosphere": {
-			"title": "Why Attend Events on Ecosphere?",
-			"subtitle": "Ecosphere helps you discover, explore, and attend events effortlessly with everything you need in one place.",
-			"card1": {
-				"title": "Centralized Event Discovery",
-				"description": "Find all upcoming events in one unified platform without searching multiple sources."
-			},
-			"card2": {
-				"title": "Detailed Event Information",
-				"description": "View schedules, locations, organizers, and all event details before attending."
-			},
-			"card3": {
-				"title": "Easy Attendance & Tracking",
-				"description": "Join events easily and keep track of the events you plan to attend."
-			}
-		},
-		"displayEvents": {
-			"title": "My Events",
-			"addEventBtn": "Add New Event",
-			"UpComingEvents": "Upcoming Events",
-			"history": "History",
-			"search": "Search",
-			"searchPlaceholder": "Search events...",
-			"filterByPrice": "Filter by price",
-			"all": "All",
-			"free": "Free",
-			"paid": "Paid",
-			"filterByType": "Filter by type",
-			"environmental_seminar": "Environmental Seminar",
-			"community_cleanup": "Community Cleanup",
-			"sustainable_brands_showcase": "Sustainable Brands Showcase",
-			"other": "Other",
-			"eventType": "Event Type",
-			"date": "Date",
-			"today": "Today",
-			"thisWeek": "This Week",
-			"thisMonth": "This Month",
-			"location": "Location",
-			"price": "Price",
-			"clearFilters": "Clear Filters",
-			"noEvents": "No events found",
-			"noupcomingEvents": "No Upcoming events found",
-			"nohistory": "No history events found",
-			"EventCard": {
-				"organizer": "You are the organizer",
-				"status": {
-					"approved": "Approved",
-					"pending": "Pending...",
-					"rejected": "Rejected"
-				}
-			},
-			"EventCardDetails": {
-				"viewDetails": "View Details",
-				"title": "Event Details",
-				"date": "Date",
-				"time": "Time",
-				"location": "Location",
-				"about": "About this event",
-				"capacity": "Capacity",
-				"attenders": "Attenders",
-				"ticketPrice": "Ticket Price",
-				"free": "Free",
-				"schedule": "Schedule",
-				"organizer": "You are the organizer"
-			},
-			"AddAttendBtn": {
-				"join": "Join Event",
-				"joined": "Joined",
-				"success": "You have successfully joined the event",
-				"error": "Something went wrong"
-			},
-			"editBtn": "Edit Event",
-			"DeleteEventBtn": {
-				"delete": "Delete Event",
-				"success": "Event deleted successfully",
-				"error": "Error deleting event"
-			}
-		},
-		"Manage": {
-			"titleCreate": "Create Event",
-			"titleEdit": "Edit Event",
-			"submitCreate": "Create Event",
-			"submitUpdate": "Update Event",
-			"submitting": "Saving Event...",
-			"successCreate": "Event created successfully",
-			"successUpdate": "Event updated successfully",
-			"error": "Error saving event",
-			"sections": {
-				"primary": "Primary Event Information",
-				"venue": "Venue and Schedule",
-				"capacity": "Capacity and Sales",
-				"schedule": "Detailed Event Schedule (Agenda Items)",
-				"toasts": {
-					"updateSuccess": "Agent status updated successfully",
-					"updateError": "Failed to update agent status"
-				},
-				"section": "section"
-			},
-			"fields": {
-				"title": "Event Title",
-				"titlePlaceholder": "Event Name",
-				"type": "Event Type",
-				"EventTypes": {
-					"environmental_seminar": "Environmental Seminar / Talk",
-					"community_cleanup": "Community Clean-Up Event",
-					"sustainable_brands_showcase": "Sustainable Brands Showcase",
-					"other": "Other"
-				},
-				"typePlaceholder": "Select event type",
-				"image": "Event Image",
-				"description": "Short Description",
-				"descriptionPlaceholder": "Describe your event...",
-				"location": "Location / Venue",
-				"locationPlaceholder": "City, Address, or Venue",
-				"date": "Event Date",
-				"startTime": "Start Time",
-				"endTime": "End Time",
-				"ticketsAmount": "Tickets Amount",
-				"ticketStatus": "Ticket Status",
-				"ticketStatusPlaceholder": "Select ticket status",
-				"ticketPrice": "Ticket Price",
-				"agendaTitle": "Title",
-				"agendaTitlePlaceholder": "Agenda section title",
-				"agendaDescription": "Description",
-				"agendaDescriptionPlaceholder": "Details..."
-			},
-			"actions": {
-				"addAgenda": "Add Agenda Section"
-			},
-			"ticketTypes": {
-				"priced": "Priced",
-				"free": "Free"
-			}
-		}
-	},
-	"Favorites": {
-		"hero": {
-			"title": "Your Favorites",
-			"breadcrumb": {
-				"home": "Home",
-				"favorite": "Favorites"
-			}
-		},
-		"emptyState": {
-			"title": "No favorites yet",
-			"description": "Start exploring and add items to your wishlist!",
-			"browseButton": "Browse Items"
-		},
-		"card": {
-			"removedFromFavorites": "Removed from favorites",
-			"addToCart": "Add to cart",
-			"removeFromCart": "Remove from cart",
-			"outOfStock": "Out of Stock",
-			"addedToCart": "Added to cart",
-			"removedFromCart": "Removed from cart"
-		},
-		"view": {
-			"grid": "Grid View",
-			"list": "List View",
-			"clearAll": "Clear All Favorites"
-		}
-	},
-	"AI": {
-		"button": {
-			"label": "Ask AI"
-		},
-		"window": {
-			"title": "EcoSphere AI",
-			"subtitle": "Your Green Assistant",
-			"clearChat": "Clear Chat",
-			"emptyState": {
-				"title": "How can I help you recycle today?",
-				"subtitle": "Ask about products, restaurants, or recycling tips!"
-			},
-			"input": {
-				"placeholder": "Ask me anything..."
-			},
-			"disclaimer": "AI can make mistakes. Please verify important info."
-		},
-		"errors": {
-			"connection": "I'm having trouble connecting right now. Please try again later."
-		}
-	},
-	"subscribe": {
-		"titleFirst": "Select the ",
-		"boldTitle": "best plan",
-		"titleLast": " for your needs",
+        "selectCategory": "Select a category",
+        "categories": {
+          "supermarket": "Supermarket",
+          "hypermarket": "Hypermarket",
+          "grocery": "Grocery",
+          "bakery": "Bakery",
+          "cafe": "Cafe",
+          "other": "Other"
+        }
+      },
+      "lastStep": {
+        "title": "Final Step",
+        "email": "Email",
+        "password": "Password",
+        "confirmPassword": "Confirm Password"
+      }
+    }
+  },
+  "Profile": {
+    "page": {
+      "pleaseLogin": "Please log in to view your profile.",
+      "loading": "Loading..."
+    },
+    "common": {
+      "editProfile": "Edit Profile",
+      "changePassword": "Change Password",
+      "personalInformation": "Personal Information",
+      "email": "Email",
+      "phoneNumber": "Phone Number",
+      "address": "Address",
+      "birthDate": "Birth Date",
+      "gender": "Gender",
+      "ecoPoints": "EcoPoints",
+      "redeem": "Redeem",
+      "redeeming": "Redeeming...",
+      "na": "N/A",
+      "cancel": "Cancel",
+      "saveChanges": "Save Changes",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "selectGender": "Select Gender",
+      "male": "Male",
+      "female": "Female"
+    },
+    "customer": {
+      "role": "Customer",
+      "orderHistory": {
+        "title": "Order History",
+        "orderCount": "You have {count} past order(s).",
+        "noOrders": "No orders yet",
+        "noOrdersDescription": "Start adding products to your Orders to see them here",
+        "browseOrders": "Browse Orders",
+        "orderId": "Order ID",
+        "date": "Date",
+        "total": "Total",
+        "status": "Status",
+        "loading": "Loading..."
+      },
+      "recyclingHistory": {
+        "title": "Recycling History",
+        "date": "Date",
+        "createdAt": "Created At",
+        "updatedAt": "last Update was at",
+        "items": "items count",
+        "itemsCount": "items",
+        "weight": "es. Weight (kg)",
+        "carbonSaved": "Carbon Saved",
+        "status": "Status",
+        "verified": "Verified",
+        "pending": "Pending",
+        "completed": "Completed",
+        "review": "Review",
+        "rejected": "Rejected",
+        "processing": "Processing",
+        "noRecyclingOrders": "No recycling orders yet",
+        "noRecyclingOrdersDescription": "Start recycling to see your eco-impact here",
+        "browseRecycling": "Start Recycling"
+      },
+      "editModalTitle": "Edit Profile"
+    },
+    "toasts": {
+      "passwordChanged": "Password changed successfully",
+      "passwordChangeFailed": "Failed to change password",
+      "redeemFailed": "Failed to redeem points. Please try again."
+    },
+    "states": {
+      "loading": "Loading profile...",
+      "notFound": "User not found."
+    },
+    "security": {
+      "title": "Security",
+      "currentPassword": "Current Password",
+      "currentPasswordPlaceholder": "Enter current password",
+      "newPassword": "New Password",
+      "newPasswordPlaceholder": "Enter new password",
+      "confirmPassword": "Confirm Password",
+      "confirmPasswordPlaceholder": "Confirm new password",
+      "changePassword": "Change Password"
+    },
+    "organizer": {
+      "role": "Event Organizer",
+      "organizationName": "Organization Name",
+      "eventsOrganized": "Events Organized",
+      "editModalTitle": "Edit Profile",
+      "subscriptionManagement": "Subscription Management",
+      "expiryDate": "Expiry Date",
+      "renewSubscription": "Renew Subscription",
+      "renewFeatureComingSoon": "Renew Subscription feature coming soon!"
+    },
+    "restaurant": {
+      "role": "shop",
+      "shopName": "Shop Name",
+      "description": "Description",
+      "location": "Location",
+      "workingHours": "Working Hours",
+      "hotline": "Hotline",
+      "editModalTitle": "Edit Shop Profile",
+      "restaurantInformation": "Restaurant Information",
+      "noDescription": "No description available.",
+      "orders": {
+        "title": "Order Management",
+        "totalOrders": "Total Orders",
+        "orderId": "Order ID",
+        "customer": "Customer",
+        "date": "Date",
+        "total": "Total",
+        "status": "Status",
+        "actions": "Actions",
+        "noOrders": "No orders found.",
+        "fetchError": "Failed to fetch orders.",
+        "statusUpdated": "Status updated successfully.",
+        "updateError": "Failed to update status.",
+        "changeStatus": "Change Status",
+        "statuses": {
+          "pending": "Pending",
+          "paid": "Paid",
+          "preparing": "Preparing",
+          "delivering": "Delivering",
+          "completed": "Completed",
+          "canceled": "Canceled"
+        },
+        "page": "Page",
+        "of": "of"
+      }
+    }
+  },
+  "Cart": {
+    "hero": {
+      "title": "Shopping Cart",
+      "home": "Home",
+      "cart": "Cart"
+    },
+    "productsSection": {
+      "product": "Product",
+      "productCode": "Product Code",
+      "quantity": "Quantity",
+      "total": "Total",
+      "action": "Action",
+      "clearAll": "Clear all",
+      "emptyCart": "Your cart is empty"
+    },
+    "removeButton": {
+      "confirm": "Confirm?",
+      "removeItem": "Remove item",
+      "clickToConfirm": "Click again to confirm"
+    },
+    "quantitySelector": {
+      "decrease": "Decrease quantity",
+      "increase": "Increase quantity"
+    },
+    "orderSummary": {
+      "title": "Order Summary",
+      "promoCode": "Promo Code",
+      "apply": "Apply",
+      "couponApplied": "Coupon Applied",
+      "subTotal": "Subtotal",
+      "discount": "Discount ({percent}%)",
+      "deliveryFee": "Delivery Fee",
+      "total": "Total",
+      "warranty": "90 Day Limited Warranty up to manufacturer's elements",
+      "details": "Details",
+      "checkoutNow": "Checkout Now",
+      "currency": "EGP",
+      "toasts": {
+        "couponApplied": "Coupon Applied",
+        "invalidCoupon": "Not valid coupon"
+      },
+      "no-coupon": "No Coupon"
+    }
+  },
+  "Checkout": {
+    "page": {
+      "title": "Checkout",
+      "payWithCard": "Pay with Card",
+      "payWithCash": "Cash on Delivery",
+      "somethingWentWrong": "Something went wrong",
+      "youWillPay": "You will pay",
+      "directlyToCourier": "directly to the courier upon delivery.",
+      "confirmOrder": "Confirm Order"
+    },
+    "form": {
+      "initializing": "Initializing Secure Payment...",
+      "securePayment": "Secure Payment",
+      "securePaymentDesc": "Complete your purchase securely.",
+      "errorTitle": "Error",
+      "unexpectedError": "An unexpected error occurred.",
+      "processing": "Processing...",
+      "pay": "Pay {amount}",
+      "securedByStripe": "Payments secured by Stripe"
+    },
+    "verification": {
+      "orderId": "Order ID",
+      "successTitle": "Payment Confirmed",
+      "successDesc": "Thank you for contributing to a greener future.",
+      "transactionId": "Transaction ID",
+      "totalAmount": "Total Amount",
+      "returnHome": "Return Home",
+      "downloadReceipt": "Download Receipt",
+      "failedTitle": "Payment Failed",
+      "failedDesc": "We encountered an issue processing your eco-contribution. No funds were deducted.",
+      "errorCode": "Error Code: {code}",
+      "cardDeclined": "Card declined. Please check your card details or try a different payment method.",
+      "tryAgain": "Try Again"
+    }
+  },
+  "Events": {
+    "hero": {
+      "title": "Never Miss an Event in Ecosphere",
+      "subTitle": "Explore upcoming events across the Ecosphere platform, get all the details you need, and take part in experiences that bring the community together"
+    },
+    "overview": {
+      "title": "Dashboard Overview",
+      "quickActions": "Quick Actions",
+      "createNewEvent": "Create new Event",
+      "keyMetrics": "Key Metrics",
+      "realTimeData": "Real-time data",
+      "totalTicketSales": "Total Ticket Sales",
+      "totalRevenue": "Total Revenue",
+      "confirmedAttendees": "Confirmed Attendees",
+      "activeEvents": "Active Events",
+      "upcomingEvents": "upcoming events",
+      "history": "History",
+      "viewAll": "view all",
+      "manage": "Manage",
+      "noUpcomingEvents": "No upcoming events found."
+    },
+    "MainDisplayEvents": {
+      "title": "Browse Events",
+      "search": "Search",
+      "upcomingEvents": "Upcoming Events",
+      "searchPlaceholder": "Search events...",
+      "filterByPrice": "Filter by price",
+      "all": "All",
+      "free": "Free",
+      "paid": "Paid",
+      "emptyTitle": "No upcoming events found",
+      "emptySubtitle": "Please check back later for upcoming events",
+      "eventType": "Event Type",
+      "date": "Date",
+      "price": "Price",
+      "clearFilters": "Clear Filters",
+      "filterByType": "Filter by Type",
+      "filterByDate": "Filter by Date",
+      "today": "Today",
+      "thisWeek": "This Week",
+      "thisMonth": "This Month",
+      "environmental_seminar": "Environmental Seminar",
+      "community_cleanup": "Community Cleanup",
+      "sustainable_brands_showcase": "Sustainable Brands Showcase",
+      "other": "Other"
+    },
+    "WhyEcosphere": {
+      "title": "Why Attend Events on Ecosphere?",
+      "subtitle": "Ecosphere helps you discover, explore, and attend events effortlessly with everything you need in one place.",
+      "card1": {
+        "title": "Centralized Event Discovery",
+        "description": "Find all upcoming events in one unified platform without searching multiple sources."
+      },
+      "card2": {
+        "title": "Detailed Event Information",
+        "description": "View schedules, locations, organizers, and all event details before attending."
+      },
+      "card3": {
+        "title": "Easy Attendance & Tracking",
+        "description": "Join events easily and keep track of the events you plan to attend."
+      }
+    },
+    "displayEvents": {
+      "title": "My Events",
+      "addEventBtn": "Add New Event",
+      "UpComingEvents": "Upcoming Events",
+      "history": "History",
+      "search": "Search",
+      "searchPlaceholder": "Search events...",
+      "filterByPrice": "Filter by price",
+      "all": "All",
+      "free": "Free",
+      "paid": "Paid",
+      "filterByType": "Filter by type",
+      "environmental_seminar": "Environmental Seminar",
+      "community_cleanup": "Community Cleanup",
+      "sustainable_brands_showcase": "Sustainable Brands Showcase",
+      "other": "Other",
+      "eventType": "Event Type",
+      "date": "Date",
+      "today": "Today",
+      "thisWeek": "This Week",
+      "thisMonth": "This Month",
+      "location": "Location",
+      "price": "Price",
+      "clearFilters": "Clear Filters",
+      "noEvents": "No events found",
+      "noupcomingEvents": "No Upcoming events found",
+      "nohistory": "No history events found",
+      "EventCard": {
+        "organizer": "You are the organizer",
+        "status": {
+          "approved": "Approved",
+          "pending": "Pending...",
+          "rejected": "Rejected"
+        }
+      },
+      "EventCardDetails": {
+        "viewDetails": "View Details",
+        "title": "Event Details",
+        "date": "Date",
+        "time": "Time",
+        "location": "Location",
+        "about": "About this event",
+        "capacity": "Capacity",
+        "attenders": "Attenders",
+        "ticketPrice": "Ticket Price",
+        "free": "Free",
+        "schedule": "Schedule",
+        "organizer": "You are the organizer"
+      },
+      "AddAttendBtn": {
+        "join": "Join Event",
+        "joined": "Joined",
+        "success": "You have successfully joined the event",
+        "error": "Something went wrong"
+      },
+      "editBtn": "Edit Event",
+      "DeleteEventBtn": {
+        "delete": "Delete Event",
+        "success": "Event deleted successfully",
+        "error": "Error deleting event"
+      }
+    },
+    "Manage": {
+      "titleCreate": "Create Event",
+      "titleEdit": "Edit Event",
+      "submitCreate": "Create Event",
+      "submitUpdate": "Update Event",
+      "submitting": "Saving Event...",
+      "successCreate": "Event created successfully",
+      "successUpdate": "Event updated successfully",
+      "error": "Error saving event",
+      "sections": {
+        "primary": "Primary Event Information",
+        "venue": "Venue and Schedule",
+        "capacity": "Capacity and Sales",
+        "schedule": "Detailed Event Schedule (Agenda Items)",
+        "toasts": {
+          "updateSuccess": "Agent status updated successfully",
+          "updateError": "Failed to update agent status"
+        },
+        "section": "section"
+      },
+      "fields": {
+        "title": "Event Title",
+        "titlePlaceholder": "Event Name",
+        "type": "Event Type",
+        "EventTypes": {
+          "environmental_seminar": "Environmental Seminar / Talk",
+          "community_cleanup": "Community Clean-Up Event",
+          "sustainable_brands_showcase": "Sustainable Brands Showcase",
+          "other": "Other"
+        },
+        "typePlaceholder": "Select event type",
+        "image": "Event Image",
+        "description": "Short Description",
+        "descriptionPlaceholder": "Describe your event...",
+        "location": "Location / Venue",
+        "locationPlaceholder": "City, Address, or Venue",
+        "date": "Event Date",
+        "startTime": "Start Time",
+        "endTime": "End Time",
+        "ticketsAmount": "Tickets Amount",
+        "ticketStatus": "Ticket Status",
+        "ticketStatusPlaceholder": "Select ticket status",
+        "ticketPrice": "Ticket Price",
+        "agendaTitle": "Title",
+        "agendaTitlePlaceholder": "Agenda section title",
+        "agendaDescription": "Description",
+        "agendaDescriptionPlaceholder": "Details..."
+      },
+      "actions": {
+        "addAgenda": "Add Agenda Section"
+      },
+      "ticketTypes": {
+        "priced": "Priced",
+        "free": "Free"
+      }
+    }
+  },
+  "Favorites": {
+    "hero": {
+      "title": "Your Favorites",
+      "breadcrumb": {
+        "home": "Home",
+        "favorite": "Favorites"
+      }
+    },
+    "emptyState": {
+      "title": "No favorites yet",
+      "description": "Start exploring and add items to your wishlist!",
+      "browseButton": "Browse Items"
+    },
+    "card": {
+      "removedFromFavorites": "Removed from favorites",
+      "addToCart": "Add to cart",
+      "removeFromCart": "Remove from cart",
+      "outOfStock": "Out of Stock",
+      "addedToCart": "Added to cart",
+      "removedFromCart": "Removed from cart"
+    },
+    "view": {
+      "grid": "Grid View",
+      "list": "List View",
+      "clearAll": "Clear All Favorites"
+    }
+  },
+  "AI": {
+    "button": {
+      "label": "Ask AI"
+    },
+    "window": {
+      "title": "EcoSphere AI",
+      "subtitle": "Your Green Assistant",
+      "clearChat": "Clear Chat",
+      "emptyState": {
+        "title": "How can I help you recycle today?",
+        "subtitle": "Ask about products, restaurants, or recycling tips!"
+      },
+      "input": {
+        "placeholder": "Ask me anything..."
+      },
+      "disclaimer": "AI can make mistakes. Please verify important info."
+    },
+    "errors": {
+      "connection": "I'm having trouble connecting right now. Please try again later."
+    }
+  },
+  "subscribe": {
+    "titleFirst": "Select the ",
+    "boldTitle": "best plan",
+    "titleLast": " for your needs",
 
-		"plans": [
-			{
-				"title": "Starter Plan",
-				"subtitle": "Perfect for small shops or new event organizers.",
-				"price": "$9 / month",
-				"btnText": "Get Started",
-				"features": [
-					"Upload unlimited products or events",
-					"Basic dashboard access",
-					"Simple analytics overview",
-					"Standard support",
-					"Eco-friendly badge included"
-				],
-				"icon": "leaf",
-				"planKey": "starter_monthly"
-			},
+    "plans": [
+      {
+        "title": "Starter Plan",
+        "subtitle": "Perfect for small shops or new event organizers.",
+        "price": "$9 / month",
+        "btnText": "Get Started",
+        "features": [
+          "Upload unlimited products or events",
+          "Basic dashboard access",
+          "Simple analytics overview",
+          "Standard support",
+          "Eco-friendly badge included"
+        ],
+        "icon": "leaf",
+        "planKey": "starter_monthly"
+      },
 
-			{
-				"title": "Pro Plan",
-				"subtitle": "For professional stores and large event organizers.",
-				"price": "$59 / month",
-				"btnText": "Go Pro",
-				"features": [
-					"Unlimited products or events",
-					"Full control panel customization",
-					"Deep AI-powered analytics",
-					"24/7 dedicated support",
-					"Access to all ecosphere premium tools"
-				],
-				"icon": "eco-pro",
-				"planKey": "pro_monthly"
-			},
-			{
-				"title": "Growth Plan",
-				"subtitle": "Great for expanding stores or active event organizers.",
-				"price": "$29 / month",
-				"btnText": "Upgrade Now",
-				"features": [
-					"Upload unlimited products or events",
-					"Advanced content management",
-					"Full analytics dashboard",
-					"Priority support",
-					"Access to eco-event tools"
-				],
-				"icon": "growth",
-				"planKey": "growth_monthly"
-			}
-		]
-	},
-	"News": {
-		"page": {
-			"title": "News & Updates",
-			"description": "Stay up to date with the latest additions to EcoSphere. Discover new eco-friendly restaurants and shops joining our community."
-		},
-		"recentlyAdded": {
-			"title": "Recently Added"
-		},
-		"card": {
-			"viewMore": "View More"
-		}
-	},
-	"ForgotPassword": {
-		"logoAlt": "EcoSphere Logo",
-		"forgotPasswordImageAlt": "Forgot Password Illustration",
-		"verifyEmailImageAlt": "Verify Email Illustration",
-		"emailStep": {
-			"title": "Verify Your Email",
-			"description": "Enter your email to receive a verification code."
-		},
-		"resetStep": {
-			"title": "Reset Password",
-			"description": "Create a new secure password for your account."
-		},
-		"resetPassword": {
-			"title": "Reset Password",
-			"description": "Create a new secure password for your account",
-			"newPassword": {
-				"label": "New Password",
-				"placeholder": "Enter new password"
-			},
-			"confirmPassword": {
-				"label": "Confirm Password",
-				"placeholder": "Confirm new password",
-				"mismatch": "Passwords do not match"
-			},
-			"requirements": {
-				"minLength": "At least 8 characters",
-				"hasNumber": "Contains a number",
-				"hasSpecial": "Contains a special character"
-			},
-			"showPassword": "Show password",
-			"hidePassword": "Hide password",
-			"submitButton": "Reset Password",
-			"success": {
-				"title": "Password Changed!",
-				"description": "Your password has been successfully changed. You will be redirected to the login page shortly.",
-				"button": "Go to Login"
-			}
-		},
-		"emailVerification": {
-			"emailStep": {
-				"title": "Verify Email",
-				"description": "Enter your email address and we'll send you a 6-digit verification code.",
-				"placeholder": "Enter your email",
-				"sendButton": "Send Code",
-				"backButton": "Back to Login",
-				"sendError": "Wrong email address. Please try again."
-			},
-			"codeStep": {
-				"title": "Enter Code",
-				"description": "We've sent a 6-digit code to {email}",
-				"inputLabel": "Digit {position}",
-				"error": "Please enter all 6 digits.",
-				"verifyButton": "Verify Code",
-				"changeEmailButton": "Change Email",
-				"responseError": "Invalid verification code. Please try again."
-			},
-			"Recycle": {
-				"form": {
-					"title": "Recycling Request",
-					"subtitle": "Schedule a pickup easily in an eco-friendly way."
-				},
+      {
+        "title": "Pro Plan",
+        "subtitle": "For professional stores and large event organizers.",
+        "price": "$59 / month",
+        "btnText": "Go Pro",
+        "features": [
+          "Unlimited products or events",
+          "Full control panel customization",
+          "Deep AI-powered analytics",
+          "24/7 dedicated support",
+          "Access to all ecosphere premium tools"
+        ],
+        "icon": "eco-pro",
+        "planKey": "pro_monthly"
+      },
+      {
+        "title": "Growth Plan",
+        "subtitle": "Great for expanding stores or active event organizers.",
+        "price": "$29 / month",
+        "btnText": "Upgrade Now",
+        "features": [
+          "Upload unlimited products or events",
+          "Advanced content management",
+          "Full analytics dashboard",
+          "Priority support",
+          "Access to eco-event tools"
+        ],
+        "icon": "growth",
+        "planKey": "growth_monthly"
+      }
+    ]
+  },
+  "News": {
+    "page": {
+      "title": "News & Updates",
+      "description": "Stay up to date with the latest additions to EcoSphere. Discover new eco-friendly restaurants and shops joining our community."
+    },
+    "recentlyAdded": {
+      "title": "Recently Added"
+    },
+    "card": {
+      "viewMore": "View More"
+    }
+  },
+  "ForgotPassword": {
+    "logoAlt": "EcoSphere Logo",
+    "forgotPasswordImageAlt": "Forgot Password Illustration",
+    "verifyEmailImageAlt": "Verify Email Illustration",
+    "emailStep": {
+      "title": "Verify Your Email",
+      "description": "Enter your email to receive a verification code."
+    },
+    "resetStep": {
+      "title": "Reset Password",
+      "description": "Create a new secure password for your account."
+    },
+    "resetPassword": {
+      "title": "Reset Password",
+      "description": "Create a new secure password for your account",
+      "newPassword": {
+        "label": "New Password",
+        "placeholder": "Enter new password"
+      },
+      "confirmPassword": {
+        "label": "Confirm Password",
+        "placeholder": "Confirm new password",
+        "mismatch": "Passwords do not match"
+      },
+      "requirements": {
+        "minLength": "At least 8 characters",
+        "hasNumber": "Contains a number",
+        "hasSpecial": "Contains a special character"
+      },
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
+      "submitButton": "Reset Password",
+      "success": {
+        "title": "Password Changed!",
+        "description": "Your password has been successfully changed. You will be redirected to the login page shortly.",
+        "button": "Go to Login"
+      }
+    },
+    "emailVerification": {
+      "emailStep": {
+        "title": "Verify Email",
+        "description": "Enter your email address and we'll send you a 6-digit verification code.",
+        "placeholder": "Enter your email",
+        "sendButton": "Send Code",
+        "backButton": "Back to Login",
+        "sendError": "Wrong email address. Please try again."
+      },
+      "codeStep": {
+        "title": "Enter Code",
+        "description": "We've sent a 6-digit code to {email}",
+        "inputLabel": "Digit {position}",
+        "error": "Please enter all 6 digits.",
+        "verifyButton": "Verify Code",
+        "changeEmailButton": "Change Email",
+        "responseError": "Invalid verification code. Please try again."
+      },
+      "Recycle": {
+        "form": {
+          "title": "Recycling Request",
+          "subtitle": "Schedule a pickup easily in an eco-friendly way."
+        },
 
-				"items": {
-					"title": "Add Items",
-					"manual": "Manual Entry",
-					"vision": "AI Scan"
-				},
+        "items": {
+          "title": "Add Items",
+          "manual": "Manual Entry",
+          "vision": "AI Scan"
+        },
 
-				"buttons": {
-					"submit": "Submit Recycling Request",
-					"processing": "Processing request..."
-				},
+        "buttons": {
+          "submit": "Submit Recycling Request",
+          "processing": "Processing request..."
+        },
 
-				"success": {
-					"title": "Recycling Request Submitted!",
-					"withPoints": "You saved {carbon} kg of CO₂ and earned {points} eco points!",
-					"withoutPoints": "You saved {carbon} kg of CO₂!"
-				},
+        "success": {
+          "title": "Recycling Request Submitted!",
+          "withPoints": "You saved {carbon} kg of CO₂ and earned {points} eco points!",
+          "withoutPoints": "You saved {carbon} kg of CO₂!"
+        },
 
-				"errors": {
-					"noItem": "Please add at least one item.",
-					"noImage": "Please upload at least one image.",
-					"submitFailed": "Failed to submit the request. Please try again.",
-					"unexpected": "An unexpected error occurred."
-				}
-			}
-		}
-	},
-	"RecycleForm": {
-		"title": "Recycle Request",
-		"description": "Schedule your pickup. Eco-friendly and easy.",
-		"submit": {
-			"default": "Submit",
-			"processing": "Processing Request..."
-		},
-		"entryMethod": {
-			"title": "Add Items",
-			"manual": "Manual",
-			"aiScan": "AI Scan"
-		},
-		"vision": {
-			"addImages": "Add Images",
-			"dragDrop": "Drag & drop or click to upload",
-			"imagesReady": "{count} Image{s} Ready"
-		},
-		"errors": {
-			"addItem": "Please add at least one item.",
-			"uploadImage": "Please upload at least one image.",
-			"submissionFailed": "Failed to submit recycling request. Please try again.",
-			"unexpected": "An unexpected error occurred."
-		},
-		"success": {
-			"title": "Recycling Request Submitted!",
-			"description": "You saved {carbonSaved}kg of CO2!",
-			"descriptionWithPoints": "You saved {carbonSaved}kg of CO2 and earned {points} Eco Points! 🎉"
-		},
+        "errors": {
+          "noItem": "Please add at least one item.",
+          "noImage": "Please upload at least one image.",
+          "submitFailed": "Failed to submit the request. Please try again.",
+          "unexpected": "An unexpected error occurred."
+        }
+      }
+    }
+  },
+  "RecycleForm": {
+    "title": "Recycle Request",
+    "description": "Schedule your pickup. Eco-friendly and easy.",
+    "submit": {
+      "default": "Submit",
+      "processing": "Processing Request..."
+    },
+    "entryMethod": {
+      "title": "Add Items",
+      "manual": "Manual",
+      "aiScan": "AI Scan"
+    },
+    "vision": {
+      "addImages": "Add Images",
+      "dragDrop": "Drag & drop or click to upload",
+      "imagesReady": "{count} Image{s} Ready"
+    },
+    "errors": {
+      "addItem": "Please add at least one item.",
+      "uploadImage": "Please upload at least one image.",
+      "submissionFailed": "Failed to submit recycling request. Please try again.",
+      "unexpected": "An unexpected error occurred."
+    },
+    "success": {
+      "title": "Recycling Request Submitted!",
+      "description": "You saved {carbonSaved}kg of CO2!",
+      "descriptionWithPoints": "You saved {carbonSaved}kg of CO2 and earned {points} Eco Points! 🎉"
+    },
 
-		"personalInfoSection": {
-			"title": "Personal Information",
-			"fields": {
-				"firstName": {
-					"label": "First Name",
-					"placeholder": "Enter your first name"
-				},
-				"lastName": {
-					"label": "Last Name",
-					"placeholder": "Enter your last name"
-				},
-				"email": {
-					"label": "Email Address",
-					"placeholder": "Enter email address"
-				},
-				"phone": {
-					"label": "Phone Number",
-					"placeholder": "Enter phone number"
-				}
-			}
-		},
+    "personalInfoSection": {
+      "title": "Personal Information",
+      "fields": {
+        "firstName": {
+          "label": "First Name",
+          "placeholder": "Enter your first name"
+        },
+        "lastName": {
+          "label": "Last Name",
+          "placeholder": "Enter your last name"
+        },
+        "email": {
+          "label": "Email Address",
+          "placeholder": "Enter email address"
+        },
+        "phone": {
+          "label": "Phone Number",
+          "placeholder": "Enter phone number"
+        }
+      }
+    },
 
-		"addressSection": {
-			"title": "Address Details",
-			"fields": {
-				"city": {
-					"label": "City",
-					"placeholder": "Enter city name"
-				},
-				"neighborhood": {
-					"label": "Neighborhood",
-					"placeholder": "Enter neighborhood"
-				},
-				"street": {
-					"label": "Street",
-					"placeholder": "Enter street address"
-				},
-				"building": {
-					"label": "Building",
-					"placeholder": "Building #"
-				},
-				"floor": {
-					"label": "Floor",
-					"placeholder": "Floor #"
-				},
-				"apartment": {
-					"label": "Apartment",
-					"placeholder": "Apt #"
-				}
-			}
-		},
+    "addressSection": {
+      "title": "Address Details",
+      "fields": {
+        "city": {
+          "label": "City",
+          "placeholder": "Enter city name"
+        },
+        "neighborhood": {
+          "label": "Neighborhood",
+          "placeholder": "Enter neighborhood"
+        },
+        "street": {
+          "label": "Street",
+          "placeholder": "Enter street address"
+        },
+        "building": {
+          "label": "Building",
+          "placeholder": "Building #"
+        },
+        "floor": {
+          "label": "Floor",
+          "placeholder": "Floor #"
+        },
+        "apartment": {
+          "label": "Apartment",
+          "placeholder": "Apt #"
+        }
+      }
+    },
 
-		"materialSection": {
-			"addButton": "Add Another Item",
-			"typeLabel": "Type",
-			"weightLabel": "Est. Weight (kg)",
-			"title": "Recyclable Materials"
-		},
-		"selectField": {
-			"selectOption": "Select an option"
-		},
-		"itemCard": {
-			"title": "Material Item {number}",
-			"typeLabel": "Type",
-			"weightLabel": "Est. Weight (kg)"
-		},
-		"materialTypes": {
-			"plastic": "Plastic",
-			"paper": "Paper",
-			"glass": "Glass",
-			"electronic": "Electronic Waste",
-			"metal": "Metal",
-			"mixed": "Mixed"
-		}
-	},
-	"RecycleDashboard": {
-		"title": "Recycle Dashboard",
-		"description": "Manage and track all recycling requests. Review, process, and complete pickups efficiently.",
-		"stats": {
-			"totalRequests": "Total Requests",
-			"reviewing": "Reviewing",
-			"pending": "Pending",
-			"outForDelivery": "Out for Delivery",
-			"completed": "Completed"
-		},
-		"tabs": {
-			"activeRequests": "Active Requests",
-			"completed": "Completed"
-		},
-		"table": {
-			"customerName": "Customer Name",
-			"email": "Email",
-			"phone": "Phone",
-			"location": "Location",
-			"status": "Status",
-			"actions": "Actions",
-			"empty": "No requests found"
-		},
-		"status": {
-			"reviewing": "Reviewing",
-			"pending": "Pending",
-			"outForDelivery": "Out for Delivery",
-			"completed": "Completed"
-		}
-	},
-	"Admin": {
-		"Events": {
-			"title": "Event Requests Dashboard",
-			"description": "Manage and monitor all event registration requests. Review, approve, and control event.",
-			"stats": {
-				"total": "Total Events",
-				"active": "Active",
-				"pending": "Pending"
-			},
-			"filter": {
-				"all": "All",
-				"pending": "Pending",
-				"accepted": "Accepted",
-				"rejected": "Rejected"
-			},
-			"card": {
-				"organizer": "Organizer",
-				"email": "Email",
-				"phone": "Phone",
-				"location": "Location",
-				"ticketPrice": "Ticket Price",
-				"status": {
-					"accepted": "Accepted",
-					"denied": "Denied"
-				},
-				"actions": {
-					"accept": "Accept",
-					"deny": "Deny"
-				},
-				"toasts": {
-					"accepted": "Event has been accepted.",
-					"denied": "Event has been denied.",
-					"acceptError": "Failed to accept event.",
-					"denyError": "Failed to deny event."
-				},
-				"noEventsInFilter": "No events found matching this status.",
-				"Loading": "Loading Events..."
-			}
-		},
-		"Shops": {
-			"title": "Shop Requests Dashboard",
-			"description": "Manage and monitor all shop registration requests. Review, approve, and control shop visibility with ease.",
-			"stats": {
-				"total": "Total Shops",
-				"active": "Active",
-				"pending": "Pending",
-				"hidden": "Hidden"
-			},
-			"filter": {
-				"all": "All",
-				"visible": "Visible",
-				"hidden": "Hidden",
-				"noShopsFound": "No shops found matching this filter."
-			},
-			"Loading": "Loading Shops...",
-			"table": {
-				"headers": {
-					"name": "Shop Name",
-					"email": "Email",
-					"phone": "Phone",
-					"status": "Status",
-					"visibility": "Visibility"
-				},
-				"status": {
-					"active": "Active",
-					"pending": "Pending",
-					"inactive": "Inactive"
-				},
-				"actions": {
-					"hidden": "Hidden",
-					"visible": "Visible"
-				}
-			}
-		},
-		"RecycleAgents": {
-			"title": "Recycle Agents Management",
-			"description": "Manage and monitor all recycle agents. Review, control status, and manage agent registrations.",
-			"stats": {
-				"total": "Total Recycle Agents",
-				"organizational": "Organizational Agents",
-				"independent": "Independent Agents"
-			},
-			"table": {
-				"headers": {
-					"name": "Agent Name",
-					"email": "Email",
-					"phone": "Phone",
-					"status": "Status",
-					"actions": "Actions"
-				},
-				"status": {
-					"enabled": "Enabled",
-					"disabled": "Disabled"
-				},
-				"actions": {
-					"addAgent": "Add Recycle Agent",
-					"enable": "Enable",
-					"disable": "Disable"
-				},
-				"toasts": {
-					"updateSuccess": "Agent status updated successfully",
-					"updateError": "Failed to update agent status"
-				}
-			},
-			"form": {
-				"title": "Add New Recycle Agent",
-				"firstName": "First Name",
-				"lastName": "Last Name",
-				"email": "Email",
-				"password": "Password",
-				"type": "Agent Type",
-				"typeOptions": {
-					"independent": "Independent Agent",
-					"organizational": "Organizational Agent"
-				},
-				"submit": "Create Agent",
-				"cancel": "Cancel",
-				"toasts": {
-					"success": "Recycle agent created successfully!",
-					"error": "Failed to create recycle agent. Please try again.",
-					"validationError": "Please fill in all required fields."
-				}
-			}
-		}
-	},
+    "materialSection": {
+      "addButton": "Add Another Item",
+      "typeLabel": "Type",
+      "weightLabel": "Est. Weight (kg)",
+      "title": "Recyclable Materials"
+    },
+    "selectField": {
+      "selectOption": "Select an option"
+    },
+    "itemCard": {
+      "title": "Material Item {number}",
+      "typeLabel": "Type",
+      "weightLabel": "Est. Weight (kg)"
+    },
+    "materialTypes": {
+      "plastic": "Plastic",
+      "paper": "Paper",
+      "glass": "Glass",
+      "electronic": "Electronic Waste",
+      "metal": "Metal",
+      "mixed": "Mixed"
+    }
+  },
+  "RecycleDashboard": {
+    "title": "Recycle Dashboard",
+    "description": "Manage and track all recycling requests. Review, process, and complete pickups efficiently.",
+    "stats": {
+      "totalRequests": "Total Requests",
+      "reviewing": "Reviewing",
+      "pending": "Pending",
+      "outForDelivery": "Out for Delivery",
+      "completed": "Completed"
+    },
+    "tabs": {
+      "activeRequests": "Active Requests",
+      "completed": "Completed"
+    },
+    "table": {
+      "customerName": "Customer Name",
+      "email": "Email",
+      "phone": "Phone",
+      "location": "Location",
+      "status": "Status",
+      "actions": "Actions",
+      "empty": "No requests found"
+    },
+    "status": {
+      "reviewing": "Reviewing",
+      "pending": "Pending",
+      "outForDelivery": "Out for Delivery",
+      "completed": "Completed"
+    }
+  },
+  "Admin": {
+    "Events": {
+      "title": "Event Requests Dashboard",
+      "description": "Manage and monitor all event registration requests. Review, approve, and control event.",
+      "stats": {
+        "total": "Total Events",
+        "active": "Active",
+        "pending": "Pending"
+      },
+      "filter": {
+        "all": "All",
+        "pending": "Pending",
+        "accepted": "Accepted",
+        "rejected": "Rejected"
+      },
+      "card": {
+        "organizer": "Organizer",
+        "email": "Email",
+        "phone": "Phone",
+        "location": "Location",
+        "ticketPrice": "Ticket Price",
+        "status": {
+          "accepted": "Accepted",
+          "denied": "Denied"
+        },
+        "actions": {
+          "accept": "Accept",
+          "deny": "Deny"
+        },
+        "toasts": {
+          "accepted": "Event has been accepted.",
+          "denied": "Event has been denied.",
+          "acceptError": "Failed to accept event.",
+          "denyError": "Failed to deny event."
+        },
+        "noEventsInFilter": "No events found matching this status.",
+        "Loading": "Loading Events..."
+      }
+    },
+    "Shops": {
+      "title": "Shop Requests Dashboard",
+      "description": "Manage and monitor all shop registration requests. Review, approve, and control shop visibility with ease.",
+      "stats": {
+        "total": "Total Shops",
+        "active": "Active",
+        "pending": "Pending",
+        "hidden": "Hidden"
+      },
+      "filter": {
+        "all": "All",
+        "visible": "Visible",
+        "hidden": "Hidden",
+        "noShopsFound": "No shops found matching this filter."
+      },
+      "Loading": "Loading Shops...",
+      "table": {
+        "headers": {
+          "name": "Shop Name",
+          "email": "Email",
+          "phone": "Phone",
+          "status": "Status",
+          "visibility": "Visibility"
+        },
+        "status": {
+          "active": "Active",
+          "pending": "Pending",
+          "inactive": "Inactive"
+        },
+        "actions": {
+          "hidden": "Hidden",
+          "visible": "Visible"
+        }
+      }
+    },
+    "RecycleAgents": {
+      "title": "Recycle Agents Management",
+      "description": "Manage and monitor all recycle agents. Review, control status, and manage agent registrations.",
+      "stats": {
+        "total": "Total Recycle Agents",
+        "organizational": "Organizational Agents",
+        "independent": "Independent Agents"
+      },
+      "table": {
+        "headers": {
+          "name": "Agent Name",
+          "email": "Email",
+          "phone": "Phone",
+          "status": "Status",
+          "actions": "Actions"
+        },
+        "status": {
+          "enabled": "Enabled",
+          "disabled": "Disabled"
+        },
+        "actions": {
+          "addAgent": "Add Recycle Agent",
+          "enable": "Enable",
+          "disable": "Disable"
+        },
+        "toasts": {
+          "updateSuccess": "Agent status updated successfully",
+          "updateError": "Failed to update agent status"
+        }
+      },
+      "form": {
+        "title": "Add New Recycle Agent",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "email": "Email",
+        "password": "Password",
+        "type": "Agent Type",
+        "typeOptions": {
+          "independent": "Independent Agent",
+          "organizational": "Organizational Agent"
+        },
+        "submit": "Create Agent",
+        "cancel": "Cancel",
+        "toasts": {
+          "success": "Recycle agent created successfully!",
+          "error": "Failed to create recycle agent. Please try again.",
+          "validationError": "Please fill in all required fields."
+        }
+      }
+    }
+  },
 
-	"Metrics": {
-		"title": "Our Impact",
-		"subtitle": "Key Metrics",
-		"tonsRecycled": {
-			"label": "Tons Recycled"
-		},
-		"partners": {
-			"label": "Partners"
-		},
-		"wasteDiverted": {
-			"label": "Waste Diverted"
-		}
-	},
-	"NotFound": {
-		"imageAlt": "404 Page Not Found Illustration",
-		"title": "Page Not Found",
-		"description": "The page you're looking for doesn't exist or has been moved. Don't worry, let's get you back on track!",
-		"goBack": "Go Back",
-		"goHome": "Go to Homepage",
-		"helpText": "If you believe this is an error, please contact our support team."
-	},
-	"Unauthorized": {
-		"imageAlt": "Unauthorized Access",
-		"title": "Unauthorized",
-		"description": "You do not have permission to access this page.",
-		"goBack": "Go Back",
-		"goHome": "Go Home",
-		"helpText": "If you think this is a mistake, please contact support."
-	},
-	"Recipes": {
-		"hero": {
-			"title": "Zero-Waste Chef ",
-			"subtitle": "Turn your leftovers into gourmet meals. Save money, save the planet."
-		},
-		"generator": {
-			"title": "Zero-Waste Chef",
-			"description": "Enter your leftover ingredients below, and our AI will create a delicious, zero-waste recipe for you.",
-			"placeholder": "e.g. Stale bread, 2 tomatoes, half an onion, cheddar cheese...",
-			"generateBtn": "Generate Recipe",
-			"generatingBtn": "Cooking Magic...",
-			"justForYou": "Just For You:",
-			"toasts": {
-				"emptyInput": "Please enter at least one ingredient",
-				"success": "Recipe generated successfully! ",
-				"error": "Failed to generate recipe. Please try again."
-			}
-		},
-		"cookbook": {
-			"title": "Your Cookbook",
-			"savedCount": "{count} recipes saved",
-			"empty": "No recipes yet. Start cooking above! 👆"
-		},
-		"card": {
-			"prep": "Prep",
-			"cook": "Cook",
-			"instructions": "Instructions",
-			"tip": "Tip:",
-			"difficulty": {
-				"Easy": "Easy",
-				"Medium": "Medium",
-				"Hard": "Hard"
-			},
-			"toasts": {
-				"deleted": "Recipe deleted",
-				"deleteError": "Could not delete recipe"
-			}
-		}
-	}
+  "Metrics": {
+    "title": "Our Impact",
+    "subtitle": "Key Metrics",
+    "tonsRecycled": {
+      "label": "Tons Recycled"
+    },
+    "partners": {
+      "label": "Partners"
+    },
+    "wasteDiverted": {
+      "label": "Waste Diverted"
+    }
+  },
+  "NotFound": {
+    "imageAlt": "404 Page Not Found Illustration",
+    "title": "Page Not Found",
+    "description": "The page you're looking for doesn't exist or has been moved. Don't worry, let's get you back on track!",
+    "goBack": "Go Back",
+    "goHome": "Go to Homepage",
+    "helpText": "If you believe this is an error, please contact our support team."
+  },
+  "Unauthorized": {
+    "imageAlt": "Unauthorized Access",
+    "title": "Unauthorized",
+    "description": "You do not have permission to access this page.",
+    "goBack": "Go Back",
+    "goHome": "Go Home",
+    "helpText": "If you think this is a mistake, please contact support."
+  },
+  "Recipes": {
+    "hero": {
+      "title": "Zero-Waste Chef ",
+      "subtitle": "Turn your leftovers into gourmet meals. Save money, save the planet."
+    },
+    "generator": {
+      "title": "Zero-Waste Chef",
+      "description": "Enter your leftover ingredients below, and our AI will create a delicious, zero-waste recipe for you.",
+      "placeholder": "e.g. Stale bread, 2 tomatoes, half an onion, cheddar cheese...",
+      "generateBtn": "Generate Recipe",
+      "generatingBtn": "Cooking Magic...",
+      "justForYou": "Just For You:",
+      "toasts": {
+        "emptyInput": "Please enter at least one ingredient",
+        "success": "Recipe generated successfully! ",
+        "error": "Failed to generate recipe. Please try again."
+      }
+    },
+    "cookbook": {
+      "title": "Your Cookbook",
+      "savedCount": "{count} recipes saved",
+      "empty": "No recipes yet. Start cooking above! 👆"
+    },
+    "card": {
+      "prep": "Prep",
+      "cook": "Cook",
+      "instructions": "Instructions",
+      "tip": "Tip:",
+      "difficulty": {
+        "Easy": "Easy",
+        "Medium": "Medium",
+        "Hard": "Hard"
+      },
+      "toasts": {
+        "deleted": "Recipe deleted",
+        "deleteError": "Could not delete recipe"
+      }
+    }
+  }
 }
