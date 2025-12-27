@@ -30,11 +30,13 @@ export interface IUserService {
 	): Promise<DashboardUsers>;
 	redeemUserPoints(userId: string): Promise<{ message: string }>;
 	getUserIdByEmail(email: string): Promise<IUser>;
-	getCart(userId: string): Promise<{ success: boolean; items: IProductCart[] }>;
 	getRecycleAgents(): Promise<PagedData<IUser>>;
+	getCart(userId: string): Promise<{ success: boolean; items: IProductCart[] }>;
 	saveUserCart(userId: string, cart: ICart[]): Promise<IUser>;
 	updateById(id: string, data: Partial<IUser>): Promise<IUser>;
 	updateFavorites(id: string, data: string): Promise<IUser>;
+	saveFavorites(userId: string, favorites: string[]): Promise<IUser>;
+	clearFavorites(userId: string): Promise<IUser>;
 	deleteById(id: string): Promise<IUser>;
 	sendForgetPasswordEmail(email: string): Promise<{ message: string }>;
 	verifyCode(email: string, code: string): Promise<{ message: string }>;
@@ -63,13 +65,13 @@ export interface IUserService {
 
 @injectable()
 class UserService implements IUserService {
-  constructor(
-    @inject("IUserRepository") private readonly userRepository: IUserRepository,
-    @inject("IRestaurantRepository")
-    private readonly restRepo: IRestaurantRepository,
-    @inject("CouponService") private readonly couponService: ICouponService,
-    @inject("ImageService") private readonly imageService: ImageService,
-  ) {}
+	constructor(
+		@inject("IUserRepository") private readonly userRepository: IUserRepository,
+		@inject("IRestaurantRepository")
+		private readonly restRepo: IRestaurantRepository,
+		@inject("CouponService") private readonly couponService: ICouponService,
+		@inject("ImageService") private readonly imageService: ImageService
+	) {}
 
 	async getAll(): Promise<IUser[]> {
 		const users = await this.userRepository.getAll();
@@ -81,20 +83,20 @@ class UserService implements IUserService {
 		return await this.populateAvatar(user);
 	}
 
-  async getDashBoardData(
-    limit?: number,
-    sortBy?: string,
-    sortOrder?: 1 | -1,
-    selectFields?: string | Record<string, 0 | 1>,
-  ): Promise<DashboardUsers> {
-    const result = await this.userRepository.getUsersByRoleAdvanced({
-      limit,
-      sortBy,
-      sortOrder,
-      selectFields,
-    });
-    return result;
-  }
+	async getDashBoardData(
+		limit?: number,
+		sortBy?: string,
+		sortOrder?: 1 | -1,
+		selectFields?: string | Record<string, 0 | 1>
+	): Promise<DashboardUsers> {
+		const result = await this.userRepository.getUsersByRoleAdvanced({
+			limit,
+			sortBy,
+			sortOrder,
+			selectFields,
+		});
+		return result;
+	}
 
 	async getRecycleAgents(): Promise<PagedData<IUser>> {
 		const usersData = await this.userRepository.getUsersByRole("recycleAgent");
@@ -333,8 +335,13 @@ class UserService implements IUserService {
 		return savedUser;
 	}
 
-	async updateFavorites(id: string, data: string): Promise<IUser> {
-		const user = await this.userRepository.updateFavorites(id, data);
+	async saveFavorites(userId: string, favorites: string[]): Promise<IUser> {
+		const user = await this.userRepository.saveFavorites(userId, favorites);
+		return await this.populateAvatar(user);
+	}
+
+	async clearFavorites(userId: string): Promise<IUser> {
+		const user = await this.userRepository.clearFavorites(userId);
 		return await this.populateAvatar(user);
 	}
 
@@ -368,6 +375,11 @@ class UserService implements IUserService {
 
 	async deleteById(id: string): Promise<IUser> {
 		const user = await this.userRepository.deleteById(id);
+		return await this.populateAvatar(user);
+	}
+
+	async updateFavorites(id: string, data: string): Promise<IUser> {
+		const user = await this.userRepository.updateFavorites(id, data);
 		return await this.populateAvatar(user);
 	}
 

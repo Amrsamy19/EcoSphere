@@ -7,7 +7,7 @@ import { IProductCart, IProduct } from "@/types/ProductType";
 @injectable()
 class UserController {
   constructor(
-    @inject("IUserService") private readonly userService: IUserService,
+    @inject("IUserService") private readonly userService: IUserService
   ) {}
 
   async getAll(): Promise<IUser[]> {
@@ -24,13 +24,13 @@ class UserController {
     limit?: number,
     sortBy?: string,
     sortOrder?: 1 | -1,
-    selectFields?: string | Record<string, 0 | 1>,
+    selectFields?: string | Record<string, 0 | 1>
   ): Promise<DashboardUsers> {
     const result = await this.userService.getDashBoardData(
       limit,
       sortBy,
       sortOrder,
-      selectFields,
+      selectFields
     );
     return result;
   }
@@ -70,6 +70,16 @@ class UserController {
 
   async updateFavorites(id: string, data: string): Promise<IUser> {
     const user = await this.userService.updateFavorites(id, data);
+    return user;
+  }
+
+  async saveFavorites(userId: string, favorites: string[]): Promise<IUser> {
+    const user = await this.userService.saveFavorites(userId, favorites);
+    return user;
+  }
+
+  async clearFavorites(userId: string): Promise<IUser> {
+    const user = await this.userService.clearFavorites(userId);
     return user;
   }
 

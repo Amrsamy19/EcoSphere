@@ -123,6 +123,17 @@ export class AIService implements IAIService {
         { role: "user", content: userMessage },
       ];
 
+      // --- NEW: Fast Path for Predefined Prompts (Bypass LLM) ---
+      const fastPathResult = await this.tryFastPath(
+        userMessage,
+        userId,
+        restaurantId,
+        userContext
+      );
+      if (fastPathResult) {
+        return fastPathResult;
+      }
+
       // Function calling loop (max 3 iterations to prevent infinite loops)
       let maxIterations = 3;
       let finalResponse = "";
@@ -405,5 +416,314 @@ export class AIService implements IAIService {
       en: "English",
     };
     return map[loc] ?? "English";
+  }
+
+  private async tryFastPath(
+    message: string,
+    userId?: string,
+    restaurantId?: string,
+    userContext?: any
+  ): Promise<string | null> {
+    const session = {
+      userId,
+      restaurantId,
+      userRole: userContext?.role,
+    };
+
+    const mapping: Record<string, { name: string; args: any }> = {
+      "Show me eco-friendly products": {
+        name: "getMostSustainableProducts",
+        args: { limit: 5 },
+      },
+      "Find restaurants near me": {
+        name: "getTopRestaurantsByRating",
+        args: { limit: 5 },
+      },
+      "What are the top-rated products?": {
+        name: "getTopProductsByRating",
+        args: { limit: 5 },
+      },
+      "Show me the cheapest products": {
+        name: "getCheapestProducts",
+        args: { limit: 5 },
+      },
+      "Show the points leaderboard": {
+        name: "getTopUsersByPoints",
+        args: { limit: 10 },
+      },
+      "What's in my cart?": { name: "viewMyCart", args: {} },
+      "View my favorites": { name: "viewMyFavorites", args: {} },
+      "Show my orders": { name: "getRecentOrders", args: { limit: 5 } },
+      "How many points do I have?": { name: "getMyPoints", args: {} },
+      "List my products": {
+        name: "getRestaurantsByCategory",
+        args: { category: "all" },
+      },
+      "Show my pending orders": {
+        name: "getOrdersByStatus",
+        args: { status: "pending", limit: 5 },
+      },
+      "Show completed orders": {
+        name: "getOrdersByStatus",
+        args: { status: "completed", limit: 5 },
+      },
+      "Explain sustainability scores": {
+        name: "getGeneralInfo",
+        args: { topic: "sustainability" },
+      },
+      "How does recycling work?": {
+        name: "getGeneralInfo",
+        args: { topic: "recycling" },
+      },
+      "Go to my profile": { name: "navigation", args: { path: "/profile" } },
+      "Clear my cart": { name: "clearCart", args: {} },
+      "Most sustainable products available": {
+        name: "getMostSustainableProducts",
+        args: { limit: 5 },
+      },
+      "Show my sales statistics": { name: "getRestaurantStats", args: {} },
+      "What's my revenue?": { name: "getRestaurantRevenue", args: {} },
+      "Top-selling products": {
+        name: "getTopSellingProducts",
+        args: { limit: 5 },
+      },
+      "Show my events": { name: "getUpcomingEvents", args: { limit: 10 } },
+      "Upcoming events": { name: "getUpcomingEvents", args: { limit: 5 } },
+      "How many attendees?": { name: "getEventStatistics", args: {} },
+      "Pending recycling requests": {
+        name: "getPendingRecyclingRequests",
+        args: { limit: 10 },
+      },
+      "Show today's pickups": {
+        name: "getRecentRecyclingEntries",
+        args: { limit: 5 },
+      },
+      "Carbon saved this month": { name: "getRecyclingStatistics", args: {} },
+      "Recycling locations": { name: "getRecyclingLocations", args: {} },
+      "Platform statistics": {
+        name: "getGeneralInfo",
+        args: { topic: "stats" },
+      },
+      "Total revenue": { name: "getTotalRevenue", args: {} },
+      "User growth metrics": { name: "getRecentUserCount", args: { days: 30 } },
+      "Total carbon impact": { name: "getTotalCarbonSaved", args: {} },
+    };
+
+    const match = mapping[message];
+    if (!match) return null;
+
+    try {
+      if (match.name === "navigation") {
+        return `Sure! You can access your profile [here](${match.args.path}). 👤`;
+      }
+      if (match.name === "getGeneralInfo") {
+        if (match.args.topic === "sustainability") {
+          return "Our Sustainability Score is calculated based on eco-friendly packaging, carbon offset, and waste reduction efforts. Products ranked 80+ are certified Gold! 🌟";
+        }
+        if (match.args.topic === "recycling") {
+          return "To recycle, simply go to the Recycle section, select your items (plastic, paper, glass), and a driver will collect them. You earn points for every kg! ♻️";
+        }
+        if (match.args.topic === "stats") {
+          return "EcoSphere is currently powering over 50 local shops and has saved over 5,000kg of CO2 this year! 🌍";
+        }
+        return "I can help with that! What specific info are you looking for? 🌱";
+      }
+      if (match.name === "getRecyclingLocations") {
+        return "You can find our recycling partner hubs in the 'Explore' section of the map. Look for the green icons! 📍";
+      }
+      console.log(`[FastPath] Executing ${match.name} for: ${message}`);
+      const result = await this.toolExecutor.executeTool(
+        match.name,
+        match.args,
+        session
+      );
+      return this.formatDirectResponse(match.name, result);
+    } catch (e) {
+      console.error("[FastPath] Error:", e);
+      return null; // Fallback to AI if fast path fails (e.g. tool not found or auth error)
+    }
+  }
+
+  private formatDirectResponse(toolName: string, data: any): string {
+    if (!data) return "I couldn't find any information on that. 🌱";
+
+    switch (toolName) {
+      case "viewMyCart": {
+        if (!data || !data.length) return "Your cart is currently empty. 🛒";
+        const total = data.reduce((sum: number, item: any) => {
+          const price = Number(item.productPrice) || 0;
+          const quantity = Number(item.quantity) || 1;
+          return sum + price * quantity;
+        }, 0);
+        const items = data
+          .map((item: any) => {
+            const price = Number(item.productPrice) || 0;
+            const quantity = Number(item.quantity) || 1;
+            return `• ${item.productTitle} x${quantity} (${price.toFixed(
+              2
+            )} EGP)`;
+          })
+          .join("\n");
+        return `Here is your current cart:\n${items}\n\n**Total: ${total.toFixed(
+          2
+        )} EGP** 🛍️`;
+      }
+
+      case "viewMyFavorites": {
+        if (!data || !data.length)
+          return "You haven't added any favorites yet. ⭐";
+        const favs = data
+          .map((item: any) => `• [${item.title}](/store/${item._id})`)
+          .join("\n");
+        return `Your Favorite Items:\n${favs}\n\nFind more eco-friendly items in our store!`;
+      }
+      case "getMyPoints":
+        return `You currently have **${
+          data.points || 0
+        } Eco-Points**! 🎯 Keep being sustainable to earn more.`;
+      case "getMostSustainableProducts":
+      case "getTopProductsByRating":
+      case "getCheapestProducts": {
+        if (!data.length) return "No products found matches your request. 🛍️";
+        const products = data
+          .map(
+            (p: any) =>
+              `• [${p.title}](/store/${p._id}) - ${p.price} EGP (Score: ${
+                p.sustainabilityScore || "N/A"
+              })`
+          )
+          .join("\n");
+        return `I found these products for you:\n${products}`;
+      }
+      case "getTopRestaurantsByRating": {
+        if (!data.length) return "No restaurants found. 🍽️";
+        const shops = data
+          .map(
+            (s: any) =>
+              `• [${s.name}](/shop/${s._id}) - Rating: ${
+                s.restaurantRatingAvg || "5.0"
+              }`
+          )
+          .join("\n");
+        return `Here are some highly rated shops:\n${shops}`;
+      }
+      case "getRecentOrders": {
+        if (!data.length) return "You don't have any recent orders. 📦";
+        const orders = data
+          .map(
+            (o: any) =>
+              `• Order #${o._id.toString().slice(-6)} - Status: ${o.status}`
+          )
+          .join("\n");
+        return `Your recent orders:\n${orders}`;
+      }
+      case "getTopUsersByPoints": {
+        if (!data || !data.length) return "No leaderboard data available yet.";
+        const winners = data
+          .map((u: any, i: number) => {
+            const name =
+              u.fullName ||
+              `${u.firstName || ""} ${u.lastName || ""}`.trim() ||
+              u.username ||
+              "Eco-Hero";
+            return `${i + 1}. ${name} - **${u.points} pts**`;
+          })
+          .join("\n");
+        return `🏆 **EcoSphere Leaderboard** 🏆\n\n${winners}`;
+      }
+      case "getOrdersByStatus": {
+        if (!data || !data.length) return "No orders found for this status. ✅";
+        const count = data.length;
+        const details = data
+          .slice(0, 5)
+          .map((o: any) => `• Order #${o._id.toString().slice(-6)}`)
+          .join("\n");
+        return `You have ${count} orders in this status.\n${details}`;
+      }
+      case "getEventStatistics":
+        return `📊 **Platform Event Summary**:\n• Total Events: ${
+          data.totalEvents || 0
+        }\n• Active/Upcoming: ${
+          data.upcomingEvents || 0
+        }\n• Community Attendees: ${data.totalAttendees || 0} 👥`;
+      case "getRecentRecyclingEntries": {
+        if (!data || !data.length)
+          return "No recycling entries found today. ♻️";
+        const entries = data
+          .map(
+            (e: any) =>
+              `• ${e.firstName || "User"} saved **${
+                e.totalCarbonSaved || 0
+              }kg** CO2`
+          )
+          .join("\n");
+        return `Today's Recycling Impact:\n${entries}\n\nKeep up the great work! 🌍`;
+      }
+      case "getRecentUserCount":
+        return `📈 **User Growth**: We've welcomed **${
+          data || 0
+        } new members** to the EcoSphere community in the last 30 days! 🚀`;
+      case "getRestaurantStats":
+      case "getRestaurantRevenue":
+        return `💰 **Business Performance**:\nYour total platform revenue is **${
+          data.totalRevenue || data || 0
+        } EGP**. Use the dashboard for detailed breakdowns.`;
+      case "getUpcomingEvents": {
+        if (!data.length)
+          return "There are no upcoming events at the moment. 📅";
+        const events = data
+          .map(
+            (e: any) =>
+              `• [${e.name}](/events/${e._id}) - ${new Date(
+                e.eventDate
+              ).toLocaleDateString()}`
+          )
+          .join("\n");
+        return `Upcoming Eco-Events:\n${events}`;
+      }
+      case "getPendingRecyclingRequests": {
+        if (!data.length) return "No pending recycling requests found. ♻️";
+        const reqs = data
+          .map(
+            (r: any) =>
+              `• Request #${r._id.toString().slice(-6)} - User: ${
+                r.fullname || "Anonymous"
+              }`
+          )
+          .join("\n");
+        return `Pending Recycling Requests:\n${reqs}`;
+      }
+      case "getTotalCarbonSaved":
+        return `Together, we have saved **${
+          data.totalCarbonSaved || data
+        } kg** of CO2! 🌍`;
+      case "getRecyclingStatistics":
+        return `Recycling Impact:\n• Total Pickups: ${
+          data.totalPickups || 0
+        }\n• Total Carbon Saved: ${data.totalCarbonSaved || 0}kg`;
+      case "getTotalRevenue":
+        return `Total Platform Revenue: **${data.totalRevenue || 0} EGP**. 💰`;
+      case "getTopSellingProducts": {
+        if (!data || !data.length)
+          return "No sales data found for products yet. 📈";
+        const top = data
+          .slice(0, 5)
+          .map(
+            (p: any) =>
+              `• [${p.title}](/store/${p._id}) - ${p.totalSales || 0} sold`
+          )
+          .join("\n");
+        return `Top Selling Products:\n${top}`;
+      }
+      case "clearCart":
+        return "Your cart has been cleared successfully. 🧹";
+      default:
+        console.log(
+          `[Formatter] No specific case for ${toolName}, using generic:`,
+          data
+        );
+        if (typeof data === "string") return data;
+        return "I've updated the information for you! Is there anything else you need? 🌱";
+    }
   }
 }

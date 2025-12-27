@@ -7,390 +7,438 @@ import { IMenuItem, RestaurantModel } from "../restaurant/restaurant.model";
 import { ProductResponse } from "../product/dto/product.dto";
 
 export interface IUserRepository {
-  getAll(): Promise<IUser[]>;
-  getById(id: string, query?: string): Promise<IUser>;
-  getFavoriteMenuItems(itemIds: string[]): Promise<ProductResponse[]>;
-  getUsersByRoleAdvanced(options?: {
-    limit?: number;
-    sortBy?: string;
-    sortOrder?: 1 | -1;
-    selectFields?: string | Record<string, 0 | 1>;
-  }): Promise<DashboardUsers>;
-  getUsersByRole(
-    userType: string,
-    limit?: number,
-    skip?: number,
-  ): Promise<PagedData<IUser>>;
-  redeemPoints(userId: string): Promise<IUser>;
-  getUserIdByEmail(email: string): Promise<IUser>;
-  getUserByStripeId(stripeCustomerId: string): Promise<IUser | null>;
-  saveCart(userId: string, cart: ICart[]): Promise<IUser>;
-  updateById(id: string, data: Partial<IUser>): Promise<IUser>;
-  updateFavorites(id: string, data: string): Promise<IUser>;
-  addToFavorites(id: string, productId: string): Promise<IUser>;
-  removeFromFavorites(id: string, productId: string): Promise<IUser>;
-  deleteById(id: string): Promise<IUser>;
-  savePasswordResetCode(
-    userId: string,
-    code: string,
-    validTo: string
-  ): Promise<void>;
-  changePassword(
-    userId: string,
-    currentPassword: string,
-    newPassword: string
-  ): Promise<boolean>;
-  // Analytics methods for AI chatbot
-  getUserCountByRole(role?: string): Promise<number>;
-  getRecentUserCount(days?: number): Promise<number>;
-  getTopUsersByPoints(limit?: number): Promise<IUser[]>;
+	getAll(): Promise<IUser[]>;
+	getById(id: string, query?: string): Promise<IUser>;
+	getFavoriteMenuItems(itemIds: string[]): Promise<ProductResponse[]>;
+	getUsersByRoleAdvanced(options?: {
+		limit?: number;
+		sortBy?: string;
+		sortOrder?: 1 | -1;
+		selectFields?: string | Record<string, 0 | 1>;
+	}): Promise<DashboardUsers>;
+	getUsersByRole(
+		userType: string,
+		limit?: number,
+		skip?: number
+	): Promise<PagedData<IUser>>;
+	redeemPoints(userId: string): Promise<IUser>;
+	getUserIdByEmail(email: string): Promise<IUser>;
+	getUserByStripeId(stripeCustomerId: string): Promise<IUser | null>;
+	saveCart(userId: string, cart: ICart[]): Promise<IUser>;
+	updateById(id: string, data: Partial<IUser>): Promise<IUser>;
+	updateFavorites(id: string, data: string): Promise<IUser>;
+	addToFavorites(id: string, productId: string): Promise<IUser>;
+	removeFromFavorites(id: string, productId: string): Promise<IUser>;
+	saveFavorites(userId: string, favorites: string[]): Promise<IUser>;
+	clearFavorites(userId: string): Promise<IUser>;
+	deleteById(id: string): Promise<IUser>;
+	savePasswordResetCode(
+		userId: string,
+		code: string,
+		validTo: string
+	): Promise<void>;
+	changePassword(
+		userId: string,
+		currentPassword: string,
+		newPassword: string
+	): Promise<boolean>;
+	// Analytics methods for AI chatbot
+	getUserCountByRole(role?: string): Promise<number>;
+	getRecentUserCount(days?: number): Promise<number>;
+	getTopUsersByPoints(limit?: number): Promise<IUser[]>;
 }
 
 @injectable()
 class UserRepository implements IUserRepository {
-  async getAll(): Promise<IUser[]> {
-    await DBInstance.getConnection();
-    return await UserModel.find({}, { password: 0 }).lean<IUser[]>().exec();
-  }
+	async getAll(): Promise<IUser[]> {
+		await DBInstance.getConnection();
+		return await UserModel.find({}, { password: 0 }).lean<IUser[]>().exec();
+	}
 
-  async getById(
-    id: string,
-    query: string = "email firstName lastName avatar phoneNumber"
-  ): Promise<IUser> {
-    await DBInstance.getConnection();
-    let projection: ProjectionFields<IUser> = {};
+	async getById(
+		id: string,
+		query: string = "email firstName lastName avatar phoneNumber"
+	): Promise<IUser> {
+		await DBInstance.getConnection();
+		let projection: ProjectionFields<IUser> = {};
 
-    if (!query || query.trim() === "") {
-      projection = { password: 0 };
-    } else {
-      query
-        .trim()
-        .split(/\s+/)
-        .filter((f) => f !== "password")
-        .forEach((field) => {
-          projection[field] = 1;
-        });
-    }
+		if (!query || query.trim() === "") {
+			projection = { password: 0 };
+		} else {
+			query
+				.trim()
+				.split(/\s+/)
+				.filter((f) => f !== "password")
+				.forEach((field) => {
+					projection[field] = 1;
+				});
+		}
 
-    const user = await UserModel.findById(id, projection)
-      .populate("favoritesIds")
-      .exec();
+		const user = await UserModel.findById(id, projection).exec();
 
-    if (!user) {
-      throw new Error(`User with id ${id} not found`);
-    }
-    return user;
-  }
+		if (!user) {
+			throw new Error(`User with id ${id} not found`);
+		}
+		return user;
+	}
 
-  async getUsersByRole(
-    userType: string,
-    limit?: number,
-    page?: number,
-  ): Promise<PagedData<IUser>> {
-    await DBInstance.getConnection();
-    const pageSafe = Math.max(page ?? 1, 1);
-    const limitSafe = Math.min(limit ?? 10, 100);
-    const skipSafe = (pageSafe - 1) * limitSafe;
-    const filter = { role: userType };
+	async getUsersByRole(
+		userType: string,
+		limit?: number,
+		page?: number
+	): Promise<PagedData<IUser>> {
+		await DBInstance.getConnection();
+		const pageSafe = Math.max(page ?? 1, 1);
+		const limitSafe = Math.min(limit ?? 10, 100);
+		const skipSafe = (pageSafe - 1) * limitSafe;
+		const filter = { role: userType };
 
-    const [items, total] = await Promise.all([
-      UserModel.find(filter)
-        .select("firstName lastName email phoneNumber birthDate role isActive")
-        .lean<IUser[]>()
-        .sort({ createdAt: -1 })
-        .limit(limitSafe)
-        .skip(skipSafe)
-        .exec(),
-      UserModel.countDocuments(filter),
-    ]);
-    return {
-      data: items,
-      meta: {
-        page: pageSafe,
-        limit: limitSafe,
-        total,
-        totalPages: Math.ceil(total / limitSafe),
-        hasNextPage: pageSafe * limitSafe < total,
-        hasPrevPage: pageSafe > 1,
-      },
-    };
-  }
+		const [items, total] = await Promise.all([
+			UserModel.find(filter)
+				.select("firstName lastName email phoneNumber birthDate role isActive")
+				.lean<IUser[]>()
+				.sort({ createdAt: -1 })
+				.limit(limitSafe)
+				.skip(skipSafe)
+				.exec(),
+			UserModel.countDocuments(filter),
+		]);
+		return {
+			data: items,
+			meta: {
+				page: pageSafe,
+				limit: limitSafe,
+				total,
+				totalPages: Math.ceil(total / limitSafe),
+				hasNextPage: pageSafe * limitSafe < total,
+				hasPrevPage: pageSafe > 1,
+			},
+		};
+	}
 
-  async getUsersByRoleAdvanced(options?: {
-    limit?: number;
-    sortBy?: string;
-    sortOrder?: 1 | -1;
-    selectFields?: string | Record<string, 0 | 1>;
-  }): Promise<DashboardUsers> {
-    await DBInstance.getConnection();
-    const {
-      limit = 5,
-      sortBy = "createdAt",
-      sortOrder = -1,
-      selectFields = "-password -cart -paymentHistory",
-    } = options || {};
+	async getUsersByRoleAdvanced(options?: {
+		limit?: number;
+		sortBy?: string;
+		sortOrder?: 1 | -1;
+		selectFields?: string | Record<string, 0 | 1>;
+	}): Promise<DashboardUsers> {
+		await DBInstance.getConnection();
+		const {
+			limit = 5,
+			sortBy = "createdAt",
+			sortOrder = -1,
+			selectFields = "-password -cart -paymentHistory",
+		} = options || {};
 
-    const roles: UserRole[] = ["organizer", "admin", "recycleAgent"];
-    // Convert selectFields to $project format
-    const projectStage = this.parseSelectFields(selectFields);
+		const roles: UserRole[] = ["organizer", "admin", "recycleAgent"];
+		// Convert selectFields to $project format
+		const projectStage = this.parseSelectFields(selectFields);
 
-    const facets = roles.reduce((acc, role) => {
-      acc[role] = [
-        { $match: { role } },
-        { $sort: { [sortBy]: sortOrder } },
-        { $limit: limit },
-        { $project: projectStage },
-      ];
-      return acc;
-    }, {} as Record<string, any[]>);
+		const facets = roles.reduce((acc, role) => {
+			acc[role] = [
+				{ $match: { role } },
+				{ $sort: { [sortBy]: sortOrder } },
+				{ $limit: limit },
+				{ $project: projectStage },
+			];
+			return acc;
+		}, {} as Record<string, any[]>);
 
-    const result = await UserModel.aggregate()
-      .match({ role: { $ne: "customer" } })
-      .facet(facets)
-      .exec();
+		const result = await UserModel.aggregate()
+			.match({ role: { $ne: "customer" } })
+			.facet(facets)
+			.exec();
 
-    return result[0] as DashboardUsers;
-  }
+		return result[0] as DashboardUsers;
+	}
 
-  async redeemPoints(userId: string) {
-    await DBInstance.getConnection();
-    const user = await UserModel.findByIdAndUpdate(
-      userId,
-      { $set: { points: 0 } },
-      { new: true }
-    )
-      .select("email points")
-      .lean<IUser>()
-      .exec();
-    return user!;
-  }
+	async redeemPoints(userId: string) {
+		await DBInstance.getConnection();
+		const user = await UserModel.findByIdAndUpdate(
+			userId,
+			{ $set: { points: 0 } },
+			{ new: true }
+		)
+			.select("email points")
+			.lean<IUser>()
+			.exec();
+		return user!;
+	}
 
-  async getUserIdByEmail(email: string): Promise<IUser> {
-    await DBInstance.getConnection();
-    const response = await UserModel.findOne({ email })
-      .select("_id")
-      .lean<IUser>()
-      .exec();
-    return response!;
-  }
+	async getUserIdByEmail(email: string): Promise<IUser> {
+		await DBInstance.getConnection();
+		const response = await UserModel.findOne({ email })
+			.select("_id")
+			.lean<IUser>()
+			.exec();
+		return response!;
+	}
 
-  async getUserByStripeId(stripeCustomerId: string): Promise<IUser> {
-    await DBInstance.getConnection();
-    const user = await UserModel.findOne({ stripeCustomerId })
-      .select("subscriptionPeriod")
-      .exec();
-    return user!;
-  }
+	async getUserByStripeId(stripeCustomerId: string): Promise<IUser> {
+		await DBInstance.getConnection();
+		const user = await UserModel.findOne({ stripeCustomerId })
+			.select("subscriptionPeriod")
+			.exec();
+		return user!;
+	}
 
-  async updateById(id: string, data: Partial<IUser>): Promise<IUser> {
-    await DBInstance.getConnection();
+	async updateById(id: string, data: Partial<IUser>): Promise<IUser> {
+		await DBInstance.getConnection();
 
-    const user = await UserModel.findById(id);
+		const user = await UserModel.findById(id);
 
-    if (!user) {
-      throw new Error(`User with id ${id} not found`);
-    }
+		if (!user) {
+			throw new Error(`User with id ${id} not found`);
+		}
 
-    Object.assign(user, data);
+		Object.assign(user, data);
 
-    const updatedUser = await user.save();
+		const updatedUser = await user.save();
 
-    return updatedUser;
-  }
+		return updatedUser;
+	}
 
-  async updateFavorites(id: string, item: string): Promise<IUser> {
-    await DBInstance.getConnection();
+	async updateFavorites(id: string, item: string): Promise<IUser> {
+		await DBInstance.getConnection();
 
-    // Attempt to add the item (if not present)
-    let updatedUser = await UserModel.findOneAndUpdate(
-      { _id: id, favoritesIds: { $ne: item } },
-      { $addToSet: { favoritesIds: item } },
-      { new: true, projection: { favoritesIds: 1, _id: 0 } }
-    )
-      .lean<IUser>()
-      .exec();
+		// Attempt to add the item (if not present)
+		let updatedUser = await UserModel.findOneAndUpdate(
+			{ _id: id, favoritesIds: { $ne: item } },
+			{ $addToSet: { favoritesIds: item } },
+			{ new: true, projection: { favoritesIds: 1, _id: 0 } }
+		)
+			.lean<IUser>()
+			.exec();
 
-    if (updatedUser) {
-      return updatedUser;
-    }
+		if (updatedUser) {
+			return updatedUser;
+		}
 
-    // If the item was already in favorites, remove it
-    updatedUser = await UserModel.findByIdAndUpdate(
-      id,
-      { $pull: { favoritesIds: item } },
-      { new: true, projection: { favoritesIds: 1, _id: 0 } }
-    )
-      .lean<IUser>()
-      .exec();
+		// If the item was already in favorites, remove it
+		updatedUser = await UserModel.findByIdAndUpdate(
+			id,
+			{ $pull: { favoritesIds: item } },
+			{ new: true, projection: { favoritesIds: 1, _id: 0 } }
+		)
+			.lean<IUser>()
+			.exec();
 
-    return updatedUser!;
-  }
+		return updatedUser!;
+	}
 
-  async addToFavorites(id: string, item: string): Promise<IUser> {
-    await DBInstance.getConnection();
-    const updatedUser = await UserModel.findByIdAndUpdate(
-      id,
-      { $addToSet: { favoritesIds: item } },
-      { new: true, projection: { favoritesIds: 1, _id: 0 } }
-    )
-      .lean<IUser>()
-      .exec();
-    return updatedUser!;
-  }
+	async addToFavorites(id: string, item: string): Promise<IUser> {
+		await DBInstance.getConnection();
+		const updatedUser = await UserModel.findByIdAndUpdate(
+			id,
+			{ $addToSet: { favoritesIds: item } },
+			{ new: true, projection: { favoritesIds: 1, _id: 0 } }
+		)
+			.lean<IUser>()
+			.exec();
+		return updatedUser!;
+	}
 
-  async removeFromFavorites(id: string, item: string): Promise<IUser> {
-    await DBInstance.getConnection();
-    const updatedUser = await UserModel.findByIdAndUpdate(
-      id,
-      { $pull: { favoritesIds: item } },
-      { new: true, projection: { favoritesIds: 1, _id: 0 } }
-    )
-      .lean<IUser>()
-      .exec();
-    return updatedUser!;
-  }
+	async removeFromFavorites(id: string, item: string): Promise<IUser> {
+		await DBInstance.getConnection();
+		const updatedUser = await UserModel.findByIdAndUpdate(
+			id,
+			{ $pull: { favoritesIds: item } },
+			{ new: true, projection: { favoritesIds: 1, _id: 0 } }
+		)
+			.lean<IUser>()
+			.exec();
+		return updatedUser!;
+	}
 
-  async getFavoriteMenuItems(itemIds: string[]): Promise<ProductResponse[]> {
-    if (itemIds.length === 0) return [];
-    await DBInstance.getConnection();
+	async saveFavorites(userId: string, favorites: string[]): Promise<IUser> {
+		await DBInstance.getConnection();
+		const user = await UserModel.findByIdAndUpdate(
+			userId,
+			{ $set: { favoritesIds: favorites } },
+			{ new: true, projection: { favoritesIds: 1, _id: 0 } }
+		)
+			.lean<IUser>()
+			.exec();
+		return user!;
+	}
 
-    const objectIds = itemIds.map((id) => new Types.ObjectId(id));
+	async clearFavorites(userId: string): Promise<IUser> {
+		await DBInstance.getConnection();
+		const user = await UserModel.findByIdAndUpdate(
+			userId,
+			{ $set: { favoritesIds: [] } },
+			{ new: true, projection: { favoritesIds: 1, _id: 0 } }
+		)
+			.lean<IUser>()
+			.exec();
+		return user!;
+	}
 
-    const restaurants = await RestaurantModel.find({
-      "menus._id": { $in: objectIds },
-    })
-      .select("_id name menus")
-      .lean()
-      .exec();
+	async getFavoriteMenuItems(itemIds: string[]): Promise<ProductResponse[]> {
+		if (!itemIds || itemIds.length === 0) return [];
+		await DBInstance.getConnection();
 
-    const favoriteItems: ProductResponse[] = [];
+		console.log("[UserRepo] Fetching details for favorite IDs:", itemIds);
 
-    restaurants.forEach((restaurant) => {
-      restaurant.menus.forEach((menu: IMenuItem) => {
-        if (objectIds.some((id) => id.equals(menu._id))) {
-          favoriteItems.push({
-            ...menu,
-            restaurantId: restaurant._id,
-            restaurantName: restaurant.name,
-          } as ProductResponse);
-        }
-      });
-    });
+		// Safely convert to ObjectIds
+		const objectIds = itemIds
+			.map((id) => {
+				try {
+					return new Types.ObjectId(id);
+				} catch (e) {
+					console.warn(
+						`[UserRepo] Invalid ObjectId encountered: ${id}, error fair ${e}`
+					);
+					return null;
+				}
+			})
+			.filter((id): id is Types.ObjectId => id !== null);
 
-    return favoriteItems;
-  }
+		if (objectIds.length === 0) {
+			console.warn("[UserRepo] No valid ObjectIds found in favorites list.");
+			return [];
+		}
 
-  async saveCart(userId: string, cart: ICart[]): Promise<IUser> {
-    await DBInstance.getConnection();
-    const user = await UserModel.findByIdAndUpdate(
-      userId,
-      { cart },
-      { new: true }
-    )
-      .lean<IUser>()
-      .exec();
+		const restaurants = await RestaurantModel.find({
+			"menus._id": { $in: objectIds },
+		})
+			.select("_id name menus")
+			.lean()
+			.exec();
 
-    return user!;
-  }
+		console.log(
+			`[UserRepo] Found ${restaurants.length} restaurants containing favorites.`
+		);
 
-  async savePasswordResetCode(
-    userId: string,
-    code: string,
-    validTo: string
-  ): Promise<void> {
-    await DBInstance.getConnection();
-    await UserModel.findByIdAndUpdate(
-      userId,
-      { resetCode: { code, validTo } },
-      { new: true }
-    );
-  }
+		const favoriteItems: ProductResponse[] = [];
 
-  async changePassword(
-    userId: string,
-    currentPassword: string,
-    newPassword: string
-  ): Promise<boolean> {
-    await DBInstance.getConnection();
-    const user = await UserModel.findById(userId).select("password");
+		restaurants.forEach((restaurant) => {
+			restaurant.menus.forEach((menu: IMenuItem) => {
+				// Use loose equality or string comparison for safety
+				if (objectIds.some((id) => `${id}` === `${menu._id}`)) {
+					favoriteItems.push({
+						...menu,
+						restaurantId: restaurant._id,
+						restaurantName: restaurant.name,
+					} as ProductResponse);
+				}
+			});
+		});
 
-    const isMatch = await user.comparePassword(currentPassword);
+		return favoriteItems;
+	}
 
-    if (!isMatch) {
-      return false;
-    }
+	async saveCart(userId: string, cart: ICart[]): Promise<IUser> {
+		await DBInstance.getConnection();
+		const user = await UserModel.findByIdAndUpdate(
+			userId,
+			{ cart },
+			{ new: true }
+		)
+			.lean<IUser>()
+			.exec();
 
-    user.password = newPassword;
-    await user.save();
+		return user!;
+	}
 
-    return true;
-  }
+	async savePasswordResetCode(
+		userId: string,
+		code: string,
+		validTo: string
+	): Promise<void> {
+		await DBInstance.getConnection();
+		await UserModel.findByIdAndUpdate(
+			userId,
+			{ resetCode: { code, validTo } },
+			{ new: true }
+		);
+	}
 
-  async deleteById(id: string): Promise<IUser> {
-    await DBInstance.getConnection();
-    const user = await this.getById(id);
-    if (!user) {
-      throw new Error(`User with id ${id} not found`);
-    }
-    return await user.deleteOne();
-  }
+	async changePassword(
+		userId: string,
+		currentPassword: string,
+		newPassword: string
+	): Promise<boolean> {
+		await DBInstance.getConnection();
+		const user = await UserModel.findById(userId).select("password");
 
-  // Helper function to convert Mongoose select syntax to $project
-  private parseSelectFields(
-    selectFields: string | Record<string, 0 | 1>
-  ): Record<string, 0 | 1> {
-    // If already an object, return as is
-    if (typeof selectFields === "object") {
-      return selectFields;
-    }
+		const isMatch = await user.comparePassword(currentPassword);
 
-    // Parse string format like "-password -cart" or "email firstName lastName"
-    const projection: Record<string, 0 | 1> = {};
-    const fields = selectFields.trim().split(/\s+/);
+		if (!isMatch) {
+			return false;
+		}
 
-    fields.forEach((field) => {
-      if (field.startsWith("-")) {
-        // Exclude field
-        projection[field.substring(1)] = 0;
-      } else if (field) {
-        // Include field
-        projection[field] = 1;
-      }
-    });
-    return projection;
-  }
+		user.password = newPassword;
+		await user.save();
 
-  // Analytics methods for AI chatbot
-  async getUserCountByRole(role?: string): Promise<number> {
-    await DBInstance.getConnection();
+		return true;
+	}
 
-    if (role) {
-      return await UserModel.countDocuments({ role }).exec();
-    }
-    return await UserModel.countDocuments().exec();
-  }
+	async deleteById(id: string): Promise<IUser> {
+		await DBInstance.getConnection();
+		const user = await this.getById(id);
+		if (!user) {
+			throw new Error(`User with id ${id} not found`);
+		}
+		return await user.deleteOne();
+	}
 
-  async getRecentUserCount(days: number = 30): Promise<number> {
-    await DBInstance.getConnection();
+	// Helper function to convert Mongoose select syntax to $project
+	private parseSelectFields(
+		selectFields: string | Record<string, 0 | 1>
+	): Record<string, 0 | 1> {
+		// If already an object, return as is
+		if (typeof selectFields === "object") {
+			return selectFields;
+		}
 
-    const startDate = new Date();
-    startDate.setDate(startDate.getDate() - days);
+		// Parse string format like "-password -cart" or "email firstName lastName"
+		const projection: Record<string, 0 | 1> = {};
+		const fields = selectFields.trim().split(/\s+/);
 
-    return await UserModel.countDocuments({
-      createdAt: { $gte: startDate },
-    }).exec();
-  }
+		fields.forEach((field) => {
+			if (field.startsWith("-")) {
+				// Exclude field
+				projection[field.substring(1)] = 0;
+			} else if (field) {
+				// Include field
+				projection[field] = 1;
+			}
+		});
+		return projection;
+	}
 
-  async getTopUsersByPoints(limit: number = 10): Promise<IUser[]> {
-    await DBInstance.getConnection();
+	// Analytics methods for AI chatbot
+	async getUserCountByRole(role?: string): Promise<number> {
+		await DBInstance.getConnection();
 
-    return await UserModel.find({ role: "customer" })
-      .sort({ points: -1 })
-      .limit(limit)
-      .select("firstName lastName points email")
-      .lean<IUser[]>()
-      .exec();
-  }
+		if (role) {
+			return await UserModel.countDocuments({ role }).exec();
+		}
+		return await UserModel.countDocuments().exec();
+	}
+
+	async getRecentUserCount(days: number = 30): Promise<number> {
+		await DBInstance.getConnection();
+
+		const startDate = new Date();
+		startDate.setDate(startDate.getDate() - days);
+
+		return await UserModel.countDocuments({
+			createdAt: { $gte: startDate },
+		}).exec();
+	}
+
+	async getTopUsersByPoints(limit: number = 10): Promise<IUser[]> {
+		await DBInstance.getConnection();
+
+		return await UserModel.find({ role: "customer" })
+			.sort({ points: -1 })
+			.limit(limit)
+			.select("firstName lastName points email")
+			.lean<IUser[]>()
+			.exec();
+	}
 }
 
 export default UserRepository;
