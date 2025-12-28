@@ -64,7 +64,7 @@ export default function RecipeGenerator({
 
   return (
     <div className="space-y-8">
-      <div className="bg-card text-card-foreground border-border border rounded-xl p-6 shadow-sm">
+      <div className=" border-border border rounded-xl p-6 shadow-sm">
         <div className="flex items-center gap-2 mb-4">
           <ChefHat className="text-primary w-6 h-6" />
           <h2 className="text-xl font-semibold">
@@ -77,12 +77,12 @@ export default function RecipeGenerator({
 
         <Textarea
           placeholder={tRecipes("generator.placeholder")}
-          className="min-h-[100px] text-base resize-none bg-input text-input-foreground focus:ring-primary"
+          className="min-h-25 text-base resize-none bg-primary/30 placeholder:text-foreground focus:ring-0 "
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
 
-        <div className="mt-4 flex justify-end">
+        <div className="mt-4 flex justify-center">
           <Button
             onClick={handleGenerate}
             disabled={loading || !input.trim()}

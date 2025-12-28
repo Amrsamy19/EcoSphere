@@ -25,6 +25,11 @@ export default function EventDetailsCard({ event, userId }: { event: any; userId
   const locale = useLocale();
   const pathname = usePathname();
 
+  const attendersCount = event.attenders?.length || 0;
+  const revenue =
+    event.ticketPrice > 0 ? attendersCount * event.ticketPrice : 0;
+
+
   // --- Locale-aware route parsing ---
   const segments = pathname.split("/").filter(Boolean);
   const locales = ["en", "ar"]; // add other locales if needed
@@ -59,7 +64,7 @@ export default function EventDetailsCard({ event, userId }: { event: any; userId
   return (
     <Dialog>
       <DialogTrigger className="flex-1 py-3 rounded-xl border border-primary font-semibold text-sm hover:bg-primary/10 transition cursor-pointer">
-        {t("viewDetails")}
+        {isOrganizerHistory ? t("report") : t("viewDetails")}
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -67,7 +72,7 @@ export default function EventDetailsCard({ event, userId }: { event: any; userId
         </DialogHeader>
 
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-          <div className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl bg-background shadow-2xl">
+          <div className="relative w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-2xl bg-background shadow-2xl">
 
             {/* Header Image */}
             <div className="relative h-60">
@@ -124,6 +129,18 @@ export default function EventDetailsCard({ event, userId }: { event: any; userId
                     <p className="font-semibold">{event.locate}</p>
                   </div>
                 </div>
+                {/* Organizer Info */}
+                {showOrganizerInfo && (
+                  <div className="sm:col-span-2 flex items-center gap-3 rounded-xl border bg-muted/40 p-4">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10">
+                      <FaUserTie className="text-primary" />
+                    </div>
+                    <div className="flex flex-col text-sm">
+                      <span className="font-medium text-foreground">{event.user?.name}</span>
+                      <span className="text-muted-foreground text-xs">{event.user?.email}</span>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Description */}
@@ -148,19 +165,16 @@ export default function EventDetailsCard({ event, userId }: { event: any; userId
                     {event.ticketPrice === 0 ? t("free") : `${event.ticketPrice} EGP`}
                   </p>
                 </div>
+                {isOrganizerHistory && (<div className="md:col-span-3 rounded-lg border p-4 bg-primary/10">
+                  <p className="text-xs uppercase text-muted-foreground">
+                    {t("totalRevenue")}
+                  </p>
+                  <p className="text-2xl font-bold text-primary">
+                    {(event.attenders?.length || 0) * event.ticketPrice} EGP
+                  </p>
+                </div>)}
 
-                {/* Organizer Info */}
-                {showOrganizerInfo && (
-                  <div className="md:col-span-3 flex items-center gap-3 rounded-xl border bg-muted/40 px-4 py-3">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10">
-                      <FaUserTie className="text-primary" />
-                    </div>
-                    <div className="flex flex-col text-sm">
-                      <span className="font-medium text-foreground">{event.user?.name}</span>
-                      <span className="text-muted-foreground text-xs">{event.user?.email}</span>
-                    </div>
-                  </div>
-                )}
+                
               </div>
 
               {/* Sections / Schedule */}

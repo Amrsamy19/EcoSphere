@@ -1,8 +1,14 @@
 "use client";
-import { Recycle, CheckCircle, Clock, Truck, Eye } from "lucide-react";
-import { useState } from "react";
+import { Recycle, CheckCircle, Clock, Truck, Eye, XCircle } from "lucide-react";
+import { useState, useEffect } from "react";
+import type { RecycleResponse } from "@/backend/features/recycle/recycle.types";
 
-type orderStatus = "reviewing" | "pending" | "completed" | "out for delivery";
+type orderStatus =
+  | "review"
+  | "pending"
+  | "completed"
+  | "processing"
+  | "rejected";
 
 interface recycleOrder {
   id: string;
@@ -16,62 +22,71 @@ interface recycleOrder {
 const RecycleDashboard = () => {
   const [activeTab, setActiveTab] = useState("pending");
   const [openDropdown, setOpenDropdown] = useState<null | string>(null);
-  const [requests, setRequests] = useState<recycleOrder[]>([
-    {
-      id: "1",
-      customerName: "John Smith",
-      email: "john.smith@email.com",
-      phone: "+1 (555) 123-4567",
-      location: "123 Main St, New York, NY",
-      status: "reviewing",
-    },
-    {
-      id: "2",
-      customerName: "Sarah Johnson",
-      email: "sarah.j@email.com",
-      phone: "+1 (555) 234-5678",
-      location: "456 Oak Ave, Los Angeles, CA",
-      status: "pending",
-    },
-    {
-      id: "3",
-      customerName: "Mike Brown",
-      email: "mike.brown@email.com",
-      phone: "+1 (555) 345-6789",
-      location: "789 Pine Rd, Chicago, IL",
-      status: "completed",
-    },
-    {
-      id: "4",
-      customerName: "Emily Davis",
-      email: "emily.d@email.com",
-      phone: "+1 (555) 456-7890",
-      location: "321 Elm St, Houston, TX",
-      status: "out for delivery",
-    },
-    {
-      id: "5",
-      customerName: "David Wilson",
-      email: "david.w@email.com",
-      phone: "+1 (555) 567-8901",
-      location: "654 Maple Dr, Phoenix, AZ",
-      status: "completed",
-    },
-  ]);
+  const [requests, setRequests] = useState<recycleOrder[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch recycle orders from backend
+  useEffect(() => {
+    const fetchRecycleOrders = async () => {
+      try {
+        const response = await fetch("/api/recycle");
+        if (!response.ok) {
+          throw new Error("Failed to fetch recycle orders");
+        }
+        const result = await response.json();
+
+        // Map backend data to component format
+        const mappedData: recycleOrder[] = (result.data || []).map(
+          (item: RecycleResponse) => ({
+            id: item.id,
+            customerName: `${item.firstName} ${item.lastName}`,
+            email: item.email,
+            phone: item.phoneNumber,
+            location: `${item.address.street}, ${item.address.neighborhood}, ${item.address.city}`,
+            status: (item.status || "pending") as orderStatus,
+          })
+        );
+
+        setRequests(mappedData);
+      } catch (error) {
+        console.error("Error fetching recycle orders:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRecycleOrders();
+  }, []);
 
   const pendingRequests = requests.filter((r) => r.status !== "completed");
   const completedRequests = requests.filter((r) => r.status === "completed");
 
-  const handleStatusChange = (id: string, newStatus: orderStatus) => {
-    setRequests(
-      requests.map((req) =>
-        req.id === id ? { ...req, status: newStatus } : req,
-      ),
-    );
-    setOpenDropdown(null);
+  const handleStatusChange = async (id: string, newStatus: orderStatus) => {
+    try {
+      // Update backend
+      const response = await fetch("/api/recycle", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ _id: id, status: newStatus }),
+      });
 
-    if (newStatus === "completed") {
-      setTimeout(() => setActiveTab("completed"), 300);
+      if (!response.ok) {
+        throw new Error("Failed to update status");
+      }
+
+      // Update local state
+      setRequests(
+        requests.map((req) =>
+          req.id === id ? { ...req, status: newStatus } : req
+        )
+      );
+      setOpenDropdown(null);
+
+      if (newStatus === "completed") {
+        setTimeout(() => setActiveTab("completed"), 300);
+      }
+    } catch (error) {
+      console.error("Error updating status:", error);
     }
   };
 
@@ -81,15 +96,20 @@ const RecycleDashboard = () => {
 
   const statusOptions = [
     {
-      value: "reviewing",
+      value: "review",
       label: "Reviewing",
       icon: <Eye className="w-4 h-4" />,
     },
     { value: "pending", label: "Pending", icon: <Clock className="w-4 h-4" /> },
     {
-      value: "out for delivery",
-      label: "Out for Delivery",
+      value: "processing",
+      label: "Processing",
       icon: <Truck className="w-4 h-4" />,
+    },
+    {
+      value: "rejected",
+      label: "Rejected",
+      icon: <XCircle className="w-4 h-4" />,
     },
     {
       value: "completed",
@@ -102,12 +122,14 @@ const RecycleDashboard = () => {
     switch (status) {
       case "completed":
         return "bg-green-100 text-green-800";
-      case "reviewing":
+      case "review":
         return "bg-blue-100 text-blue-800";
       case "pending":
         return "bg-yellow-100 text-yellow-800";
-      case "out for delivery":
+      case "processing":
         return "bg-purple-100 text-purple-800";
+      case "rejected":
+        return "bg-red-100 text-red-800";
       default:
         return "bg-gray-100 text-gray-800";
     }
@@ -121,7 +143,7 @@ const RecycleDashboard = () => {
     },
     {
       label: "Reviewing",
-      value: requests.filter((r) => r.status === "reviewing").length,
+      value: requests.filter((r) => r.status === "review").length,
       icon: <Eye className="w-5 h-5" />,
     },
     {
@@ -130,8 +152,8 @@ const RecycleDashboard = () => {
       icon: <Clock className="w-5 h-5" />,
     },
     {
-      label: "Out for Delivery",
-      value: requests.filter((r) => r.status === "out for delivery").length,
+      label: "Processing",
+      value: requests.filter((r) => r.status === "processing").length,
       icon: <Truck className="w-5 h-5" />,
     },
     {
@@ -262,7 +284,9 @@ const RecycleDashboard = () => {
                     <td className="px-6 py-4 whitespace-nowrap relative overflow-visible">
                       {activeTab === "completed" ? (
                         <span
-                          className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(request.status)}`}
+                          className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(
+                            request.status
+                          )}`}
                         >
                           Completed
                         </span>
@@ -270,16 +294,20 @@ const RecycleDashboard = () => {
                         <div className="relative ">
                           <button
                             onClick={() => toggleDropdown(request.id)}
-                            className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all hover:opacity-80 ${getStatusColor(request.status)}`}
+                            className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all hover:opacity-80 ${getStatusColor(
+                              request.status
+                            )}`}
                           >
                             {
                               statusOptions.find(
-                                (opt) => opt.value === request.status,
+                                (opt) => opt.value === request.status
                               )?.icon
                             }
                             <span className="capitalize">{request.status}</span>
                             <svg
-                              className={`w-4 h-4 transition-transform ${openDropdown === request.id ? "rotate-180" : ""}`}
+                              className={`w-4 h-4 transition-transform ${
+                                openDropdown === request.id ? "rotate-180" : ""
+                              }`}
                               fill="none"
                               viewBox="0 0 24 24"
                               stroke="currentColor"
@@ -306,7 +334,7 @@ const RecycleDashboard = () => {
                                     onClick={() =>
                                       handleStatusChange(
                                         request.id,
-                                        option.value as orderStatus,
+                                        option.value as orderStatus
                                       )
                                     }
                                     className={`w-full flex items-center gap-3 px-4 py-2 text-sm hover:bg-gray-50 transition-colors ${
@@ -317,7 +345,7 @@ const RecycleDashboard = () => {
                                   >
                                     <span
                                       className={getStatusColor(
-                                        option.value as orderStatus,
+                                        option.value as orderStatus
                                       )
                                         .replace("bg-", "text-")
                                         .replace("/100", "-600")}

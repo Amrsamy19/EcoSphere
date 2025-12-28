@@ -68,77 +68,6 @@ const EventListItem: React.FC<EventListItemProps> = ({
   locate,
   avatar,
 }) => {
-  // const t = useTranslations("Events.overview");
-  // const locale = useLocale();
-  // const buttonText = t("manage");
-  // const lineColor = "bg-primary";
-  // const imageSource = (avatar as string) || "/events/defaultImgEvent.png";
-  // return (
-  //   <div
-  //     className="
-  //     flex items-center p-2 pr-6  rounded-xl shadow-md border-2 border-muted
-  //     transition duration-200 hover:shadow-lg hover:border-primary
-  //   "
-  //   >
-  //     {/* 1. Leading Color Line */}
-  //     <div
-  //       className={`w-1.5 h-16 rounded-full mr-4 ${lineColor} self-center shrink-0`}
-  //     ></div>
-
-  //     {/* 2. Event Image */}
-  //     <Image
-  //       src={imageSource}
-  //       alt={`Image for ${name}`}
-  //       className="w-14 h-14 object-cover rounded-md mr-4 ml-2 shrink-0"
-  //       width={100}
-  //       height={100}
-  //     />
-
-  //     {/* 3. Main Content Area */}
-  //     <div className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center gap-4">
-  //       {/* Title, Date, and Time */}
-  //       <div className="flex flex-col col-span-1">
-  //         <h3 className="text-base font-semibold ">{name}</h3>
-  //         <p className="flex items-center text-gray-600">
-  //           <MapPin className="w-4 h-4 mr-1.5 text-muted-foreground" />
-  //           <span>{locate}</span>
-  //         </p>
-  //       </div>
-
-  //       {/* Location */}
-  //       <div className=" flex justify-center items-center flex-col text-sm col-span-1">
-  //         <p className="text-sm text-gray-500 font-medium">
-  //           {formatDate(eventDate, locale)}
-  //         </p>
-  //         {/* Displaying the Time */}
-  //         <p className="text-sm text-grey-600 font-semibold">
-  //           {formatTime(startTime, locale)} – {formatTime(endTime, locale)}
-  //         </p>
-  //       </div>
-
-  //       {/* Placeholder column */}
-  //       <div className="hidden lg:block col-span-1">{/* Empty */}</div>
-  //     </div>
-
-  //     {/* 4. Action Button */}
-  //     <Link href={`/organizer/manage/${_id}`}>
-  //       <button
-  //         className="
-  //       cursor-pointer
-  //       ml-4 px-4 py-2 text-sm font-medium
-  //       border border-primary rounded-lg
-  //       text-foreground
-  //       hover:bg-primary hover:border-gray-400 hover:text-primary-foreground
-  //       focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2
-  //       whitespace-nowrap
-  //       shrink-0
-  //     "
-  //       >
-  //         {buttonText}
-  //       </button>
-  //     </Link>
-  //   </div>
-  // );
   const t = useTranslations("Events.overview");
   const locale = useLocale();
 
@@ -201,7 +130,6 @@ const EventListItem: React.FC<EventListItemProps> = ({
               {locate}
             </p>
           </div>
-
          
           {/* Date & time */}
           <div className="text-sm flex flex-col col-span-1 md:items-center">

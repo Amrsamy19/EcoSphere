@@ -31,13 +31,10 @@ export default function EventCard({ event }: { event: any }) {
 
   // --- Route flags ---
   const isEventsPage = routeSegment === "events";
-  const isOrganizerUpcoming =
-    routeSegment === "organizer" && secondSegment === "upcomingEvents";
-  const isOrganizerHistory =
-    routeSegment === "organizer" && secondSegment === "history";
-
+  const isOrganizerUpcoming = routeSegment === "organizer" && secondSegment === "upcomingEvents";
+  const isOrganizerHistory = routeSegment === "organizer" && secondSegment === "history";
   const statusStyles: Record<EventStatus, string> = {
-    approved: "bg-green-600 text-white",
+    approved: "bg-primary text-white",
     pending: "bg-yellow-500 text-white",
     rejected: "bg-red-600 text-white",
   };
@@ -54,16 +51,35 @@ export default function EventCard({ event }: { event: any }) {
   // LIVE only if approved AND time matches
   const isLiveNow = event.isAccepted && start <= now && end >= now;
 
+  const showLiveBadge = isLiveNow && (isEventsPage || isOrganizerUpcoming);
+
+  const showStatusBadge =
+    isOrganizerUpcoming && !isLiveNow;
+
+
+  const liveCardBorder = isLiveNow
+    ? "border-red-600 ring-2 ring-red-500/60 "
+    : "border-primary/20";
+
   const status: EventStatus = event.isAccepted
     ? "approved"
     : event.isEventNew
-    ? "pending"
-    : "rejected";
+      ? "pending"
+      : "rejected";
 
-  const badgeClass = isLiveNow
+  const badgeText = showLiveBadge
+    ? t("status.live")
+    : showStatusBadge
+      ? t(`status.${status}`)
+      : null;
+
+
+  const badgeClass = showLiveBadge
     ? "bg-red-600 text-white animate-pulse"
-    : statusStyles[status];
-
+    : showStatusBadge
+      ? statusStyles[status]
+      : "";
+      
   return (
     <div className="col-span-1 flex h-full justify-center">
       <div
@@ -99,6 +115,16 @@ export default function EventCard({ event }: { event: any }) {
             </div>
           )}
 
+          {(showLiveBadge || showStatusBadge) && (
+            <div className="absolute top-4 ltr:left-4 rtl:right-4 z-20">
+              <p
+                className={`capitalize py-1 px-3 rounded-full text-sm font-medium ${badgeClass}`}
+              >
+                {badgeText}
+              </p>
+            </div>
+          )}
+
           {/* Event Name */}
           <div className="absolute bottom-4 left-4 right-4">
             <h2 className="text-xl font-bold text-white leading-tight line-clamp-2">
@@ -125,12 +151,6 @@ export default function EventCard({ event }: { event: any }) {
               <FaLocationDot className="text-primary" />
               <span>{event.locate}</span>
             </div>
-            {isLiveNow && (
-              <div className="flex items-center gap-2 rounded-full bg-muted px-4 py-2">
-                <FaPlay className="text-primary" />
-                {t("live")}
-              </div>
-            )}
 
             {/* Organizer info only on /events */}
             {isEventsPage && (

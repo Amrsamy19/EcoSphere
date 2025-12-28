@@ -395,7 +395,9 @@
         "Snacks": "Snacks",
         "Other": "Other"
       },
-      "noProducts": "No products match your current search criteria."
+      "noProducts": "No products match your current search criteria.",
+      "inStockOnly": "Stock only",
+      "onlineOnly": "Online only"
     }
   },
   "ProductDetails": {
@@ -545,7 +547,6 @@
         "title": "Shop Details",
         "location": "Enter shop location",
         "workingHours": "e.g., Mon-Fri 9:00 AM - 6:00 PM",
-
         "selectCategory": "Select a category",
         "categories": {
           "supermarket": "Supermarket",
@@ -629,9 +630,7 @@
     "toasts": {
       "passwordChanged": "Password changed successfully",
       "passwordChangeFailed": "Failed to change password",
-      "redeemFailed": "Failed to redeem points. Please try again.",
-      "profileUpdated": "Profile updated successfully",
-      "profileUpdateFailed": "Failed to update profile"
+      "redeemFailed": "Failed to redeem points. Please try again."
     },
     "states": {
       "loading": "Loading profile...",
@@ -864,12 +863,11 @@
       "nohistory": "No history events found",
       "EventCard": {
         "organizer": "You are the organizer",
-        "live": "Live Now",
         "status": {
           "approved": "Approved",
-          "pending": "Pending ..",
+          "pending": "Pending...",
           "rejected": "Rejected",
-          "live": "LIVE NOW"
+          "live": "Live Now"
         }
       },
       "EventCardDetails": {
@@ -885,13 +883,16 @@
         "free": "Free",
         "schedule": "Schedule",
         "organizer": "You are the organizer",
-        "liveActionsDisabled": "Actions are disabled while the event is live"
+        "liveActionsDisabled": "Actions are disabled while the event is live",
+        "report": "Report",
+        "totalRevenue": "Total Revenue"
       },
       "AddAttendBtn": {
         "join": "Join Event",
         "joined": "Joined",
         "success": "You have successfully joined the event",
-        "error": "Something went wrong"
+        "error": "Something went wrong",
+        "notLoggedIn": "You must log in first"
       },
       "editBtn": "Edit Event",
       "DeleteEventBtn": {
@@ -1418,7 +1419,6 @@
       }
     }
   },
-
   "Metrics": {
     "title": "Our Impact",
     "subtitle": "Key Metrics",
@@ -1463,7 +1463,7 @@
       "toasts": {
         "emptyInput": "Please enter at least one ingredient",
         "success": "Recipe generated successfully! ",
-        "error": "Please login to generate a recipe"
+        "error": "Failed to generate recipe. Please try again."
       }
     },
     "cookbook": {

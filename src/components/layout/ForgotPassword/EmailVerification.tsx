@@ -128,9 +128,8 @@ export default function EmailVerification({
                 setEmail(val);
                 setEmailValid(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val));
               }}
-              className={`myInput ${
-                email && !emailValid ? "border-red-500" : "border-border"
-              }`}
+              className={`myInput ${email && !emailValid ? "border-red-500" : "border-border"
+                }`}
             />
 
             <button
@@ -204,8 +203,14 @@ export default function EmailVerification({
             onClick={verifyCode}
             className="myBtnPrimary disabled:opacity-50 disabled:cursor-not-allowed "
           >
-            {t("codeStep.verifyButton")}{" "}
-            <IoIosArrowRoundForward className="text-2xl" />
+            {loading ? (
+              <Loader2 className="mr-2 animate-spin" />
+            ) : (
+              <span className="flex gap-2 items-center">
+                {t("codeStep.verifyButton")}
+                <IoIosArrowRoundForward className="text-2xl" />
+              </span>
+            )}
           </button>
 
           <button
@@ -216,11 +221,7 @@ export default function EmailVerification({
             }}
             className="text-sm text-muted-foreground hover:text-foreground transition underline"
           >
-            {loading ? (
-              <Loader2 className="mr-2 animate-spin" />
-            ) : (
-              t("codeStep.changeEmailButton")
-            )}
+            {t("codeStep.changeEmailButton")}
           </button>
         </motion.div>
       )}
