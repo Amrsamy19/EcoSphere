@@ -855,7 +855,9 @@
         "free": "مجاني",
         "schedule": "الجدول",
         "organizer": "أنت منظم الفعالية",
-        "liveActionsDisabled": "لا يمكن تعديل أو حذف الحدث أثناء البث المباشر"
+        "liveActionsDisabled": "لا يمكن تعديل أو حذف الحدث أثناء البث المباشر",
+        "report": "تقرير",
+        "totalRevenue": "إجمالي الإيرادات"
       },
       "AddAttendBtn": {
         "join": "انضم إلى الفعالية",

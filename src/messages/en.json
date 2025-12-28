@@ -882,7 +882,9 @@
         "free": "Free",
         "schedule": "Schedule",
         "organizer": "You are the organizer",
-        "liveActionsDisabled": "Actions are disabled while the event is live"
+        "liveActionsDisabled": "Actions are disabled while the event is live",
+        "report": "Report",
+        "totalRevenue": "Total Revenue"
       },
       "AddAttendBtn": {
         "join": "Join Event",
