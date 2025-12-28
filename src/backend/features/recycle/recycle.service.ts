@@ -8,6 +8,7 @@ import {
 	sendRecycleRequestReceivedEmail,
 	sendUnregisteredRecycleEmail,
 } from "@/backend/utils/mailer";
+import { RecyclePageOptions, PaginatedRecycleResponse } from "./recycle.dto";
 
 export interface IRecycleService {
 	createRecycleEntry(data: Partial<IRecycle>): Promise<RecycleResponse>;
@@ -24,6 +25,9 @@ export interface IRecycleService {
 	calculateManualCarbon(
 		items: { type: string; amount: number }[]
 	): Promise<any>;
+	listRecycleEntriesPaginated(
+		options?: RecyclePageOptions
+	): Promise<PaginatedRecycleResponse>;
 }
 
 @injectable()
@@ -86,6 +90,12 @@ export class RecycleService implements IRecycleService {
 		);
 		const mappedData = response.map((item) => mapRecycleToResponse(item));
 		return mappedData;
+	}
+
+	async listRecycleEntriesPaginated(
+		options?: RecyclePageOptions
+	): Promise<PaginatedRecycleResponse> {
+		return await this.recycleRepository.listRecycleEntriesPaginated(options);
 	}
 
 	async analyzeImages(files: Blob[]): Promise<any> {
