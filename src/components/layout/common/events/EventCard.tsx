@@ -4,7 +4,7 @@ import Image from "next/image";
 import { MdAccessTime } from "react-icons/md";
 import { formatDate, formatTime } from "@/frontend/utils/Event";
 import { FaLocationDot } from "react-icons/fa6";
-import { FaCalendar } from "react-icons/fa";
+import { FaCalendar, FaPlay } from "react-icons/fa";
 import EventDetailsCard from "./EventDetailsCard";
 import DeleteEventBtn from "../../Dashboard/Events/DisplayEvents/DeleteEventBtn";
 import UpdateEventBtn from "../../Dashboard/Events/DisplayEvents/UpdateEventBtn";
@@ -33,9 +33,6 @@ export default function EventCard({ event }: { event: any }) {
   const isEventsPage = routeSegment === "events";
   const isOrganizerUpcoming = routeSegment === "organizer" && secondSegment === "upcomingEvents";
   const isOrganizerHistory = routeSegment === "organizer" && secondSegment === "history";
-  
-
-
   const statusStyles: Record<EventStatus, string> = {
     approved: "bg-primary text-white",
     pending: "bg-yellow-500 text-white",
@@ -85,8 +82,9 @@ export default function EventCard({ event }: { event: any }) {
       
   return (
     <div className="col-span-1 flex h-full justify-center">
-      <div className={`${liveCardBorder} w-full h-full flex flex-col max-w-sm ltr:rounded-tr-4xl ltr:rounded-bl-4xl rtl:rounded-tl-4xl rtl:rounded-br-4xl overflow-hidden border border-primary/20 bg-background shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2`}>
-
+      <div
+        className={`w-full h-full flex flex-col max-w-sm ltr:rounded-tr-4xl ltr:rounded-bl-4xl rtl:rounded-tl-4xl rtl:rounded-br-4xl overflow-hidden border border-primary/20 bg-background shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2`}
+      >
         {/* Image Header */}
         <div className="relative h-52">
           <Image
@@ -107,15 +105,6 @@ export default function EventCard({ event }: { event: any }) {
                   <DeleteEventBtn id={event._id} detailscard={false} />
                 </div>
               )}
-
-              {/* Status badge (always visible) */}
-              <div className="absolute top-4 ltr:left-4 rtl:right-4 z-20">
-                <p
-                  className={`capitalize py-1 px-3 rounded-full text-sm font-medium ${badgeClass}`}
-                >
-                  {badgeText}
-                </p>
-              </div>
             </div>
           )}
 
@@ -144,20 +133,29 @@ export default function EventCard({ event }: { event: any }) {
             <div className="flex items-center gap-2 rounded-full bg-muted px-4 py-2">
               <MdAccessTime className="text-primary" />
               <span>
-                {formatTime(event.startTime, locale)} – {formatTime(event.endTime, locale)}
+                {formatTime(event.startTime, locale)} –{" "}
+                {formatTime(event.endTime, locale)}
               </span>
             </div>
             <div className="flex items-center gap-2 rounded-full bg-muted px-4 py-2">
               <FaLocationDot className="text-primary" />
               <span>{event.locate}</span>
             </div>
+            {isLiveNow && (
+              <div className="flex items-center gap-2 rounded-full bg-muted px-4 py-2">
+                <FaPlay className="text-primary" />
+                {t("live")}
+              </div>
+            )}
 
             {/* Organizer info only on /events */}
             {isEventsPage && (
               <div className="flex items-center gap-2 rounded-full bg-muted px-4 py-2">
                 <FaUserTie className="text-primary" />
                 <div className="flex flex-col text-sm">
-                  <span className="font-medium text-foreground">{event.user?.name}</span>
+                  <span className="font-medium text-foreground">
+                    {event.user?.name}
+                  </span>
                 </div>
               </div>
             )}
@@ -167,10 +165,7 @@ export default function EventCard({ event }: { event: any }) {
         {/* Actions */}
         <div className="flex m-2 gap-3 mt-auto">
           {/* Details card */}
-          <EventDetailsCard
-            event={event}
-            userId={session?.user?.id || ""}
-          />
+          <EventDetailsCard event={event} userId={session?.user?.id || ""} />
 
           {/* Attend button only on /events */}
           {isEventsPage && (

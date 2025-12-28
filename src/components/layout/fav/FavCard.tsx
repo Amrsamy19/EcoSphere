@@ -23,10 +23,11 @@ const FavCard = ({ product }: FavCardProps) => {
   const router = useRouter();
   const { view } = useAppSelector((state: RootState) => state.fav);
   const isInCart = useAppSelector((state: RootState) =>
-    isInCartSelector(state, product.id),
+    isInCartSelector(state, product.id)
   );
   const dispatch = useAppDispatch();
-  const handleRemoveFromFav = () => {
+  const handleRemoveFromFav = (e: React.MouseEvent) => {
+    e.stopPropagation();
     dispatch(toggleFavoriteAsync(product));
     toast.success(t("removedFromFavorites"));
   };
@@ -42,7 +43,7 @@ const FavCard = ({ product }: FavCardProps) => {
           ...product,
           quantity: 1,
           maxQuantity: product.quantity || 999,
-        }),
+        })
       );
       toast.success(t("addedToCart"));
     }
@@ -66,7 +67,7 @@ const FavCard = ({ product }: FavCardProps) => {
         />
       </div>
       <div className="p-3 capitalize flex-1 flex flex-col justify-between gap-2">
-        <div className="flex justify-between text-foreground text-md md:text-lg">
+        <div className="flex flex-col justify-between text-foreground text-md md:text-lg">
           <span>{product.productName}</span>
           <span>{product.productPrice} EGP</span>
         </div>
@@ -75,7 +76,7 @@ const FavCard = ({ product }: FavCardProps) => {
         )}
         <div className="flex justify-evenly gap-5">
           <button
-            className={`myBtnPrimary ${
+            className={`myBtnPrimary w-full ${
               !product.quantity ? "cursor-not-allowed! opacity-50" : ""
             }`}
             onClick={handleAddToCart}

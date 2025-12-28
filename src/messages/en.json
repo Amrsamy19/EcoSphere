@@ -629,7 +629,9 @@
     "toasts": {
       "passwordChanged": "Password changed successfully",
       "passwordChangeFailed": "Failed to change password",
-      "redeemFailed": "Failed to redeem points. Please try again."
+      "redeemFailed": "Failed to redeem points. Please try again.",
+      "profileUpdated": "Profile updated successfully",
+      "profileUpdateFailed": "Failed to update profile"
     },
     "states": {
       "loading": "Loading profile...",
@@ -777,7 +779,7 @@
       "subTitle": "Explore upcoming events across the Ecosphere platform, get all the details you need, and take part in experiences that bring the community together"
     },
     "overview": {
-      "title": "Dashboard Overview",
+      "title": "Events Dashboard Overview",
       "quickActions": "Quick Actions",
       "createNewEvent": "Create new Event",
       "keyMetrics": "Key Metrics",
@@ -862,6 +864,7 @@
       "nohistory": "No history events found",
       "EventCard": {
         "organizer": "You are the organizer",
+        "live": "Live Now",
         "status": {
           "approved": "Approved",
           "pending": "Pending ..",
@@ -1463,7 +1466,7 @@
       "toasts": {
         "emptyInput": "Please enter at least one ingredient",
         "success": "Recipe generated successfully! ",
-        "error": "Failed to generate recipe. Please try again."
+        "error": "Please login to generate a recipe"
       }
     },
     "cookbook": {
