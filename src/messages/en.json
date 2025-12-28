@@ -395,7 +395,9 @@
         "Snacks": "Snacks",
         "Other": "Other"
       },
-      "noProducts": "No products match your current search criteria."
+      "noProducts": "No products match your current search criteria.",
+      "inStockOnly": "Stock only",
+      "onlineOnly": "Online only"
     }
   },
   "ProductDetails": {
@@ -545,7 +547,6 @@
         "title": "Shop Details",
         "location": "Enter shop location",
         "workingHours": "e.g., Mon-Fri 9:00 AM - 6:00 PM",
-
         "selectCategory": "Select a category",
         "categories": {
           "supermarket": "Supermarket",
@@ -629,9 +630,7 @@
     "toasts": {
       "passwordChanged": "Password changed successfully",
       "passwordChangeFailed": "Failed to change password",
-      "redeemFailed": "Failed to redeem points. Please try again.",
-      "profileUpdated": "Profile updated successfully",
-      "profileUpdateFailed": "Failed to update profile"
+      "redeemFailed": "Failed to redeem points. Please try again."
     },
     "states": {
       "loading": "Loading profile...",
@@ -779,7 +778,7 @@
       "subTitle": "Explore upcoming events across the Ecosphere platform, get all the details you need, and take part in experiences that bring the community together"
     },
     "overview": {
-      "title": "Events Dashboard Overview",
+      "title": "Dashboard Overview",
       "quickActions": "Quick Actions",
       "createNewEvent": "Create new Event",
       "keyMetrics": "Key Metrics",
@@ -864,12 +863,10 @@
       "nohistory": "No history events found",
       "EventCard": {
         "organizer": "You are the organizer",
-        "live": "Live Now",
         "status": {
           "approved": "Approved",
-          "pending": "Pending ..",
-          "rejected": "Rejected",
-          "live": "LIVE NOW"
+          "pending": "Pending...",
+          "rejected": "Rejected"
         }
       },
       "EventCardDetails": {
@@ -1421,7 +1418,6 @@
       }
     }
   },
-
   "Metrics": {
     "title": "Our Impact",
     "subtitle": "Key Metrics",
@@ -1466,7 +1462,7 @@
       "toasts": {
         "emptyInput": "Please enter at least one ingredient",
         "success": "Recipe generated successfully! ",
-        "error": "Please login to generate a recipe"
+        "error": "Failed to generate recipe. Please try again."
       }
     },
     "cookbook": {
