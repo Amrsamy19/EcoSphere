@@ -75,13 +75,13 @@ export default async function PaymentSuccess({
               <Home className="w-5 h-5 group-hover:-translate-y-0.5 transition-transform" />
             </Link>
 
-            <button
+            {/*<button
               className="myBtnPrimary w-full group flex items-center justify-center gap-2 opacity-50 cursor-not-allowed"
               disabled
             >
               {t("downloadReceipt")}
               <Download className="w-5 h-5 group-hover:-translate-y-0.5 transition-transform" />
-            </button>
+            </button>*/}
           </MotionItem>
         </div>
       </MotionContainer>
