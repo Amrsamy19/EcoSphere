@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -39,7 +40,7 @@ export default function RecipeCard({
       animate={{ opacity: 1, y: 0 }}
       className="h-full"
     >
-      <Card className="h-full flex flex-col hover:shadow-lg transition-shadow border-border bg-card text-card-foreground">
+      <Card className="h-full flex flex-col hover:shadow-lg transition-shadow border-border ">
         <CardHeader className="pb-3">
           <div className="flex justify-between items-start">
             <Badge
@@ -79,7 +80,7 @@ export default function RecipeCard({
         </CardHeader>
         <CardContent className="flex-1 flex flex-col gap-4">
           {/* Sustainability Note */}
-          <div className="bg-primary/10 p-3 rounded-lg flex gap-3 text-sm text-primary">
+          <div className="bg-primary/30 p-3 rounded-lg flex gap-3 text-sm ">
             <Leaf className="w-5 h-5 shrink-0" />
             <p>{recipe.sustainabilityNote}</p>
           </div>
