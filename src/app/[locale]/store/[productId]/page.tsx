@@ -42,7 +42,7 @@ const ProductPage = async ({ params }: Props) => {
       <div className="w-[80%] mx-auto">
         <ProductDetailsCard product={product} />
         {/* <TextComponent product={product} /> */}
-        <RelatedProducts products={relatedProducts} />
+        {/* <RelatedProducts products={relatedProducts} /> */}
       </div>
     </div>
   );
