@@ -115,6 +115,16 @@ export default function EventCard({ event }: { event: any }) {
             </div>
           )}
 
+          {(showLiveBadge || showStatusBadge) && (
+            <div className="absolute top-4 ltr:left-4 rtl:right-4 z-20">
+              <p
+                className={`capitalize py-1 px-3 rounded-full text-sm font-medium ${badgeClass}`}
+              >
+                {badgeText}
+              </p>
+            </div>
+          )}
+
           {/* Event Name */}
           <div className="absolute bottom-4 left-4 right-4">
             <h2 className="text-xl font-bold text-white leading-tight line-clamp-2">
@@ -141,12 +151,6 @@ export default function EventCard({ event }: { event: any }) {
               <FaLocationDot className="text-primary" />
               <span>{event.locate}</span>
             </div>
-            {isLiveNow && (
-              <div className="flex items-center gap-2 rounded-full bg-muted px-4 py-2">
-                <FaPlay className="text-primary" />
-                {t("live")}
-              </div>
-            )}
 
             {/* Organizer info only on /events */}
             {isEventsPage && (
