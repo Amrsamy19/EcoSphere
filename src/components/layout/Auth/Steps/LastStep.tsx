@@ -72,52 +72,57 @@ const LastStep = () => {
       </div>
 
       {/* Password */}
-      <div className="relative">
-        <input
-          type={showPassword ? "text" : "password"}
-          placeholder={t("password")}
-          {...register("password")}
-          className="myInput"
-        />
-        <button
-          type="button"
-          onClick={() => setShowPassword(!showPassword)}
-          className={`absolute ${
-            locale === "ar" ? "left-4" : "right-4"
-          } top-1/2 cursor-pointer -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors`}
-        >
-          {showPassword ? (
-            <EyeOff size={20} className="text-black" />
-          ) : (
-            <Eye size={20} className="text-black" />
-          )}
-        </button>
+      <div >
+        <div className="relative">
+
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder={t("password")}
+            {...register("password")}
+            className="myInput"
+          >
+          </input>
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className={`absolute ${locale === "ar" ? "left-4" : "right-4"
+              } top-1/2 cursor-pointer -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors`}
+          >
+            {showPassword ? (
+              <EyeOff size={20} className="text-primary" />
+            ) : (
+              <Eye size={20} className="text-primary" />
+            )}
+          </button>
+        </div>
         {errors.password && (
           <p className="text-red-500 mt-1 text-sm">{errors.password.message}</p>
         )}
       </div>
 
       {/* Confirm Password */}
-      <div className="relative">
-        <input
-          type={showConfirmPassword ? "text" : "password"}
-          placeholder={t("confirmPassword")}
-          {...register("confirmPassword")}
-          className="myInput"
-        />
-        <button
-          type="button"
-          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-          className={`absolute cursor-pointer ${
-            locale === "ar" ? "left-4" : "right-4"
-          } top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors`}
-        >
-          {showConfirmPassword ? (
-            <EyeOff size={20} className="text-black" />
-          ) : (
-            <Eye size={20} className="text-black" />
-          )}
-        </button>
+      <div>
+
+        <div className="relative">
+          <input
+            type={showConfirmPassword ? "text" : "password"}
+            placeholder={t("confirmPassword")}
+            {...register("confirmPassword")}
+            className="myInput"
+          />
+          <button
+            type="button"
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            className={`absolute cursor-pointer ${locale === "ar" ? "left-4" : "right-4"
+              } top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors`}
+          >
+            {showConfirmPassword ? (
+              <EyeOff size={20} className="text-primary" />
+            ) : (
+              <Eye size={20} className="text-primary" />
+            )}
+          </button>
+        </div>
         {errors.confirmPassword && (
           <p className="text-red-500 mt-1 text-sm">
             {errors.confirmPassword.message}
