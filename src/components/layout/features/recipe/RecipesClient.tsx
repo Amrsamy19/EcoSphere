@@ -77,9 +77,9 @@ export default function RecipesClient({
         title={tRecipes("hero.title")}
         subTitle={tRecipes("hero.subtitle")}
       />
-      <div className="container py-10 max-w-5xl mx-auto space-y-12">
+      <div className="container py-10 max-w-[80%] mx-auto space-y-12">
 
-        <div className="max-w-2xl mx-auto">
+        <div className="w-full">
           <RecipeGenerator onRecipeGenerated={handleRecipeGenerated} />
         </div>
 

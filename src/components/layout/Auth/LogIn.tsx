@@ -97,9 +97,9 @@ const LogIn = () => {
           } top-1/2 cursor-pointer -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors`}
         >
           {showPassword ? (
-            <EyeOff size={20} className="text-black" />
+            <EyeOff size={20} className="text-primary" />
           ) : (
-            <Eye size={20} className="text-black" />
+            <Eye size={20} className="text-primary" />
           )}
         </button>
       </div>
